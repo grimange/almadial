@@ -1,0 +1,23 @@
+# M0 CANDIDATE ONLY. This file is intentionally NOT installable.
+schema_version: 1
+profile: almalinux10-single
+status: candidate
+os:
+  id: almalinux
+  major: 10
+  arch: x86_64
+asterisk:
+  major_candidate: 22
+  version: TBD-M0
+  sha256: TBD-M0
+vicidial:
+  source: svn://svn.eflo.net:3690/agc_2-X/trunk
+  revision: TBD-M0
+  exported_tree_sha256: TBD-M0
+webrtc:
+  name: VICIphone
+  revision: TBD-M0
+  sha256: TBD-M0
+verification:
+  fixture_id: TBD-M0
+  evidence_digest: TBD-M0

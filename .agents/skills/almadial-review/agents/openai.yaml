@@ -1,0 +1,4 @@
+interface:
+  display_name: "AlmaDial Independent QA"
+  short_description: "Review change safety and reproduce acceptance evidence"
+  default_prompt: "Use $almadial-review to evaluate the assigned change independently, prioritize correctness and reproducibility, and return an evidence-backed verdict."

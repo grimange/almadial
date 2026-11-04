@@ -1,0 +1,4 @@
+interface:
+  display_name: "AlmaDial WebRTC QA"
+  short_description: "Validate the browser-to-conference call path"
+  default_prompt: "Use $almadial-webrtc-test to verify the authorized lab WebRTC call lifecycle and record observed evidence for each acceptance case."
