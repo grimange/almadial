@@ -1,16 +1,81 @@
 # AlmaDial synchronization audit
 
+## Inventory tooling QA and baseline finalization — 2026-11-05
+
+The operator separately authorized independent tooling review, bounded defect corrections and one local commit of the reviewed slice. The implementation worker requested a separate Codex reviewer (`/root/inventory_independent_qa`); its [independent report](../reviews/m0-01-inventory-qa.md) preserves the initial rejection, reproduced defect and final re-review. This tooling decision does not accept ALM-1 or the M0 gate.
+
+The original reported collector/test/fixture hashes were verified against their actual bytes before edits. One MEDIUM defect was confirmed: incomplete required facts in several parsers could be reported COLLECTED and yield CLI exit 0. The bounded correction requires the relevant memory, device, interface, route, time, chrony and service fields/states, returning ERROR/parse_error and partial exit 1 for malformed observations. Legitimate null/absent facts remain distinct; chrony offset direction is retained. Three regression test methods were added. Two intermediate implementation test runs exposed helper-name shadowing; unique helper names corrected those development failures before the final passing runs. The original ledger and hashes below remain historical, not the corrected artifact identity.
+
+| Corrected artifact | SHA-256 independently rechecked |
+|---|---|
+| `scripts/collect_host_inventory.py` | `b894e1d43500162ee59464f0290853235e6f1a8b39fcfdf34f8c4a8c6f5bb5f0` |
+| `scripts/tests/test_collect_host_inventory.py` | `45340233e7559fe5b62331f06b32f21af3fd1502196ab343d21125aeb31c0376` |
+| `scripts/tests/fixtures/inventory/almalinux10.json` | `c86c3963a7719087cb5b2a36c17a912a47cff72ead44786cf142bde4b1c4199d` |
+
+Executed locally by the implementer and reproduced by the separate reviewer:
+
+| Exact command / check | Result |
+|---|---|
+| `python3 scripts/validate_scaffold.py` | PASS: 11 required files and 4 skills |
+| `python3 -m unittest discover -s scripts/tests -v` | Final PASS: 22 tests (18 inventory and 4 validator); initial 19-test suite also passed before the independent defect discovery |
+| `python3 -m py_compile scripts/collect_host_inventory.py scripts/tests/test_collect_host_inventory.py` | PASS |
+| `python3 scripts/collect_host_inventory.py --fixture scripts/tests/fixtures/inventory/almalinux10.json --output-dir <fresh-temporary-directory>/fixture` | PASS: 23 simulated probes; consistent JSON/Markdown; acceptance fields NOT_RUN; private files and matching collector digest |
+| Controlled negative cases, without live probes | PASS after correction: failed/missing/timed-out commands, output cap, malformed/partial fixtures, required-field errors, existing destinations/symlinks, redaction and fixture isolation; see separate review for precise reproduction |
+| `git diff --check` | PASS before staging; repeat for the staged and committed slice |
+| Go tests / live AlmaLinux Python 3.12 / host inventory | NOT_RUN; no Go code added and no host execution authorized |
+
+Fresh MCP reads during QA confirmed the same AlmaDial project `ghritpte6e40o5ayktgz0vh1`, all seven accepted board columns in order, 35 canonical Backlog/unassigned tasks with 8/7/7/6/7 milestone labels and 44 valid acyclic native blocks relations. ALM-1 (`p8urvq3yjtc76rktih9xlhe3`) retains its Blocked label, original description/acceptance criteria, sole outgoing M0-02 dependency and existing creation activity. Initial QA read found zero comments. No assignment, task/status/label/dependency update is authorized or needed for tooling QA. After local finalization, a concise QA comment records the resulting full commit SHA and is retrieved through MCP; its returned reference is included in the final handoff. Existing history is preserved.
+
+Commit scope is the collector, unchanged synthetic fixture, tests, preparation handoff, this audit, the synchronization snapshot, readiness report and separate QA report. Use the local commit containing these exact reviewed digests as the tooling baseline; its parent is `1df743a4178fc32d9d78d53de8ea0870b1d2c30f`. The complete new SHA is recorded by Git and the final handoff/Kaneo comment after creation, avoiding a self-referential hash. No unrelated work, raw evidence, private configuration, push, release or host collection is included. Committed-tree reproduction is performed after creation and reported in the final handoff, rather than being claimed prospectively here.
+
+The synchronization contract remains **ALMADIAL_KANEO_SYNC_VERIFIED**. Actual host baseline remains **ALMADIAL_M0_HOST_BASELINE_NOT_RUN**. Required operator inputs remain a named disposable target and console route, verified signed image/digest/architecture, clean snapshot and restore proof, exact read-only/evidence-write authorization, reviewed tooling revision, protected evidence handling and a separate host reviewer. Real systemd alias behavior, privileged observations, package origins and CPU ISA qualification remain explicit lab gaps. The next bounded assignment is actual inventory collection after separate exact-target authorization and the prerequisites above.
+
+---
+
 ## Final synchronization acceptance — 2026-11-05
 
 Current verdict: **ALMADIAL_KANEO_SYNC_VERIFIED** under the operator's explicit revised contract: Backlog → Ready → In Progress → QA Review → Accepted are the standard workflow, followed by the retained optional Failed and Cancelled exceptional states. The earlier exact-five discrepancy is resolved by this acceptance amendment, not by deleting columns or rewriting historical evidence.
 
-MCP read-back at **2026-11-04 22:41:05 UTC** confirmed AlmaDial `ghritpte6e40o5ayktgz0vh1` (ALM), Personal Projects `30VyoMQZ4LROnW3UUeAYGg8bIF9mj1il`. Exactly one project with that name exists in this accessible workspace. All seven returned column IDs, slugs and positions match the table in the preceding audit below: positions 0–6 are Backlog, Ready, In Progress, QA Review, Accepted, Failed, Cancelled. Accepted alone has native `isFinal=true`; Failed/Cancelled are exceptional terminal states by policy while their native flags remain false. Column mutation is still unsupported by this MCP and was unnecessary. No URL was returned.
+MCP read-back at **2026-11-04 22:41:05 UTC** confirmed AlmaDial `ghritpte6e40o5ayktgz0vh1` (ALM), Personal Projects `30VyoMQZ4LROnW3UUeAYGg8bIF9mj1il`. Exactly one project with that name exists in this accessible workspace. All seven returned column IDs, slugs and positions match the table in the historical board audit below: positions 0–6 are Backlog, Ready, In Progress, QA Review, Accepted, Failed, Cancelled. Accepted alone has native `isFinal=true`; Failed/Cancelled are exceptional terminal states by policy while their native flags remain false. Column mutation is still unsupported by this MCP and was unnecessary. No URL was returned.
 
 Both fresh task/relationship/history read-backs matched each other and the previous audit byte-for-byte: **35 canonical tasks**, milestone counts **8/7/7/6/7**, **44 distinct directed native `blocks` relationships**, zero cycles, missing endpoints or duplicate work-package mappings. All 35 retain Backlog, unassigned ownership, full descriptions/acceptance criteria and milestone labels. M0-01 retains Blocked. The legacy Ready label has zero task attachments and its template is retained. Zero tasks were created, updated, moved, assigned, completed or deleted; zero labels/dependencies were changed. All 0 comments and 35 creation-activity records remain intact.
 
 This run made **one project-description PATCH**, immediately retrieved and compared exactly, then verified again in final read-back. It records the revised seven-column contract and preserves the M0 gate, identity discovery, self-assignment before In Progress, read-back, implementer ownership during independent QA and evidence-based acceptance. A second reconciliation requires **zero additional writes**. Earlier 122-write bootstrap and subsequent one-write board audit remain historical below.
 
 ALM-1 / M0-01 remains Backlog / Blocked / unassigned. Repository baseline and inventory-tool preparation are authorized in the current assignment; they do not supply a named disposable VM, recovery snapshot, signed image provenance or exact host inspection authority. Host inventory and stack compatibility remain **NOT_RUN**. The inventory preparation handoff records the local documentation baseline commit separately; no push is authorized. Synchronization acceptance is project-configuration acceptance, not M0 or product acceptance.
+
+### Local baseline, inventory preparation and final checks
+
+The authorized local documentation/scaffold baseline is commit `1df743a4178fc32d9d78d53de8ea0870b1d2c30f` on `main`. It contains 35 reviewed project-owned paths, including the formerly locally excluded guidance/skills/templates/manifest. The preexisting project ignore edits were preserved and included after review; no unrelated files, private worker configuration or generated caches were staged. The source-plan bytes/digest were unchanged. A Markdown whitespace attribute permits intentional hard breaks; the first staged whitespace check had flagged those existing Markdown breaks before the attribute was added. A stale reference to a missing optional Codex configuration example was corrected. No commit or push authority was inferred from earlier planning assignments: this commit uses the subsequent explicit operator authorization. No remote operation occurred.
+
+Git initially could not create its index lock because the sandbox mounts `.git` read-only. The explicitly authorized local Git stage/commit was completed through the reviewed escalation path. There was no approval rejection, destructive reset, overwrite or discarded work.
+
+Final metadata/task-list read-back at **2026-11-04 22:50:40 UTC** matched the full 22:41:05 UTC audit: identical project policy, seven columns, all 35 task placements, ALM-1 unassigned in Backlog and entire workspace label inventory. Only the one project-description write occurred, with **1/1** immediate and final read-back verification; zero failed/unverified writes or additional reconciliation changes. The two complete task/relationship/history reads also match the prior audit exactly. This is configuration verification, not independent QA of the newly authored collector.
+
+The read-only M0 research collector, synthetic fixture, tests and [preparation handoff](../compatibility/m0-01-host-inventory.md) are subsequent **uncommitted** working-tree additions. The readiness document now records the committed documentation baseline; obtain a reviewed tooling revision before any host run. No host, snapshot or exact host authority has appeared. ALM-1 remains Backlog / Blocked / unassigned. `ALMADIAL_M0_INVENTORY_TOOLING_READY` applies to repository fixture-tested preparation; `ALMADIAL_M0_HOST_BASELINE_NOT_RUN` remains mandatory. No Go source was added; Go is unavailable, so Go tests/vet/gofmt are NOT_RUN / not applicable to this Python-only slice. Python 3.14.4 was used locally; the Python 3.12 target has not been exercised in a live AlmaLinux VM.
+
+| Executed command or check | Result |
+|---|---|
+| `python3 scripts/validate_scaffold.py` | PASS: 11 required files, 4 skills |
+| `python3 -m unittest discover -s scripts/tests -v` | PASS: 19 tests (15 inventory tests + 4 existing validator regressions) |
+| `python3 scripts/collect_host_inventory.py --fixture scripts/tests/fixtures/inventory/almalinux10.json --output-dir /tmp/almadial-inventory-fixture-acceptance` | PASS, exit 0: JSON + Markdown, 23 simulated COLLECTED probes; host/compatibility/independent QA remain NOT_RUN |
+| `python3 -m py_compile scripts/collect_host_inventory.py scripts/tests/test_collect_host_inventory.py` | PASS |
+| `python3 /tmp/almadial-final-validate.py` | PASS: plan digest/equality, all 35 source/report/live mappings, milestone labels, 44 acyclic dependencies, seven-column contract, preserved ownership/history |
+| Fresh `git archive --format=tar HEAD` export, then the scaffold validator and existing test command inside the export | PASS: baseline self-contained, 4 tests; no dependence on local excluded files |
+| Focused Python Markdown checks | PASS: four current reports have final newlines, balanced code fences and existing relative file-link targets |
+| `git diff --check` and Git status inspection | PASS; post-baseline collector/handoff/readiness and final audit notes remain uncommitted |
+
+One initial inventory fixture test exposed acceptance of an empty JSON object as an interface list; strict array parsing fixed it before the final passing run. The subsequent self-check added a regression preventing a null fixture from selecting live mode. Neither development failure produced host evidence; all tests and the final CLI run were offline.
+
+Artifact digests for this reviewed working-tree snapshot:
+
+| Path | SHA-256 |
+|---|---|
+| `scripts/collect_host_inventory.py` | `6433b68fc64f156ac3a351a1ec088e0cfe360ad5698a64924079c8433ccc2b1e` |
+| `scripts/tests/test_collect_host_inventory.py` | `8fca2b989c59aeb88360498e4df3245c4771df013b8b162f131fabb1e07aea00` |
+| `scripts/tests/fixtures/inventory/almalinux10.json` | `c86c3963a7719087cb5b2a36c17a912a47cff72ead44786cf142bde4b1c4199d` |
+
+These hashes are provenance for repository preparation, not live host acceptance. Independent collector review and named disposable-host/image/snapshot/authority prerequisites remain outstanding. The sections below preserve historical outcomes and authorization limits as they stood at those earlier stages.
 
 ---
 

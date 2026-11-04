@@ -1,0 +1,121 @@
+{
+  "fixture_schema": 1,
+  "note": "Synthetic parser inputs only; no measured host or compatibility evidence. Credentials are documentation-only sentinels.",
+  "probes": {
+    "os": {
+      "stdout": "NAME=\"AlmaLinux\"\nID=\"almalinux\"\nVERSION_ID=\"10.0\"\n",
+      "stderr": "",
+      "exit_code": null
+    },
+    "memory": {
+      "stdout": "MemTotal:       8388608 kB\nMemAvailable:   7340032 kB\n",
+      "stderr": "",
+      "exit_code": null
+    },
+    "dns": {
+      "stdout": "nameserver 192.0.2.53\nsearch inventory.example.test\n",
+      "stderr": "",
+      "exit_code": null
+    },
+    "repositories": {
+      "stdout": "{\"dnf_config\": \"[main]\\ngpgcheck=1\\n\", \"configs\": [\"[baseos]\\nenabled=1\\nbaseurl=https://fixture-user:DOC_ONLY_SECRET@repo.example.test/baseos\\ngpgcheck=1\\nrepo_gpgcheck=0\\n[disabled]\\nenabled=0\\nbaseurl=https://disabled.example.test\\n\"]}",
+      "stderr": "",
+      "exit_code": null
+    },
+    "binaries": {
+      "stdout": "{\"/usr/sbin/asterisk\": false, \"/usr/local/sbin/asterisk\": false, \"/usr/sbin/mariadbd\": false, \"/usr/sbin/mysqld\": false, \"/usr/sbin/httpd\": false}",
+      "stderr": "",
+      "exit_code": null
+    },
+    "kernel": {
+      "stdout": "6.12.0-55.9.1.el10_0.x86_64\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "cpu": {
+      "stdout": "{\"lscpu\": [{\"field\": \"Architecture:\", \"data\": \"x86_64\"}, {\"field\": \"CPU(s):\", \"data\": \"4\"}, {\"field\": \"Flags:\", \"data\": \"sse sse2 sse4_1 sse4_2 ssse3 popcnt avx avx2 bmi1 bmi2 f16c fma lahf_lm movbe xsave\"}]}",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "disks": {
+      "stdout": "{\"blockdevices\": [{\"name\": \"vda\", \"type\": \"disk\", \"size\": 68719476736, \"fstype\": null, \"mountpoints\": [null], \"children\": [{\"name\": \"vda1\", \"type\": \"part\", \"size\": 67645734912, \"fstype\": \"xfs\", \"mountpoints\": [\"/home/fixture-private/DOC_ONLY_SECRET\"]}]}]}",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "mounts": {
+      "stdout": "{\"filesystems\": [{\"target\": \"/home/fixture-private/DOC_ONLY_SECRET\", \"source\": \"/dev/vda1\", \"fstype\": \"xfs\", \"size\": 67645734912, \"avail\": 60000000000}]}",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "interfaces": {
+      "stdout": "[{\"ifname\": \"ens3\", \"mtu\": 1500, \"operstate\": \"UP\", \"address\": \"00:11:22:33:44:55\", \"addr_info\": [{\"local\": \"192.0.2.10\", \"prefixlen\": 24, \"scope\": \"global\"}, {\"local\": \"2001:db8::10\", \"prefixlen\": 64, \"scope\": \"global\"}]}]",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "routes_v4": {
+      "stdout": "[{\"dst\": \"default\", \"gateway\": \"192.0.2.1\", \"dev\": \"ens3\", \"metric\": 100}]",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "routes_v6": {
+      "stdout": "[{\"dst\": \"2001:db8::/64\", \"dev\": \"ens3\", \"metric\": 100}]",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "hostname": {
+      "stdout": "lab-private.inventory.example.test\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "packages": {
+      "stdout": "almalinux-release\t0:10.0-1.el10\tx86_64\nkernel\t0:10.0-1.el10\tx86_64\nglibc\t0:10.0-1.el10\tx86_64\nrpm\t0:10.0-1.el10\tx86_64\ndnf\t0:10.0-1.el10\tx86_64\npython3\t0:10.0-1.el10\tx86_64\npackage asterisk is not installed\npackage mariadb-server is not installed\npackage MariaDB-server is not installed\npackage httpd is not installed\npackage php is not installed\npackage php-fpm is not installed\npackage perl is not installed\nchrony\t0:10.0-1.el10\tx86_64\nfirewalld\t0:10.0-1.el10\tx86_64\nselinux-policy\t0:10.0-1.el10\tx86_64\n",
+      "stderr": "",
+      "exit_code": 1
+    },
+    "selinux": {
+      "stdout": "Enforcing\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "firewalld": {
+      "stdout": "running\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "firewall_zones": {
+      "stdout": "public\n  interfaces: ens3\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "firewall_rules": {
+      "stdout": "public (active)\n  target: default\n  interfaces: ens3\n  sources: 192.0.2.0/24\n  services: ssh dhcpv6-client\n  ports: 443/tcp\n  forward: yes\n  masquerade: no\n  rich rules:\n    rule family=\"ipv4\" source address=\"192.0.2.0/24\" port port=\"443\" protocol=\"tcp\" accept\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "time": {
+      "stdout": "Timezone=Etc/UTC\nLocalRTC=no\nNTPSynchronized=yes\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "chrony": {
+      "stdout": "Reference ID    : C0000235 (ntp-private.example.test)\nStratum         : 3\nSystem time     : 0.000001234 seconds slow of NTP time\nLast offset     : -0.000000001 seconds\nRMS offset      : 0.000000002 seconds\nLeap status     : Normal\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "services": {
+      "stdout": "Id=asterisk.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nUnitFileState=\n\nId=mariadb.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nUnitFileState=\n\nId=mysqld.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nUnitFileState=\n\nId=httpd.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nUnitFileState=\n\nId=php-fpm.service\nLoadState=not-found\nActiveState=inactive\nSubState=dead\nUnitFileState=\n\nId=firewalld.service\nLoadState=loaded\nActiveState=active\nSubState=running\nUnitFileState=enabled\n\nId=chronyd.service\nLoadState=loaded\nActiveState=active\nSubState=running\nUnitFileState=enabled\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "listeners": {
+      "stdout": "tcp LISTEN 0 128 0.0.0.0:22 0.0.0.0:*\nudp UNCONN 0 0 [::]:323 [::]:*\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    "virtualization": {
+      "stdout": "kvm\n",
+      "stderr": "",
+      "exit_code": 0
+    }
+  }
+}

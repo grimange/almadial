@@ -1,16 +1,32 @@
 # AlmaDial Kaneo project synchronization
 
+## Inventory tooling independent QA follow-up — 2026-11-05
+
+Synchronization remains **ALMADIAL_KANEO_SYNC_VERIFIED** under the seven-column acceptance contract below. Fresh QA-time MCP reads confirm 35 canonical tasks, 8/7/7/6/7 milestone distribution and 44 acyclic native dependencies. ALM-1 remains Backlog / Blocked / unassigned, with its original acceptance requirements and history. No work-package or board reconciliation was repeated and no task was created or transitioned.
+
+The collector slice based on documentation commit `1df743a4178fc32d9d78d53de8ea0870b1d2c30f` received [separate tooling QA](reviews/m0-01-inventory-qa.md), including one corrected incomplete-fact defect and focused regressions. The [current audit](planning/kaneo-sync-report.md#inventory-tooling-qa-and-baseline-finalization--2026-11-05) records corrected digests and commands: 22 offline tests, scaffold validation, compilation and fresh 23-probe synthetic replay. Initial preparation and synchronization evidence below is preserved. The local commit containing the final reviewed artifacts is the tooling baseline; the full resulting SHA and verified task-comment reference are recorded in the final handoff after creation. No push or host execution is included.
+
+Tooling QA does not provide image authenticity, disposable-host identity, recoverable snapshot or host authorization. Actual inventory/compatibility remains NOT_RUN, and ALM-1 is not accepted. A future implementing worker must discover its authorized identity, self-assign before In Progress and verify assignment/status; independent reviewers retain implementer ownership.
+
+---
+
 ## Final synchronization acceptance — 2026-11-05
 
 Current verdict: **ALMADIAL_KANEO_SYNC_VERIFIED** under the operator's explicit revised contract: Backlog → Ready → In Progress → QA Review → Accepted are the standard workflow, followed by the retained optional Failed and Cancelled exceptional states. The earlier exact-five discrepancy is resolved by this acceptance amendment, not by deleting columns or rewriting historical evidence.
 
-MCP read-back at **2026-11-04 22:41:05 UTC** confirmed AlmaDial `ghritpte6e40o5ayktgz0vh1` (ALM), Personal Projects `30VyoMQZ4LROnW3UUeAYGg8bIF9mj1il`. Exactly one project with that name exists in this accessible workspace. All seven returned column IDs, slugs and positions match the table in the preceding audit below: positions 0–6 are Backlog, Ready, In Progress, QA Review, Accepted, Failed, Cancelled. Accepted alone has native `isFinal=true`; Failed/Cancelled are exceptional terminal states by policy while their native flags remain false. Column mutation is still unsupported by this MCP and was unnecessary. No URL was returned.
+MCP read-back at **2026-11-04 22:41:05 UTC** confirmed AlmaDial `ghritpte6e40o5ayktgz0vh1` (ALM), Personal Projects `30VyoMQZ4LROnW3UUeAYGg8bIF9mj1il`. Exactly one project with that name exists in this accessible workspace. All seven returned column IDs, slugs and positions match the table in the historical board audit below: positions 0–6 are Backlog, Ready, In Progress, QA Review, Accepted, Failed, Cancelled. Accepted alone has native `isFinal=true`; Failed/Cancelled are exceptional terminal states by policy while their native flags remain false. Column mutation is still unsupported by this MCP and was unnecessary. No URL was returned.
 
 Both fresh task/relationship/history read-backs matched each other and the previous audit byte-for-byte: **35 canonical tasks**, milestone counts **8/7/7/6/7**, **44 distinct directed native `blocks` relationships**, zero cycles, missing endpoints or duplicate work-package mappings. All 35 retain Backlog, unassigned ownership, full descriptions/acceptance criteria and milestone labels. M0-01 retains Blocked. The legacy Ready label has zero task attachments and its template is retained. Zero tasks were created, updated, moved, assigned, completed or deleted; zero labels/dependencies were changed. All 0 comments and 35 creation-activity records remain intact.
 
 This run made **one project-description PATCH**, immediately retrieved and compared exactly, then verified again in final read-back. It records the revised seven-column contract and preserves the M0 gate, identity discovery, self-assignment before In Progress, read-back, implementer ownership during independent QA and evidence-based acceptance. A second reconciliation requires **zero additional writes**. Earlier 122-write bootstrap and subsequent one-write board audit remain historical below.
 
 ALM-1 / M0-01 remains Backlog / Blocked / unassigned. Repository baseline and inventory-tool preparation are authorized in the current assignment; they do not supply a named disposable VM, recovery snapshot, signed image provenance or exact host inspection authority. Host inventory and stack compatibility remain **NOT_RUN**. The inventory preparation handoff records the local documentation baseline commit separately; no push is authorized. Synchronization acceptance is project-configuration acceptance, not M0 or product acceptance.
+
+### Documentation baseline and inventory handoff
+
+Local documentation/scaffold baseline: `1df743a4178fc32d9d78d53de8ea0870b1d2c30f` (`main`), created under the subsequent explicit operator authorization. A fresh Git export passes the scaffold validator and its four tests. The source plan and candidate stack status are unchanged; no push occurred. Collector preparation follows that commit in the working tree and is documented in [the M0-01 handoff](compatibility/m0-01-host-inventory.md). The collector passes 15 offline tests plus the four existing regressions; a fixture-only CLI run produced JSON/Markdown for 23 simulated probes. No host baseline has run. The final metadata read-back at 2026-11-04 22:50:40 UTC matches the complete task/dependency audit. [The final validation ledger](planning/kaneo-sync-report.md#local-baseline-inventory-preparation-and-final-checks) records commands, limitations and hashes.
+
+The historical sections below retain earlier PARTIAL outcomes, source revisions and authorization boundaries; the amended final contract above is authoritative for synchronization acceptance.
 
 ---
 

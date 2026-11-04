@@ -1,6 +1,6 @@
 # M0 execution readiness and first assignment
 
-Date: 2026-11-05 (Asia/Manila). Full M0 execution verdict: **BLOCKED**. Repository-only source/protocol preparation is the next bounded assignment, but no engineering work is started by synchronization.
+Date: 2026-11-05 (Asia/Manila). Full M0 execution verdict: **BLOCKED**. Repository-only inventory tooling is now prepared and fixture-tested under the subsequent explicit preparation assignment. Host collection and compatibility remain **NOT_RUN**; synchronization alone starts no engineering work.
 
 ## First canonical work package
 
@@ -24,16 +24,18 @@ The next worker must discover its own identity via MCP and verify membership. Fo
 |---|---|---|
 | Defined product and task acceptance | PASS for planning | Plan 1.0-draft and canonical M0-01 task description |
 | Review/backlog traceability | PASS | 35 tasks, 44 proposed native dependency edges, MCP read-back |
-| Reproducible committed source baseline | BLOCKED | Original scaffold/plan mostly untracked; guidance/templates locally excluded. Record an authorized reviewed snapshot before engineering handoff; no commit is authorized here. |
+| Reproducible documentation and tooling baseline | PASS for documentation; tooling finalization recorded separately | Documentation commit `1df743a4178fc32d9d78d53de8ea0870b1d2c30f` includes the reviewed scaffold/plan/reports and guidance/templates. Use the subsequent local commit containing [the independent tooling QA report](../reviews/m0-01-inventory-qa.md) for collector execution; verify its complete SHA and reviewed artifact digests before transfer. No push. |
 | Named disposable AlmaLinux 10 host | BLOCKED | No host identity, access/console route or image identity supplied |
 | Recoverable clean snapshot | BLOCKED | No snapshot identifier, timestamp or restore proof supplied |
-| Exact host inspection/mutation authority | BLOCKED | Current assignment is repository/project planning only |
+| Exact host inspection/mutation authority | BLOCKED | Current assignment authorizes repository preparation and a local baseline commit only; no exact host authority |
 | Exact image/minor release and CPU ISA | NOT_RUN | Measure OS and v2/v3 flags; do not assume x86_64 suffices |
 | Repository/package/security inventory | NOT_RUN | Host not inspected |
 | Independent inventory reproduction | NOT_RUN | Separate reviewer and lab access not supplied |
 | Stack compatibility and lock promotion | NOT_RUN | M0-02–08 unexecuted; manifest remains candidate |
 
-## Bounded next assignment: repository preparation
+## Repository preparation slice — now implemented, host acceptance excluded
+
+The subsequent operator assignments explicitly authorized tested executable inventory preparation, independent tooling QA, minimal defect corrections and a local tooling commit after acceptance. See [the protocol and handoff](../compatibility/m0-01-host-inventory.md), `scripts/collect_host_inventory.py`, its synthetic fixtures/tests and [the separate review](../reviews/m0-01-inventory-qa.md). The Python standard-library research utility has no default collection mode, no fixture fallback to live probes and no package/configuration mutations. Go is unavailable in this workspace; no M1 Go framework was introduced. Review acceptance is limited to this repository slice and cannot supply host evidence. The original preparation contract is retained below as its acceptance scope.
 
 Objective: prepare an executable, minimal M0-01 collection protocol and source audit without touching a host or starting installer development.
 
@@ -64,4 +66,4 @@ A separate reviewer, using the `almadial-review` skill and independent-review te
 
 After accepted M0-01, M0-02 qualifies exact OS/Asterisk/VICIdial/PHP/Perl/MariaDB/phone candidates and authenticated source acquisition. M0-03–07 provide actual module, generated PJSIP/dialplan, ConfBridge allocation, AMI/AGI, dialing, two-way WebRTC media and recording evidence. M0-08 repeats the required suite on a second clean VM and proposes the reviewed manifest/validator transition. M1–M4 implementation remains blocked until the complete M0 gate is accepted.
 
-No production access, carrier/PSTN calls, installer implementation, package installation, real credentials, blanket policy disablement, commit, push or publication is authorized by this readiness report.
+No production access, carrier/PSTN calls, installer implementation, package installation, real credentials, blanket policy disablement, push or publication is authorized by this readiness report. The operator separately authorized the local documentation baseline commit and repository-only collector preparation; no host authority followed from that authorization.
