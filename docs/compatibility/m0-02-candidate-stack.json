@@ -1,0 +1,3583 @@
+{
+  "schema_version": 1,
+  "status": "candidate",
+  "task": "ALM-2 / M0-02",
+  "source_baseline": "bba4d144e246745fb0e4dae4cd364d5d009a397c",
+  "observed_at": "2026-11-05T16:35:05.893997+00:00",
+  "evidence_reference": "almadial-lab/evidence/m0-02/20261105T162726Z",
+  "enabled_repositories": [
+    "baseos",
+    "appstream",
+    "crb",
+    "extras"
+  ],
+  "runtime_compatibility": "NOT_RUN",
+  "packages": [
+    {
+      "requested": "autoconf",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "autoconf",
+          "epoch": "0",
+          "version": "2.71",
+          "release": "13.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "automake",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "automake",
+          "epoch": "0",
+          "version": "1.16.5",
+          "release": "20.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "bzip2",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "bzip2",
+          "epoch": "0",
+          "version": "1.0.8",
+          "release": "25.el10",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "certbot",
+      "purpose": "Host service or operational utility",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "certbot",
+          "epoch": "0",
+          "version": "4.2.0",
+          "release": "1.el10_2",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "chrony",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "chrony",
+          "epoch": "0",
+          "version": "4.8",
+          "release": "2.el10",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "cmake",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "cmake",
+          "epoch": "0",
+          "version": "3.31.8",
+          "release": "1.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "cronie",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "cronie",
+          "epoch": "0",
+          "version": "1.7.0",
+          "release": "14.el10",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "curl",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "curl",
+          "epoch": "0",
+          "version": "8.12.1",
+          "release": "4.el10_2.7",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "firewalld",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "firewalld",
+          "epoch": "0",
+          "version": "2.4.3",
+          "release": "4.el10_2",
+          "arch": "noarch",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "gcc",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "gcc",
+          "epoch": "0",
+          "version": "14.3.1",
+          "release": "4.4.el10.alma.2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "gcc-c++",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "gcc-c++",
+          "epoch": "0",
+          "version": "14.3.1",
+          "release": "4.4.el10.alma.2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "git",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "git",
+          "epoch": "0",
+          "version": "2.52.0",
+          "release": "1.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "glibc-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "glibc-devel",
+          "epoch": "0",
+          "version": "2.39",
+          "release": "145.el10_2.alma.1",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "httpd",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "httpd",
+          "epoch": "0",
+          "version": "2.4.63",
+          "release": "13.el10_2.8",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "jansson-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "jansson-devel",
+          "epoch": "0",
+          "version": "2.14",
+          "release": "3.el10",
+          "arch": "x86_64",
+          "repository": "crb"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "kernel-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "kernel-devel",
+          "epoch": "0",
+          "version": "6.12.0",
+          "release": "211.73.1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional DAHDI-only investigation; ConfBridge does not require DAHDI. Latest repository headers differ from the running kernel; do not upgrade kernel for this task."
+    },
+    {
+      "requested": "kernel-headers",
+      "purpose": "Host service or operational utility",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "kernel-headers",
+          "epoch": "0",
+          "version": "6.12.0",
+          "release": "211.73.1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional DAHDI-only investigation; ConfBridge does not require DAHDI. Latest repository headers differ from the running kernel; do not upgrade kernel for this task."
+    },
+    {
+      "requested": "lame",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "lame",
+          "epoch": "0",
+          "version": "3.100",
+          "release": "19.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libcurl-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libcurl-devel",
+          "epoch": "0",
+          "version": "8.12.1",
+          "release": "4.el10_2.7",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libedit-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libedit-devel",
+          "epoch": "0",
+          "version": "3.1",
+          "release": "52.20230828cvs.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libogg-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libogg-devel",
+          "epoch": "2",
+          "version": "1.3.5",
+          "release": "10.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libsndfile-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libsndfile-devel",
+          "epoch": "0",
+          "version": "1.2.2",
+          "release": "6.el10_2.1",
+          "arch": "x86_64",
+          "repository": "crb"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libsrtp-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libsrtp-devel",
+          "epoch": "0",
+          "version": "2.3.0",
+          "release": "16.el10",
+          "arch": "x86_64",
+          "repository": "crb"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libtool",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libtool",
+          "epoch": "0",
+          "version": "2.4.7",
+          "release": "13.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libuuid-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libuuid-devel",
+          "epoch": "0",
+          "version": "2.40.2",
+          "release": "18.el10_2.20",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libvorbis-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libvorbis-devel",
+          "epoch": "1",
+          "version": "1.3.7",
+          "release": "12.el10",
+          "arch": "x86_64",
+          "repository": "crb"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "libwebsockets-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libwebsockets-devel",
+          "epoch": "0",
+          "version": "4.3.10",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "EPEL available but excluded: Asterisk uses its native res_http_websocket, not libwebsockets."
+    },
+    {
+      "requested": "libxml2-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "libxml2-devel",
+          "epoch": "0",
+          "version": "2.12.5",
+          "release": "10.el10_2.4",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "logrotate",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "logrotate",
+          "epoch": "0",
+          "version": "3.22.0",
+          "release": "5.el10",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "make",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "make",
+          "epoch": "1",
+          "version": "4.4.1",
+          "release": "9.el10",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "mariadb",
+      "purpose": "Database/client/backup",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "mariadb",
+          "epoch": "3",
+          "version": "10.11.18",
+          "release": "1.el10_2.alma.2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "mariadb-backup",
+      "purpose": "Database/client/backup",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "mariadb-backup",
+          "epoch": "3",
+          "version": "10.11.18",
+          "release": "1.el10_2.alma.2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "mariadb-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "mariadb-devel",
+          "epoch": "3",
+          "version": "10.11.18",
+          "release": "1.el10_2.alma.2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "mariadb-server",
+      "purpose": "Database/client/backup",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "mariadb-server",
+          "epoch": "3",
+          "version": "10.11.18",
+          "release": "1.el10_2.alma.2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "mod_ssl",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "mod_ssl",
+          "epoch": "1",
+          "version": "2.4.63",
+          "release": "13.el10_2.8",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "ncurses-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "ncurses-devel",
+          "epoch": "0",
+          "version": "6.4",
+          "release": "15.20240127.el10_1",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "openssl-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "openssl-devel",
+          "epoch": "1",
+          "version": "3.5.8",
+          "release": "2.el10_2.alma.1",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "opus-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "opus-devel",
+          "epoch": "0",
+          "version": "1.4",
+          "release": "6.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "patch",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "patch",
+          "epoch": "0",
+          "version": "2.7.6",
+          "release": "26.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl",
+          "epoch": "4",
+          "version": "5.40.2",
+          "release": "515.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-Crypt-Eksblowfish",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Crypt-Eksblowfish",
+          "epoch": "0",
+          "version": "0.009",
+          "release": "42.el10_0",
+          "arch": "x86_64",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-DBD-MariaDB",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-DBD-MariaDB",
+          "epoch": "0",
+          "version": "1.23",
+          "release": "10.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-DBD-MySQL",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-DBD-MySQL",
+          "epoch": "0",
+          "version": "5.007",
+          "release": "4.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-DBI",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-DBI",
+          "epoch": "0",
+          "version": "1.643",
+          "release": "26.el10_2.7",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-Digest-MD5",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Digest-MD5",
+          "epoch": "0",
+          "version": "2.59",
+          "release": "6.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-Encode",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Encode",
+          "epoch": "4",
+          "version": "3.21",
+          "release": "511.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-Expect",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Expect",
+          "epoch": "0",
+          "version": "1.38",
+          "release": "1.el10_0",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-File-Compare",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-File-Compare",
+          "epoch": "0",
+          "version": "1.100.800",
+          "release": "515.el10_2",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-File-Copy",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-File-Copy",
+          "epoch": "0",
+          "version": "2.41",
+          "release": "515.el10_2",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-File-HomeDir",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-File-HomeDir",
+          "epoch": "0",
+          "version": "1.006",
+          "release": "15.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-GD",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-GD",
+          "epoch": "0",
+          "version": "2.86",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Getopt-Long",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Getopt-Long",
+          "epoch": "1",
+          "version": "2.58",
+          "release": "3.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-HTML-Parser",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-HTML-Parser",
+          "epoch": "0",
+          "version": "3.82",
+          "release": "3.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-HTML-Strip",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional upstream feature dependency: do not install/enable this path before separate qualification."
+    },
+    {
+      "requested": "perl-IO-Socket-SSL",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-IO-Socket-SSL",
+          "epoch": "0",
+          "version": "2.085",
+          "release": "3.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-JSON",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-JSON",
+          "epoch": "0",
+          "version": "4.10",
+          "release": "7.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-JSON-PP",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-JSON-PP",
+          "epoch": "1",
+          "version": "4.16",
+          "release": "513.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-MIME-Lite",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-MIME-Lite",
+          "epoch": "0",
+          "version": "3.033",
+          "release": "13.el10_0",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-MIME-tools",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-MIME-tools",
+          "epoch": "0",
+          "version": "5.515",
+          "release": "1.el10_0",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Mail-Box",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional upstream feature dependency: do not install/enable this path before separate qualification."
+    },
+    {
+      "requested": "perl-Mail-IMAPClient",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional upstream feature dependency: do not install/enable this path before separate qualification."
+    },
+    {
+      "requested": "perl-Mail-POP3Client",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional upstream feature dependency: do not install/enable this path before separate qualification."
+    },
+    {
+      "requested": "perl-Mail-Sendmail",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Mail-Sendmail",
+          "epoch": "0",
+          "version": "0.80",
+          "release": "22.el10_0",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Net-FTPSSL",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional upstream feature dependency: do not install/enable this path before separate qualification."
+    },
+    {
+      "requested": "perl-Net-SFTP",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional upstream feature dependency: do not install/enable this path before separate qualification."
+    },
+    {
+      "requested": "perl-Net-SFTP-Foreign",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Net-SFTP-Foreign",
+          "epoch": "0",
+          "version": "1.93",
+          "release": "13.el10_0",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Net-SSH2",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional upstream feature dependency: do not install/enable this path before separate qualification."
+    },
+    {
+      "requested": "perl-Net-SSLeay",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Net-SSLeay",
+          "epoch": "0",
+          "version": "1.94",
+          "release": "8.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-Net-Server",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Net-Server",
+          "epoch": "0",
+          "version": "2.014",
+          "release": "9.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-Net-Telnet",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Source Required",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Required by AMI scripts; pin CPAN Net-Telnet 3.05, SHA256 and Perl license below. Do not silently substitute a different Telnet module."
+    },
+    {
+      "requested": "perl-Scalar-List-Utils",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Scalar-List-Utils",
+          "epoch": "5",
+          "version": "1.63",
+          "release": "511.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-Spreadsheet-ParseExcel",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Spreadsheet-ParseExcel",
+          "epoch": "1",
+          "version": "0.66",
+          "release": "2.el10_0",
+          "arch": "x86_64",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Spreadsheet-Read",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Optional upstream feature dependency: do not install/enable this path before separate qualification."
+    },
+    {
+      "requested": "perl-Spreadsheet-WriteExcel",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Spreadsheet-WriteExcel",
+          "epoch": "0",
+          "version": "2.40",
+          "release": "32.el10_0",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Spreadsheet-XLSX",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Spreadsheet-XLSX",
+          "epoch": "0",
+          "version": "0.18",
+          "release": "2.el10_0",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Switch",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Switch",
+          "epoch": "0",
+          "version": "2.17",
+          "release": "33.el10_1",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Text-CSV",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Text-CSV",
+          "epoch": "0",
+          "version": "2.06",
+          "release": "1.el10_2",
+          "arch": "noarch",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-Time-HiRes",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Time-HiRes",
+          "epoch": "4",
+          "version": "1.9777",
+          "release": "511.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-Time-Piece",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-Time-Piece",
+          "epoch": "0",
+          "version": "1.3401",
+          "release": "515.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-WWW-Curl",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "optional/not selected for initial core",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-WWW-Curl",
+          "epoch": "0",
+          "version": "4.17",
+          "release": "48.el10_2",
+          "arch": "x86_64",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "perl-core",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Missing",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Removed/absent metapackage in queried repositories. Select perl and explicit modules; not a missing Perl runtime."
+    },
+    {
+      "requested": "perl-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-devel",
+          "epoch": "4",
+          "version": "5.40.2",
+          "release": "515.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-libnet",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-libnet",
+          "epoch": "0",
+          "version": "3.15",
+          "release": "512.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "perl-libwww-perl",
+      "purpose": "VICIdial Perl runtime/module",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "perl-libwww-perl",
+          "epoch": "0",
+          "version": "6.76",
+          "release": "3.el10",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-bcmath",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-bcmath",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-cli",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-cli",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-common",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-common",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-curl",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Renamed",
+      "selected": [
+        {
+          "name": "php-common",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "php-common provides php-curl (capability query verified); no separate php-curl RPM."
+    },
+    {
+      "requested": "php-fpm",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-fpm",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-gd",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-gd",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-ldap",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-ldap",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-mbstring",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-mbstring",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-mysqlnd",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-mysqlnd",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-opcache",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-opcache",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-soap",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-soap",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "php-xml",
+      "purpose": "Apache/PHP web runtime",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "php-xml",
+          "epoch": "0",
+          "version": "8.3.36",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "pjproject-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "optional/not selected for initial core",
+      "availability": "Source Required",
+      "selected": [],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Not required as a system RPM: use Asterisk bundled PJPROJECT 2.17 with separately pinned source artifact and Asterisk patches."
+    },
+    {
+      "requested": "pkgconf",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "pkgconf",
+          "epoch": "0",
+          "version": "2.1.0",
+          "release": "3.el10",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "pkgconf-pkg-config",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "pkgconf-pkg-config",
+          "epoch": "0",
+          "version": "2.1.0",
+          "release": "3.el10",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "policycoreutils-python-utils",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "policycoreutils-python-utils",
+          "epoch": "0",
+          "version": "3.10",
+          "release": "2.el10_2",
+          "arch": "noarch",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "python3",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "python3",
+          "epoch": "0",
+          "version": "3.12.15",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "python3-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "python3-devel",
+          "epoch": "0",
+          "version": "3.12.15",
+          "release": "1.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "screen",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "screen",
+          "epoch": "0",
+          "version": "5.0.1",
+          "release": "6.el10_2",
+          "arch": "x86_64",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "sox",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "sox",
+          "epoch": "0",
+          "version": "14.4.2.0",
+          "release": "42.el10_1",
+          "arch": "x86_64",
+          "repository": "epel-10.2-isolated"
+        }
+      ],
+      "evidence": "sources/epel-selected-final.json",
+      "compatibility": "Not Tested",
+      "resolution": "Official EPEL 10.2 metadata; NOT enabled on guest. Verify Fedora key and RPM signature before separately authorized installation."
+    },
+    {
+      "requested": "speex-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "speex-devel",
+          "epoch": "0",
+          "version": "1.2.0",
+          "release": "19.el10",
+          "arch": "x86_64",
+          "repository": "crb"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "speexdsp-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "speexdsp-devel",
+          "epoch": "0",
+          "version": "1.2.1",
+          "release": "8.el10",
+          "arch": "x86_64",
+          "repository": "crb"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "sqlite-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "sqlite-devel",
+          "epoch": "0",
+          "version": "3.46.1",
+          "release": "6.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "subversion",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "subversion",
+          "epoch": "0",
+          "version": "1.14.5",
+          "release": "3.el10",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "unzip",
+      "purpose": "Host service or operational utility",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "unzip",
+          "epoch": "0",
+          "version": "6.0",
+          "release": "69.el10",
+          "arch": "x86_64",
+          "repository": "baseos"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "wget",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "wget",
+          "epoch": "0",
+          "version": "1.24.5",
+          "release": "8.el10_2",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    },
+    {
+      "requested": "zlib-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Renamed",
+      "selected": [
+        {
+          "name": "zlib-ng-compat-devel",
+          "epoch": "0",
+          "version": "2.2.3",
+          "release": "3.el10_1",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "zlib-ng-compat-devel provides zlib-devel, verified by capability query."
+    },
+    {
+      "requested": "zlib-ng-compat-devel",
+      "purpose": "Asterisk build/development",
+      "scope": "core or investigated dependency",
+      "availability": "Available",
+      "selected": [
+        {
+          "name": "zlib-ng-compat-devel",
+          "epoch": "0",
+          "version": "2.2.3",
+          "release": "3.el10_1",
+          "arch": "x86_64",
+          "repository": "appstream"
+        }
+      ],
+      "evidence": "packages-latest.json; packages.json; capability-query records",
+      "compatibility": "Not Tested",
+      "resolution": "Distribution RPM candidate; installation and runtime NOT_RUN."
+    }
+  ],
+  "missing_in_enabled_repositories": [
+    "certbot",
+    "libwebsockets-devel",
+    "perl-Crypt-Eksblowfish",
+    "perl-Expect",
+    "perl-GD",
+    "perl-HTML-Strip",
+    "perl-MIME-Lite",
+    "perl-MIME-tools",
+    "perl-Mail-Box",
+    "perl-Mail-IMAPClient",
+    "perl-Mail-POP3Client",
+    "perl-Mail-Sendmail",
+    "perl-Net-FTPSSL",
+    "perl-Net-SFTP",
+    "perl-Net-SFTP-Foreign",
+    "perl-Net-SSH2",
+    "perl-Net-Telnet",
+    "perl-Spreadsheet-ParseExcel",
+    "perl-Spreadsheet-Read",
+    "perl-Spreadsheet-WriteExcel",
+    "perl-Spreadsheet-XLSX",
+    "perl-Switch",
+    "perl-Text-CSV",
+    "perl-WWW-Curl",
+    "perl-core",
+    "php-curl",
+    "pjproject-devel",
+    "screen",
+    "sox",
+    "zlib-devel"
+  ],
+  "sources": [
+    {
+      "component": "Asterisk",
+      "version": "22.12.0",
+      "url": "https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-22.12.0.tar.gz",
+      "artifact": "asterisk-22.12.0.tar.gz",
+      "sha256": "f8b2ba98aac6c4ff3376bc0a2868bea6ed577ca684efb7ec739ae6e8ce6e35e2",
+      "kind": "archive",
+      "license": "GPL-2.0 with upstream exceptions/alternative licensing; retain LICENSE",
+      "provenance": "Official HTTPS + matching official SHA256 + GPG VALIDSIG F2FC93DB7587BD1FB49E045A5D984BE337191CE7. Key association from upstream maintainer-linked key; Web-of-Trust undefined, independent QA must review.",
+      "compatibility": "Not Tested"
+    },
+    {
+      "component": "VICIdial",
+      "version": "SVN r4037; 2.14b0.5; schema 1748",
+      "url": "svn://svn.eflo.net:3690/agc_2-X/trunk@4037",
+      "artifact": "vicidial-r4037",
+      "sha256": "04a41c36c381981853cd0fc49a82fea9dda611cf39b336e9e8d92d459551eaed",
+      "kind": "tree",
+      "license": "Upstream docs/LICENSE.txt: Affero General Public License version 2, November 2007. Preserve verbatim notices; do not relabel as GNU AGPLv3.",
+      "provenance": "UNAUTHENTICATED SVN. Inspected only. TLS endpoint failed hostname validation. HOLD root execution/distribution pending authenticated upstream export or independently approved trusted mirror.",
+      "compatibility": "Not Tested"
+    },
+    {
+      "component": "VICIphone",
+      "version": "3.0; 24e98fccfa7b7079fff970e02fca5f002ac1f2cc",
+      "url": "https://codeload.github.com/vicimikec/ViciPhone/tar.gz/24e98fccfa7b7079fff970e02fca5f002ac1f2cc",
+      "artifact": "viciphone.tar.gz",
+      "sha256": "f42c7ec8a8114b71fae74c9ffa8bfa3927fc789609ac6ef78a9f897c6f3c8ac8",
+      "kind": "archive",
+      "license": "AGPL-3.0; bundled SIP.js/JsSIP MIT and additional third-party notices retained",
+      "provenance": "Official maintainer GitHub repository via HTTPS, exact commit and archive digest; no signed-tag claim.",
+      "compatibility": "Not Tested"
+    },
+    {
+      "component": "PJPROJECT",
+      "version": "2.17; Asterisk third-party 52e2f32de1b11e40844bb007749a327862f75275",
+      "url": "https://raw.githubusercontent.com/asterisk/third-party/52e2f32de1b11e40844bb007749a327862f75275/pjproject/2.17/pjproject-2.17.tar.bz2",
+      "artifact": "pjproject-2.17.tar.bz2",
+      "sha256": "04b2eb1f0f01aa0ad1945b167171843448a51aa6b7c3e806496d434f13a112b7",
+      "kind": "archive",
+      "license": "GPL-2.0-or-later/commercial option per COPYING; embedded third-party notices also apply",
+      "provenance": "Asterisk-owned HTTPS commit URL; SHA256 recorded and MD5 compared to signed Asterisk source. Build uses Asterisk bundled patches; never track master dynamically.",
+      "compatibility": "Not Tested"
+    },
+    {
+      "component": "Net::Telnet",
+      "version": "3.05",
+      "url": "https://cpan.metacpan.org/authors/id/J/JR/JROGERS/Net-Telnet-3.05.tar.gz",
+      "artifact": "Net-Telnet-3.05.tar.gz",
+      "sha256": "677f68ba2cd2a824fae323fa82e183bf7e3d03c3c499c91d923bd6283796a743",
+      "kind": "archive",
+      "license": "Same terms as Perl 5 (Artistic/GPL choices); release metadata perl_5",
+      "provenance": "Official CPAN HTTPS + MetaCPAN authorized release and matching checksum_sha256; no signature claim.",
+      "compatibility": "Not Tested"
+    }
+  ],
+  "epel_metadata": {
+    "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/repodata/d4fff60dd06658d71a399208107640c7f000d50d56f2c347410b6ecc02315c16-primary.xml.zst",
+    "sha256": "d4fff60dd06658d71a399208107640c7f000d50d56f2c347410b6ecc02315c16",
+    "repomd_sha256": "b2de1b667d0bffaba0da024e96d184832e78818b1b4b92b3351557cc0468dd16",
+    "enabled_on_guest": false,
+    "authentication": "Fedora official HTTPS; repomd content hash verified; RPM signatures NOT_RUN"
+  },
+  "epel_packages": [
+    {
+      "name": "certbot",
+      "epoch": "0",
+      "version": "4.2.0",
+      "release": "1.el10_2",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "5d2554d6ffd1903ad9706e0e35139aaaaa0a49f7b8fa19b37da0e9663e76a1f7",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/c/certbot-4.2.0-1.el10_2.noarch.rpm",
+      "license": "Apache-2.0",
+      "provides": [
+        {
+          "name": "certbot",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.2.0",
+          "rel": "1.el10_2"
+        },
+        {
+          "name": "config(certbot)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.2.0",
+          "rel": "1.el10_2"
+        },
+        {
+          "name": "letsencrypt",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.2.0",
+          "rel": "1.el10_2"
+        }
+      ]
+    },
+    {
+      "name": "libwebsockets-devel",
+      "epoch": "0",
+      "version": "4.3.10",
+      "release": "1.el10_2",
+      "arch": "x86_64",
+      "repository": "epel-10.2-isolated",
+      "sha256": "92767701b2cf6b515ad736d43411a598f4648d6d3933c018d35f7d199aa2a102",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/l/libwebsockets-devel-4.3.10-1.el10_2.x86_64.rpm",
+      "license": "LicenseRef-Callaway-LGPLv2 AND LicenseRef-Callaway-Public-Domain AND LicenseRef-Callaway-BSD AND LicenseRef-Callaway-MIT AND Zlib",
+      "provides": [
+        {
+          "name": "cmake(libwebsockets)"
+        },
+        {
+          "name": "libwebsockets-devel",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.3.10",
+          "rel": "1.el10_2"
+        },
+        {
+          "name": "libwebsockets-devel(x86-64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.3.10",
+          "rel": "1.el10_2"
+        },
+        {
+          "name": "pkgconfig(libwebsockets)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.3.10",
+          "rel": "no_hash"
+        }
+      ]
+    },
+    {
+      "name": "perl-Crypt-Eksblowfish",
+      "epoch": "0",
+      "version": "0.009",
+      "release": "42.el10_0",
+      "arch": "x86_64",
+      "repository": "epel-10.2-isolated",
+      "sha256": "5cdeb146add4bf332e9ff3b0eba6f11149d0efddb83b0049b3329f295218f3f8",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Crypt-Eksblowfish-0.009-42.el10_0.x86_64.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Crypt::Eksblowfish)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.009"
+        },
+        {
+          "name": "perl(Crypt::Eksblowfish::Bcrypt)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.009"
+        },
+        {
+          "name": "perl(Crypt::Eksblowfish::Blowfish)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.009"
+        },
+        {
+          "name": "perl(Crypt::Eksblowfish::Family)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.009"
+        },
+        {
+          "name": "perl(Crypt::Eksblowfish::Subkeyed)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.009"
+        },
+        {
+          "name": "perl(Crypt::Eksblowfish::Uklblowfish)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.009"
+        },
+        {
+          "name": "perl-Crypt-Eksblowfish",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.009",
+          "rel": "42.el10_0"
+        },
+        {
+          "name": "perl-Crypt-Eksblowfish(x86-64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.009",
+          "rel": "42.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-Expect",
+      "epoch": "0",
+      "version": "1.38",
+      "release": "1.el10_0",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "396ec670bd21540d9a4426ea809ed728d7c782ea07b0beb49c6dd8c7029f188f",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Expect-1.38-1.el10_0.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Expect)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.38"
+        },
+        {
+          "name": "perl-Expect",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.38",
+          "rel": "1.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-GD",
+      "epoch": "0",
+      "version": "2.86",
+      "release": "1.el10_2",
+      "arch": "x86_64",
+      "repository": "epel-10.2-isolated",
+      "sha256": "a30ef6a6ae644fc6d1f0114f2b774f97e9823a8724b39713d770ec67c12d5f2f",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-GD-2.86-1.el10_2.x86_64.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-2.0",
+      "provides": [
+        {
+          "name": "perl(GD)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.86"
+        },
+        {
+          "name": "perl(GD::Group)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.00"
+        },
+        {
+          "name": "perl(GD::Image)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.86"
+        },
+        {
+          "name": "perl(GD::Polygon)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.82"
+        },
+        {
+          "name": "perl(GD::Polyline)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.2"
+        },
+        {
+          "name": "perl(GD::Simple)"
+        },
+        {
+          "name": "perl-GD",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.86",
+          "rel": "1.el10_2"
+        },
+        {
+          "name": "perl-GD(x86-64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.86",
+          "rel": "1.el10_2"
+        }
+      ]
+    },
+    {
+      "name": "perl-MIME-Lite",
+      "epoch": "0",
+      "version": "3.033",
+      "release": "13.el10_0",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "4ca333ee08015cd72d8316793381704c50933fd13b02a86a14db1fe424b993cf",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-MIME-Lite-3.033-13.el10_0.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(MIME::Lite)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "3.033"
+        },
+        {
+          "name": "perl(MIME::Lite::IO_Handle)"
+        },
+        {
+          "name": "perl(MIME::Lite::IO_Scalar)"
+        },
+        {
+          "name": "perl(MIME::Lite::IO_ScalarArray)"
+        },
+        {
+          "name": "perl(MIME::Lite::SMTP)"
+        },
+        {
+          "name": "perl-MIME-Lite",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "3.033",
+          "rel": "13.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-MIME-tools",
+      "epoch": "0",
+      "version": "5.515",
+      "release": "1.el10_0",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "ed22b05558e0de1a3fcd4fbeeb78e3b3affe8fb27ee6d3197ec94edbe5ed5e27",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-MIME-tools-5.515-1.el10_0.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(MIME::Body)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Body::File)"
+        },
+        {
+          "name": "perl(MIME::Body::InCore)"
+        },
+        {
+          "name": "perl(MIME::Body::Scalar)"
+        },
+        {
+          "name": "perl(MIME::Decoder)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Decoder::Base64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Decoder::BinHex)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Decoder::Binary)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Decoder::Gzip64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Decoder::NBit)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Decoder::QuotedPrint)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Decoder::UU)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Entity)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Field::ConTraEnc)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Field::ContDisp)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Field::ContType)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Field::ParamVal)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Head)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Parser)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::Parser::FileInto)"
+        },
+        {
+          "name": "perl(MIME::Parser::FileUnder)"
+        },
+        {
+          "name": "perl(MIME::Parser::Filer)"
+        },
+        {
+          "name": "perl(MIME::Parser::Reader)"
+        },
+        {
+          "name": "perl(MIME::Parser::Results)"
+        },
+        {
+          "name": "perl(MIME::Tools)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl(MIME::WordDecoder)"
+        },
+        {
+          "name": "perl(MIME::WordDecoder::ISO_8859)"
+        },
+        {
+          "name": "perl(MIME::WordDecoder::US_ASCII)"
+        },
+        {
+          "name": "perl(MIME::WordDecoder::UTF_8)"
+        },
+        {
+          "name": "perl(MIME::Words)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515"
+        },
+        {
+          "name": "perl-MIME-tools",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.515",
+          "rel": "1.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-Mail-Sendmail",
+      "epoch": "0",
+      "version": "0.80",
+      "release": "22.el10_0",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "171aa62585e6a72a959091e520ed1fb737cb9b6b43ab08f2f35ddeb81edd71fb",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Mail-Sendmail-0.80-22.el10_0.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Mail::Sendmail)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.80"
+        },
+        {
+          "name": "perl-Mail-Sendmail",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.80",
+          "rel": "22.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-Net-SFTP-Foreign",
+      "epoch": "0",
+      "version": "1.93",
+      "release": "13.el10_0",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "2cd89e4385260f7ce67a7eeb7c329628fb509784fecd0af1e10f63ecd326023c",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Net-SFTP-Foreign-1.93-13.el10_0.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Net::SFTP::Foreign)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.93"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Attributes)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.68"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Attributes::Compat)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.01"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Backend::Unix)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.88"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Buffer)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.68"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Common)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.76"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Compat)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.70"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Constants)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.63"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::DirHandle)"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::FileHandle)"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Handle)"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Helpers)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.74"
+        },
+        {
+          "name": "perl(Net::SFTP::Foreign::Local)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.57"
+        },
+        {
+          "name": "perl-Net-SFTP-Foreign",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.93",
+          "rel": "13.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-Spreadsheet-ParseExcel",
+      "epoch": "1",
+      "version": "0.66",
+      "release": "2.el10_0",
+      "arch": "x86_64",
+      "repository": "epel-10.2-isolated",
+      "sha256": "d2075bd2df4ca85375ab0590f393cc98b3d845db24538832877790696e91f9ff",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Spreadsheet-ParseExcel-0.66-2.el10_0.x86_64.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Spreadsheet::ParseExcel)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::Cell)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::Dump)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::FmtDefault)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::FmtJapan)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::FmtJapan2)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::FmtUnicode)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::Font)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::Format)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::SaveParser)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::SaveParser::Workbook)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::SaveParser::Worksheet)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::Utility)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::Workbook)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl(Spreadsheet::ParseExcel::Worksheet)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.66"
+        },
+        {
+          "name": "perl-Spreadsheet-ParseExcel",
+          "flags": "EQ",
+          "epoch": "1",
+          "ver": "0.66",
+          "rel": "2.el10_0"
+        },
+        {
+          "name": "perl-Spreadsheet-ParseExcel(x86-64)",
+          "flags": "EQ",
+          "epoch": "1",
+          "ver": "0.66",
+          "rel": "2.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-Spreadsheet-WriteExcel",
+      "epoch": "0",
+      "version": "2.40",
+      "release": "32.el10_0",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "f5023063a1aa42bd5aa24763ceec24c0b22fbf3b46a012f33bbe7ad9c69a0ce6",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Spreadsheet-WriteExcel-2.40-32.el10_0.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Spreadsheet::WriteExcel)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::BIFFwriter)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Big)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart::Area)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart::Bar)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart::Column)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart::External)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart::Line)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart::Pie)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart::Scatter)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Chart::Stock)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Examples)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Format)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Formula)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::OLEwriter)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Properties)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Utility)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Workbook)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl(Spreadsheet::WriteExcel::Worksheet)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40"
+        },
+        {
+          "name": "perl-Spreadsheet-WriteExcel",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.40",
+          "rel": "32.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-Spreadsheet-XLSX",
+      "epoch": "0",
+      "version": "0.18",
+      "release": "2.el10_0",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "c357dba31a940f687ccb425889821b440acf75f43e0af258175a5b76cf4e81a7",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Spreadsheet-XLSX-0.18-2.el10_0.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Spreadsheet::XLSX)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.18"
+        },
+        {
+          "name": "perl(Spreadsheet::XLSX::Fmt2007)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.18"
+        },
+        {
+          "name": "perl(Spreadsheet::XLSX::Utility2007)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.18"
+        },
+        {
+          "name": "perl-Spreadsheet-XLSX",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "0.18",
+          "rel": "2.el10_0"
+        }
+      ]
+    },
+    {
+      "name": "perl-Switch",
+      "epoch": "0",
+      "version": "2.17",
+      "release": "33.el10_1",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "fd470d089ae27612fdf331345dafa46f893f25da95a257360857dc49025bdf48",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Switch-2.17-33.el10_1.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Switch)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.17"
+        },
+        {
+          "name": "perl-Switch",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.17",
+          "rel": "33.el10_1"
+        }
+      ]
+    },
+    {
+      "name": "perl-Text-CSV",
+      "epoch": "0",
+      "version": "2.06",
+      "release": "1.el10_2",
+      "arch": "noarch",
+      "repository": "epel-10.2-isolated",
+      "sha256": "68bd4d404066c73264ddd13830b0e88b38c9152bb4a1457c27ff5a8e8b3a550f",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Text-CSV-2.06-1.el10_2.noarch.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Text::CSV)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.06"
+        },
+        {
+          "name": "perl(Text::CSV::ErrorDiag)"
+        },
+        {
+          "name": "perl(Text::CSV_PP)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.06"
+        },
+        {
+          "name": "perl-Text-CSV",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "2.06",
+          "rel": "1.el10_2"
+        }
+      ]
+    },
+    {
+      "name": "perl-Text-CSV_XS",
+      "epoch": "0",
+      "version": "1.65",
+      "release": "1.el10_2",
+      "arch": "x86_64",
+      "repository": "epel-10.2-isolated",
+      "sha256": "4acfed7bb072d9543e72603533b3ce967378868989ef64706ff24cbc2f73b534",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-Text-CSV_XS-1.65-1.el10_2.x86_64.rpm",
+      "license": "GPL-1.0-or-later OR Artistic-1.0-Perl",
+      "provides": [
+        {
+          "name": "perl(Text::CSV_XS)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.65"
+        },
+        {
+          "name": "perl-Text-CSV_XS",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.65",
+          "rel": "1.el10_2"
+        },
+        {
+          "name": "perl-Text-CSV_XS(x86-64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "1.65",
+          "rel": "1.el10_2"
+        }
+      ]
+    },
+    {
+      "name": "perl-WWW-Curl",
+      "epoch": "0",
+      "version": "4.17",
+      "release": "48.el10_2",
+      "arch": "x86_64",
+      "repository": "epel-10.2-isolated",
+      "sha256": "5d1704a7a4504cc13ff903558f5edeb155ea10b802b1e2e15ea1cc63221cf5dc",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/p/perl-WWW-Curl-4.17-48.el10_2.x86_64.rpm",
+      "license": "MIT",
+      "provides": [
+        {
+          "name": "perl(WWW::Curl)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.17"
+        },
+        {
+          "name": "perl(WWW::Curl::Easy)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.17"
+        },
+        {
+          "name": "perl(WWW::Curl::Form)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.17"
+        },
+        {
+          "name": "perl(WWW::Curl::Multi)"
+        },
+        {
+          "name": "perl(WWW::Curl::Share)"
+        },
+        {
+          "name": "perl-WWW-Curl",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.17",
+          "rel": "48.el10_2"
+        },
+        {
+          "name": "perl-WWW-Curl(x86-64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "4.17",
+          "rel": "48.el10_2"
+        }
+      ]
+    },
+    {
+      "name": "screen",
+      "epoch": "0",
+      "version": "5.0.1",
+      "release": "6.el10_2",
+      "arch": "x86_64",
+      "repository": "epel-10.2-isolated",
+      "sha256": "e29bb3c708f4a82222a5d17c5c075f77e6cf9ea75cbbeaf5761287f239b15a40",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/s/screen-5.0.1-6.el10_2.x86_64.rpm",
+      "license": "GPL-3.0-or-later",
+      "provides": [
+        {
+          "name": "config(screen)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.0.1",
+          "rel": "6.el10_2"
+        },
+        {
+          "name": "group(screen)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "ZyBzY3JlZW4gODQA"
+        },
+        {
+          "name": "screen",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.0.1",
+          "rel": "6.el10_2"
+        },
+        {
+          "name": "screen(x86-64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "5.0.1",
+          "rel": "6.el10_2"
+        }
+      ]
+    },
+    {
+      "name": "sox",
+      "epoch": "0",
+      "version": "14.4.2.0",
+      "release": "42.el10_1",
+      "arch": "x86_64",
+      "repository": "epel-10.2-isolated",
+      "sha256": "a1adf0b95bf5c4d013854a33465366c8b15d62686371993b50e8d3bcaef0dffa",
+      "url": "https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/Packages/s/sox-14.4.2.0-42.el10_1.x86_64.rpm",
+      "license": "GPL-2.0-or-later AND LicenseRef-Callaway-LGPLv2+ AND LicenseRef-Callaway-MIT",
+      "provides": [
+        {
+          "name": "libsox.so.3()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_alsa.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_ao.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_caf.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_fap.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_flac.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_mat4.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_mat5.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_mp3.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_opus.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_oss.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_paf.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_pulseaudio.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_pvf.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_sd2.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_sndfile.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_vorbis.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_w64.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_wavpack.so()(64bit)"
+        },
+        {
+          "name": "libsox_fmt_xi.so()(64bit)"
+        },
+        {
+          "name": "sox",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "14.4.2.0",
+          "rel": "42.el10_1"
+        },
+        {
+          "name": "sox(x86-64)",
+          "flags": "EQ",
+          "epoch": "0",
+          "ver": "14.4.2.0",
+          "rel": "42.el10_1"
+        }
+      ]
+    }
+  ],
+  "perl_import_inventory": [
+    {
+      "module": "Asterisk::AGI",
+      "example": "agi/CID_change.agi:59",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Crypt::Eksblowfish::Bcrypt",
+      "example": "bin/ADMIN_bcrypt_convert.pl:29",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "DBI",
+      "example": "agi/CID_change.agi:180",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Data::Dumper",
+      "example": "bin/AST_VDsales_export_SFTPSSH2.pl:878",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Digest::MD5",
+      "example": "agi/VD_amd.agi:1396",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Encode",
+      "example": "bin/AST_inbound_email_parser.pl:9",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "File::Basename",
+      "example": "bin/ADMIN_purge_log_tables.pl:37",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "File::Compare",
+      "example": "bin/ADMIN_keepalive_ALL.pl:5718",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "File::Copy",
+      "example": "bin/AST_CRON_audio_3_archive.pl:57",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Getopt::Long",
+      "example": "bin/AST_manager_send.pl:40",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "HTML::Entities",
+      "example": "bin/AST_inbound_email_parser.pl:4",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "HTML::Strip",
+      "example": "bin/AST_inbound_email_parser.pl:5",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "IO::Handle",
+      "example": "bin/ADMIN_purge_log_tables.pl:36",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "IO::Socket::SSL",
+      "example": "bin/AST_inbound_email_parser.pl:283",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "JSON::PP",
+      "example": "bin/AST_KHOMP_auth_updater.pl:79",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "MIME::Base64",
+      "example": "bin/AST_DB_check_tables.pl:259",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "MIME::Decoder",
+      "example": "bin/AST_inbound_email_parser.pl:8",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "MIME::QuotedPrint",
+      "example": "bin/AST_DB_check_tables.pl:258",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Mail::IMAPClient",
+      "example": "bin/AST_inbound_email_parser.pl:281",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Mail::Message",
+      "example": "bin/AST_inbound_email_parser.pl:282",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Mail::POP3Client",
+      "example": "bin/AST_inbound_email_parser.pl:721",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Mail::Sendmail",
+      "example": "bin/AST_DB_check_tables.pl:260",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::FTP",
+      "example": "bin/ADMIN_backup.pl:634",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::FTPSSL",
+      "example": "bin/AST_CRON_audio_3_ftp_FTPSSL.pl:395",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::Ping",
+      "example": "bin/AST_CRON_audio_3_ftp.pl:382",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::SFTP",
+      "example": "bin/AST_VDsales_export_SFTP.pl:860",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::SFTP::Attributes",
+      "example": "bin/AST_VDsales_export_SFTP.pl:907",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::SFTP::Foreign",
+      "example": "bin/AST_email_web_reportSFTP.pl:751",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::SSH2",
+      "example": "bin/AST_VDsales_export_SFTPSSH2.pl:799",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::SSH2::SFTP",
+      "example": "bin/AST_VDsales_export_SFTPSSH2.pl:877",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::Server",
+      "example": "bin/FastAGI_log.pl:215",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::Server::PreFork",
+      "example": "bin/FastAGI_log.pl:217",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Net::Telnet",
+      "example": "bin/AST_conf_update.pl:131",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "POSIX",
+      "example": "bin/ADMIN_purge_log_tables.pl:34",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Scalar::Util",
+      "example": "bin/AST_CRON_audio_3_archive.pl:56",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Spreadsheet::ParseExcel",
+      "example": "www/vicidial/listloader_rowdisplay.pl:50",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Spreadsheet::Read",
+      "example": "bin/VICIDIAL_international_DNC_parser_2.pl:433",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Spreadsheet::WriteExcel",
+      "example": "www/vicidial/spreadsheet_sales_viewer.pl:13",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Spreadsheet::XLSX",
+      "example": "bin/VICIDIAL_international_DNC_parser_2.pl:434",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Switch",
+      "example": "bin/AST_conf_update_screen.pl:112",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Term::ANSIColor",
+      "example": "bin/AST_conf_update_screen.pl:115",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Time::HiRes",
+      "example": "agi/CID_change.agi:181",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Time::Local",
+      "example": "agi/VD_amd.agi:147",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "Time::Piece",
+      "example": "bin/AST_rec_monitor.pl:113",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "WWW::Curl::Easy",
+      "example": "bin/AST_DNCcom_filter.pl:119",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "WWW::Curl::Form",
+      "example": "bin/AST_DNCcom_filter.pl:120",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "lib",
+      "example": "bin/AST_SWAMPauto_dial.pl:172",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "open",
+      "example": "bin/VICIDIAL_international_DNC_parser_2.pl:436",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "strict",
+      "example": "agi/agi-VDAD_local_optimize.agi:18",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "vars",
+      "example": "bin/FastAGI_log.pl:216",
+      "state": "Source-level import observed; execution NOT_RUN"
+    },
+    {
+      "module": "warnings",
+      "example": "bin/ADMIN_purge_log_tables.pl:33",
+      "state": "Source-level import observed; execution NOT_RUN"
+    }
+  ],
+  "bundled_asterisk_agi": {
+    "path": "extras/Asterisk/AGI.pm",
+    "sha256": "38f4e84f50e93e53d63b279584f5fca04553528c7660022d4b082aac30314c9a",
+    "license_state": "No separate per-file license declaration observed; retained in VICIdial export, do not independently redistribute without review."
+  },
+  "manifest_pins": {
+    "schema_version": "1",
+    "profile": "almalinux10-single",
+    "status": "candidate",
+    "os.id": "almalinux",
+    "os.major": "10",
+    "os.release": "10.2",
+    "os.arch": "x86_64",
+    "os.image_sha256": "cbee4726fc0f5a60694bb4f289003cc221e715dfbacebcce76b54daf386d8eca",
+    "asterisk.major_candidate": "22",
+    "asterisk.version": "22.12.0",
+    "asterisk.source": "https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-22.12.0.tar.gz",
+    "asterisk.sha256": "f8b2ba98aac6c4ff3376bc0a2868bea6ed577ca684efb7ec739ae6e8ce6e35e2",
+    "asterisk.signing_fingerprint": "F2FC93DB7587BD1FB49E045A5D984BE337191CE7",
+    "vicidial.source": "svn://svn.eflo.net:3690/agc_2-X/trunk",
+    "vicidial.revision": "4037",
+    "vicidial.exported_tree_sha256": "04a41c36c381981853cd0fc49a82fea9dda611cf39b336e9e8d92d459551eaed",
+    "vicidial.schema_version": "1748",
+    "vicidial.provenance_state": "unauthenticated_hold_before_root_execution",
+    "webrtc.name": "VICIphone",
+    "webrtc.revision": "24e98fccfa7b7079fff970e02fca5f002ac1f2cc",
+    "webrtc.sha256": "f42c7ec8a8114b71fae74c9ffa8bfa3927fc789609ac6ef78a9f897c6f3c8ac8",
+    "webrtc.sipjs_version": "0.20.1",
+    "webrtc.sipjs_sha256": "9eb6524ac04ee19ee106e835a813c0c5cb333478df6a2c71b382ff6cbd50164b",
+    "pjproject.version": "2.17",
+    "pjproject.source": "https://raw.githubusercontent.com/asterisk/third-party/52e2f32de1b11e40844bb007749a327862f75275/pjproject/2.17/pjproject-2.17.tar.bz2",
+    "pjproject.sha256": "04b2eb1f0f01aa0ad1945b167171843448a51aa6b7c3e806496d434f13a112b7",
+    "perl_net_telnet.version": "3.05",
+    "perl_net_telnet.source": "https://cpan.metacpan.org/authors/id/J/JR/JROGERS/Net-Telnet-3.05.tar.gz",
+    "perl_net_telnet.sha256": "677f68ba2cd2a824fae323fa82e183bf7e3d03c3c499c91d923bd6283796a743",
+    "verification.runtime_state": "NOT_RUN",
+    "verification.fixture_id": "TBD-M0",
+    "verification.evidence_digest": "TBD-M0",
+    "mariadb.nevra": "mariadb-server-3:10.11.18-1.el10_2.alma.2.x86_64",
+    "mariadb.repository": "appstream",
+    "php.nevra": "php-fpm-0:8.3.36-1.el10_2.x86_64",
+    "php.repository": "appstream",
+    "perl.nevra": "perl-4:5.40.2-515.el10_2.x86_64",
+    "perl.repository": "appstream",
+    "apache.nevra": "httpd-0:2.4.63-13.el10_2.8.x86_64",
+    "apache.repository": "appstream",
+    "srtp.nevra": "libsrtp-devel-0:2.3.0-16.el10.x86_64",
+    "srtp.repository": "crb",
+    "jansson.nevra": "jansson-devel-0:2.14-3.el10.x86_64",
+    "jansson.repository": "crb"
+  },
+  "open_gates": [
+    "M0-03 build/modules/PJSIP WSS/media NOT_RUN",
+    "M0-04 authentic VICIdial source, schema/PHP/Perl smoke NOT_RUN",
+    "M0-05 generated PJSIP wizard configuration NOT_RUN",
+    "M0-06 ConfBridge/AMI/AGI/dialing/recording NOT_RUN",
+    "M0-07 self-hosted browser registration, DTLS-SRTP two-way audio/reconnect/recording NOT_RUN",
+    "M0-08 second clean VM and accepted stack lock NOT_RUN"
+  ]
+}

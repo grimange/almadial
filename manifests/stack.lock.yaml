@@ -1,23 +1,61 @@
 # M0 CANDIDATE ONLY. This file is intentionally NOT installable.
+# Qualification: docs/compatibility/m0-02-dependency-matrix.md
+# Exact RPM inventory: docs/compatibility/m0-02-candidate-stack.json
+# Source authentication and runtime gates remain explicit; no stack acceptance.
 schema_version: 1
 profile: almalinux10-single
 status: candidate
 os:
   id: almalinux
   major: 10
+  release: 10.2
   arch: x86_64
+  image_sha256: cbee4726fc0f5a60694bb4f289003cc221e715dfbacebcce76b54daf386d8eca
 asterisk:
   major_candidate: 22
-  version: TBD-M0
-  sha256: TBD-M0
+  version: 22.12.0
+  source: https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-22.12.0.tar.gz
+  sha256: f8b2ba98aac6c4ff3376bc0a2868bea6ed577ca684efb7ec739ae6e8ce6e35e2
+  signing_fingerprint: F2FC93DB7587BD1FB49E045A5D984BE337191CE7
 vicidial:
   source: svn://svn.eflo.net:3690/agc_2-X/trunk
-  revision: TBD-M0
-  exported_tree_sha256: TBD-M0
+  revision: 4037
+  exported_tree_sha256: 04a41c36c381981853cd0fc49a82fea9dda611cf39b336e9e8d92d459551eaed
+  schema_version: 1748
+  provenance_state: unauthenticated_hold_before_root_execution
 webrtc:
   name: VICIphone
-  revision: TBD-M0
-  sha256: TBD-M0
+  revision: 24e98fccfa7b7079fff970e02fca5f002ac1f2cc
+  sha256: f42c7ec8a8114b71fae74c9ffa8bfa3927fc789609ac6ef78a9f897c6f3c8ac8
+  sipjs_version: 0.20.1
+  sipjs_sha256: 9eb6524ac04ee19ee106e835a813c0c5cb333478df6a2c71b382ff6cbd50164b
+pjproject:
+  version: 2.17
+  source: https://raw.githubusercontent.com/asterisk/third-party/52e2f32de1b11e40844bb007749a327862f75275/pjproject/2.17/pjproject-2.17.tar.bz2
+  sha256: 04b2eb1f0f01aa0ad1945b167171843448a51aa6b7c3e806496d434f13a112b7
+perl_net_telnet:
+  version: 3.05
+  source: https://cpan.metacpan.org/authors/id/J/JR/JROGERS/Net-Telnet-3.05.tar.gz
+  sha256: 677f68ba2cd2a824fae323fa82e183bf7e3d03c3c499c91d923bd6283796a743
 verification:
+  runtime_state: NOT_RUN
   fixture_id: TBD-M0
   evidence_digest: TBD-M0
+mariadb:
+  nevra: mariadb-server-3:10.11.18-1.el10_2.alma.2.x86_64
+  repository: appstream
+php:
+  nevra: php-fpm-0:8.3.36-1.el10_2.x86_64
+  repository: appstream
+perl:
+  nevra: perl-4:5.40.2-515.el10_2.x86_64
+  repository: appstream
+apache:
+  nevra: httpd-0:2.4.63-13.el10_2.8.x86_64
+  repository: appstream
+srtp:
+  nevra: libsrtp-devel-0:2.3.0-16.el10.x86_64
+  repository: crb
+jansson:
+  nevra: jansson-devel-0:2.14-3.el10.x86_64
+  repository: crb
