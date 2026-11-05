@@ -1,4 +1,0 @@
-interface:
-  display_name: "AlmaDial Compatibility"
-  short_description: "Qualify a reproducible AlmaLinux VICIdial stack"
-  default_prompt: "Use $almadial-compatibility to investigate the assigned M0 compatibility hypothesis and report verifiable evidence without assuming success."

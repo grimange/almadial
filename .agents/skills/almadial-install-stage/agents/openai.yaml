@@ -1,4 +1,0 @@
-interface:
-  display_name: "AlmaDial Go Stage"
-  short_description: "Implement a bounded deterministic installer stage"
-  default_prompt: "Use $almadial-install-stage to implement only the authorized installer stage with explicit postconditions, safe retries, and focused tests."
