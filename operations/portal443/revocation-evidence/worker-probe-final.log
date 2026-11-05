@@ -1,0 +1,6 @@
+PASS live queue -> account recheck -> timed SIP/RTP rules -> active status/web grant
+PASS shared IP: revoking one agent lease preserves another agent lease and supervisor web lease
+PASS shared IP: supervisor retains web; SIP matches native monitoring permission: True
+PASS account-scoped revoke clears old sessions; stale queued grant cannot reactivate access
+PASS live per-lease revoke removes web and owned SIP/RTP rules; fixture cleaned
+PASS live ineligible account request fails closed

@@ -4,6 +4,26 @@ Target `2.29.153.161` only. All remote execution uses SSH from the desktop.
 This is an operational upgrade of an existing custom portal, not an AlmaDial
 installer stage or a promoted compatibility lock. See BASELINE.md before deployment.
 
+The latest bounded change is SIP revocation and browser navigation redirects;
+see [REVOCATION_REPORT.md](REVOCATION_REPORT.md) and
+[revocation-evidence/BASELINE.md](revocation-evidence/BASELINE.md).
+Use `revoke-deploy.sh` / `revoke-rollback.sh` for that change, with its dedicated
+private backup. The original migration scripts below are historical deployment
+evidence from commit `0d36667`; do not rerun them against the updated source or
+restore their older firewall archive for this task.
+
+The current root worker also maintains `inet alma_portal_sip` at nftables
+priority -10, before firewalld's established UDP accept. Timed agent sets enforce
+SIP immediately on revocation of the last phone-enabled lease. Only established RTP conntracks marked
+during a valid grant have up to 120 seconds of grace. A web-only supervisor cannot
+keep SIP/RTP open. Per the operator's later policy correction, supervisors with
+native `blind_monitor` permission also receive phone access while keeping their
+administration redirect. Each refresh is capped at 35 seconds and the absolute lease
+deadline; stale workers fail closed. A required boot unit installs an empty
+guard before firewalld/Asterisk. No global conntrack flush or Asterisk restart.
+Browser GET navigation to the two exact entry scripts redirects to the fixed
+portal root; all other unauthorized protected requests retain 403.
+
 Architecture:
 
 - Apache terminates the existing IP-address certificate and proxies only the exact
@@ -12,8 +32,8 @@ Architecture:
   It compares the request IP with the underlying connection IP and reads root-owned
   expiring files. HTTP permits only static ACME challenge tokens.
 - Browser login is form-based against the existing column-limited, read-only DB
-  account; the original verifier is preserved byte-for-byte. No account/schema
-  change. Active levels 1–7 navigate to agent; active non-API levels 8–9 navigate
+  account; the original verifier is preserved byte-for-byte. No VICIdial user data or schema change; the phone policy adds column-only
+  SELECT access to two native monitoring-permission fields. Active levels 1–7 navigate to agent; active non-API levels 8–9 navigate
   to administration. Existing forced-change exclusions remain. Supervisor wins
   when both uses are possible. VICIdial enforces its own login and privileges.
 - Portal cookies are Secure, HttpOnly, SameSite=Strict, Path=/portal/. Apache strips
@@ -26,18 +46,23 @@ Architecture:
   The five-second countdown and Continue Now require confirmed status. Every
   countdown tick and server continuation recheck expiry. No user-controlled URL.
 - Each lease is independent. Web uses the latest eligible lease for an IP; SIP/RTP
-  uses only agent leases. Revoking one lease preserves others. Shared IPs share
+  uses agent leases and eligible supervisors with native monitoring permission.
+  Sign-out revokes every lease for that account on that IP, including older
+  browser sessions; it preserves other users and IPs. Tombstones reject stale
+  queued grants even if queue processing order differs. Shared IPs share
   network reachability, never VICIdial identity or application permissions.
 - Web freshness expires after 35 seconds without a worker confirmation. SIP rules
   have native firewalld timeouts capped at their absolute lease expiry. The worker
   persists ownership before effect, reconciles after firewalld reload/reboot,
-  and touches only priority=10 rules it owns. Existing static telephony rules
-  remain explicit exceptions. Fail2Ban reject rules take precedence.
+  and touches only priority=10 rules it owns. No permanent SIP/RTP grants remain for the residential test client. The early
+  gate also denies protected UDP when an unrelated downstream accept exists.
+  Authorized traffic still traverses firewalld and its existing Fail2Ban rules.
 - Backend sessions are memory-only; a backend restart requires portal login again.
   Existing root-owned grants survive a service restart until expiry/revocation.
   Logout queues revocation; web revocation takes the next worker tick (normally
   10 seconds). A failing worker causes web denial within the freshness window;
-  SIP rules may remain until their existing native timeout. No instant-revocation
+  The early SIP gate expires within 35 seconds of its last successful refresh;
+  only previously marked RTP flows can continue for a further 120 seconds. No instant-revocation
   guarantee is made during firewalld/worker failure.
 
 Validation:
@@ -77,16 +102,16 @@ Deployment order (scripts must be copied over SSH into root-only staging):
    9091 and disables its service. The old files and rollback archive remain.
 4. Re-run probes and health inventory, record checksums and exact verdict.
 
-Rollback via existing SSH/recovery console:
+Current task rollback via SSH on the operator-updated port:
 
 ```sh
-ssh root@2.29.153.161 'bash /root/alma-portal-443-backup/rollback.sh'
+ssh -p 22222 root@2.29.153.161 'bash /root/alma-portal-revoke-backup/rollback.sh'
 ```
 
-Rollback closes public 443 before restoring the source-firewall-protected v2
-Apache config, opens 9091, restores Apache and Fail2Ban portal configuration,
-and starts the original portal/worker. It preserves unrelated firewall settings.
-New runtime SIP rules expire naturally; no Asterisk restart is involved.
+This restores the pre-revocation 443 portal and its known UDP conntrack
+limitation. It preserves the operator's SSH configuration and the rotated portal
+DB service secret. Do not invoke the original migration rollback for this task:
+its historical archive predates subsequent firewall and SSH changes.
 
 Operator browser checks (use existing credentials privately; never send passwords):
 
@@ -118,7 +143,7 @@ for its separate backup, exact file changes, browser evidence and SSO decision.
 the original migration scripts. The installed VICIdial logo is read through a
 fixed public portal route; its artwork is not copied into this source tree.
 Supervisor SSO is not implemented. Native VICIdial authentication and optional
-2FA remain authoritative. Portal logout revokes its lease and session; it does
+2FA remain authoritative. Portal logout revokes its account's grants on the current IP and its session; it does
 not clear credentials cached by a browser for native HTTP Basic authentication.
 
 References: [Apache Lua authorization providers](https://httpd.apache.org/docs/2.4/mod/mod_lua.html),

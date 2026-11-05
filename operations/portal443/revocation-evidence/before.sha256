@@ -1,0 +1,10 @@
+0568ae5a18df9298e19d0e7ec766e9cbc02552a839f11aad05806b81faf1c552  /etc/httpd/conf.d/02-alma-vicidial-ssl.conf
+923e1d55726d9ce5643b07fd1bae9576e3613e30da5e342f128a1aa109b4edd0  /etc/systemd/system/alma-portal-443-apply.service
+2141f9093ee411e68bba4c7f91a2777341909b33f5b8b8c16ac46888009ccac5  /etc/firewalld/zones/public.xml
+76374a9f25aacf66854662088b75cc9bb32b6de653520064dccd616707181003  /opt/alma-portal-443/app.css
+89939aff2b2a0f85765156bec77ec4dc8636bbcc6228cb182cff60b3f9dd3dbb  /opt/alma-portal-443/common.py
+ade3cc65a22d4d5fcee8e2cd61e7e7dd5b7fdac9e7d98b8e821fc862e51cd1cf  /opt/alma-portal-443/portal.py
+94cabb6ca362cfed6082c230b88acdbaef93d640c967562b18a2916cbe781f2e  /opt/alma-portal-443/app.js
+12cc6c0aaf461cc24d1c3322a6fe7d3df2aa75d5f4f9238472b1b7429839d2a8  /opt/alma-portal-443/access.lua
+e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac  /opt/alma-portal-443/vicidial_auth.py
+ef750307cfb714949c7d4fbd41daccf54556cea9e2b7997db057b028a72e3db7  /opt/alma-portal-443/apply_requests.py

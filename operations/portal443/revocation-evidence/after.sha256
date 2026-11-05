@@ -1,0 +1,8 @@
+d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49  /opt/alma-portal-443/sip_guard.py
+d816bb73ae3741aef1ee6a8de2c5f24def57f3138da385d24dbbce1c8a33b79a  /opt/alma-portal-443/phone_policy.py
+5603c76e36895a69ca2e256d294a2f48db6c9a209066503075c94d38780c4711  /opt/alma-portal-443/apply_requests.py
+6028bda31d5ae71af18591957a7f732819bb18c1696ce8ac6c35fa5706d86e91  /opt/alma-portal-443/portal.py
+54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c  /opt/alma-portal-443/access.lua
+1678315c6cab51032465b382032647a68db09c7c792d6fc0a89962b7d5f2851c  /etc/systemd/system/alma-portal-sip-guard.service
+8507c4eacfbd9fce424bd89fe8f760738c0f7e357e164436b4cf7cd75cb11063  /etc/systemd/system/alma-portal-443-apply.service
+4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7  /etc/httpd/conf.d/02-alma-vicidial-ssl.conf

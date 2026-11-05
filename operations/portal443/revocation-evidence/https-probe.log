@@ -1,0 +1,9 @@
+PASS VICIdial logo/CSS/JS exact public routes; integrated login; restrictive CSP
+PASS TLS trust/IP SAN; root portal; private status and continue
+PASS browser303 fixed root; API/AJAX/resource403; no open redirect; useful portal notice
+PASS default-deny paths, encoded paths, aliases, PHP, host and header spoofing
+PASS HTTP deny; real ACME webroot challenge file
+PASS temporary server-IP web fixture reaches native login pages
+PASS authorized CSS, JavaScript and image assets; unauthorized assets denied above
+PASS expired web grant denied
+PASS revoked web grant denied; fixture removed

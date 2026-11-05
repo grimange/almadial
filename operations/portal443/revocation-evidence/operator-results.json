@@ -1,0 +1,47 @@
+{
+  "source": "Operator replies in this task; passwords never requested or stored",
+  "checks": [
+    {
+      "case": "No grant: fresh Zoiper registration and direct browser navigation",
+      "result": "PASS_OPERATOR",
+      "reply": "Fresh registration blocked; both browser redirects passed"
+    },
+    {
+      "case": "Agent grant: fresh registration, native agent page, then revocation",
+      "result": "PASS_OPERATOR",
+      "reply": "Authorized registration succeeds; revoked registration blocked; agent page works"
+    },
+    {
+      "case": "Permission-qualified supervisor grant and revocation",
+      "result": "PASS_OPERATOR",
+      "reply": "Supervisor administration and registration passed; revocation blocked registration; audio/barge untested"
+    },
+    {
+      "case": "Final account-scoped sign-out after re-login; fresh REGISTER and both browser redirects",
+      "result": "PASS_OPERATOR",
+      "reply": "Registration blocked; both redirects passed"
+    },
+    {
+      "case": "Repeat final sign-out to resolve still-active old supervisor lease",
+      "result": "PASS_OPERATOR",
+      "reply": "Revoked now; fresh registration blocked",
+      "server_corroboration": "Final health.json: zero residential web/phone leases, revoke recorded, no web file, no owned runtime rules or early-guard membership; other-IP phone lease preserved"
+    },
+    {
+      "case": "Two-way audio and native monitoring/barge",
+      "result": "NOT_RUN"
+    },
+    {
+      "case": "Live call across the complete 120-second RTP grace",
+      "result": "NOT_RUN"
+    },
+    {
+      "case": "Production reboot",
+      "result": "NOT_RUN"
+    }
+  ],
+  "limitations": [
+    "REGISTER metadata observer corroborated ingress attempts only. No captured SIP200 is claimed. Actual registration results are independently reported by the operator.",
+    "Packet expiry/grace tests used isolated kernel namespaces and shortened timeouts, not production calls."
+  ]
+}

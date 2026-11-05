@@ -1,0 +1,118 @@
+{
+  "at": 1793920699,
+  "apache_config": {
+    "rc": 0,
+    "out": "",
+    "err": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nSyntax OK"
+  },
+  "service_health": {
+    "rc": 0,
+    "out": "active\nactive\nactive\nactive\nactive\nactive\nactive\nactive",
+    "err": ""
+  },
+  "asterisk_pid": {
+    "rc": 0,
+    "out": "MainPID=143137",
+    "err": ""
+  },
+  "calls": {
+    "rc": 0,
+    "out": "0 active channels\n0 active calls\n16 calls processed",
+    "err": ""
+  },
+  "guard_boot": {
+    "rc": 0,
+    "out": "enabled\nenabled",
+    "err": ""
+  },
+  "guard_order": {
+    "rc": 0,
+    "out": "Before=firewalld.service shutdown.target alma-portal-443-apply.service multi-user.target asterisk.service",
+    "err": ""
+  },
+  "unit_syntax": {
+    "rc": 0,
+    "out": "",
+    "err": ""
+  },
+  "ssh_22222": {
+    "rc": 0,
+    "out": "State  Recv-Q Send-Q Local Address:Port  Peer Address:Port\nLISTEN 0      128          0.0.0.0:22222      0.0.0.0:*   \nLISTEN 0      128             [::]:22222         [::]:*",
+    "err": ""
+  },
+  "legacy_9091": {
+    "rc": 0,
+    "out": "State Recv-Q Send-Q Local Address:Port Peer Address:Port",
+    "err": ""
+  },
+  "cockpit_9090": {
+    "rc": 0,
+    "out": "State Recv-Q Send-Q Local Address:Port Peer Address:Port",
+    "err": ""
+  },
+  "firewall_ports": {
+    "rc": 0,
+    "out": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "err": ""
+  },
+  "firewall_permanent_ports": {
+    "rc": 0,
+    "out": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "err": ""
+  },
+  "permanent_rich": {
+    "rc": 0,
+    "out": "",
+    "err": ""
+  },
+  "direct_rules": {
+    "rc": 0,
+    "out": "",
+    "err": ""
+  },
+  "guard_exists": {
+    "rc": 0,
+    "out": "table inet firewalld\ntable inet alma_portal_sip",
+    "err": ""
+  },
+  "fail2ban": {
+    "rc": 0,
+    "out": "Status\n|- Number of jail:\t2\n`- Jail list:\talma-portal, asterisk",
+    "err": ""
+  },
+  "residential_valid_leases": 0,
+  "residential_phone_leases": 0,
+  "other_valid_phone_leases": 1,
+  "residential_web_file_exists": false,
+  "residential_revoke_recorded": true,
+  "residential_runtime_rules_present": {
+    "5061": false,
+    "10000-20000": false
+  },
+  "guard_counters": [
+    {
+      "chain": "input",
+      "packets": 64,
+      "bytes": 47603
+    },
+    {
+      "chain": "input",
+      "packets": 2,
+      "bytes": 187
+    },
+    {
+      "chain": "output",
+      "packets": 7,
+      "bytes": 3449
+    },
+    {
+      "chain": "output",
+      "packets": 0,
+      "bytes": 0
+    }
+  ],
+  "residential_in_guard_sets": {
+    "agents4": false,
+    "grace4": false
+  }
+}

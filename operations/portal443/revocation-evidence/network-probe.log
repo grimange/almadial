@@ -1,0 +1,12 @@
+PASS no grant fresh SIP blocked
+PASS valid agent fresh SIP passes
+PASS valid agent RTP passes and is marked
+PASS revoked established SIP blocked before downstream ct accept
+PASS revoked fresh SIP blocked
+PASS established authorized RTP survives within grace
+PASS new RTP flow cannot use grace
+PASS established RTP blocked after native grace timeout
+PASS short valid grant fresh SIP passes
+PASS native grant expiry blocks established SIP without worker
+PASS web-only supervisor has no SIP grant
+ISOLATED_NETWORK_PROBE_PASS

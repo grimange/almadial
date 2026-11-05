@@ -1,0 +1,10 @@
+f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6  /etc/asterisk/pjsip.conf
+e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde  /etc/asterisk/extensions.conf
+fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8  /var/www/html/vicidial/admin.php
+ca2606774e3a25cb54e3815cb096b7847462eedb4804a38d857a98a15838481a  /var/www/html/vicidial/non_agent_api.php
+1c837e12635c6f0ea538f8e3c57b15d693defb034aa9d901aee1aea5ba08d114  /var/www/html/vicidial/AST_timeonVDADall.php
+e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac  /opt/alma-portal-443/vicidial_auth.py
+89939aff2b2a0f85765156bec77ec4dc8636bbcc6228cb182cff60b3f9dd3dbb  /opt/alma-portal-443/common.py
+1c250ef8ae8c9d8847988351f4c9045e65f0029dd88e3b4d8e51ebd617c1242a  /etc/fail2ban/filter.d/alma-portal.conf
+bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524  /etc/fail2ban/jail.d/alma-portal.local
+b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5  /etc/firewalld/zones/public.xml

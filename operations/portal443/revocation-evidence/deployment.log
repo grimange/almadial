@@ -1,0 +1,12 @@
+Created symlink '/etc/systemd/system/multi-user.target.wants/alma-portal-sip-guard.service' → '/etc/systemd/system/alma-portal-sip-guard.service'.
+Created symlink '/etc/systemd/system/firewalld.service.requires/alma-portal-sip-guard.service' → '/etc/systemd/system/alma-portal-sip-guard.service'.
+Created symlink '/etc/systemd/system/asterisk.service.requires/alma-portal-sip-guard.service' → '/etc/systemd/system/alma-portal-sip-guard.service'.
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message
+Syntax OK
+active
+active
+active
+active
+active
+active
+REVOCATION_REDIRECT_DEPLOYED
