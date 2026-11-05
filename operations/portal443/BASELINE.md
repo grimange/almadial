@@ -1,0 +1,21 @@
+# Portal 443 baseline — 2026-11-05 UTC
+
+Authorized target: `2.29.153.161`, SSH only. This bounded operational migration does not accept an AlmaDial stack or implement installer automation. Existing unrelated repository changes remain untouched.
+
+Observed before mutation:
+
+- AlmaLinux 10.2, hostname dialer01, KVM VPS. Asterisk 20.21.0; httpd, alma-portal, firewalld, fail2ban, asterisk active. Zero active calls/channels. No outbound PJSIP registration objects (this does not establish endpoint registration or media).
+- Listeners: Apache *:80 and *:443; portal Python 0.0.0.0:9091; SSH 22; local MariaDB 3306 and AMI 5038. FastAGI 4577 and several Asterisk UDP sockets listen globally but are not globally allowed by the observed public zone.
+- Only vhosts: 00-alma-acme.conf :80 and 02-alma-vicidial-ssl.conf :443. HTTPS DocumentRoot /var/www/html; directory access granted, protection entirely via source-IP firewalld rules. Global PHP-FPM handler, CGI, icons and default welcome aliases exist. No RemoteIP directive observed. Lua, proxy_http, SSL, authz_core and headers modules loaded.
+- HTTP ACME vhost directory-denies its document root except the challenge directory, but inherited aliases and welcome behavior require a URL-level default deny.
+- Portal v2: stdlib threaded TLS server; Basic credentials on every request, Origin check on empty-body POST, no session or CSRF token; seven failures per source/900 seconds; Fail2Ban AUTH_FAIL integration. Queue files owned by alma-portal and root timer worker. Worker checks account eligibility, adds 12h firewalld rules, deletes request regardless of result; no durable status, expiry UI or redirect confirmation.
+- Read-only DB account has only column SELECT permissions on vicidial_users (user, pass, pass_hash, active, user_level, api_only_user, force_change_password) and system_settings (pass_key, pass_cost, pass_hash_enabled). Existing password mode plaintext (0); bcrypt verifier is also present. No database credentials copied. User inventory aggregated: one active level 1, one active level 9, two disabled level 1. Service-only and forced-password-change users are rejected by existing policy.
+- Installed admin.php lines 7968–7986 authenticate then select user_level >7 and api_only_user !=1 for admin entry; level 7 with view_reports is report-only. Existing portal level >=8 supervisor policy retained. ast_admin_access controls particular server functions, not general admin entry. Upstream VICIdial remains authoritative for all application privileges.
+- Runtime public firewall: cockpit/dhcpv6-client/ssh services; TCP 22,80,9091; source-specific 443 rule; permanent source-specific PJSIP 5061 and RTP 10000–20000 allowances for an existing operator source. Asterisk Fail2Ban rejects also present. No global SIP/RTP/FastAGI grants. Existing static telephony source allowances will be preserved and reported as exceptions to dynamic expiry.
+- Cockpit is firewall-allowed but no 9090 listener or cockpit.socket unit exists. This preexisting condition prevents claiming Cockpit operational acceptance.
+- SELinux already Permissive; no recent AVC matches reported. This task will not weaken it or change global SELinux mode.
+- Certificate issuer Let's Encrypt YE1, IP SAN matches target, valid Nov 5 19:05:55 through Nov 12 11:05:54 UTC. Renewal uses certbot 5.9.0 webroot /var/www/alma-acme and a twice-daily systemd timer, deploy hook copies TLS files and restarts portal/reloads Apache.
+- Fail2Ban jails alma-portal (journal; seven/900s; ban 3600s; currently port 9091) and asterisk. No portal bans at inspection.
+- Operator confirmed recovery-console access and availability for browser tests. VPS snapshot status is not established; file/config backups precede deployment. No reboot or Asterisk restart is planned.
+
+Acceptance: public root portal, default-deny every other HTTPS application path until worker-confirmed IP lease, fixed role destinations after five seconds, authenticated CSRF-protected status/actions, server TTL, no public backend, HTTP challenge-only, existing telephony unchanged, rollback proven before opening 443. Browser, real credential, real media and reboot results remain separate from mocked and on-host checks.

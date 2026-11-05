@@ -1,0 +1,15 @@
+[Unit]
+Description=Confirm and expire VICIdial Secure Access grants
+After=firewalld.service mariadb.service
+Requires=firewalld.service mariadb.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/alma-portal-venv/bin/python /opt/alma-portal-443/apply_requests.py
+NoNewPrivileges=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/alma-portal/requests-443 /var/lib/alma-portal-443
+PrivateTmp=true
+UMask=0027
+TimeoutStartSec=90

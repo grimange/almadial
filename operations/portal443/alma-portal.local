@@ -1,0 +1,9 @@
+[alma-portal]
+enabled = true
+filter = alma-portal
+backend = systemd
+maxretry = 7
+findtime = 900
+bantime = 3600
+ignoreip = 127.0.0.1/8 ::1
+action = firewallcmd-rich-rules[name=alma-portal, port="443", protocol="tcp", zone="public"]

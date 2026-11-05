@@ -1,0 +1,28 @@
+[Unit]
+Description=VICIdial Secure Access loopback form portal
+After=network-online.target mariadb.service
+Requires=mariadb.service
+
+[Service]
+Type=simple
+User=alma-portal
+Group=alma-portal
+Environment=PORTAL_PUBLIC_IP=2.29.153.161
+ExecStart=/opt/alma-portal-venv/bin/python /opt/alma-portal-443/portal.py
+Restart=on-failure
+RestartSec=3
+TasksMax=96
+MemoryMax=192M
+CPUQuota=100%
+NoNewPrivileges=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/alma-portal/requests-443
+PrivateTmp=true
+UMask=0027
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target
