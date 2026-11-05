@@ -69,3 +69,26 @@ A separate reviewer, using the `almadial-review` skill and independent-review te
 After accepted M0-01, M0-02 qualifies exact OS/Asterisk/VICIdial/PHP/Perl/MariaDB/phone candidates and authenticated source acquisition. M0-03–07 provide actual module, generated PJSIP/dialplan, ConfBridge allocation, AMI/AGI, dialing, two-way WebRTC media and recording evidence. M0-08 repeats the required suite on a second clean VM and proposes the reviewed manifest/validator transition. M1–M4 implementation remains blocked until the complete M0 gate is accepted.
 
 No production access, carrier/PSTN calls, installer implementation, package installation, real credentials, blanket policy disablement, push or publication is authorized by this readiness report. The operator separately authorized the local documentation baseline commit and repository-only collector preparation; no host authority followed from that authorization.
+
+## 2026-11-06 update — scoped M0-04 implementation evidence
+
+The preceding sections preserve their historical readiness snapshot. Subsequent
+independent reviews accepted M0-01–03; the current M0-04 assignment separately
+authorizes the named disposable VM's application experiments. It does not grant
+production authority or whole-stack acceptance.
+
+See [the M0-04 runtime report](../compatibility/m0-04-vicidial-runtime.md).
+The official HTTPS nightly ZIP exactly matches all 2,511 pinned r4037 files,
+resolving that artifact's publisher-origin hold. MariaDB 10.11.18 imports the
+reviewed schema derivation to version 1748; PHP 8.3.36 executes bounded admin and
+agent application requests; Perl 5.40.2 loads required modules and executes a
+controlled empty-queue sender. Schema grant separation and the reproduced process
+query truncation correction are explicit, hash-pinned derivations. Original source
+and failed evidence remain preserved. A pre-VICIdial snapshot exists; it was not
+restored. SELinux remains enforcing and accepted Asterisk files remain unchanged.
+
+The agent request test uses a seeded, nontelephony application session. Full phone
+login, AMI/AGI operation, generated PJSIP/ConfBridge configuration, dialing and
+recording remain downstream experiments. M0-04 requires a separate reviewer;
+the implementing Codex worker cannot grant acceptance. The complete manifest
+remains candidate, and M1–M4 stack automation remains gated on complete M0 evidence.

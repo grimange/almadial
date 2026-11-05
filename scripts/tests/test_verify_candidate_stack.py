@@ -101,6 +101,23 @@ class CandidateEvidenceTests(unittest.TestCase):
         self.assertEqual(C.check_matrix(baseline, text), [])
         self.assertTrue(C.check_matrix(baseline, text.replace("| Not Tested |", "| PASS |", 1)))
 
+    def test_m004_provenance_transition_requires_exact_archive_and_tree(self):
+        baseline = json.loads(C.BASELINE.read_text())
+        manifest = (C.ROOT / "manifests/stack.lock.yaml").read_text()
+        self.assertEqual(C.check_local(baseline, manifest), [])
+        for key, value in C.M004_PROVENANCE.items():
+            with self.subTest(key=key):
+                changed = manifest.replace(value, "unverified-value")
+                self.assertIn("manifest mismatch: vicidial.provenance_state",
+                              C.check_local(baseline, changed))
+
+    def test_historical_m002_provenance_remains_valid(self):
+        baseline = json.loads(C.BASELINE.read_text())
+        manifest = (C.ROOT / "manifests/stack.lock.yaml").read_text()
+        manifest = manifest.replace(C.M004_PROVENANCE["vicidial.provenance_state"],
+                                    baseline["manifest_pins"]["vicidial.provenance_state"])
+        self.assertEqual(C.check_local(baseline, manifest), [])
+
     def test_source_records_must_agree_with_manifest(self):
         baseline = json.loads(C.BASELINE.read_text())
         manifest = (C.ROOT / "manifests/stack.lock.yaml").read_text()

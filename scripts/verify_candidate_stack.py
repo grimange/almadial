@@ -19,6 +19,19 @@ VM = "almadial-alma10"
 FORMAT = "%{name}|%{epoch}|%{version}|%{release}|%{arch}|%{repoid}"
 FIELDS = ("name", "epoch", "version", "release", "arch", "repository")
 
+# M0-02 is a historical qualification snapshot. M0-04 authenticated this exact
+# unchanged tree through the official HTTPS nightly archive. This exception only
+# checks the recorded identity; it does not itself authenticate a download.
+M004_PROVENANCE = {
+    "vicidial.provenance_state": "official_https_snapshot_byte_matched_to_pinned_export",
+    "vicidial.revision": "4037",
+    "vicidial.schema_version": "1748",
+    "vicidial.exported_tree_sha256": "04a41c36c381981853cd0fc49a82fea9dda611cf39b336e9e8d92d459551eaed",
+    "vicidial.authenticated_archive": "https://www.vicidial.org/svn_trunk_nightly/vicidial-trunk-2026-11-05.zip",
+    "vicidial.archive_sha256": "ebdd6fab3c9bd56c5ed84f79a3118153c1c9ed38508f24a83a1b71ad803a4058",
+    "vicidial.provenance_evidence": "docs/compatibility/m0-04-vicidial-runtime.md",
+}
+
 
 def parse_packages(text: str) -> list[dict[str, str]]:
     rows = []
@@ -82,6 +95,9 @@ def check_local(baseline: dict, manifest: str) -> list[str]:
     leaves = manifest_leaves(manifest)
     for key, expected in baseline["manifest_pins"].items():
         if leaves.get(key) != str(expected):
+            if key == "vicidial.provenance_state" and all(
+                    leaves.get(k) == v for k, v in M004_PROVENANCE.items()):
+                continue
             issues.append(f"manifest mismatch: {key}")
     requested = [row["requested"] for row in baseline["packages"]]
     if not requested or len(requested) != len(set(requested)):
