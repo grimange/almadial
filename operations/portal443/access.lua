@@ -4,7 +4,8 @@ local public = {
     ['/'] = true, ['/portal/'] = true, ['/portal/login'] = true,
     ['/portal/grant'] = true, ['/portal/status'] = true,
     ['/portal/continue'] = true, ['/portal/logout'] = true,
-    ['/portal/app.js'] = true
+    ['/portal/app.js'] = true, ['/portal/app.css'] = true,
+    ['/portal/logo.png'] = true
 }
 
 function authorize(r)

@@ -22,7 +22,7 @@ tar -tf "$backup/config.tar" >/dev/null
 install -d -m 0755 /opt/alma-portal-443 /var/lib/alma-portal-443 /var/lib/alma-portal-443/web
 install -d -o root -g alma-portal -m 0750 /var/lib/alma-portal-443/status
 install -d -o alma-portal -g alma-portal -m 0700 /var/lib/alma-portal/requests-443
-for source in common.py portal.py vicidial_auth.py apply_requests.py app.js access.lua; do
+for source in common.py portal.py vicidial_auth.py apply_requests.py app.js app.css access.lua; do
   install -o root -g root -m 0644 "/root/alma-portal-443-stage/$source" "/opt/alma-portal-443/$source"
 done
 for unit in alma-portal-443.service alma-portal-443-apply.service alma-portal-443-apply.timer; do

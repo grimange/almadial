@@ -29,6 +29,7 @@ async function tick() {
     if (started) countdown--;
     started = true;
     document.getElementById('countdown').textContent = `Redirecting in: ${countdown} seconds`;
+    document.getElementById('countdown').hidden = false;
     if (countdown <= 0) {
       location.assign('/portal/continue'); // Server rechecks; destination is never supplied by the browser.
       return;
@@ -36,6 +37,7 @@ async function tick() {
     setTimeout(tick, 1000);
   } catch (_) {
     document.getElementById('countdown').textContent = 'Unable to confirm access. Refresh to retry.';
+    document.getElementById('countdown').hidden = false;
     document.getElementById('continue')?.remove();
   }
 }

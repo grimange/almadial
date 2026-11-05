@@ -1,0 +1,10 @@
+7c54534a29a2a256b2630f87377b968df99d593cda74a7825b2eceb0141665a3  /etc/httpd/conf.d/00-alma-acme.conf
+0726d4474f00d789e7fe4208dd133dca98a17b2563610f3ad5d930fcec068254  /etc/httpd/conf.d/02-alma-vicidial-ssl.conf
+4b78c4e92b7a36038ba3a3f1e95ba7c93ca66fa5f8c932640d221a408290b19f  /etc/fail2ban/filter.d/alma-portal.conf
+62409072a25f00c065c71384121b8faaf4d7e88d7c541ac0e81131a83ea1265c  /etc/fail2ban/jail.d/alma-portal.local
+de7a3262ef362367136f0e8bafbbb50a0986ca65df03029451f7c264baa1a851  /opt/alma-portal/apply_requests.py
+7ce38c7f5fe236e6f2d1d4cf5d64575bd21d1768e4e15e593d07351b59726fd3  /opt/alma-portal/manage_users.py
+805061f60017a9b7dd0fda167c06920456ea53233daae6a5b57316dd06d07004  /opt/alma-portal/portal.py
+cb47b9e2a7362d86f4d10be400e3deef5e4e6aae6d1d2ecd4839434f9bf430d5  /opt/alma-portal/test_auth.py
+e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac  /opt/alma-portal/vicidial_auth.py
+0053f686682747641a80bf0b5c0898580bcaad9e6ea587e8759fd339110ce8d4  /etc/firewalld/zones/public.xml

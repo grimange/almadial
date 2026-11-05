@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Loopback-only form portal. Apache overwrites the source header from its socket."""
 from collections import OrderedDict
+from datetime import datetime, timezone
 from http.cookies import SimpleCookie, CookieError
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import html
@@ -23,6 +24,9 @@ FAILURES = OrderedDict()
 LOCK = threading.RLock()
 AUTH_SLOTS = threading.BoundedSemaphore(4)
 APP_JS = Path(__file__).with_name('app.js')
+APP_CSS = Path(__file__).with_name('app.css')
+# Reuse the installed asset without redistributing or modifying VICIdial artwork.
+LOGO = Path('/var/www/html/vicidial/images/vicidial_admin_web_logo.png')
 
 
 def grant_status(session, now=None):
@@ -60,12 +64,12 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
     def send(self, code, body='', kind='text/html; charset=utf-8', cookie=None, location=None):
-        data = body.encode()
+        data = body.encode() if isinstance(body, str) else body
         self.send_response(code)
         for key, value in {'Content-Type': kind, 'Content-Length': str(len(data)),
                            'Cache-Control': 'no-store, private', 'X-Content-Type-Options': 'nosniff',
                            'Referrer-Policy': 'same-origin', 'X-Frame-Options': 'DENY',
-                           'Content-Security-Policy': "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}.items():
+                           'Content-Security-Policy': "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self'; img-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}.items():
             self.send_header(key, value)
         if cookie:
             self.send_header('Set-Cookie', f'{COOKIE}={cookie}; Path=/portal/; HttpOnly; Secure; SameSite=Strict; Max-Age={LIFETIME}')
@@ -113,28 +117,75 @@ class Handler(BaseHTTPRequestHandler):
 
     def page(self, s, message=''):
         csrf = html.escape(s['csrf'])
-        def form(action, fields):
-            return f'<form method="post" action="/portal/{action}"><input type="hidden" name="csrf" value="{csrf}">{fields}</form>'
-        content = f'<p>Current public IP: <strong>{self.ip}</strong></p><p>{html.escape(message)}</p>'
+        signed_in = 'user' in s
+        status = grant_status(s) if signed_in else {'state': 'idle'}
+        active = status['state'] == 'active'
+        pending = status['state'] == 'pending'
+        step = 3 if active else 2 if signed_in else 1
+
+        def form(action, fields, css=''):
+            return f'<form class="{css}" method="post" action="/portal/{action}"><input type="hidden" name="csrf" value="{csrf}">{fields}</form>'
+
+        steps = '<ol class="steps" aria-label="Access steps">'
+        for number, label in enumerate(('Sign in', 'Authorize IP', 'Continue'), 1):
+            current = ' aria-current="step"' if number == step else ''
+            steps += f'<li{current}><span>{number}</span>{label}</li>'
+        steps += '</ol>'
+        content = '<section class="panel" aria-labelledby="panel-title">'
         if 'user' not in s:
-            content += form('login', '<p><label>VICIdial username <input name="username" required maxlength="64" autocomplete="username"></label></p><p><label>Password <input type="password" name="password" required maxlength="256" autocomplete="current-password"></label></p><button>Sign in</button>')
+            content += '<h2 id="panel-title" class="panel-title">User Login</h2><div class="panel-body"><p class="intro">Sign in with your VICIdial account to authorize access.</p>'
+            if message:
+                content += f'<p id="login-feedback" class="notice error" role="alert">{html.escape(message)}</p>'
+            described = ' aria-describedby="login-feedback"' if message else ''
+            content += form('login', '<div class="form-row"><label for="username">Username</label>'
+                            f'<input id="username" name="username" required minlength="2" maxlength="64" autocomplete="username" autocapitalize="none" spellcheck="false"{described}></div>'
+                            '<div class="form-row"><label for="password">Password</label>'
+                            f'<input id="password" type="password" name="password" required maxlength="256" autocomplete="current-password"{described}></div>'
+                            '<div class="form-actions"><button class="button primary">Sign in</button></div>', 'login-form')
+            content += '<p class="form-note">Use your existing account. Passwords are used only to verify sign-in.</p></div>'
         else:
-            status = grant_status(s)
             role = 'Supervisor' if s['role'] == 'web' else 'Agent'
-            content += f'<p>Signed in as {html.escape(s["user"])}. Access type: {role}</p>'
-            if status['state'] == 'active':
+            destination = DESTINATIONS[s['role']]
+            content += '<h2 id="panel-title" class="panel-title">Access Authorization</h2><div class="panel-body">'
+            content += f'<dl class="details"><div><dt>VICIdial username</dt><dd>{html.escape(s["user"])}</dd></div><div><dt>Account access type</dt><dd>{role}</dd></div>'
+            content += f'<div><dt>{"Authorized public IP" if active else "Public IP"}</dt><dd><code>{self.ip}</code></dd></div></dl>'
+            content += f'<section class="authorization {status["state"]}" aria-labelledby="state">'
+            if active:
                 minutes = status['remaining'] // 60
-                content += f'<h2 id="state">Access granted</h2><p>Authorized IP: {self.ip}</p><p>Authorization expires in: <span id="lifetime">{minutes // 60}h {minutes % 60}m</span></p><p id="countdown">Redirecting in: 5 seconds</p><p><a id="continue" href="/portal/continue">Continue Now</a></p>'
-            elif status['state'] == 'pending':
-                content += '<h2 id="state">Authorizing your IP...</h2><p id="countdown"></p>'
+                expiry = datetime.fromtimestamp(status['expires_at'], timezone.utc)
+                content += '<h3 id="state" role="status">Access granted</h3>'
+                content += f'<p>Authorization expires in: <strong id="lifetime">{minutes // 60}h {minutes % 60}m</strong></p>'
+                content += f'<p class="expiry">Grant expiry: <time datetime="{expiry.isoformat()}">{expiry.strftime("%d %b %Y, %H:%M:%S UTC")}</time></p>'
+                content += '<p id="countdown" class="countdown" hidden>Redirecting in: 5 seconds</p><a class="button primary" id="continue" href="/portal/continue">Continue Now</a>'
+            elif pending:
+                content += '<h3 id="state" role="status">Authorizing your IP...</h3><p>Waiting for access to be confirmed. This page will update automatically.</p><p id="countdown" hidden></p>'
             else:
-                content += '<h2 id="state">' + html.escape(status.get('message', 'Authorize access')) + '</h2>'
-                content += form('grant', '<button>Authorize my current IP for 12 hours</button>')
-            content += '<p><a href="/portal/">Refresh authorization status</a></p><noscript><p>Refresh this page to confirm authorization. Continue Now appears only after server confirmation.</p></noscript>'
-            content += form('logout', '<button>Revoke this session’s authorization and sign out</button>')
+                content += '<h3 id="state" role="status">' + html.escape(status.get('message', 'Ready to authorize')) + '</h3>'
+                content += '<p>Authorize this public IP for up to 12 hours to continue to VICIdial.</p>'
+                content += form('grant', '<button class="button primary">Authorize my current IP</button>')
+            content += '</section>'
+            content += f'<p class="destination">Destination: <code>{destination}</code></p>'
+            content += '<div class="session-actions"><a href="/portal/">Refresh authorization status</a>'
+            content += form('logout', '<button class="text-button">Revoke access &amp; sign out</button>') + '</div>'
+            content += '<noscript><p class="notice">JavaScript is disabled. Refresh this page to confirm authorization. Continue Now appears only after server confirmation.</p></noscript></div>'
             if status['state'] in ('active', 'pending'):
                 content += '<script src="/portal/app.js" defer></script>'
-        return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>VICIdial Secure Access</title></head><body style="font:17px system-ui;max-width:700px;margin:4rem auto;padding:1rem"><h1>VICIdial Secure Access</h1>' + content + '<p>Network access only. Sign in to VICIdial separately; its existing permissions still apply. Shared public IPs share network reachability.</p></body></html>'
+        content += '</section>'
+        help_title = 'Continue to VICIdial' if signed_in else 'Secure access to your dialer'
+        help_body = ('Your account determines the destination. VICIdial will ask you to sign in separately and complete any required two-factor authentication.'
+                     if signed_in else 'Sign in, authorize your current public IP, then continue to your VICIdial application.')
+        help_body += '</p><p>Access expires automatically. Other users on this public IP share network access; each uses their own VICIdial account.'
+        return ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
+                '<title>VICIdial Secure Access</title><link rel="stylesheet" href="/portal/app.css"></head><body>'
+                '<a class="skip-link" href="#main">Skip to main content</a>'
+                '<header class="masthead"><div class="brand"><img src="/portal/logo.png" width="170" height="45" alt="VICIdial">'
+                '<span class="brand-label">Secure Access Portal</span></div><span class="connection">HTTPS connection</span></header>'
+                '<div class="title-bar"><div><h1>VICIdial Secure Access</h1><p>Your gateway to the agent and administration interfaces</p></div></div>'
+                '<main id="main" class="container">' + steps +
+                f'<p class="ip-line">Current public IP: <strong><code>{self.ip}</code></strong></p>'
+                '<div class="workspace">' + content + f'<aside class="help-panel"><h2>{help_title}</h2><p>{help_body}</p>'
+                '<p class="help-note">Changing networks? Return here to authorize your new public IP.</p></aside></div></main>'
+                '<footer>VICIdial Secure Access <span aria-hidden="true">&middot;</span> Application permissions are managed by VICIdial.</footer></body></html>')
 
     def do_GET(self):
         if not self.checks():
@@ -144,6 +195,13 @@ class Handler(BaseHTTPRequestHandler):
             return
         if self.path == '/portal/app.js':
             self.send(200, APP_JS.read_text(), 'application/javascript')
+            return
+        if self.path in ('/portal/app.css', '/portal/logo.png'):
+            source, kind = (APP_CSS, 'text/css; charset=utf-8') if self.path.endswith('.css') else (LOGO, 'image/png')
+            try:
+                self.send(200, source.read_bytes(), kind)
+            except OSError:
+                self.send(503, 'Portal asset unavailable')
             return
         s, cookie = self.session(create=self.path == '/portal/')
         if s is None:

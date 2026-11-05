@@ -45,8 +45,19 @@ Validation:
 ```sh
 python3 -m unittest discover -s operations/portal443/tests -v
 python3 -m compileall -q operations/portal443
-bash -n operations/portal443/*.sh
+for file in operations/portal443/*.sh; do bash -n "$file" || exit; done
+node --check operations/portal443/app.js
+node operations/portal443/tests/test_app.js
 ```
+
+After activation, run `probe.py`, `form_probe.py`, and `worker_probe.py` with the
+server's existing Python environment through SSH. The first exercises Apache's
+boundary with a temporary web-only fixture for the server IP; the second submits
+deliberately fake credentials through real HTTPS; the third uses eligible account
+names from the read-only connection, without passwords, to test actual queue,
+firewall confirmation, shared-IP leases, revocation and ineligible requests. These
+probes refuse to overwrite an existing server-IP grant. None establishes an actual
+agent password login, browser behavior or media. See EVIDENCE.md for executed results.
 
 The local test runner uses a mock DB driver if PyMySQL is absent. On the server it
 uses the existing installed bcrypt 4.3.0/PyMySQL 1.2.3 environment. No dependencies
@@ -100,6 +111,15 @@ Do not reboot an operational dialer merely to fill an acceptance box. Boot-unit
 configuration inspection and service restarts do not prove reboot persistence.
 Record unexecuted real-user/media/reboot checks as NOT_RUN, and use PARTIAL unless
 every mandatory acceptance check is actually evidenced.
+
+The subsequent VICIdial visual update is deployed. See [UI_SSO_REPORT.md](UI_SSO_REPORT.md)
+for its separate backup, exact file changes, browser evidence and SSO decision.
+`ui-deploy.sh` updates an existing 443 deployment; it must not be confused with
+the original migration scripts. The installed VICIdial logo is read through a
+fixed public portal route; its artwork is not copied into this source tree.
+Supervisor SSO is not implemented. Native VICIdial authentication and optional
+2FA remain authoritative. Portal logout revokes its lease and session; it does
+not clear credentials cached by a browser for native HTTP Basic authentication.
 
 References: [Apache Lua authorization providers](https://httpd.apache.org/docs/2.4/mod/mod_lua.html),
 [Apache configuration-section merge order](https://httpd.apache.org/docs/2.4/sections.html).

@@ -72,6 +72,9 @@ class Authentication(unittest.TestCase):
                                             ('incorrect', 'Y', None), ('fake-password-only', 'N', None)):
             with patch.object(auth, '_connect', return_value=FakeDB({**user, 'active': active}, settings)):
                 self.assertEqual(auth.authenticate('mockagent', password), expected)
+        for level, active, expected in ((8, 'Y', 'web'), (9, 'Y', 'web'), (9, 'N', None)):
+            with patch.object(auth, '_connect', return_value=FakeDB({**user, 'user_level': level, 'active': active}, settings)):
+                self.assertEqual(auth.authenticate('mockagent', 'fake-password-only'), expected)
 
     def test_bcrypt_legacy_suffix(self):
         salt = bcrypt.gensalt(rounds=4, prefix=b'2a')
@@ -125,7 +128,7 @@ class PortalHTTP(unittest.TestCase):
         headers.update(extra or {})
         conn.request(method, path, urlencode(fields) if fields else None, headers)
         response = conn.getresponse()
-        body = response.read().decode()
+        body = response.read().decode(errors='replace')
         result = (response.status, dict(response.getheaders()), body)
         if response.getheader('Set-Cookie'):
             self.cookie = response.getheader('Set-Cookie').split(';')[0]
@@ -163,7 +166,39 @@ class PortalHTTP(unittest.TestCase):
         # no-referrer can null the Origin on real browser form POSTs.
         self.assertEqual(headers['Referrer-Policy'], 'same-origin')
         self.assertIn('VICIdial Secure Access', body)
+        self.assertIn('alt="VICIdial"', body)
+        self.assertIn('href="/portal/app.css"', body)
+        self.assertIn('for="username"', body)
+        self.assertIn('for="password"', body)
+        self.assertIn('Skip to main content', body)
+        self.assertNotIn('unsafe-inline', headers['Content-Security-Policy'])
         self.assertEqual(self.request('/portal/status')[0], 401)
+
+    def test_fixed_public_assets_and_no_asset_path_expansion(self):
+        logo = self.base/'logo.png'
+        logo.write_bytes(b'PNG-test-fixture')
+        with patch.object(portal, 'LOGO', logo):
+            code, headers, body = self.request('/portal/logo.png')
+        self.assertEqual((code, headers['Content-Type'], body), (200, 'image/png', 'PNG-test-fixture'))
+        code, headers, body = self.request('/portal/app.css')
+        self.assertEqual((code, headers['Content-Type']), (200, 'text/css; charset=utf-8'))
+        self.assertIn('@media (max-width: 420px)', body)
+        self.assertIn(':focus-visible', body)
+        self.assertIn('#015b91', body)
+        self.assertIn('#d9e6fe', body)
+        self.assertNotEqual(self.request('/portal/logo.png/agc/vicidial.php')[0], 200)
+
+    def test_client_fields_cannot_escalate_role_or_supply_destination(self):
+        s = self.login('agent')
+        code, _, _ = self.request('/portal/grant', 'POST',
+                                  {'csrf': s['csrf'], 'role': 'web', 'destination': '/vicidial/admin.php'})
+        self.assertEqual(code, 303)
+        queued = json.loads((self.base/'queue'/(s['request']+'.request')).read_text())
+        self.assertEqual(queued['role'], 'agent')
+        self.assertNotIn('destination', queued)
+        self.activate(s)
+        code, headers, body = self.request('/portal/continue')
+        self.assertEqual((code, headers['Location']), (303, '/agc/vicidial.php'))
 
     def test_login_csrf_origin_and_ip_binding(self):
         s = self.login()
@@ -183,6 +218,8 @@ class PortalHTTP(unittest.TestCase):
                 code, headers, _ = self.request('/portal/continue')
                 self.assertEqual((code, headers['Location']), (303, destination))
                 self.assertIn('Redirecting in: 5 seconds', self.request()[2])
+                self.assertIn('Grant expiry:', self.request()[2])
+                self.assertIn('hidden>Redirecting in: 5 seconds', self.request()[2])
                 self.assertEqual(self.request('/portal/continue?next=https://evil.example')[0], 400)
                 self.assertIn('Refresh this page', self.request()[2])
 
@@ -210,7 +247,10 @@ class PortalHTTP(unittest.TestCase):
         output = io.StringIO()
         with patch.object(portal, 'authenticate', return_value=None), contextlib.redirect_stdout(output):
             for _ in range(7):
-                self.assertEqual(self.request('/portal/login', 'POST', {'csrf': csrf, 'username': 'mockagent', 'password': 'fake-password-only'})[0], 401)
+                code, _, body = self.request('/portal/login', 'POST', {'csrf': csrf, 'username': 'mockagent', 'password': 'fake-password-only'})
+                self.assertEqual(code, 401)
+                self.assertNotIn('fake-password-only', body)
+                self.assertIn('role="alert"', body)
             self.assertEqual(self.request('/portal/login', 'POST', {'csrf': csrf, 'username': 'mockagent', 'password': 'fake-password-only'})[0], 429)
         self.assertEqual(output.getvalue().count('AUTH_FAIL ip=8.8.8.8'), 7)
         self.assertNotIn('fake-password-only', output.getvalue())

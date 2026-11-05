@@ -32,14 +32,18 @@ def request(path, port=443, headers=None, method='GET'):
 
 
 def main():
+    assets = ['/agc/calendar.css', '/agc/vicidial_chat_agent.js',
+              '/agc/webphone/loader.gif', '/agc/images/2FA_icon.png']
     paths = ['/agc/', '/agc/vicidial.php', '/vicidial/', '/vicidial/admin.php',
              '/agc/vdc_db_query.php', '/vicidial/non_agent_api.php', '/recordings/',
              '/RECORDINGS/', '/robots.txt', '/icons/', '/cgi-bin/', '/.noindex.html',
              '/server-status', '/%61gc/vicidial.php', '//agc/vicidial.php',
              '/portal/../agc/vicidial.php', '/portal/%2e%2e/agc/vicidial.php',
              '/agc%2fvicidial.php', '/portal/app.js/agc/vicidial.php',
+             '/portal/app.css/agc/vicidial.php', '/portal/logo.png/vicidial/admin.php',
+             '/portal/logo.png/../agc/vicidial.php', '/portal/private.css',
              '/portal/continue/../agc/vicidial.php', '/agc/vicidial.php/portal/',
-             '/%252e%252e/agc/vicidial.php']
+             '/%252e%252e/agc/vicidial.php', *assets]
     grant = Path('/var/lib/alma-portal-443/web') / IP
     # Refuse to disturb any real grant for this IP.
     if grant.exists():
@@ -50,6 +54,13 @@ def main():
     assert 'WWW-Authenticate' not in headers
     assert request('/portal/status')[0] == 401
     assert request('/portal/continue')[0] == 401
+    for path, kind in (('/portal/app.css', 'text/css'), ('/portal/logo.png', 'image/png'),
+                       ('/portal/app.js', 'application/javascript')):
+        code, asset_headers, asset_body = request(path)
+        assert code == 200 and asset_body and asset_headers['Content-Type'].startswith(kind), (path, code)
+    assert b'width="170" height="45" alt="VICIdial"' in body
+    assert b'name="password"' in body and b'unsafe-inline' not in headers['Content-Security-Policy'].encode()
+    print('PASS VICIdial logo/CSS/JS exact public routes; integrated login; restrictive CSP')
     print('PASS TLS trust/IP SAN; root portal; private status and continue')
     for path in paths:
         for spoof in ({}, {'X-Forwarded-For': '158.62.74.253', 'X-Real-IP': '158.62.74.253', 'X-Alma-Source': '158.62.74.253'}):
@@ -78,6 +89,10 @@ def main():
             code = request(path)[0]
             assert code in (200, 401), ('active web fixture', path, code)
         print('PASS temporary server-IP web fixture reaches native login pages')
+        for path in assets:
+            code, _, body = request(path)
+            assert code == 200 and body, ('active supporting asset', path, code)
+        print('PASS authorized CSS, JavaScript and image assets; unauthorized assets denied above')
         grant.write_text(str(int(time.time()) - 1))
         assert request('/agc/vicidial.php')[0] == 403
         print('PASS expired web grant denied')

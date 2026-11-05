@@ -1,0 +1,11 @@
+fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8  /var/www/html/vicidial/admin.php
+14d11c2b9229f1ce5acd397cbb0b16e6e27f9c5216a1e0ad4ad1ca86db506fac  /var/www/html/vicidial/functions.php
+57e5fac9dbf6b7168aa50e6ae7bcd65a1e9108087ddc07805f8249651e1a7ed2  /var/www/html/vicidial/images/vicidial_admin_web_logo.png
+f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6  /etc/asterisk/pjsip.conf
+e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde  /etc/asterisk/extensions.conf
+3cda5b432da5a601f171aad88a91e2d2f01a7a252c8071d4fc7809bd69f223e5  /etc/firewalld/zones/public.xml
+1c250ef8ae8c9d8847988351f4c9045e65f0029dd88e3b4d8e51ebd617c1242a  /etc/fail2ban/filter.d/alma-portal.conf
+bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524  /etc/fail2ban/jail.d/alma-portal.local
+e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac  /opt/alma-portal-443/vicidial_auth.py
+89939aff2b2a0f85765156bec77ec4dc8636bbcc6228cb182cff60b3f9dd3dbb  /opt/alma-portal-443/common.py
+ef750307cfb714949c7d4fbd41daccf54556cea9e2b7997db057b028a72e3db7  /opt/alma-portal-443/apply_requests.py
