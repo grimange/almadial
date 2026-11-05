@@ -160,6 +160,8 @@ class PortalHTTP(unittest.TestCase):
         for value in ('Secure', 'HttpOnly', 'SameSite=Strict', 'Path=/portal/'):
             self.assertIn(value, headers['Set-Cookie'])
         self.assertNotIn('WWW-Authenticate', headers)
+        # no-referrer can null the Origin on real browser form POSTs.
+        self.assertEqual(headers['Referrer-Policy'], 'same-origin')
         self.assertIn('VICIdial Secure Access', body)
         self.assertEqual(self.request('/portal/status')[0], 401)
 

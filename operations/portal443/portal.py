@@ -64,7 +64,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(code)
         for key, value in {'Content-Type': kind, 'Content-Length': str(len(data)),
                            'Cache-Control': 'no-store, private', 'X-Content-Type-Options': 'nosniff',
-                           'Referrer-Policy': 'no-referrer', 'X-Frame-Options': 'DENY',
+                           'Referrer-Policy': 'same-origin', 'X-Frame-Options': 'DENY',
                            'Content-Security-Policy': "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}.items():
             self.send_header(key, value)
         if cookie:
@@ -168,19 +168,23 @@ class Handler(BaseHTTPRequestHandler):
         if not self.checks():
             return
         s, _ = self.session()
+        reason = 'form'
         try:
             length = int(self.headers.get('Content-Length', '0'))
-            if not 1 <= length <= 4096 or self.headers.get('Content-Type') != 'application/x-www-form-urlencoded':
+            if not 1 <= length <= 4096 or self.headers.get('Content-Type', '').split(';')[0].strip() != 'application/x-www-form-urlencoded':
                 raise ValueError('Invalid form')
             fields = parse_qs(self.rfile.read(length).decode(), strict_parsing=True, max_num_fields=4)
             if any(len(v) != 1 for v in fields.values()):
                 raise ValueError('Duplicate field')
             fields = {k: v[0] for k, v in fields.items()}
+            reason = 'session' if not s else 'csrf'
             if not s or not secrets.compare_digest(fields.get('csrf', ''), s['csrf']):
                 raise ValueError('Invalid CSRF')
+            reason = 'origin'
             if self.headers.get('Origin', ORIGIN) != ORIGIN:
                 raise ValueError('Invalid origin')
         except (ValueError, UnicodeError):
+            print('FORM_REJECT reason=' + reason, flush=True)
             self.send(403, 'Form or CSRF validation failed')
             return
         if self.path == '/portal/login':
