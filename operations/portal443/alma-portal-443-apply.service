@@ -1,7 +1,7 @@
 [Unit]
 Description=Confirm and expire VICIdial Secure Access grants
-After=firewalld.service mariadb.service
-Requires=firewalld.service mariadb.service
+After=firewalld.service mariadb.service alma-portal-sip-guard.service
+Requires=firewalld.service mariadb.service alma-portal-sip-guard.service
 
 [Service]
 Type=oneshot

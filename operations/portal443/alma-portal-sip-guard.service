@@ -1,0 +1,18 @@
+[Unit]
+Description=Fail-closed SIP and RTP portal authorization before conntrack accepts
+After=local-fs.target
+Before=firewalld.service asterisk.service alma-portal-443-apply.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/opt/alma-portal-venv/bin/python /opt/alma-portal-443/sip_guard.py
+NoNewPrivileges=true
+ProtectHome=true
+ProtectSystem=strict
+PrivateTmp=true
+TimeoutStartSec=15
+
+[Install]
+WantedBy=multi-user.target
+RequiredBy=firewalld.service asterisk.service

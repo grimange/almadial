@@ -62,6 +62,18 @@ def main():
     assert b'name="password"' in body and b'unsafe-inline' not in headers['Content-Security-Policy'].encode()
     print('PASS VICIdial logo/CSS/JS exact public routes; integrated login; restrictive CSP')
     print('PASS TLS trust/IP SAN; root portal; private status and continue')
+    navigation = {'Accept': 'text/html', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Dest': 'document'}
+    for entry in ('/agc/vicidial.php', '/vicidial/admin.php'):
+        code, h, _ = request(entry + '?next=https://untrusted.invalid/', headers=navigation)
+        assert code == 303 and h.get('Location') == 'https://2.29.153.161/', (entry, code, h)
+        assert '__Secure-AlmaNotice=required' in h.get('Set-Cookie', '')
+        assert request(entry, headers={**navigation, 'X-Requested-With': 'XMLHttpRequest'})[0] == 403
+        assert request(entry, headers={**navigation, 'Sec-Fetch-Mode': 'cors'})[0] == 403
+        assert request(entry, headers=navigation, method='POST')[0] == 403
+    for resource in ('/agc/vdc_db_query.php', '/vicidial/non_agent_api.php', *assets):
+        assert request(resource, headers=navigation)[0] == 403
+    assert b'missing, expired or revoked' in request('/portal/', headers={'Cookie': '__Secure-AlmaNotice=required'})[2]
+    print('PASS browser303 fixed root; API/AJAX/resource403; no open redirect; useful portal notice')
     for path in paths:
         for spoof in ({}, {'X-Forwarded-For': '158.62.74.253', 'X-Real-IP': '158.62.74.253', 'X-Alma-Source': '158.62.74.253'}):
             code = request(path, headers=spoof)[0]
@@ -89,6 +101,8 @@ def main():
             code = request(path)[0]
             assert code in (200, 401), ('active web fixture', path, code)
         print('PASS temporary server-IP web fixture reaches native login pages')
+        assert request('/agc/vicidial.php', headers=navigation)[0] == 200
+        assert request('/vicidial/admin.php', headers=navigation)[0] in (200, 401)
         for path in assets:
             code, _, body = request(path)
             assert code == 200 and body, ('active supporting asset', path, code)

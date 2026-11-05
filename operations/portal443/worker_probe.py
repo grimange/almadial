@@ -17,6 +17,8 @@ sys.path.insert(0, '/opt/alma-portal-443')
 from common import BASE, QUEUE
 from apply_requests import rule, PORTS
 from vicidial_auth import _connect
+from sip_guard import TABLE
+from phone_policy import supervisor_phone
 
 IP = '2.29.153.161'
 uid = pwd.getpwnam('alma-portal').pw_uid
@@ -41,6 +43,11 @@ def run_worker():
     assert command('systemctl', 'start', 'alma-portal-443-apply.service').returncode == 0
 
 
+def guarded():
+    result = command('nft', '-j', 'get', 'element', 'inet', TABLE, 'agents4', '{', IP, '}')
+    return result.returncode == 0
+
+
 def status(key):
     return json.loads((BASE / 'status' / key).read_text())
 
@@ -55,6 +62,7 @@ def main():
             supervisor = cursor.fetchone()['user']
     finally:
         c.close()
+    supervisor_has_phone = supervisor_phone(supervisor)
     assert not (BASE / 'web' / IP).exists(), 'Refuse to disturb existing web grant'
     for port in PORTS:
         assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 1
@@ -65,6 +73,7 @@ def main():
         run_worker()
         current = status(key)
         assert current['state'] == 'active'
+        assert guarded()
         assert 43100 < current['expires_at'] - time.time() <= 43200
         assert (BASE/'web'/IP).stat().st_uid == 0
         for port in PORTS:
@@ -77,6 +86,7 @@ def main():
         grants.append((web_key, web_data))
         run_worker()
         assert status(second)['state'] == status(web_key)['state'] == 'active'
+        assert guarded()
         queue({**data, 'kind': 'revoke', 'target': key, 'at': int(time.time())})
         run_worker()
         assert status(key)['state'] == 'revoked'
@@ -84,14 +94,20 @@ def main():
         for port in PORTS:
             assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 0
         print('PASS shared IP: revoking one agent lease preserves another agent lease and supervisor web lease')
-        queue({**data, 'kind': 'revoke', 'target': second, 'at': int(time.time())})
+        revoke_at = int(time.time())
+        queue({**data, 'kind': 'revoke_user', 'at': revoke_at})
         run_worker()
         assert status(second)['state'] == 'revoked'
         assert status(web_key)['state'] == 'active'
+        assert guarded() == supervisor_has_phone
         assert (BASE/'web'/IP).exists()
         for port in PORTS:
-            assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 1
-        print('PASS shared IP: supervisor retains web access without agent SIP/RTP rules')
+            assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == (0 if supervisor_has_phone else 1)
+        print('PASS shared IP: supervisor retains web; SIP matches native monitoring permission: ' + str(supervisor_has_phone))
+        stale = queue({**data, 'at': revoke_at})
+        run_worker()
+        assert status(stale)['state'] == 'failed'
+        print('PASS account-scoped revoke clears old sessions; stale queued grant cannot reactivate access')
     finally:
         for target, grant_data in grants:
             queue({**grant_data, 'kind': 'revoke', 'target': target, 'at': int(time.time())})
@@ -102,6 +118,7 @@ def main():
                 command('firewall-cmd', '--zone=public', '--remove-rich-rule=' + rule(IP, port))
     assert all(status(target)['state'] == 'revoked' for target, _ in grants)
     assert not (BASE/'web'/IP).exists()
+    assert not guarded()
     for port in PORTS:
         assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 1
     print('PASS live per-lease revoke removes web and owned SIP/RTP rules; fixture cleaned')

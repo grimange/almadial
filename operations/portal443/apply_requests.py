@@ -13,6 +13,8 @@ import time
 
 from common import BASE, QUEUE, LIFETIME, HEARTBEAT, atomic_json, public_ip
 from vicidial_auth import current_role, USER_PATTERN
+from sip_guard import grace_state, refresh as guard_refresh
+from phone_policy import supervisor_phone
 
 ID = re.compile(r'^[a-f0-9]{32}$')
 PORTS = ('5061', '10000-20000')
@@ -36,7 +38,7 @@ def aggregate(leases, now):
             continue
         ip = lease['ip']
         web[ip] = max(web.get(ip, 0), lease['expires_at'])
-        if lease['role'] == 'agent':
+        if lease['role'] == 'agent' or lease.get('sip_enabled', False):
             sip[ip] = max(sip.get(ip, 0), lease['expires_at'])
     return web, sip
 
@@ -71,10 +73,14 @@ def reconcile(sip, previous, now, command=firewall):
     return confirmed, synced
 
 
-def process(state, now, role_check=current_role, command=firewall):
+def process(state, now, role_check=current_role, command=firewall, gate=guard_refresh, phone_check=supervisor_phone):
     portal_uid = pwd.getpwnam('alma-portal').pw_uid
     portal_gid = grp.getgrnam('alma-portal').gr_gid
     leases = state.setdefault('leases', {})
+    revocations = state.setdefault('revoked_before', {})
+    for key in list(revocations):
+        if revocations[key] < now - 86400:
+            del revocations[key]
     for path in sorted(QUEUE.glob('*.request'))[:50]:
         request_id = path.stem
         data = None
@@ -93,15 +99,26 @@ def process(state, now, role_check=current_role, command=firewall):
                 raise ValueError('Invalid identity')
             if type(at) is not int or not 0 <= now - at <= 120:
                 raise ValueError('Stale request')
-            if data['kind'] == 'revoke':
+            identity = user + '@' + ip
+            if data['kind'] == 'revoke_user':
+                # Clear this account's old browser sessions, not another user
+                # sharing the IP. Tombstones also defeat queued grant races.
+                revocations[identity] = max(revocations.get(identity, 0), at)
+                for lease in leases.values():
+                    if (lease['user'], lease['ip']) == (user, ip) and lease.get('requested_at', 0) <= at:
+                        lease['expires_at'] = min(lease['expires_at'], now)
+                        lease['revoked'] = True
+            elif data['kind'] == 'revoke':
                 target = data['target']
                 lease = leases.get(target)
                 if lease and (lease['user'], lease['ip']) == (user, ip):
                     lease['expires_at'] = now
                     lease['revoked'] = True
             elif data['kind'] == 'grant' and role_check(user) == role:
+                if at <= revocations.get(identity, 0):
+                    raise ValueError('Grant predates account revocation')
                 leases[request_id] = {'ip': ip, 'user': user, 'role': role,
-                                      'expires_at': now + LIFETIME, 'eligible': True}
+                                      'expires_at': now + LIFETIME, 'eligible': True, 'requested_at': at}
             else:
                 raise ValueError('Account no longer eligible')
         except Exception:
@@ -110,10 +127,12 @@ def process(state, now, role_check=current_role, command=firewall):
                             {'ip': data.get('ip'), 'user': data.get('user'), 'state': 'failed'}, gid=portal_gid)
             print('REQUEST_REJECTED', flush=True)
         finally:
+            # A crash must not consume a revoke without persisting its intent.
+            atomic_json(BASE / 'state.json', state, 0o600)
             path.unlink(missing_ok=True)
 
     # Account disable/role changes fail closed even for previously granted leases.
-    roles = {}
+    roles, phones = {}, {}
     for lease in leases.values():
         user = lease['user']
         if user not in roles:
@@ -122,12 +141,30 @@ def process(state, now, role_check=current_role, command=firewall):
             except Exception:
                 roles[user] = None
         lease['eligible'] = roles[user] == lease['role']
+        if user not in phones:
+            try:
+                phones[user] = roles[user] == 'web' and phone_check(user)
+            except Exception:
+                phones[user] = False
+        # Never accept phone capability from a request, browser, or stale state.
+        lease['sip_enabled'] = lease['eligible'] and (roles[user] == 'agent' or bool(phones[user]))
     web, sip = aggregate(leases, now)
+    previous_sip = state.get('sip_previous', state.get('synced', {}))
+    state['rtp_grace'] = grace_state(sip, previous_sip, state.get('rtp_grace', {}), now)
+    # Persist this transition even if nft fails. Retrying a failed revoke must
+    # never recreate or extend an elapsed grace deadline.
+    state['sip_previous'] = sip
     # Persist ownership BEFORE firewall mutation, so a crash cannot orphan a grant.
     old_synced = {**dict.fromkeys(state.get('owned', []), 0), **state.get('synced', {})}
     state['owned'] = list(set(old_synced) | set(sip))
     atomic_json(BASE / 'state.json', state, 0o600)
+    try:
+        guarded = gate(sip, state['rtp_grace'], now)
+    except Exception:
+        guarded = set()
+        print('SIP_GUARD_RECONCILE_FAILED', flush=True)
     confirmed, synced = reconcile(sip, old_synced, now, command)
+    confirmed &= guarded
     state['synced'] = synced
     state['owned'] = list(synced)
     for ip in list(web):

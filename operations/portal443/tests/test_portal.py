@@ -3,6 +3,7 @@ import contextlib
 import http.client
 import io
 import json
+import os
 from pathlib import Path
 import re
 import sys
@@ -24,6 +25,7 @@ import bcrypt
 import vicidial_auth as auth
 import portal
 import apply_requests as worker
+from phone_policy import monitor_allowed
 from common import public_ip, atomic_json
 
 
@@ -239,7 +241,7 @@ class PortalHTTP(unittest.TestCase):
         self.assertEqual(json.loads(self.request('/portal/status')[2])['state'], 'failed')
         self.assertEqual(self.request('/portal/logout', 'POST', {'csrf': s['csrf']})[0], 303)
         self.assertEqual(self.request('/portal/status')[0], 401)
-        self.assertTrue(any(json.loads(p.read_text()).get('kind') == 'revoke' for p in (self.base / 'queue').iterdir()))
+        self.assertTrue(any(json.loads(p.read_text()).get('kind') == 'revoke_user' for p in (self.base / 'queue').iterdir()))
 
     def test_rate_limit_and_log_redaction(self):
         _, _, body = self.request()
@@ -257,7 +259,57 @@ class PortalHTTP(unittest.TestCase):
         self.assertNotIn('mockagent', output.getvalue())
 
 
+class SupervisorPhonePolicy(unittest.TestCase):
+    def test_native_monitor_permissions_and_account_eligibility(self):
+        base = {**row(), 'user_level': 9, 'vdc_agent_api_access': '1',
+                'api_allowed_functions': ' blind_monitor '}
+        for changes, expected in (({}, True), ({'user_level': 8}, True),
+                ({'user_level': 7}, False), ({'active': 'N'}, False),
+                ({'api_only_user': '1'}, False), ({'force_change_password': 'Y'}, False),
+                ({'vdc_agent_api_access': '0'}, False), ({'api_allowed_functions': ' ALL_FUNCTIONS '}, True),
+                ({'api_allowed_functions': ' not_blind_monitor '}, False),
+                ({'api_allowed_functions': '\tblind_monitor\t'}, False),
+                ({'api_allowed_functions': ''}, False)):
+            with self.subTest(changes=changes):
+                self.assertEqual(monitor_allowed({**base, **changes}), expected)
+        self.assertFalse(monitor_allowed(None))
+
+
 class FirewallLeases(unittest.TestCase):
+    def test_account_revoke_defeats_pending_grant_and_preserves_other_users(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            for name in ('web', 'status', 'queue'):
+                (base/name).mkdir()
+            def enqueue(key, kind, at):
+                p = base/'queue'/(key + '.request')
+                p.write_text(json.dumps(dict(kind=kind, at=at, ip='8.8.8.8', user='mockagent', role='agent')))
+                p.chmod(0o600)
+            with patch.object(worker, 'BASE', base), patch.object(worker, 'QUEUE', base/'queue'), \
+                 patch.object(worker.pwd, 'getpwnam', return_value=types.SimpleNamespace(pw_uid=os.getuid())), \
+                 patch.object(worker.grp, 'getgrnam', return_value=types.SimpleNamespace(gr_gid=0)), \
+                 patch.object(worker, 'atomic_json', side_effect=lambda p,v,*a,**k: Path(p).write_text(json.dumps(v))):
+                state = {}
+                # Lexical processing deliberately sees revoke BEFORE old grant.
+                enqueue('a'*32, 'revoke_user', 100)
+                enqueue('b'*32, 'grant', 100)
+                def process(now):
+                    worker.process(state, now, role_check=lambda u:'agent', command=lambda *a:0,
+                                   gate=lambda sip, grace, now:set(sip))
+                process(100)
+                self.assertFalse(worker.aggregate(state['leases'], 100)[1])
+                self.assertEqual(state['revoked_before']['mockagent@8.8.8.8'], 100)
+                enqueue('c'*32, 'grant', 101)
+                process(101)
+                self.assertTrue(state['leases']['c'*32]['sip_enabled'])
+                state['leases']['e'*32] = dict(ip='8.8.8.8', user='anotheruser', role='agent',
+                                                expires_at=500, eligible=True, requested_at=99)
+                enqueue('d'*32, 'revoke_user', 102)
+                process(102)
+                self.assertTrue(state['leases']['c'*32]['revoked'])
+                self.assertEqual(state['leases']['e'*32]['expires_at'], 500)
+                self.assertEqual(state['sip_previous'], {'8.8.8.8': 500})
+
     def test_shared_ip_and_roles(self):
         leases = {'a': dict(ip='8.8.8.8', role='agent', expires_at=100, eligible=True),
                   'b': dict(ip='8.8.8.8', role='agent', expires_at=200, eligible=True),
@@ -265,6 +317,10 @@ class FirewallLeases(unittest.TestCase):
         self.assertEqual(worker.aggregate(leases, 50), ({'8.8.8.8': 300}, {'8.8.8.8': 200}))
         leases['b']['expires_at'] = 50
         self.assertEqual(worker.aggregate(leases, 101), ({'8.8.8.8': 300}, {}))
+        leases['c']['sip_enabled'] = True
+        self.assertEqual(worker.aggregate(leases, 101), ({'8.8.8.8': 300}, {'8.8.8.8': 300}))
+        leases['c']['eligible'] = False
+        self.assertEqual(worker.aggregate(leases, 101), ({}, {}))
 
     def test_firewall_confirm_failure_and_revoke(self):
         rules = set()
@@ -301,14 +357,42 @@ class FirewallLeases(unittest.TestCase):
                 lease = dict(ip='8.8.8.8', user='mockagent', role='agent', expires_at=1000, eligible=True)
                 state = {'leases': {'a'*32: lease}}
                 with patch.object(worker, 'atomic_json', side_effect=lambda p,v,*a,**k: Path(p).write_text(json.dumps(v))):
-                    worker.process(state, 100, role_check=lambda u: None, command=lambda *a: 1)
+                    worker.process(state, 100, role_check=lambda u: None, command=lambda *a: 1, gate=lambda *a: set())
                     self.assertFalse((base/'web'/'8.8.8.8').exists())
                     self.assertEqual(json.loads((base/'status'/('a'*32)).read_text())['state'], 'failed')
-                    worker.process(state, 110, role_check=lambda u: 'agent', command=lambda *a: 2)
+                    worker.process(state, 110, role_check=lambda u: 'agent', command=lambda *a: 2, gate=lambda *a: {'8.8.8.8'})
                     self.assertFalse((base/'web'/'8.8.8.8').exists())
-                    worker.process(state, 120, role_check=lambda u: 'agent', command=lambda *a: 0)
+                    def failed_gate(*args):
+                        raise RuntimeError('simulated netlink failure')
+                    worker.process(state, 115, role_check=lambda u: 'agent', command=lambda *a: 0, gate=failed_gate)
+                    self.assertFalse((base/'web'/'8.8.8.8').exists())
+                    self.assertEqual(json.loads((base/'status'/('a'*32)).read_text())['state'], 'failed')
+                    worker.process(state, 120, role_check=lambda u: 'agent', command=lambda *a: 0, gate=lambda *a: {'8.8.8.8'})
                     self.assertEqual((base/'web'/'8.8.8.8').read_text(), '155')
                     self.assertEqual(json.loads((base/'status'/('a'*32)).read_text())['state'], 'active')
+                    lease['expires_at'] = 125
+                    worker.process(state, 130, role_check=lambda u: 'agent', command=lambda *a: 1, gate=failed_gate)
+                    self.assertEqual(state['rtp_grace'], {'8.8.8.8': 250})
+                    self.assertEqual(json.loads((base/'state.json').read_text())['sip_previous'], {})
+                    worker.process(state, 300, role_check=lambda u: 'agent', command=lambda *a: 1, gate=failed_gate)
+                    self.assertEqual(state['rtp_grace'], {})
+                    # A client/stale sip_enabled flag cannot confer phone access.
+                    state['leases'] = {'b'*32: dict(ip='8.8.8.8', user='mocksupervisor', role='web',
+                                                  expires_at=1000, eligible=True, sip_enabled=True)}
+                    gate = lambda sip, grace, now: set(sip)
+                    worker.process(state, 350, role_check=lambda u: 'web', command=lambda *a: 0,
+                                   gate=gate, phone_check=lambda u: False)
+                    self.assertEqual(state['sip_previous'], {})
+                    self.assertFalse(state['leases']['b'*32]['sip_enabled'])
+                    self.assertTrue((base/'web'/'8.8.8.8').exists())
+                    worker.process(state, 360, role_check=lambda u: 'web', command=lambda *a: 0,
+                                   gate=gate, phone_check=lambda u: True)
+                    self.assertEqual(state['sip_previous'], {'8.8.8.8': 1000})
+                    worker.process(state, 370, role_check=lambda u: 'web', command=lambda *a: 0,
+                                   gate=gate, phone_check=lambda u: False)
+                    self.assertEqual(state['sip_previous'], {})
+                    self.assertEqual(state['rtp_grace'], {'8.8.8.8': 490})
+                    self.assertTrue((base/'web'/'8.8.8.8').exists())
 
 
 if __name__ == '__main__':

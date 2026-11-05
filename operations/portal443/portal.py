@@ -116,6 +116,13 @@ class Handler(BaseHTTPRequestHandler):
         return None, None
 
     def page(self, s, message=''):
+        try:
+            notice_cookie = SimpleCookie(self.headers.get('Cookie', ''))
+            access_notice = '__Secure-AlmaNotice' in notice_cookie and notice_cookie['__Secure-AlmaNotice'].value == 'required'
+        except CookieError:
+            access_notice = False
+        notice = ('<p class="notice" role="status">VICIdial access is missing, expired or revoked. '
+                  'Sign in and authorize your current public IP to continue.</p>') if access_notice else ''
         csrf = html.escape(s['csrf'])
         signed_in = 'user' in s
         status = grant_status(s) if signed_in else {'state': 'idle'}
@@ -149,6 +156,8 @@ class Handler(BaseHTTPRequestHandler):
             content += '<h2 id="panel-title" class="panel-title">Access Authorization</h2><div class="panel-body">'
             content += f'<dl class="details"><div><dt>VICIdial username</dt><dd>{html.escape(s["user"])}</dd></div><div><dt>Account access type</dt><dd>{role}</dd></div>'
             content += f'<div><dt>{"Authorized public IP" if active else "Public IP"}</dt><dd><code>{self.ip}</code></dd></div></dl>'
+            if active:
+                content += '<p class="form-note">' + ('Phone access: SIP/RTP enabled for agent or authorized supervisor monitoring.' if status.get('sip_enabled', s['role'] == 'agent') else 'Phone access: web-only; this account has no supervisor monitoring permission.') + '</p>'
             content += f'<section class="authorization {status["state"]}" aria-labelledby="state">'
             if active:
                 minutes = status['remaining'] // 60
@@ -166,7 +175,8 @@ class Handler(BaseHTTPRequestHandler):
             content += '</section>'
             content += f'<p class="destination">Destination: <code>{destination}</code></p>'
             content += '<div class="session-actions"><a href="/portal/">Refresh authorization status</a>'
-            content += form('logout', '<button class="text-button">Revoke access &amp; sign out</button>') + '</div>'
+            content += form('logout', '<button class="text-button">Revoke my grants on this IP &amp; sign out</button>') + '</div>'
+            content += '<p class="form-note">Revocation includes your older browser sessions on this IP. Other users with valid phone grants on the same IP keep access.</p>'
             content += '<noscript><p class="notice">JavaScript is disabled. Refresh this page to confirm authorization. Continue Now appears only after server confirmation.</p></noscript></div>'
             if status['state'] in ('active', 'pending'):
                 content += '<script src="/portal/app.js" defer></script>'
@@ -181,7 +191,7 @@ class Handler(BaseHTTPRequestHandler):
                 '<header class="masthead"><div class="brand"><img src="/portal/logo.png" width="170" height="45" alt="VICIdial">'
                 '<span class="brand-label">Secure Access Portal</span></div><span class="connection">HTTPS connection</span></header>'
                 '<div class="title-bar"><div><h1>VICIdial Secure Access</h1><p>Your gateway to the agent and administration interfaces</p></div></div>'
-                '<main id="main" class="container">' + steps +
+                '<main id="main" class="container">' + notice + steps +
                 f'<p class="ip-line">Current public IP: <strong><code>{self.ip}</code></strong></p>'
                 '<div class="workspace">' + content + f'<aside class="help-panel"><h2>{help_title}</h2><p>{help_body}</p>'
                 '<p class="help-note">Changing networks? Return here to authorize your new public IP.</p></aside></div></main>'
@@ -286,12 +296,11 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path in ('/portal/grant', '/portal/logout') and 'user' in s:
             with LOCK:
                 if self.path == '/portal/logout':
-                    if 'request' in s:
-                        try:
-                            self.queue(s, 'revoke')
-                        except OSError:
-                            self.send(503, 'Revocation could not be queued. Please retry.')
-                            return
+                    try:
+                        self.queue(s, 'revoke_user')
+                    except OSError:
+                        self.send(503, 'Revocation could not be queued. Please retry.')
+                        return
                     for key in list(SESSIONS):
                         if SESSIONS[key] is s:
                             del SESSIONS[key]
