@@ -46,7 +46,7 @@ COMMANDS = {
     "firewalld": ("firewall-cmd", "--state"),
     "firewall_zones": ("firewall-cmd", "--get-active-zones"),
     "firewall_rules": ("firewall-cmd", "--list-all-zones"),
-    "time": ("timedatectl", "show", "--property=NTPSynchronized,Timezone,LocalRTC"),
+    "time": ("timedatectl", "show", "--property=NTPSynchronized", "--property=Timezone", "--property=LocalRTC"),
     "chrony": ("chronyc", "-n", "tracking"),
     "services": ("systemctl", "show", "--no-pager", "--property=Id,LoadState,ActiveState,SubState,UnitFileState", *UNITS),
     "listeners": ("ss", "--no-header", "--listening", "--numeric", "--tcp", "--udp"),
@@ -468,7 +468,13 @@ def result(probe: str, raw: dict | None, r: Redactor, simulated: bool) -> dict:
     if not isinstance(text, str) or len(text.encode()) > LIMIT:
         output.update(status="ERROR", error="invalid_output")
         return output
-    allowed_nonzero = (probe == "packages" and code == 1) or (probe == "virtualization" and code == 1 and text.strip() == "none") or (probe == "firewalld" and code == 252 and text.strip() == "not running")
+    # RPM returns the count of missing query operands, not a Boolean failure.
+    # Only accept a positive count corroborated by explicit absence records;
+    # parse() still requires a complete, recognized result for every package.
+    absent_packages = {line[8:-17] for line in text.splitlines()
+                       if line.startswith("package ") and line.endswith(" is not installed")
+                       and line[8:-17] in PACKAGES}
+    allowed_nonzero = (probe == "packages" and code == len(absent_packages) and 0 < code <= len(PACKAGES)) or (probe == "virtualization" and code == 1 and text.strip() == "none") or (probe == "firewalld" and code == 252 and text.strip() == "not running")
     if code not in (None, 0) and not allowed_nonzero:
         output.update(status="ERROR", error="nonzero_exit")
         return output

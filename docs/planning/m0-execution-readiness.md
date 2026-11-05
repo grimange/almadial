@@ -1,14 +1,16 @@
 # M0 execution readiness and first assignment
 
-Date: 2026-11-05 (Asia/Manila). Full M0 execution verdict: **BLOCKED**. Repository-only inventory tooling is now prepared and fixture-tested under the subsequent explicit preparation assignment. Host collection and compatibility remain **NOT_RUN**; synchronization alone starts no engineering work.
+Date: 2026-11-05 (Asia/Manila). Full M0 gate remains **OPEN / NOT ACCEPTED**. ALM-1 implementation handoff: **ALMADIAL_M0_HOST_BASELINE_READY_FOR_QA**. Real host collection and implementer recovery verification executed on `almadial-alma10`; the later authorized firewall closure measured an empty kernel nftables ruleset using successful JSON/text queries. Final collector run remains accurately 20 COLLECTED / 3 firewalld-specific UNAVAILABLE, exit 1; separate real nftables evidence completes the mandatory firewall observation. Independent host acceptance and stack compatibility remain **NOT_RUN**. See [the live evidence and recovery report](../compatibility/m0-01-alma10-live-evidence.md).
+
+Earlier live-collection assignment: the operator confirmed **no VM had been created**; [that blocked attempt and transfer protocol](../compatibility/m0-01-live-host-baseline.md) remain as history. Later assignments authorized the named VM and clean snapshot, then the bounded firewall closure. Accepted tooling commit `18b97eea1438e0d1be72276fd3018659a33a636f` ran unchanged first; two observed defects were corrected with regressions and a hashed, uncommitted rerun. The final run uses those same corrected bytes (collector SHA-256 `07a3bd79ca43a59a1ee55fc54adcce9d2964a83edf831d6cf827f7929973f282`), not a newly accepted commit. All runs remain protected outside Git. Recovery previously passed; no restoration was repeated. ALM-1 is now **QA Review**, assigned to Codex, M0 label retained and Blocked attachment removed, with MCP read-back. It is not Accepted.
 
 ## First canonical work package
 
 - **M0-01 — Establish the clean AlmaLinux 10 VM and host inventory**
 - Kaneo project AlmaDial `ghritpte6e40o5ayktgz0vh1`, project reference **ALM-1**, actual task ID `p8urvq3yjtc76rktih9xlhe3`.
 - Source: plan §14 M0-01; §§4, 9.1, 20 B, 23; AGENTS.md and `prompts/M0-01-codex.md`.
-- Current verified state, rechecked 2026-11-05: Backlog (unchanged `to-do` status slug)/unassigned, AlmaDial M0 and Blocked labels. No task is currently marked Ready. The native board now includes Ready; the former Ready-label fallback is deprecated. The two retained extra columns do not resolve M0 prerequisites.
-- No prerequisite task; external prerequisites are missing. A synchronized task is not implementation authority.
+- Current verified state, rechecked 2026-11-05: QA Review (`in-review`), assigned to the discovered Codex member, AlmaDial M0 label retained; Blocked attachment removed. Accepted was not entered. Evidence comment `gee7ljvyenf31ie77luzr273` was read back. The native board includes Ready; the former Ready-label fallback is deprecated.
+- No prerequisite work package. Host, access, image checksums/signature, operator authority, source, clean-snapshot recovery and kernel firewall observation are evidenced for implementation handoff. Separate independent QA is the next gate. A synchronized task alone is not execution authority.
 
 ## Worker configuration and required tools
 
@@ -25,12 +27,12 @@ The next worker must discover its own identity via MCP and verify membership. Fo
 | Defined product and task acceptance | PASS for planning | Plan 1.0-draft and canonical M0-01 task description |
 | Review/backlog traceability | PASS | 35 tasks, 44 proposed native dependency edges, MCP read-back |
 | Reproducible documentation and tooling baseline | PASS for documentation; tooling finalization recorded separately | Documentation commit `1df743a4178fc32d9d78d53de8ea0870b1d2c30f` includes the reviewed scaffold/plan/reports and guidance/templates. Use the subsequent local commit containing [the independent tooling QA report](../reviews/m0-01-inventory-qa.md) for collector execution; verify its complete SHA and reviewed artifact digests before transfer. No push. |
-| Named disposable AlmaLinux 10 host | BLOCKED | No host identity, access/console route or image identity supplied |
-| Recoverable clean snapshot | BLOCKED | No snapshot identifier, timestamp or restore proof supplied |
-| Exact host inspection/mutation authority | BLOCKED | Current assignment authorizes repository preparation and a local baseline commit only; no exact host authority |
-| Exact image/minor release and CPU ISA | NOT_RUN | Measure OS and v2/v3 flags; do not assume x86_64 suffices |
-| Repository/package/security inventory | NOT_RUN | Host not inspected |
-| Independent inventory reproduction | NOT_RUN | Separate reviewer and lab access not supplied |
+| Named disposable AlmaLinux 10 host | PASS for implementer inspection | `almadial-alma10`, Multipass/QEMU; real host collection protected outside Git |
+| Recoverable clean snapshot | PASS for implementer verification | `almadial-alma10.clean-baseline` restored; current collection state preserved in snapshot2; host evidence hashes unchanged |
+| Exact host inspection/mutation authority | PASS for scoped assignments | Original inspection/transfer/evidence/recovery authority and later explicit nftables-package/required-dependency inspection authority are recorded separately. nftables was already present at closure entry; no installation, service activation, rule change or repeat restoration was performed by the closure worker. |
+| Exact image/minor release and CPU ISA | PASS for observation | Image digest and CHECKSUM signature verified; AlmaLinux 10.2 x86_64; guest loader supports v2/v3; no stack compatibility inference |
+| Repository/package/security inventory | PASS for implementation-side evidence completeness; independent QA pending | Final 23-probe run: 20 COLLECTED / 3 firewalld-specific UNAVAILABLE, exit 1, no errors. Separate successful privileged JSON/text nftables queries establish an empty kernel nftables ruleset. Firewalld absent; nftables service disabled/inactive; SELinux enforcing. No release security or stack-compatibility approval implied. |
+| Independent inventory reproduction | NOT_RUN | Implementer cross-checks and recovery evidence exist; separate reviewer still required |
 | Stack compatibility and lock promotion | NOT_RUN | M0-02–08 unexecuted; manifest remains candidate |
 
 ## Repository preparation slice — now implemented, host acceptance excluded
@@ -54,7 +56,7 @@ Acceptance for the **preparation slice**: every required baseline field has a co
 
 ## Full work-package execution after prerequisites
 
-Only after explicit host-specific authority and a recoverable clean snapshot are supplied, collect the approved inventory on the named disposable host. Record exact commands, outputs, timestamp, image/repository provenance, CPU ISA, topology and security baseline. Stop on production ambiguity, absent recovery boundary, unexpected credentials or requested mutation beyond authority. Do not install packages or alter networking/security merely to fill an inventory.
+Only after explicit host-specific authority and a recoverable clean snapshot are supplied, collect the approved inventory on the named disposable host. Record exact commands, outputs, timestamp, image/repository provenance, CPU ISA, topology and security baseline. Stop on production ambiguity, absent recovery boundary, unexpected credentials or requested mutation beyond authority. Do not install packages or alter networking/security merely to fill an inventory without separate exact-target authorization. The later operator assignment explicitly authorized nftables and required dependencies only; it did not authorize service activation or rule changes.
 
 Full artifacts: measured Markdown and sanitized machine-readable host inventory; image/package/kernel/repository evidence; topology and security-state description; host-identity/authorization/snapshot record; reproducible command log and evidence digests; independent review and next-experiment handoff.
 

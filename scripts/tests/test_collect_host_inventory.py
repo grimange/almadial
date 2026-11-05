@@ -40,7 +40,7 @@ class InventoryTests(unittest.TestCase):
         self.assertIn("avx2", probes["cpu"]["facts"]["flags"])
         self.assertEqual(probes["memory"]["facts"]["MemTotal_bytes"], 8589934592)
         self.assertIn("asterisk", probes["packages"]["facts"]["not_installed"])
-        self.assertEqual(probes["packages"]["exit_code"], 1)
+        self.assertEqual(probes["packages"]["exit_code"], 7)
         self.assertFalse(probes["repositories"]["facts"]["repositories"][1]["configured_enabled"])
         self.assertEqual(probes["interfaces"]["facts"][0]["addresses"][1]["family"], 6)
         self.assertEqual(probes["listeners"]["facts"][0]["port"], 22)
@@ -160,6 +160,25 @@ class InventoryTests(unittest.TestCase):
         raw = copy.deepcopy(self.fixture["probes"]["packages"])
         raw["stdout"] = "package asterisk is not installed\n"
         self.assertEqual(c.result("packages", raw, self.r, True)["status"], "ERROR")
+
+    def test_rpm_multiple_absent_packages_on_almalinux_10(self):
+        raw = copy.deepcopy(self.fixture["probes"]["packages"])
+        raw["stdout"] = raw["stdout"].replace("firewalld\t0:10.0-1.el10\tx86_64", "package firewalld is not installed")
+        raw["exit_code"] = 8
+        row = c.result("packages", raw, self.r, True)
+        self.assertEqual(row["status"], "COLLECTED")
+        self.assertEqual(len(row["facts"]["not_installed"]), 8)
+        for code in (1, 9, 127, -9):
+            raw["exit_code"] = code
+            self.assertEqual(c.result("packages", raw, self.r, True)["error"], "nonzero_exit")
+
+    def test_timedatectl_repeats_property_flags(self):
+        self.assertEqual(c.COMMANDS["time"], ("timedatectl", "show",
+                         "--property=NTPSynchronized", "--property=Timezone", "--property=LocalRTC"))
+        # AlmaLinux 10.2 returned exit 0 with empty output for one comma-list.
+        self.assertEqual(c.result("time", {"stdout": "", "exit_code": 0}, self.r, True)["error"], "parse_error")
+        raw = {"stdout": "Timezone=Etc/UTC\nLocalRTC=no\nNTPSynchronized=yes\n", "exit_code": 0}
+        self.assertEqual(c.result("time", raw, self.r, True)["facts"]["ntp_synchronized"], "yes")
 
     def test_existing_services_and_unknown_units(self):
         raw = copy.deepcopy(self.fixture["probes"]["services"])

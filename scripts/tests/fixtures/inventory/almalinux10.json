@@ -70,7 +70,7 @@
     "packages": {
       "stdout": "almalinux-release\t0:10.0-1.el10\tx86_64\nkernel\t0:10.0-1.el10\tx86_64\nglibc\t0:10.0-1.el10\tx86_64\nrpm\t0:10.0-1.el10\tx86_64\ndnf\t0:10.0-1.el10\tx86_64\npython3\t0:10.0-1.el10\tx86_64\npackage asterisk is not installed\npackage mariadb-server is not installed\npackage MariaDB-server is not installed\npackage httpd is not installed\npackage php is not installed\npackage php-fpm is not installed\npackage perl is not installed\nchrony\t0:10.0-1.el10\tx86_64\nfirewalld\t0:10.0-1.el10\tx86_64\nselinux-policy\t0:10.0-1.el10\tx86_64\n",
       "stderr": "",
-      "exit_code": 1
+      "exit_code": 7
     },
     "selinux": {
       "stdout": "Enforcing\n",
