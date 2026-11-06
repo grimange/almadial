@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>AlmaDial ALM-6 isolated conference qualification</title>
+<h1>ALM-6 conference media qualification</h1>
+<p>Disposable lab only. Automated synthetic media; no physical microphone/speaker claim.</p>
+<audio id="remote" autoplay></audio>
+<script src="sip.js"></script>
+<script>
+'use strict';
+window.alm = {events: [], captures: {}, stats: []};
+const alm = window.alm;
+const cfg = new URLSearchParams(location.search);
+const identity = cfg.get('user') || '9051';
+const destination = cfg.get('dest') || '9600001';
+if (!/^(9051|9052|9053|9001)$/.test(identity) || !/^(9600001|9600099|9001)$/.test(destination)) throw new Error('Lab identity/destination refused');
+const event = (type, data = {}) => alm.events.push({time: performance.now(), type, ...data});
+const nativeGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+navigator.mediaDevices.getUserMedia = async options => {
+  const stream = await nativeGetUserMedia(options);
+  alm.localStream = stream;
+  event('getUserMedia', {settings: stream.getAudioTracks().map(t => t.getSettings())});
+  return stream;
+};
+const NativePC = window.RTCPeerConnection;
+window.RTCPeerConnection = class extends NativePC {
+  constructor(...args) {
+    super(...args); alm.pc = this;
+    for (const name of ['iceconnectionstatechange', 'connectionstatechange', 'signalingstatechange'])
+      this.addEventListener(name, () => event(name, {ice: this.iceConnectionState, connection: this.connectionState, signaling: this.signalingState}));
+    this.addEventListener('track', e => { alm.remoteStream = new MediaStream([e.track]); event('remote-track', {kind: e.track.kind}); });
+  }
+};
+alm.register = async password => {
+  alm.user = new SIP.Web.SimpleUser('wss://' + location.host + '/ws', {
+    aor: 'sip:' + identity + '@almadial-alma10.test',
+    media: {constraints: {audio: {echoCancellation: false, noiseSuppression: false, autoGainControl: false}, video: false}, remote: {audio: document.getElementById('remote')}},
+    userAgentOptions: {authorizationUsername: identity, authorizationPassword: password, logLevel: 'error', transportOptions: {server: 'wss://' + location.host + '/ws', traceSip: false}},
+    delegate: {onRegistered: () => event('registered'), onUnregistered: () => event('unregistered'), onCallAnswered: () => event('answered'), onCallHangup: () => event('hangup')}
+  });
+  await alm.user.connect(); await alm.user.register();
+};
+alm.call = async () => { await alm.user.call('sip:' + destination + '@almadial-alma10.test'); };
+alm.snapshot = async () => {
+  if (!alm.pc) return {};
+  const rows = [...(await alm.pc.getStats()).values()].filter(r => ['inbound-rtp','outbound-rtp','transport','candidate-pair','local-candidate','remote-candidate','codec'].includes(r.type));
+  const result = {utc: new Date().toISOString(), ice: alm.pc.iceConnectionState, connection: alm.pc.connectionState,
+    localSdp: alm.pc.localDescription?.sdp, remoteSdp: alm.pc.remoteDescription?.sdp, rows};
+  alm.stats.push(result); return result;
+};
+// Install the accepted paired AudioWorklet helper m0_05_capture.js before capture.
+alm.capture = async () => { throw new Error('Paired AudioWorklet helper required'); };
+alm.download = name => {const a=document.createElement('a');a.href=URL.createObjectURL(alm.captures[name]);a.download=name+'.wav';a.click();};
+alm.downloadJson = (name, value) => {const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));a.download=name+'.json';a.click();};
+alm.hangup = async () => {await alm.user.hangup();await alm.user.unregister();await alm.user.disconnect();};
+</script>
