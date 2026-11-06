@@ -1,0 +1,9 @@
+{
+  "rollback": "/root/alma-vicidial-backup-deploy-20261106T205857Z",
+  "installed": {
+    "/usr/local/sbin/alma-vicidial-backup": "27a75ab64e15ded9c13ed95762863f311e39f4cc28f341729646a5ecce57223a",
+    "/etc/alma-vicidial-backup.json": "b4bb56d5c0e507a4422085239a2ea5e903e0d93dcd0386129b8baea5ca01baac",
+    "/etc/systemd/system/alma-vicidial-backup.service": "2f61a59980b49bd5b08b3a07844c491fbac8dc195188e545afe68fa17a76b256",
+    "/etc/systemd/system/alma-vicidial-backup.timer": "d6b2aa807caaf60572cea1f2a99f7e87a04c8b899938aa08a3a6d7a1b83d775d"
+  }
+}

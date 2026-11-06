@@ -1,0 +1,35 @@
+{
+  "results": {
+    "host_identity": "PASS",
+    "nine_existing_services_same_pids_start_times_and_restarts": "PASS",
+    "twenty_existing_critical_file_hashes_unchanged": "PASS",
+    "four_installed_files_match_current_sources": "PASS",
+    "channels_unchanged_and_success": "PASS",
+    "apache_syntax_unchanged_and_success": "PASS",
+    "listeners_unchanged_and_success": "PASS",
+    "firewall_runtime_unchanged_and_success": "PASS",
+    "firewall_permanent_unchanged_and_success": "PASS",
+    "tls_timer_unchanged_and_success": "PASS",
+    "worker_unchanged_and_success": "PASS",
+    "nft_policy_and_effective_grant_members_unchanged": "PASS",
+    "raw_recording_bytes_and_inventory_unchanged": "PASS",
+    "trusted_served_tls_certificate_unchanged": "PASS",
+    "portal_and_unauthorized_redirect_resource_semantics_unchanged": "PASS",
+    "two_complete_archives_fully_reverified": "PASS",
+    "all_exported_backup_payloads_root_private": "PASS",
+    "unprivileged_sql_read_denied": "PASS",
+    "failure_probe_preserved_prior_archive": "PASS",
+    "overlap_and_injected_failure_detected": "PASS",
+    "successful_run_recovered_health_and_retained_failure_history": "PASS",
+    "timer_enabled_active_persistent_explicit_timezone": "PASS",
+    "unit_validation": "PASS",
+    "synthetic_scoped_rollback_rehearsal": "PASS"
+  },
+  "source_sha256": {
+    "backup.py": "b38462d24d9636659561f46d4c88c617690b68e4314ea67dd00377a4a4b27a81",
+    "config.json": "523dfe94a2006641f8e87a1e234099452c7cdd28aa2f2c6a19eb7d951044b3ab",
+    "alma-vicidial-backup.service": "2f61a59980b49bd5b08b3a07844c491fbac8dc195188e545afe68fa17a76b256",
+    "alma-vicidial-backup.timer": "d6b2aa807caaf60572cea1f2a99f7e87a04c8b899938aa08a3a6d7a1b83d775d"
+  },
+  "evidence_scope": "Local comparisons of captured host evidence; no restore, off-host copy, live call, or reboot acceptance."
+}

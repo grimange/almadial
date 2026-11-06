@@ -1,0 +1,187 @@
+{
+  "time_utc": "2026-11-06T20:58:08Z",
+  "host": "dialer01",
+  "commands": {
+    "database": {
+      "rc": 0,
+      "stdout": "10.11.18-MariaDB\nasterisk\tMEMORY\t8\t7568960\nasterisk\tMyISAM\t338\t1661705\nmysql\tVIEW\t1\tNULL\nmysql\tAria\t24\t3416064\nmysql\tCSV\t2\t0\nmysql\tInnoDB\t4\t114688\nlog_bin\tOFF\nsocket\t/var/lib/mysql/mysql.sock\n0\n0\n",
+      "stderr": ""
+    },
+    "channels": {
+      "rc": 0,
+      "stdout": "0 active channels\n0 active calls\n24 calls processed\n",
+      "stderr": ""
+    },
+    "apache_syntax": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nSyntax OK\n"
+    },
+    "listeners": {
+      "rc": 0,
+      "stdout": "Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port\nudp   UNCONN 0      0          127.0.0.1:323        0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:4520       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:4569       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:5000       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:5060       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:5061       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:42911      0.0.0.0:*   \nudp   UNCONN 0      0              [::1]:323           [::]:*   \nudp   UNCONN 0      0               [::]:34772         [::]:*   \ntcp   LISTEN 0      10         127.0.0.1:5038       0.0.0.0:*   \ntcp   LISTEN 0      4096         0.0.0.0:4577       0.0.0.0:*   \ntcp   LISTEN 0      128          0.0.0.0:22222      0.0.0.0:*   \ntcp   LISTEN 0      32         127.0.0.1:19091      0.0.0.0:*   \ntcp   LISTEN 0      80         127.0.0.1:3306       0.0.0.0:*   \ntcp   LISTEN 0      511                *:443              *:*   \ntcp   LISTEN 0      511                *:80               *:*   \ntcp   LISTEN 0      128             [::]:22222         [::]:*   \n",
+      "stderr": ""
+    },
+    "firewall_runtime": {
+      "rc": 0,
+      "stdout": "public (default, active)\n  target: default\n  ingress-priority: 0\n  egress-priority: 0\n  icmp-block-inversion: no\n  interfaces: eth0\n  sources: \n  services: cockpit dhcpv6-client ssh\n  ports: 22/tcp 80/tcp 443/tcp 22222/tcp\n  protocols: \n  forward: yes\n  masquerade: no\n  forward-ports: \n  source-ports: \n  icmp-blocks: \n  rich rules: \n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"5061\" protocol=\"udp\" accept\n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"10000-20000\" protocol=\"udp\" accept\n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"5060\" protocol=\"udp\" accept\n",
+      "stderr": ""
+    },
+    "firewall_permanent": {
+      "rc": 0,
+      "stdout": "public (default)\n  target: default\n  ingress-priority: 0\n  egress-priority: 0\n  icmp-block-inversion: no\n  interfaces: \n  sources: \n  services: cockpit dhcpv6-client ssh\n  ports: 22/tcp 80/tcp 443/tcp 22222/tcp\n  protocols: \n  forward: yes\n  masquerade: no\n  forward-ports: \n  source-ports: \n  icmp-blocks: \n  rich rules: \n",
+      "stderr": ""
+    },
+    "sip_gate": {
+      "rc": 0,
+      "stdout": "{\"nftables\": [{\"metainfo\": {\"version\": \"1.1.5\", \"release_name\": \"Commodore Bullmoose #6\", \"json_schema_version\": 1}}, {\"table\": {\"family\": \"inet\", \"name\": \"alma_portal_sip\", \"handle\": 5}}, {\"chain\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"name\": \"input\", \"handle\": 1, \"type\": \"filter\", \"hook\": \"input\", \"prio\": -10, \"policy\": \"accept\"}}, {\"chain\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"name\": \"output\", \"handle\": 2, \"type\": \"filter\", \"hook\": \"output\", \"prio\": -10, \"policy\": \"accept\"}}, {\"set\": {\"family\": \"inet\", \"name\": \"agents4\", \"table\": \"alma_portal_sip\", \"type\": \"ipv4_addr\", \"handle\": 3, \"flags\": [\"timeout\"], \"elem\": [{\"elem\": {\"val\": \"158.62.74.253\", \"timeout\": 35, \"expires\": 27}}]}}, {\"set\": {\"family\": \"inet\", \"name\": \"grace4\", \"table\": \"alma_portal_sip\", \"type\": \"ipv4_addr\", \"handle\": 4, \"flags\": [\"timeout\"], \"elem\": [{\"elem\": {\"val\": \"158.62.74.253\", \"timeout\": 155, \"expires\": 147}}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"input\", \"handle\": 31, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"meta\": {\"key\": \"iifname\"}}, \"right\": \"lo\"}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"input\", \"handle\": 32, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"dport\"}}, \"right\": 5060}}, {\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"ip\", \"field\": \"saddr\"}}, \"right\": \"@agents4\"}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"input\", \"handle\": 33, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"dport\"}}, \"right\": 5060}}, {\"counter\": {\"packets\": 2375, \"bytes\": 1771806}}, {\"drop\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"input\", \"handle\": 34, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"dport\"}}, \"right\": 5061}}, {\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"ip\", \"field\": \"saddr\"}}, \"right\": \"@agents4\"}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"input\", \"handle\": 35, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"dport\"}}, \"right\": 5061}}, {\"counter\": {\"packets\": 24, \"bytes\": 17616}}, {\"drop\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"input\", \"handle\": 36, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"dport\"}}, \"right\": {\"range\": [10000, 20000]}}}, {\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"ip\", \"field\": \"saddr\"}}, \"right\": \"@agents4\"}}, {\"mangle\": {\"key\": {\"ct\": {\"key\": \"mark\"}}, \"value\": {\"|\": [{\"ct\": {\"key\": \"mark\"}}, 1073741824]}}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"input\", \"handle\": 37, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"dport\"}}, \"right\": {\"range\": [10000, 20000]}}}, {\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"ip\", \"field\": \"saddr\"}}, \"right\": \"@grace4\"}}, {\"match\": {\"op\": \"in\", \"left\": {\"ct\": {\"key\": \"state\"}}, \"right\": \"established\"}}, {\"match\": {\"op\": \"!=\", \"left\": {\"&\": [{\"ct\": {\"key\": \"mark\"}}, 1073741824]}, \"right\": 0}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"input\", \"handle\": 38, \"comment\": \"alma-phone-sip-5060-5061-v1\", \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"dport\"}}, \"right\": {\"range\": [10000, 20000]}}}, {\"counter\": {\"packets\": 28, \"bytes\": 8402}}, {\"drop\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"output\", \"handle\": 39, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"meta\": {\"key\": \"oifname\"}}, \"right\": \"lo\"}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"output\", \"handle\": 40, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"sport\"}}, \"right\": 5060}}, {\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"ip\", \"field\": \"daddr\"}}, \"right\": \"@agents4\"}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"output\", \"handle\": 41, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"sport\"}}, \"right\": 5060}}, {\"counter\": {\"packets\": 0, \"bytes\": 0}}, {\"drop\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"output\", \"handle\": 42, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"sport\"}}, \"right\": 5061}}, {\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"ip\", \"field\": \"daddr\"}}, \"right\": \"@agents4\"}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"output\", \"handle\": 43, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"sport\"}}, \"right\": 5061}}, {\"counter\": {\"packets\": 0, \"bytes\": 0}}, {\"drop\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"output\", \"handle\": 44, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"sport\"}}, \"right\": {\"range\": [10000, 20000]}}}, {\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"ip\", \"field\": \"daddr\"}}, \"right\": \"@agents4\"}}, {\"mangle\": {\"key\": {\"ct\": {\"key\": \"mark\"}}, \"value\": {\"|\": [{\"ct\": {\"key\": \"mark\"}}, 1073741824]}}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"output\", \"handle\": 45, \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"sport\"}}, \"right\": {\"range\": [10000, 20000]}}}, {\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"ip\", \"field\": \"daddr\"}}, \"right\": \"@grace4\"}}, {\"match\": {\"op\": \"in\", \"left\": {\"ct\": {\"key\": \"state\"}}, \"right\": \"established\"}}, {\"match\": {\"op\": \"!=\", \"left\": {\"&\": [{\"ct\": {\"key\": \"mark\"}}, 1073741824]}, \"right\": 0}}, {\"return\": null}]}}, {\"rule\": {\"family\": \"inet\", \"table\": \"alma_portal_sip\", \"chain\": \"output\", \"handle\": 46, \"comment\": \"alma-phone-sip-5060-5061-v1\", \"expr\": [{\"match\": {\"op\": \"==\", \"left\": {\"payload\": {\"protocol\": \"udp\", \"field\": \"sport\"}}, \"right\": {\"range\": [10000, 20000]}}}, {\"counter\": {\"packets\": 13, \"bytes\": 949}}, {\"drop\": null}]}}]}\n",
+      "stderr": ""
+    },
+    "disk": {
+      "rc": 0,
+      "stdout": "Filesystem     Type  Size  Used Avail Use% Mounted on\n/dev/sda1      ext4  151G  4.9G  140G   4% /\n",
+      "stderr": ""
+    },
+    "inodes": {
+      "rc": 0,
+      "stdout": "Filesystem      Inodes  IUsed   IFree IUse% Mounted on\n/dev/sda1      9904752 126229 9778523    2% /\n",
+      "stderr": ""
+    },
+    "backup_timer": {
+      "rc": 0,
+      "stdout": "NextElapseUSecRealtime=\nPersistent=no\nActiveState=inactive\nUnitFileState=\n",
+      "stderr": ""
+    },
+    "backup_service": {
+      "rc": 0,
+      "stdout": "Result=success\nExecMainStatus=0\nActiveState=inactive\n",
+      "stderr": ""
+    },
+    "tls_timer": {
+      "rc": 0,
+      "stdout": "Persistent=yes\nActiveState=active\nUnitFileState=enabled\n",
+      "stderr": ""
+    },
+    "worker": {
+      "rc": 0,
+      "stdout": "Result=success\nExecMainStatus=0\n",
+      "stderr": ""
+    }
+  },
+  "services": {
+    "asterisk": {
+      "rc": 0,
+      "stdout": "MainPID=143137\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 10:25:33 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "mariadb": {
+      "rc": 0,
+      "stdout": "MainPID=61646\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:47:10 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "httpd": {
+      "rc": 0,
+      "stdout": "MainPID=26973\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:15:42 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "php-fpm": {
+      "rc": 0,
+      "stdout": "MainPID=26963\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:15:41 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "alma-portal-443": {
+      "rc": 0,
+      "stdout": "MainPID=232072\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 20:26:01 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "firewalld": {
+      "rc": 0,
+      "stdout": "MainPID=142982\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 10:24:24 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "fail2ban": {
+      "rc": 0,
+      "stdout": "MainPID=178535\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 15:28:22 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "sshd": {
+      "rc": 0,
+      "stdout": "MainPID=993\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:03:29 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "crond": {
+      "rc": 0,
+      "stdout": "MainPID=62430\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 17:52:46 EST\nActiveState=active\n",
+      "stderr": ""
+    }
+  },
+  "hashes": {
+    "/etc/cron.d/vicidial": "99890ea249236dda91b6429932eec79b5a7b9ccf16cda67516202c5bb11cf168",
+    "/etc/my.cnf.d/91-vicidial-sql-compat.cnf": "ec2a4c1e2254b98087aa903ab69f0e566ea29df94fc368b57865528ad6e30e08",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+    "/etc/httpd/conf.d/00-alma-acme.conf": "eff27d628e0da49669c469708e91ab9dc0a811373a6800d5db1b8c8a2595ddd0",
+    "/usr/local/libexec/alma-portal-tls": "614a6a55f46a7d71957a3db55af2593403444cb9758b75ac965cbbd7469522ff",
+    "/usr/local/sbin/alma-portal-cert-deploy": "fad1df74eb9800038ec2e9b57b886df73692cd85445fbb9a358df95d51a21403",
+    "/etc/systemd/system/alma-portal-renew.service": "f22f962fca67f28cd825acca0460bacb969291df7719a8033e9b380280d598e4",
+    "/etc/systemd/system/alma-portal-renew.timer": "50a4bc8e1406c5443c5ec3c71755938e328998885f473e75f111b6ed5aab32b0",
+    "/etc/asterisk/extensions.conf": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+    "/etc/asterisk/sip.conf": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+    "/etc/asterisk/pjsip.conf": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+    "/etc/asterisk/rtp.conf": "9f9a8a0d492915a1f7d2cd47afd0b7a4f1914589d3f7a193fc0f7c443afa9aa7",
+    "/opt/alma-portal-443/common.py": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74",
+    "/opt/alma-portal-443/access.lua": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+    "/opt/alma-portal-443/apply_requests.py": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956",
+    "/opt/alma-portal-443/sip_guard.py": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf",
+    "/usr/share/astguiclient/ADMIN_keepalive_ALL.pl": "51abc2f7e65f8e6722e218b9714d7142e2cb76c1fba755d8a42e195a9fbf555a",
+    "/usr/share/astguiclient/AST_manager_send.pl": "007fc3012ea5c37e5c5a330719ed51a621aa9ad84488ade3ef13eac9d64756d3",
+    "/usr/share/astguiclient/AST_VDauto_dial.pl": "458e6fe7ad864760688e73d3031fe5de0d28e1fae6a31bbdabfc5448542f3d3e",
+    "/usr/share/astguiclient/AST_VDremote_agents.pl": "c6093d1551290b283e7cae7bbe8ef684e4e93298c2b1880e79b758083eb6b173"
+  },
+  "recordings": {
+    "files": 4,
+    "bytes": 2147696,
+    "inventory_sha256": "9ce3f39c1c6e8b1bf8ae7eab53a2ef9e4801e701d0f6aa82915e3d1f3799a689"
+  },
+  "served_tls": {
+    "sha256": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+    "version": "TLSv1.3"
+  },
+  "http": [
+    {
+      "path": "/",
+      "ajax": false,
+      "code": 303,
+      "location": "/portal/"
+    },
+    {
+      "path": "/portal/",
+      "ajax": false,
+      "code": 200,
+      "location": null
+    },
+    {
+      "path": "/agc/vicidial.php",
+      "ajax": false,
+      "code": 303,
+      "location": "https://2.29.153.161/"
+    },
+    {
+      "path": "/vicidial/admin.php",
+      "ajax": false,
+      "code": 303,
+      "location": "https://2.29.153.161/"
+    },
+    {
+      "path": "/agc/vicidial.php",
+      "ajax": true,
+      "code": 403,
+      "location": null
+    },
+    {
+      "path": "/vicidial/admin.php",
+      "ajax": true,
+      "code": 403,
+      "location": null
+    }
+  ]
+}

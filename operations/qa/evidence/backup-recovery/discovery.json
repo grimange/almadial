@@ -1,0 +1,86 @@
+{
+  "time_utc": "2026-11-06T21:13:37.143439+00:00",
+  "os_release": {
+    "ID": "almalinux",
+    "VERSION_ID": "10.2",
+    "PRETTY_NAME": "AlmaLinux 10.2 (Lavender Lion)"
+  },
+  "kernel": {
+    "rc": 0,
+    "stdout": "6.12.0-211.73.1.el10_2.x86_64 x86_64\n",
+    "stderr": ""
+  },
+  "time": {
+    "rc": 0,
+    "stdout": "Timezone=America/New_York\nNTPSynchronized=yes\n",
+    "stderr": ""
+  },
+  "asterisk": {
+    "rc": 0,
+    "stdout": "Asterisk 20.21.0 built by root @ dialer01 on a x86_64 running Linux on 2026-11-04 21:37:40 UTC\n",
+    "stderr": ""
+  },
+  "dump_version": {
+    "rc": 0,
+    "stdout": "mariadb-dump  Ver 10.19 Distrib 10.11.18-MariaDB, for Linux (x86_64)\n",
+    "stderr": ""
+  },
+  "tools": {
+    "mariadb": "/usr/bin/mariadb",
+    "mariadb-dump": "/usr/bin/mariadb-dump",
+    "mariadb-backup": "/usr/bin/mariadb-backup",
+    "tar": "/usr/bin/tar",
+    "sha256sum": "/usr/bin/sha256sum",
+    "flock": "/usr/bin/flock",
+    "timeout": "/usr/bin/timeout",
+    "openssl": "/usr/bin/openssl",
+    "rsync": "/usr/bin/rsync",
+    "python3": "/usr/bin/python3"
+  },
+  "db": {
+    "rc": 0,
+    "stdout": "10.11.18-MariaDB\nroot@localhost\t1\n1\n0\n0\n0\n0\n",
+    "stderr": ""
+  },
+  "historical_dumps": [
+    {
+      "name": "asterisk-before-pjsip.sql",
+      "bytes": 1231978,
+      "mtime_utc": "2026-11-04T23:28:43.734882+00:00"
+    },
+    {
+      "name": "vicidial-confbridges.sql",
+      "bytes": 37200,
+      "mtime_utc": "2026-11-04T22:26:27.617258+00:00"
+    },
+    {
+      "name": "vicidial-first-server.sql",
+      "bytes": 26141,
+      "mtime_utc": "2026-11-04T21:56:45.206912+00:00"
+    },
+    {
+      "name": "vicidial-schema.sql",
+      "bytes": 285858,
+      "mtime_utc": "2026-11-04T21:56:07.193185+00:00"
+    },
+    {
+      "name": "vicidial-servers-before-ami-fix.sql",
+      "bytes": 5739,
+      "mtime_utc": "2026-11-04T23:51:12.111671+00:00"
+    }
+  ],
+  "complete_names": [
+    "20261106T210108-9b19fad6",
+    "20261106T210331-1ea99037"
+  ],
+  "backup_timer": {
+    "rc": 0,
+    "stdout": "NextElapseUSecRealtime=Sat 2026-11-07 03:40:00 EST\nPersistent=yes\nActiveState=active\nUnitFileState=enabled\n",
+    "stderr": ""
+  },
+  "backup_health": {
+    "rc": 0,
+    "stdout": "{\n  \"outcome\": \"ok\",\n  \"attempt_at\": \"2026-11-06T21:03:30.996782+00:00\",\n  \"pid\": 414044,\n  \"finished_at\": \"2026-11-06T21:03:40.787207+00:00\",\n  \"last_failure\": {\n    \"at\": \"2026-11-06T21:02:22.754013+00:00\",\n    \"reason\": \"required_dataset_missing\"\n  },\n  \"last_success\": {\n    \"id\": \"20261106T210331-1ea99037\",\n    \"completed_at\": \"2026-11-06T21:03:39.881806+00:00\",\n    \"bytes\": 1363750901,\n    \"database\": {\n      \"method\": \"mariadb-dump --all-databases --lock-all-tables\",\n      \"timeout_seconds\": 30,\n      \"lock_hold_upper_bound_seconds\": 0.7662,\n      \"completed_at\": \"2026-11-06T21:03:32.504294+00:00\"\n    },\n    \"integrity\": {\n      \"verified_at\": \"2026-11-06T21:03:39.627825+00:00\",\n      \"payloads\": 5,\n      \"archive_members\": 21368,\n      \"database_tables\": 376,\n      \"recording_files\": 6\n    },\n    \"archive_sha256\": \"b867bcf61a63cf9a498f25ac48620392a042d329f79988f80f8e878b638e54b6\"\n  },\n  \"newest_complete_age_seconds\": 597.473786,\n  \"remaining_bytes\": 146556547072,\n  \"free_inodes\": 9778493,\n  \"last_success_verification_present\": true,\n  \"job_lock_held\": false\n}\n",
+    "stderr": ""
+  }
+}

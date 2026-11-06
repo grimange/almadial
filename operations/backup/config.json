@@ -1,0 +1,41 @@
+{
+  "hostname": "dialer01",
+  "destination": "/var/lib/alma-vicidial-backup",
+  "socket": "/var/lib/mysql/mysql.sock",
+  "dump_timeout_seconds": 30,
+  "max_complete_backups": 7,
+  "max_pool_bytes": 34359738368,
+  "max_run_bytes": 4294967296,
+  "reserve_bytes": 5368709120,
+  "required": [
+    "/etc/asterisk", "/etc/astguiclient.conf", "/usr/share/astguiclient",
+    "/var/www/html", "/etc/httpd", "/etc/php.ini", "/etc/php.d", "/etc/php-fpm.conf", "/etc/php-fpm.d",
+    "/etc/my.cnf", "/etc/my.cnf.d", "/etc/letsencrypt", "/var/www/alma-acme",
+    "/etc/alma-portal", "/opt/alma-portal-443", "/opt/alma-portal-venv",
+    "/opt/alma-portal-certbot", "/var/lib/alma-portal-443", "/var/lib/alma-portal",
+    "/etc/systemd/system", "/etc/cron.d", "/etc/crontab",
+    "/etc/firewalld", "/etc/fail2ban", "/etc/ssh", "/root/.ssh/authorized_keys",
+    "/etc/passwd", "/etc/group", "/etc/shadow", "/etc/gshadow", "/etc/localtime",
+    "/usr/local/sbin", "/usr/local/libexec", "/usr/local/share/perl5", "/usr/local/lib64/perl5",
+    "/usr/sbin/asterisk", "/usr/lib64/asterisk", "/var/lib/asterisk",
+    "/usr/src/asterisk-20.21.0", "/usr/src/asterisk-perl-0.08", "/usr/src/astguiclient/trunk",
+    "/var/spool/asterisk/monitor", "/var/spool/asterisk/monitorDONE",
+    "/etc/alma-vicidial-backup.json"
+  ],
+  "optional": [
+    "/var/spool/cron", "/etc/cron.hourly", "/etc/cron.daily", "/etc/cron.weekly", "/etc/cron.monthly",
+    "/etc/sysconfig/asterisk", "/etc/sysconfig/iptables", "/etc/nftables", "/etc/chrony.conf",
+    "/etc/selinux", "/etc/logrotate.d", "/etc/yum.repos.d", "/etc/dnf/dnf.conf",
+    "/etc/sysconfig/httpd", "/etc/NetworkManager/system-connections", "/etc/hosts", "/etc/hostname",
+    "/etc/audit", "/etc/sudoers", "/etc/sudoers.d",
+    "/opt/alma-portal", "/var/lib/alma-portal-tls",
+    "/var/spool/asterisk/voicemail", "/var/spool/asterisk/dictate", "/var/spool/asterisk/recording",
+    "/var/spool/asterisk/monitorP", "/var/spool/asterisk/monitorS", "/var/spool/asterisk/monitorTRASH",
+    "/var/spool/asterisk/system"
+  ],
+  "recording_roots": [
+    "/var/spool/asterisk/monitor", "/var/spool/asterisk/monitorDONE",
+    "/var/spool/asterisk/voicemail", "/var/spool/asterisk/dictate", "/var/spool/asterisk/recording",
+    "/var/spool/asterisk/monitorP", "/var/spool/asterisk/monitorS", "/var/spool/asterisk/monitorTRASH"
+  ]
+}

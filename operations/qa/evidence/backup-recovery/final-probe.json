@@ -1,0 +1,100 @@
+{
+  "archive_verifications": [
+    {
+      "id": "20261106T210108-9b19fad6",
+      "result": {
+        "verified_at": "2026-11-06T21:05:11.973132+00:00",
+        "payloads": 5,
+        "archive_members": 21306,
+        "database_tables": 376,
+        "recording_files": 6
+      }
+    },
+    {
+      "id": "20261106T210331-1ea99037",
+      "result": {
+        "verified_at": "2026-11-06T21:05:15.694311+00:00",
+        "payloads": 5,
+        "archive_members": 21368,
+        "database_tables": 376,
+        "recording_files": 6
+      }
+    }
+  ],
+  "health": {
+    "outcome": "ok",
+    "attempt_at": "2026-11-06T21:03:30.996782+00:00",
+    "pid": 414044,
+    "finished_at": "2026-11-06T21:03:40.787207+00:00",
+    "last_failure": {
+      "at": "2026-11-06T21:02:22.754013+00:00",
+      "reason": "required_dataset_missing"
+    },
+    "last_success": {
+      "id": "20261106T210331-1ea99037",
+      "completed_at": "2026-11-06T21:03:39.881806+00:00",
+      "bytes": 1363750901,
+      "database": {
+        "method": "mariadb-dump --all-databases --lock-all-tables",
+        "timeout_seconds": 30,
+        "lock_hold_upper_bound_seconds": 0.7662,
+        "completed_at": "2026-11-06T21:03:32.504294+00:00"
+      },
+      "integrity": {
+        "verified_at": "2026-11-06T21:03:39.627825+00:00",
+        "payloads": 5,
+        "archive_members": 21368,
+        "database_tables": 376,
+        "recording_files": 6
+      },
+      "archive_sha256": "b867bcf61a63cf9a498f25ac48620392a042d329f79988f80f8e878b638e54b6"
+    },
+    "newest_complete_age_seconds": 95.877283,
+    "remaining_bytes": 146556895232,
+    "free_inodes": 9778495,
+    "last_success_verification_present": true,
+    "job_lock_held": false
+  },
+  "unprivileged_read_denied_rc": 1,
+  "rollback_rehearsal": {
+    "result": "PASS",
+    "scope": "synthetic files plus stubbed systemctl; not a live rollback or data restore",
+    "path": "/root/alma-vicidial-backup-deploy-20261106T205857Z",
+    "installed_hashes": {
+      "/usr/local/sbin/alma-vicidial-backup": "b38462d24d9636659561f46d4c88c617690b68e4314ea67dd00377a4a4b27a81",
+      "/etc/alma-vicidial-backup.json": "523dfe94a2006641f8e87a1e234099452c7cdd28aa2f2c6a19eb7d951044b3ab",
+      "/etc/systemd/system/alma-vicidial-backup.service": "2f61a59980b49bd5b08b3a07844c491fbac8dc195188e545afe68fa17a76b256",
+      "/etc/systemd/system/alma-vicidial-backup.timer": "d6b2aa807caaf60572cea1f2a99f7e87a04c8b899938aa08a3a6d7a1b83d775d"
+    }
+  },
+  "journal": {
+    "rc": 0,
+    "stdout": "Nov 06 15:59:30 dialer01 systemd[1]: Starting alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup...\nNov 06 15:59:36 dialer01 alma-vicidial-backup[413057]: BACKUP_FAILED database_table_definition_missing\nNov 06 15:59:36 dialer01 systemd[1]: alma-vicidial-backup.service: Main process exited, code=exited, status=1/FAILURE\nNov 06 15:59:36 dialer01 systemd[1]: alma-vicidial-backup.service: Failed with result 'exit-code'.\nNov 06 15:59:36 dialer01 systemd[1]: Failed to start alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup.\nNov 06 15:59:36 dialer01 systemd[1]: alma-vicidial-backup.service: Consumed 5.654s CPU time, 1.3G memory peak.\nNov 06 16:01:08 dialer01 systemd[1]: Starting alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup...\nNov 06 16:01:17 dialer01 alma-vicidial-backup[413493]: BACKUP_COMPLETE {\"id\": \"20261106T210108-9b19fad6\", \"completed_at\": \"2026-11-06T21:01:17.109332+00:00\", \"bytes\": 1358927507, \"database\": {\"method\": \"mariadb-dump --all-databases --lock-all-tables\", \"timeout_seconds\": 30, \"lock_hold_upper_bound_seconds\": 0.8166, \"completed_at\": \"2026-11-06T21:01:09.829989+00:00\"}, \"integrity\": {\"verified_at\": \"2026-11-06T21:01:16.914713+00:00\", \"payloads\": 5, \"archive_members\": 21306, \"database_tables\": 376, \"recording_files\": 6}, \"archive_sha256\": \"78392d733880aac0993c06e71cbe9a462b4cc3f090c5297cb68c8b5d5a995ac7\"}\nNov 06 16:01:17 dialer01 systemd[1]: alma-vicidial-backup.service: Deactivated successfully.\nNov 06 16:01:17 dialer01 systemd[1]: Finished alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup.\nNov 06 16:01:17 dialer01 systemd[1]: alma-vicidial-backup.service: Consumed 9.135s CPU time, 1.3G memory peak.\nNov 06 16:02:22 dialer01 systemd[1]: Starting alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup...\nNov 06 16:02:22 dialer01 alma-vicidial-backup[413781]: BACKUP_FAILED execution_lock_busy\nNov 06 16:02:22 dialer01 systemd[1]: alma-vicidial-backup.service: Main process exited, code=exited, status=1/FAILURE\nNov 06 16:02:22 dialer01 systemd[1]: alma-vicidial-backup.service: Failed with result 'exit-code'.\nNov 06 16:02:22 dialer01 systemd[1]: Failed to start alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup.\nNov 06 16:02:22 dialer01 systemd[1]: Starting alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup...\nNov 06 16:02:22 dialer01 alma-vicidial-backup[413785]: BACKUP_FAILED required_dataset_missing\nNov 06 16:02:22 dialer01 systemd[1]: alma-vicidial-backup.service: Main process exited, code=exited, status=1/FAILURE\nNov 06 16:02:22 dialer01 systemd[1]: alma-vicidial-backup.service: Failed with result 'exit-code'.\nNov 06 16:02:22 dialer01 systemd[1]: Failed to start alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup.\nNov 06 16:03:30 dialer01 systemd[1]: Starting alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup...\nNov 06 16:03:40 dialer01 alma-vicidial-backup[414044]: BACKUP_COMPLETE {\"id\": \"20261106T210331-1ea99037\", \"completed_at\": \"2026-11-06T21:03:39.881806+00:00\", \"bytes\": 1363750901, \"database\": {\"method\": \"mariadb-dump --all-databases --lock-all-tables\", \"timeout_seconds\": 30, \"lock_hold_upper_bound_seconds\": 0.7662, \"completed_at\": \"2026-11-06T21:03:32.504294+00:00\"}, \"integrity\": {\"verified_at\": \"2026-11-06T21:03:39.627825+00:00\", \"payloads\": 5, \"archive_members\": 21368, \"database_tables\": 376, \"recording_files\": 6}, \"archive_sha256\": \"b867bcf61a63cf9a498f25ac48620392a042d329f79988f80f8e878b638e54b6\"}\nNov 06 16:03:40 dialer01 systemd[1]: alma-vicidial-backup.service: Deactivated successfully.\nNov 06 16:03:40 dialer01 systemd[1]: Finished alma-vicidial-backup.service - Idle-window VICIdial consistent database and recovery-file backup.\nNov 06 16:03:40 dialer01 systemd[1]: alma-vicidial-backup.service: Consumed 9.054s CPU time, 1.4G memory peak.\n",
+    "stderr": ""
+  },
+  "unit_validation": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "schedule": {
+    "rc": 0,
+    "stdout": "Normalized form: *-*-* 03:40:00 America/New_York\n    Next elapse: Sat 2026-11-07 03:40:00 EST\n       (in UTC): Sat 2026-11-07 08:40:00 UTC\n       From now: 11h left\n",
+    "stderr": ""
+  },
+  "module": {
+    "rc": 0,
+    "stdout": "Module                         Description                              Use Count  Status      Support Level\nres_monitor.so                 Call Monitoring Resource                 0          Running        deprecated\n1 modules loaded\n",
+    "stderr": ""
+  },
+  "active_calls": {
+    "rc": 0,
+    "stdout": "0 active channels\n0 active calls\n24 calls processed\n",
+    "stderr": ""
+  },
+  "backup_directory": {
+    "rc": 0,
+    "stdout": "700 root:root /var/lib/alma-vicidial-backup\n700 root:root /var/lib/alma-vicidial-backup/complete\n600 root:root /var/lib/alma-vicidial-backup/status.json\n",
+    "stderr": ""
+  }
+}

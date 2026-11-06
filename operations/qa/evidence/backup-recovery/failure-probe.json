@@ -1,0 +1,50 @@
+{
+  "prior_success": "20261106T210108-9b19fad6",
+  "complete_before": {
+    "20261106T210108-9b19fad6": "8ee5da7c6ac64ac06fc3babf6b196353910fc7c57ef80316ffa2847af33ab63b"
+  },
+  "overlap_rejected_rc": 1,
+  "injected_failure_rc": 1,
+  "failed_state": {
+    "outcome": "failed",
+    "attempt_at": "2026-11-06T21:02:22.736079+00:00",
+    "pid": 413785,
+    "finished_at": "2026-11-06T21:02:22.754004+00:00",
+    "last_failure": {
+      "at": "2026-11-06T21:02:22.754013+00:00",
+      "reason": "required_dataset_missing"
+    },
+    "last_success": {
+      "id": "20261106T210108-9b19fad6",
+      "completed_at": "2026-11-06T21:01:17.109332+00:00",
+      "bytes": 1358927507,
+      "database": {
+        "method": "mariadb-dump --all-databases --lock-all-tables",
+        "timeout_seconds": 30,
+        "lock_hold_upper_bound_seconds": 0.8166,
+        "completed_at": "2026-11-06T21:01:09.829989+00:00"
+      },
+      "integrity": {
+        "verified_at": "2026-11-06T21:01:16.914713+00:00",
+        "payloads": 5,
+        "archive_members": 21306,
+        "database_tables": 376,
+        "recording_files": 6
+      },
+      "archive_sha256": "78392d733880aac0993c06e71cbe9a462b4cc3f090c5297cb68c8b5d5a995ac7"
+    }
+  },
+  "health_failure_rc": 1,
+  "systemd_failed": "Result=exit-code\nExecMainStatus=1\nActiveState=failed\n",
+  "complete_after": {
+    "20261106T210108-9b19fad6": "8ee5da7c6ac64ac06fc3babf6b196353910fc7c57ef80316ffa2847af33ab63b"
+  },
+  "prior_backup_verified_after_failure": {
+    "verified_at": "2026-11-06T21:02:26.277542+00:00",
+    "payloads": 5,
+    "archive_members": 21306,
+    "database_tables": 376,
+    "recording_files": 6
+  },
+  "original_config_restored_sha256": "b4bb56d5c0e507a4422085239a2ea5e903e0d93dcd0386129b8baea5ca01baac"
+}
