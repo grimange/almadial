@@ -1,0 +1,36 @@
+{
+  "backup": "/root/alma-recording-pr01-20261106T222119Z",
+  "rollback_rehearsal": "byte/metadata-identical extraction; bash -n PASS",
+  "policy": {
+    "automatic_start_epoch": 1794003679,
+    "historical_hold": [
+      1,
+      2
+    ],
+    "publication": "denied_pending_individual_authorization"
+  },
+  "apache_validation": "Syntax OK",
+  "apache_action": "graceful reload",
+  "modified": {
+    "/etc/cron.d/vicidial": "218590f37328cc45504b5d9fe05948880a797ac28c00bb61b962fa1873484d2d",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "01f6a2fe048bb1cc112f22cba922614758593442a00c78d7bc9c7fc294869ec8",
+    "/usr/local/sbin/alma-vicidial-recording": "52755bd6f5033b03c5147744be22a4a977225a7e28d7dc3aed4211a575ad410f",
+    "/etc/systemd/system/alma-vicidial-recording.service": "5c0b3903a26b877f11f78a5b57d6f083ae83f1992f8b3083461d56cba2740932",
+    "/etc/systemd/system/alma-vicidial-recording.timer": "9470917000e2353a54dae16ea436428f3b5c7b974caee8664dd9ac51a0c77977",
+    "/etc/alma-vicidial-recording.json": "56939a23986ef559367734542a4f204b9b40d8cee835603f6c067d03c878dc9d"
+  },
+  "previous": {
+    "/etc/cron.d/vicidial": {
+      "sha256": "99890ea249236dda91b6429932eec79b5a7b9ccf16cda67516202c5bb11cf168",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0
+    },
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": {
+      "sha256": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0
+    }
+  }
+}

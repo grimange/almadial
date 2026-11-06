@@ -1,0 +1,585 @@
+{
+  "path": "/var/www/html/vicidial/admin_modify_lead.php",
+  "lines": [
+    {
+      "line": 806,
+      "text": "\t\t\t$list_id=\"\"; $HTML_header=\"\"; $CSV_header=\"\"; $HTML_body=\"\"; $CSV_body=\"\";"
+    },
+    {
+      "line": 807,
+      "text": "\t\t\t"
+    },
+    {
+      "line": 808,
+      "text": "\t\t\t$mysql_stmt.=\" order by \".$date_field_array[$t].\" desc\";"
+    },
+    {
+      "line": 809,
+      "text": "\t\t\t$mysql_rslt=mysql_to_mysqli($mysql_stmt, $link);"
+    },
+    {
+      "line": 810,
+      "text": "\t\t\tif ($DB) {echo \"|$mysql_stmt|\\n\";}"
+    },
+    {
+      "line": 811,
+      "text": "\t\t\tif (mysqli_num_rows($mysql_rslt)>0)"
+    },
+    {
+      "line": 812,
+      "text": "\t\t\t\t{"
+    },
+    {
+      "line": 813,
+      "text": "\t\t\t\t$CSV_text.=\"\\\"\"._QXZ(\"TABLE NAME\").\":\\\",\\\"$table_name\\\"\\n\";"
+    },
+    {
+      "line": 814,
+      "text": "\t\t\t\t$HTML_text.=\"<B>\"._QXZ(\"TABLE NAME\").\": $table_name</B><BR>\\n\";"
+    },
+    {
+      "line": 815,
+      "text": "\t\t\t\t$HTML_text.=\"<TABLE width=1000 cellspacing=1 cellpadding=5>\\n\";"
+    },
+    {
+      "line": 816,
+      "text": ""
+    },
+    {
+      "line": 817,
+      "text": "\t\t\t\t$j=0;"
+    },
+    {
+      "line": 818,
+      "text": "\t\t\t\twhile($row=mysqli_fetch_array($mysql_rslt,MYSQLI_ASSOC)) "
+    },
+    {
+      "line": 819,
+      "text": "\t\t\t\t\t{"
+    },
+    {
+      "line": 820,
+      "text": "\t\t\t\t\tif ($j%2==0) "
+    },
+    {
+      "line": 821,
+      "text": "\t\t\t\t\t\t{"
+    },
+    {
+      "line": 822,
+      "text": "\t\t\t\t\t\t$bgcolor=$SSstd_row2_background;"
+    },
+    {
+      "line": 823,
+      "text": "\t\t\t\t\t\t} "
+    },
+    {
+      "line": 824,
+      "text": "\t\t\t\t\telse "
+    },
+    {
+      "line": 825,
+      "text": "\t\t\t\t\t\t{"
+    },
+    {
+      "line": 826,
+      "text": "\t\t\t\t\t\t$bgcolor=$SSstd_row3_background;"
+    },
+    {
+      "line": 827,
+      "text": "\t\t\t\t\t\t}"
+    },
+    {
+      "line": 828,
+      "text": ""
+    },
+    {
+      "line": 829,
+      "text": "\t\t\t\t\tif ($j==0)"
+    },
+    {
+      "line": 830,
+      "text": "\t\t\t\t\t\t{"
+    },
+    {
+      "line": 831,
+      "text": "\t\t\t\t\t\t$HTML_header.=\"<tr>\\n\";"
+    },
+    {
+      "line": 832,
+      "text": "\t\t\t\t\t\t}"
+    },
+    {
+      "line": 833,
+      "text": "\t\t\t\t\t$HTML_body.=\"<tr>\\n\";"
+    },
+    {
+      "line": 834,
+      "text": "#\t\t\t\t\twhile (list($key, $val)=each($row)) "
+    },
+    {
+      "line": 835,
+      "text": "\t\t\t\t\tforeach ($row as $key => $val)"
+    },
+    {
+      "line": 836,
+      "text": "\t\t\t\t\t\t{"
+    },
+    {
+      "line": 837,
+      "text": "\t\t\t\t\t\tif ($key==\"entry_list_id\") {$list_id=$val;}"
+    },
+    {
+      "line": 838,
+      "text": "\t\t\t\t\t\tif (in_array($key, $purge_field_array[\"$table_name\"]) || (preg_match(\"/^custom_/\", $table_name) && $key!=\"lead_id\")) "
+    },
+    {
+      "line": 839,
+      "text": "\t\t\t\t\t\t\t{"
+    },
+    {
+      "line": 840,
+      "text": "\t\t\t\t\t\t\t$bgcolor=\"bgcolor='#999999'\";"
+    },
+    {
+      "line": 841,
+      "text": "\t\t\t\t\t\t\t$sb=\"<B>\";"
+    },
+    {
+      "line": 842,
+      "text": "\t\t\t\t\t\t\t$eb=\"</B>\";"
+    },
+    {
+      "line": 843,
+      "text": "\t\t\t\t\t\t\t} "
+    },
+    {
+      "line": 844,
+      "text": "\t\t\t\t\t\telse "
+    },
+    {
+      "line": 845,
+      "text": "\t\t\t\t\t\t\t{"
+    },
+    {
+      "line": 846,
+      "text": "\t\t\t\t\t\t\t$bgcolor=\"bgcolor='#$SSstd_row1_background'\";"
+    },
+    {
+      "line": 847,
+      "text": "\t\t\t\t\t\t\t$sb=\"\";"
+    },
+    {
+      "line": 848,
+      "text": "\t\t\t\t\t\t\t$eb=\"\";"
+    },
+    {
+      "line": 849,
+      "text": "\t\t\t\t\t\t\t}"
+    },
+    {
+      "line": 850,
+      "text": "\t\t\t\t\t\tif ($j==0)"
+    },
+    {
+      "line": 851,
+      "text": "\t\t\t\t\t\t\t{ "
+    },
+    {
+      "line": 852,
+      "text": "\t\t\t\t\t\t\t$CSV_header.=\"\\\"\".$key.\"\\\",\";"
+    },
+    {
+      "line": 853,
+      "text": "\t\t\t\t\t\t\t$HTML_header.=\"\\t<td $bgcolor>$sb<font size='2'>\".$key.\"</font>$eb</td>\\n\";"
+    },
+    {
+      "line": 854,
+      "text": "\t\t\t\t\t\t\t}"
+    },
+    {
+      "line": 855,
+      "text": "\t\t\t\t\t\t$CSV_body.=\"\\\"$val\\\",\";"
+    },
+    {
+      "line": 856,
+      "text": "\t\t\t\t\t\t$HTML_body.=\"\\t<td $bgcolor>$sb<font size='2'>\".$val.\"</font>$eb</td>\\n\";"
+    },
+    {
+      "line": 857,
+      "text": "\t\t\t\t\t\t}"
+    },
+    {
+      "line": 858,
+      "text": "\t\t\t\t\tif ($j==0)"
+    },
+    {
+      "line": 859,
+      "text": "\t\t\t\t\t\t{"
+    },
+    {
+      "line": 860,
+      "text": "\t\t\t\t\t\t$CSV_header=substr($CSV_header, 0, -1).\"\\n\";"
+    },
+    {
+      "line": 861,
+      "text": "\t\t\t\t\t\t$HTML_header.=\"</tr>\\n\";"
+    },
+    {
+      "line": 862,
+      "text": "\t\t\t\t\t\t}"
+    },
+    {
+      "line": 863,
+      "text": "\t\t\t\t\t$CSV_body=substr($CSV_body, 0, -1).\"\\n\";"
+    },
+    {
+      "line": 864,
+      "text": "\t\t\t\t\t$HTML_body.=\"</tr>\\n\";"
+    },
+    {
+      "line": 865,
+      "text": "\t\t\t\t\t$j++;"
+    },
+    {
+      "line": 866,
+      "text": "\t\t\t\t\t}"
+    },
+    {
+      "line": 867,
+      "text": ""
+    },
+    {
+      "line": 868,
+      "text": "\t\t\t\t\t$CSV_text.=$CSV_header.$CSV_body;"
+    },
+    {
+      "line": 869,
+      "text": "\t\t\t\t\t$HTML_text.=$HTML_header.$HTML_body;"
+    },
+    {
+      "line": 870,
+      "text": "\t\t\t\t\t"
+    },
+    {
+      "line": 871,
+      "text": "\t\t\t\t\t$CSV_text.=\"\\n\";"
+    },
+    {
+      "line": 872,
+      "text": "\t\t\t\t\t$HTML_text.=\"</table><BR><BR>\";"
+    },
+    {
+      "line": 873,
+      "text": ""
+    },
+    {
+      "line": 874,
+      "text": "\t\t\t\t}"
+    },
+    {
+      "line": 875,
+      "text": ""
+    },
+    {
+      "line": 876,
+      "text": "\t\t\t\tif ($list_id && $table_name==\"vicidial_list\" && table_exists(\"custom_$list_id\") && !in_array(\"custom_$list_id\", $table_array)) "
+    },
+    {
+      "line": 877,
+      "text": "\t\t\t\t{"
+    },
+    {
+      "line": 878,
+      "text": "\t\t\t\t\tarray_splice($table_array, 1, 0, \"custom_$list_id\");"
+    },
+    {
+      "line": 879,
+      "text": "\t\t\t\t\tarray_splice($date_field_array, 1, 0, \"lead_id\");"
+    },
+    {
+      "line": 880,
+      "text": "\t\t\t\t\t$custom_table_array=array(\"custom_$list_id\" => array());"
+    },
+    {
+      "line": 881,
+      "text": "\t\t\t\t\t$purge_field_array=array_merge($purge_field_array, $custom_table_array);"
+    },
+    {
+      "line": 882,
+      "text": "\t\t\t\t\t$table_count++;"
+    },
+    {
+      "line": 883,
+      "text": "\t\t\t\t}"
+    },
+    {
+      "line": 884,
+      "text": "\t\t\t}"
+    },
+    {
+      "line": 885,
+      "text": ""
+    },
+    {
+      "line": 886,
+      "text": "\t\tif (strlen($CSV_text)>0 && $gdpr_action==\"download\") "
+    },
+    {
+      "line": 887,
+      "text": "\t\t\t{"
+    },
+    {
+      "line": 888,
+      "text": "\t\t\t$rec_stmt=\"select start_time, location, filename from recording_log where lead_id='$lead_id' order by start_time asc\";"
+    },
+    {
+      "line": 889,
+      "text": "\t\t\t$rec_rslt=mysql_to_mysqli($rec_stmt, $link);"
+    },
+    {
+      "line": 890,
+      "text": "\t\t\t$files_to_zip=array();"
+    },
+    {
+      "line": 891,
+      "text": "\t\t\twhile ($rec_row=mysqli_fetch_row($rec_rslt)) {"
+    },
+    {
+      "line": 892,
+      "text": "\t\t\t\t$start_time=$rec_row[0];"
+    },
+    {
+      "line": 893,
+      "text": "\t\t\t\t$start_date=substr($start_time, 1, 10);"
+    },
+    {
+      "line": 894,
+      "text": "\t\t\t\t$location=$rec_row[1];"
+    },
+    {
+      "line": 895,
+      "text": "\t\t\t\t$filename=$rec_row[2];"
+    },
+    {
+      "line": 896,
+      "text": "\t\t\t\tpreg_match(\"/$filename.*$/\", $location, $matches);"
+    },
+    {
+      "line": 897,
+      "text": "\t\t\t\t"
+    },
+    {
+      "line": 898,
+      "text": "\t\t\t\t$destination_filename=$matches[0];"
+    },
+    {
+      "line": 899,
+      "text": ""
+    },
+    {
+      "line": 900,
+      "text": "\t\t\t\tset_time_limit(0);"
+    },
+    {
+      "line": 901,
+      "text": ""
+    },
+    {
+      "line": 902,
+      "text": "\t\t\t\t$fp = fopen(\"/tmp/$destination_filename\", 'w+');"
+    },
+    {
+      "line": 903,
+      "text": "\t\t\t\t$ch = curl_init(str_replace(\" \",\"%20\",$location));"
+    },
+    {
+      "line": 904,
+      "text": "\t\t\t\tcurl_setopt($ch, CURLOPT_TIMEOUT, 50);"
+    },
+    {
+      "line": 905,
+      "text": "\t\t\t\tcurl_setopt($ch, CURLOPT_FILE, $fp);"
+    },
+    {
+      "line": 906,
+      "text": "\t\t\t\tcurl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);"
+    },
+    {
+      "line": 907,
+      "text": "\t\t\t\tcurl_exec($ch);"
+    },
+    {
+      "line": 908,
+      "text": "\t\t\t\t# Deprecated - curl_close($ch);"
+    },
+    {
+      "line": 909,
+      "text": "\t\t\t\tfclose($fp);"
+    },
+    {
+      "line": 910,
+      "text": ""
+    },
+    {
+      "line": 911,
+      "text": "\t\t\t\tarray_push($files_to_zip, \"$destination_filename\");"
+    },
+    {
+      "line": 912,
+      "text": "\t\t\t}"
+    },
+    {
+      "line": 913,
+      "text": ""
+    },
+    {
+      "line": 914,
+      "text": "\t\t\t$stmt=\"INSERT INTO vicidial_admin_log set event_date='$NOW_TIME', user='$PHP_AUTH_USER', ip_address='$ip', event_section='LEADS', event_type='EXPORT', record_id='$lead_id', event_code='GDPR EXPORT LEAD DATA', event_sql=\\\"$SQL_log\\\", event_notes='';\";"
+    },
+    {
+      "line": 915,
+      "text": "\t\t\tif ($DB) {echo \"|$stmt|\\n\";}"
+    },
+    {
+      "line": 916,
+      "text": "\t\t\t$rslt=mysql_to_mysqli($stmt, $link);"
+    },
+    {
+      "line": 917,
+      "text": ""
+    },
+    {
+      "line": 918,
+      "text": "\t\t\t"
+    },
+    {
+      "line": 919,
+      "text": "\t\t\t$FILE_TIME = date(\"Ymd-His\");"
+    },
+    {
+      "line": 920,
+      "text": "\t\t\t$CSVfilename = \"GDPR_export_$US$FILE_TIME.csv\";"
+    },
+    {
+      "line": 921,
+      "text": "\t\t\t$CSV_text=preg_replace('/^\\s+/', '', $CSV_text);"
+    },
+    {
+      "line": 922,
+      "text": "\t\t\t$CSV_text=preg_replace('/ +\\\"/', '\"', $CSV_text);"
+    },
+    {
+      "line": 923,
+      "text": "\t\t\t$CSV_text=preg_replace('/\\\" +/', '\"', $CSV_text);"
+    },
+    {
+      "line": 924,
+      "text": ""
+    },
+    {
+      "line": 925,
+      "text": "\t\t\tarray_push($files_to_zip, \"$CSVfilename\");"
+    },
+    {
+      "line": 926,
+      "text": "\t\t\t$fp = fopen(\"/tmp/$CSVfilename\", 'w+');"
+    },
+    {
+      "line": 927,
+      "text": "\t\t\tfwrite($fp, $CSV_text);"
+    },
+    {
+      "line": 928,
+      "text": "\t\t\tfclose($fp);"
+    },
+    {
+      "line": 929,
+      "text": ""
+    },
+    {
+      "line": 930,
+      "text": "\t\t\t$zipname = \"$lead_id.zip\";"
+    },
+    {
+      "line": 931,
+      "text": "\t\t\t$zip = new ZipArchive;"
+    },
+    {
+      "line": 932,
+      "text": "\t\t\t$zip->open($zipname, ZipArchive::CREATE);"
+    },
+    {
+      "line": 933,
+      "text": "\t\t\tforeach ($files_to_zip as $file) {"
+    },
+    {
+      "line": 934,
+      "text": "\t\t\t\t$tempfile=\"/tmp/$file\";"
+    },
+    {
+      "line": 935,
+      "text": "\t\t\t\t$zip->addFile($tempfile);"
+    },
+    {
+      "line": 936,
+      "text": "\t\t\t}"
+    },
+    {
+      "line": 937,
+      "text": "\t\t\t$zip->close();"
+    },
+    {
+      "line": 938,
+      "text": ""
+    },
+    {
+      "line": 939,
+      "text": "\t\t\theader('Content-Type: application/zip');"
+    },
+    {
+      "line": 940,
+      "text": "\t\t\theader('Content-disposition: attachment; filename='.$zipname);"
+    },
+    {
+      "line": 941,
+      "text": "\t\t\theader('Content-Length: ' . filesize($zipname));"
+    },
+    {
+      "line": 942,
+      "text": "\t\t\treadfile($zipname);"
+    },
+    {
+      "line": 943,
+      "text": ""
+    },
+    {
+      "line": 944,
+      "text": "\t\t\t/*"
+    },
+    {
+      "line": 945,
+      "text": "\t\t\t// We'll be outputting a TXT file"
+    },
+    {
+      "line": 946,
+      "text": "\t\t\theader('Content-type: application/octet-stream');"
+    },
+    {
+      "line": 947,
+      "text": ""
+    },
+    {
+      "line": 948,
+      "text": "\t\t\t// It will be called LIST_101_20090209-121212.txt"
+    },
+    {
+      "line": 949,
+      "text": "\t\t\theader(\"Content-Disposition: attachment; filename=\\\"$CSVfilename\\\"\");"
+    },
+    {
+      "line": 950,
+      "text": "\t\t\theader('Expires: 0');"
+    }
+  ]
+}

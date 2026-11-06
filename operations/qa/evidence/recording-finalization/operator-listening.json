@@ -1,0 +1,8 @@
+{
+  "recording_id": 2,
+  "path": "/var/spool/asterisk/monitorDONE/20261107-024337_7000000001-all.wav",
+  "result": "Both voices confirmed",
+  "evidence_category": "operator confirmed",
+  "provenance": "Operator reply to finalized-recording SSH listening question in this assignment",
+  "limitations": "No audio downloaded, transcribed or independently listened to by the implementation worker"
+}

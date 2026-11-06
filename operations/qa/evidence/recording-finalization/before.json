@@ -1,0 +1,272 @@
+{
+  "host": "dialer01",
+  "utc": "2026-11-06T22:18:09Z",
+  "hashes": {
+    "/etc/cron.d/vicidial": "99890ea249236dda91b6429932eec79b5a7b9ccf16cda67516202c5bb11cf168",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+    "/etc/httpd/conf.d/00-alma-acme.conf": "eff27d628e0da49669c469708e91ab9dc0a811373a6800d5db1b8c8a2595ddd0",
+    "/etc/asterisk/extensions.conf": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+    "/etc/asterisk/sip.conf": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+    "/etc/asterisk/pjsip.conf": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+    "/etc/asterisk/rtp.conf": "9f9a8a0d492915a1f7d2cd47afd0b7a4f1914589d3f7a193fc0f7c443afa9aa7",
+    "/opt/alma-portal-443/access.lua": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+    "/opt/alma-portal-443/common.py": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74",
+    "/opt/alma-portal-443/apply_requests.py": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956",
+    "/opt/alma-portal-443/sip_guard.py": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf",
+    "/usr/local/sbin/alma-portal-cert-deploy": "fad1df74eb9800038ec2e9b57b886df73692cd85445fbb9a358df95d51a21403",
+    "/usr/local/libexec/alma-portal-tls": "614a6a55f46a7d71957a3db55af2593403444cb9758b75ac965cbbd7469522ff",
+    "/usr/local/sbin/alma-vicidial-backup": "b38462d24d9636659561f46d4c88c617690b68e4314ea67dd00377a4a4b27a81",
+    "/etc/alma-vicidial-backup.json": "523dfe94a2006641f8e87a1e234099452c7cdd28aa2f2c6a19eb7d951044b3ab",
+    "/etc/systemd/system/alma-portal-renew.service": "f22f962fca67f28cd825acca0460bacb969291df7719a8033e9b380280d598e4",
+    "/etc/systemd/system/alma-portal-renew.timer": "50a4bc8e1406c5443c5ec3c71755938e328998885f473e75f111b6ed5aab32b0",
+    "/etc/systemd/system/alma-vicidial-backup.service": "2f61a59980b49bd5b08b3a07844c491fbac8dc195188e545afe68fa17a76b256",
+    "/etc/systemd/system/alma-vicidial-backup.timer": "d6b2aa807caaf60572cea1f2a99f7e87a04c8b899938aa08a3a6d7a1b83d775d",
+    "/usr/share/astguiclient/AST_CRON_audio_1_move_mix.pl": "5a6c785234c1cd1ac23b990b1f3083c0da81eef9dbbcfc9a129231e314b7b569",
+    "/usr/share/astguiclient/AST_CRON_audio_1_move_VDonly.pl": "a9837929fcda93d4ca238eb0f06ac5d2fc3198c3029c2e6132f29fe3091c25c0",
+    "/usr/share/astguiclient/AST_CRON_audio_2_compress.pl": "9a203c6e07a510e3f84cc4df07bfeee544850043523bc45624898ed4a5747e74",
+    "/var/www/html/vicidial/recording_log_redirect.php": "6a002622b38424848c4e887c493a632844abf25f6f8be45556f4601df90c75fc",
+    "/var/www/html/vicidial/user_stats.php": "ac25d88cf9a8febee004b1ee577136674541e089e72c3770ed0d1279b90cccc1",
+    "/var/www/html/vicidial/admin_modify_lead.php": "78c30912209ae16cea8ae1044fc7175f0ca5f2ab30b897a548ef69585b2b2803"
+  },
+  "services": {
+    "asterisk": {
+      "rc": 0,
+      "stdout": "MainPID=143137\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 10:25:33 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "mariadb": {
+      "rc": 0,
+      "stdout": "MainPID=61646\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:47:10 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "httpd": {
+      "rc": 0,
+      "stdout": "MainPID=26973\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:15:42 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "php-fpm": {
+      "rc": 0,
+      "stdout": "MainPID=26963\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:15:41 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "alma-portal-443": {
+      "rc": 0,
+      "stdout": "MainPID=232072\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 20:26:01 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "firewalld": {
+      "rc": 0,
+      "stdout": "MainPID=142982\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 10:24:24 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "fail2ban": {
+      "rc": 0,
+      "stdout": "MainPID=178535\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 15:28:22 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "sshd": {
+      "rc": 0,
+      "stdout": "MainPID=993\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:03:29 EST\nActiveState=active\n",
+      "stderr": ""
+    },
+    "crond": {
+      "rc": 0,
+      "stdout": "MainPID=62430\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 17:52:46 EST\nActiveState=active\n",
+      "stderr": ""
+    }
+  },
+  "timers": {
+    "alma-portal-renew.timer": {
+      "rc": 0,
+      "stdout": "NextElapseUSecRealtime=Sat 2026-11-07 04:18:22 EST\nNextElapseUSecMonotonic=0\nPersistent=yes\nActiveState=active\nUnitFileState=enabled\n",
+      "stderr": ""
+    },
+    "alma-vicidial-backup.timer": {
+      "rc": 0,
+      "stdout": "NextElapseUSecRealtime=Sat 2026-11-07 03:40:00 EST\nNextElapseUSecMonotonic=0\nPersistent=yes\nActiveState=active\nUnitFileState=enabled\n",
+      "stderr": ""
+    },
+    "alma-vicidial-recording.timer": {
+      "rc": 0,
+      "stdout": "NextElapseUSecRealtime=\nNextElapseUSecMonotonic=infinity\nPersistent=no\nActiveState=inactive\nUnitFileState=\n",
+      "stderr": ""
+    }
+  },
+  "channels": {
+    "rc": 0,
+    "stdout": "0 active channels\n0 active calls\n24 calls processed\n",
+    "stderr": ""
+  },
+  "dialplan": {
+    "rc": 0,
+    "stdout": "[ Included context 'vicidial-auto-internal' created by 'pbx_config' ]\n  '8309' =>         1. Answer()                                   [extensions-vicidial.conf:235]\n                    2. Monitor(wav,${CALLERID(name)})             [extensions-vicidial.conf:236]\n                    3. Wait(3600)                                 [extensions-vicidial.conf:237]\n                    4. Hangup()                                   [extensions-vicidial.conf:238]\n\n-= 1 extension (4 priorities) in 1 context. =-\n",
+    "stderr": ""
+  },
+  "listeners": {
+    "rc": 0,
+    "stdout": "Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port\nudp   UNCONN 0      0          127.0.0.1:323        0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:4520       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:4569       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:5000       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:5060       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:5061       0.0.0.0:*   \nudp   UNCONN 0      0            0.0.0.0:42911      0.0.0.0:*   \nudp   UNCONN 0      0              [::1]:323           [::]:*   \nudp   UNCONN 0      0               [::]:34772         [::]:*   \ntcp   LISTEN 0      10         127.0.0.1:5038       0.0.0.0:*   \ntcp   LISTEN 0      4096         0.0.0.0:4577       0.0.0.0:*   \ntcp   LISTEN 0      128          0.0.0.0:22222      0.0.0.0:*   \ntcp   LISTEN 0      32         127.0.0.1:19091      0.0.0.0:*   \ntcp   LISTEN 0      80         127.0.0.1:3306       0.0.0.0:*   \ntcp   LISTEN 0      511                *:443              *:*   \ntcp   LISTEN 0      511                *:80               *:*   \ntcp   LISTEN 0      128             [::]:22222         [::]:*   \n",
+    "stderr": ""
+  },
+  "apache": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nSyntax OK\n"
+  },
+  "database": {
+    "rc": 0,
+    "stdout": "1\t20261106-024951_7000000001\t1793904591\t1793904670\t79\tNULL\n2\t20261107-024337_7000000001\t1793990617\t1793990673\t56\tNULL\n1793990617.45\t2026-11-07 02:43:41\t52\tSALE\tTEST01\t8\n0\t0\t0\nY\t1\t0\t1\nY\t9\t0\t1\nN\t1\t0\t2\n",
+    "stderr": ""
+  },
+  "cron": "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin\n\n# VICIdial process supervision\n* * * * * root /usr/share/astguiclient/ADMIN_keepalive_ALL.pl\n\n# Hopper\n* * * * * root /usr/share/astguiclient/AST_VDhopper.pl -q\n\n# Hung call cleanup\n* * * * * root /usr/share/astguiclient/AST_manager_kill_hung_congested.pl\n\n# Voicemail status\n* * * * * root /usr/share/astguiclient/AST_vm_update.pl\n\n# Flush database action queue\n11 * * * * root /usr/share/astguiclient/AST_flush_DBqueue.pl -q\n\n# Agent log cleanup\n33 * * * * root /usr/share/astguiclient/AST_cleanup_agent_log.pl\n\n# Recording mixing\n*/3 * * * * root /usr/share/astguiclient/AST_CRON_audio_1_move_mix.pl --MIX\n",
+  "recordings": [
+    {
+      "path": "/var/spool/asterisk/monitor/20261106-024951_7000000001-in.wav",
+      "size": 1255404,
+      "sha256": "ba9f72359aad7bb56afa2b18a1780d466df7e9443e4183f692d237228a7febab",
+      "mode": "0o644",
+      "channels": 1,
+      "rate": 8000,
+      "width": 2,
+      "frames": 627680,
+      "seconds": 78.46
+    },
+    {
+      "path": "/var/spool/asterisk/monitor/20261106-024951_7000000001-out.wav",
+      "size": 44,
+      "sha256": "4f8734c5e13ac599e168cf247a51c1dd0758537ce00bf16d7fed1a3d14d07041",
+      "mode": "0o644",
+      "channels": 1,
+      "rate": 8000,
+      "width": 2,
+      "frames": 0,
+      "seconds": 0.0
+    },
+    {
+      "path": "/var/spool/asterisk/monitor/20261107-024337_7000000001-in.wav",
+      "size": 892204,
+      "sha256": "f726a1d5615d50767c8a0f4794f68a544322ffa70037d1ef1a7bb3667aa4be59",
+      "mode": "0o644",
+      "channels": 1,
+      "rate": 8000,
+      "width": 2,
+      "frames": 446080,
+      "seconds": 55.76
+    },
+    {
+      "path": "/var/spool/asterisk/monitor/20261107-024337_7000000001-out.wav",
+      "size": 44,
+      "sha256": "4f8734c5e13ac599e168cf247a51c1dd0758537ce00bf16d7fed1a3d14d07041",
+      "mode": "0o644",
+      "channels": 1,
+      "rate": 8000,
+      "width": 2,
+      "frames": 0,
+      "seconds": 0.0
+    }
+  ],
+  "firewall": {
+    "runtime": {
+      "rc": 0,
+      "sha256": "8d2a7452522d9654fdfab3867051aaa5e9b85de0f018a05816e7f0f80b91e9ab"
+    },
+    "permanent": {
+      "rc": 0,
+      "sha256": "3c326536e4422504344004e87536310a89aeda1d663c8c89047c448efcf1c763"
+    }
+  },
+  "sip_gate_policy_sha256": "cfd3b1e6096da8c8787e4a2bc9905c8222ffdb2ace00f1f346569e510ffa161f",
+  "worker": {
+    "rc": 0,
+    "stdout": "Result=success\nExecMainStatus=0\n",
+    "stderr": ""
+  },
+  "backup_health": {
+    "rc": 0,
+    "stdout": "{\n  \"outcome\": \"ok\",\n  \"attempt_at\": \"2026-11-06T21:03:30.996782+00:00\",\n  \"pid\": 414044,\n  \"finished_at\": \"2026-11-06T21:03:40.787207+00:00\",\n  \"last_failure\": {\n    \"at\": \"2026-11-06T21:02:22.754013+00:00\",\n    \"reason\": \"required_dataset_missing\"\n  },\n  \"last_success\": {\n    \"id\": \"20261106T210331-1ea99037\",\n    \"completed_at\": \"2026-11-06T21:03:39.881806+00:00\",\n    \"bytes\": 1363750901,\n    \"database\": {\n      \"method\": \"mariadb-dump --all-databases --lock-all-tables\",\n      \"timeout_seconds\": 30,\n      \"lock_hold_upper_bound_seconds\": 0.7662,\n      \"completed_at\": \"2026-11-06T21:03:32.504294+00:00\"\n    },\n    \"integrity\": {\n      \"verified_at\": \"2026-11-06T21:03:39.627825+00:00\",\n      \"payloads\": 5,\n      \"archive_members\": 21368,\n      \"database_tables\": 376,\n      \"recording_files\": 6\n    },\n    \"archive_sha256\": \"b867bcf61a63cf9a498f25ac48620392a042d329f79988f80f8e878b638e54b6\"\n  },\n  \"newest_complete_age_seconds\": 4470.277326,\n  \"remaining_bytes\": 146553851904,\n  \"free_inodes\": 9778497,\n  \"last_success_verification_present\": true,\n  \"job_lock_held\": false\n}\n",
+    "stderr": ""
+  },
+  "backup_complete_sets": 2,
+  "tls": {
+    "sha256": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+    "version": "TLSv1.3"
+  },
+  "http": [
+    {
+      "scheme": "https",
+      "path": "/",
+      "ajax": false,
+      "code": 501,
+      "location": null
+    },
+    {
+      "scheme": "https",
+      "path": "/portal/",
+      "ajax": false,
+      "code": 501,
+      "location": null
+    },
+    {
+      "scheme": "https",
+      "path": "/agc/vicidial.php",
+      "ajax": false,
+      "code": 403,
+      "location": null
+    },
+    {
+      "scheme": "https",
+      "path": "/vicidial/admin.php",
+      "ajax": false,
+      "code": 403,
+      "location": null
+    },
+    {
+      "scheme": "https",
+      "path": "/agc/vicidial.php",
+      "ajax": true,
+      "code": 403,
+      "location": null
+    },
+    {
+      "scheme": "https",
+      "path": "/vicidial/admin.php",
+      "ajax": true,
+      "code": 403,
+      "location": null
+    },
+    {
+      "scheme": "https",
+      "path": "/RECORDINGS/",
+      "ajax": false,
+      "code": 403,
+      "location": null
+    },
+    {
+      "scheme": "https",
+      "path": "/RECORDINGS/PR01_SYNTHETIC-all.wav",
+      "ajax": false,
+      "code": 403,
+      "location": null
+    },
+    {
+      "scheme": "https",
+      "path": "/RECORDINGS/20261107-024337_7000000001-all.wav",
+      "ajax": false,
+      "code": 403,
+      "location": null
+    },
+    {
+      "scheme": "http",
+      "path": "/RECORDINGS/PR01_SYNTHETIC-all.wav",
+      "ajax": false,
+      "code": 403,
+      "location": null
+    },
+    {
+      "scheme": "http",
+      "path": "/",
+      "ajax": false,
+      "code": 403,
+      "location": null
+    }
+  ]
+}

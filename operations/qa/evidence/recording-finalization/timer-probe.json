@@ -1,0 +1,16 @@
+{
+  "first": {
+    "at": 1794003867,
+    "outcome": "ok",
+    "results": []
+  },
+  "second": {
+    "at": 1794003867,
+    "outcome": "ok",
+    "results": []
+  },
+  "timer": "NextElapseUSecMonotonic=2d 1h 24min 8.915863s\nActiveState=active\nUnitFileState=enabled\n",
+  "service": "Result=success\nExecMainStatus=0\n",
+  "journal": "Starting alma-vicidial-recording.service - Private native VICIdial conference recording finalization...\n{\"at\": 1794003680, \"outcome\": \"ok\", \"results\": []}\nalma-vicidial-recording.service: Deactivated successfully.\nFinished alma-vicidial-recording.service - Private native VICIdial conference recording finalization.\nStarting alma-vicidial-recording.service - Private native VICIdial conference recording finalization...\n{\"at\": 1794003862, \"outcome\": \"ok\", \"results\": []}\nalma-vicidial-recording.service: Deactivated successfully.\nFinished alma-vicidial-recording.service - Private native VICIdial conference recording finalization.\nStarting alma-vicidial-recording.service - Private native VICIdial conference recording finalization...\n{\"at\": 1794003867, \"outcome\": \"ok\", \"results\": []}\nalma-vicidial-recording.service: Deactivated successfully.\nFinished alma-vicidial-recording.service - Private native VICIdial conference recording finalization.\nStarting alma-vicidial-recording.service - Private native VICIdial conference recording finalization...\n{\"at\": 1794003867, \"outcome\": \"ok\", \"results\": []}\nalma-vicidial-recording.service: Deactivated successfully.\nFinished alma-vicidial-recording.service - Private native VICIdial conference recording finalization.\n",
+  "scope": "only recording timer restarted; empty automatic queue; full host reboot NOT RUN"
+}

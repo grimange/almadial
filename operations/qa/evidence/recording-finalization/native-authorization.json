@@ -1,0 +1,155 @@
+{
+  "/var/www/html/vicidial/recording_log_redirect.php": {
+    "sha256": "6a002622b38424848c4e887c493a632844abf25f6f8be45556f4601df90c75fc",
+    "matches": [
+      {
+        "line": 80,
+        "text": "$auth_message = user_authorization($PHP_AUTH_USER,$PHP_AUTH_PW,'',1,0);"
+      },
+      {
+        "line": 105,
+        "text": "\techo \"$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\\n\";"
+      },
+      {
+        "line": 110,
+        "text": "$rights_stmt = \"SELECT access_recordings,selected_language from vicidial_users where user='$PHP_AUTH_USER';\";"
+      },
+      {
+        "line": 118,
+        "text": "if ( ( $access_recordings < 1 ) or ( $log_recording_access < 1 ) )"
+      },
+      {
+        "line": 189,
+        "text": "\theader(\"Location: $location\");"
+      }
+    ]
+  },
+  "/var/www/html/vicidial/user_stats.php": {
+    "sha256": "ac25d88cf9a8febee004b1ee577136674541e089e72c3770ed0d1279b90cccc1",
+    "matches": [
+      {
+        "line": 1659,
+        "text": "\t\t\tif ($log_recording_access<1) "
+      },
+      {
+        "line": 1660,
+        "text": "\t\t\t\t{$location = \"<a href=\\\"$location\\\">$locat</a>\";}"
+      },
+      {
+        "line": 1662,
+        "text": "\t\t\t\t{$location = \"<a href=\\\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=$search_archived_data\\\">$locat</a>\";}"
+      }
+    ]
+  },
+  "/var/www/html/vicidial/admin_modify_lead.php": {
+    "sha256": "78c30912209ae16cea8ae1044fc7175f0ca5f2ab30b897a548ef69585b2b2803",
+    "matches": [
+      {
+        "line": 288,
+        "text": "$stmt = \"SELECT use_non_latin,custom_fields_enabled,webroot_writable,allow_emails,enable_languages,language_method,active_modules,log_recording_access,admin_screen_colors,enable_gdpr_download_deletion,source_id_display,mute_recordings,sip_event_logging,allow_web_debug,hopper_hold_inserts,coldstorage_server_ip,coldstorage_dbname,coldstorage_login,coldstorage_pass,coldstorage_port,stereo_recording,recording_dtmf_detection,recording_dtmf_muting FROM system_settings;\";"
+      },
+      {
+        "line": 302,
+        "text": "\t$log_recording_access =\t\t$row[7];"
+      },
+      {
+        "line": 1196,
+        "text": "\t\t\txmlhttp.open('POST', 'recording_log_redirect.php'); "
+      },
+      {
+        "line": 4143,
+        "text": "\t\t\t\tif ($log_recording_access<1) "
+      },
+      {
+        "line": 4145,
+        "text": "\t\t\t\t\t$play_audio = \"<td align=left><font size=2> <audio controls preload=\\\"none\\\"> <source src ='$location' type='audio/wav' > <source src ='$location' type='audio/mpeg' >\"._QXZ(\"No browser audio playback support\").\"</audio> </td>\\n\";"
+      },
+      {
+        "line": 4150,
+        "text": "\t\t\t\t\t#$location = \"<a href=\\\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=0\\\">$locat</a>\";"
+      },
+      {
+        "line": 4151,
+        "text": "\t\t\t\t\t$play_audio = \"<td align=left> <audio id='modifylead_recording_id_\".$row[0].\"' controls preload=\\\"none\\\" onplay='LogAudioRecordingAccess($log_recording_access, $row[0], $row[12], this.id)'> <source src ='$location' type='audio/wav' > <source src ='$location' type='audio/mpeg' >\"._QXZ(\"No browser audio playback support\").\"</audio> </td>\\n\";"
+      },
+      {
+        "line": 4276,
+        "text": "\t\t\t\tif ($log_recording_access<1) "
+      },
+      {
+        "line": 4278,
+        "text": "\t\t\t\t\t$play_audio = \"<td align=left><font size=2> <audio controls preload=\\\"none\\\"> <source src ='$location' type='audio/wav' > <source src ='$location' type='audio/mpeg' >\"._QXZ(\"No browser audio playback support\").\"</audio> </td>\\n\";"
+      },
+      {
+        "line": 4283,
+        "text": "\t\t\t\t\t$location = \"<a href=\\\"recording_log_redirect.php?recording_id=$row[0]&lead_id=$row[12]&search_archived_data=1\\\">$locat</a>\";"
+      },
+      {
+        "line": 4312,
+        "text": "\tif ($log_recording_access > 0) "
+      }
+    ]
+  },
+  "/usr/share/astguiclient/AST_CRON_audio_1_move_VDonly.pl": {
+    "sha256": "a9837929fcda93d4ca238eb0f06ac5d2fc3198c3029c2e6132f29fe3091c25c0",
+    "matches": [
+      {
+        "line": 188,
+        "text": "\tif ( ($line =~ /^PATHmonitor/) && ($CLImonitor < 1) )"
+      },
+      {
+        "line": 190,
+        "text": "\tif ( ($line =~ /^PATHDONEmonitor/) && ($CLIDONEmonitor < 1) )"
+      },
+      {
+        "line": 311,
+        "text": "sleep(15);"
+      },
+      {
+        "line": 484,
+        "text": "\t\t\t\t\t`mv -f \"$dir1/$INfile\" \"$dir2/$ALLfile\"`;"
+      },
+      {
+        "line": 485,
+        "text": "\t\t\t\t\t`rm -f \"$dir1/$OUTfile\"`;"
+      },
+      {
+        "line": 645,
+        "text": "\t\t\t\t\t\t\t`mv -f \"$dir2/$origALLfile\" \"$dir2/$ALLfile\"`;"
+      },
+      {
+        "line": 665,
+        "text": "\t\t\t\t\t\t\t\t`mv -f \"$dir2/$origALLfile\" \"$dir2/$ALLfile\"`;"
+      },
+      {
+        "line": 677,
+        "text": "\t\t\t\tif ($HTTPS > 0) {$HTTP='https';}"
+      },
+      {
+        "line": 678,
+        "text": "\t\t\t\t$stmtA = \"UPDATE recording_log set location='$HTTP://$server_ip/RECORDINGS/$ALLfile' $filenameSQL $lengthSQL where recording_id='$recording_id';\";"
+      }
+    ]
+  },
+  "/usr/share/astguiclient/AST_CRON_audio_1_move_mix.pl": {
+    "sha256": "5a6c785234c1cd1ac23b990b1f3083c0da81eef9dbbcfc9a129231e314b7b569",
+    "matches": [
+      {
+        "line": 208,
+        "text": "$dir1 = \"$PATHmonitor\";"
+      },
+      {
+        "line": 211,
+        "text": "if ($MIX > 0)"
+      },
+      {
+        "line": 212,
+        "text": "\t{$dir1 = \"$PATHmonitor/MIX\";}"
+      },
+      {
+        "line": 215,
+        "text": "\t$dir1 = \"$PATHmonitor/SPHINX/RAW\";"
+      }
+    ]
+  }
+}

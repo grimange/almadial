@@ -1,0 +1,12 @@
+{
+  "provenance": "Final noninteractive SSH check after desktop-denial.json",
+  "recording_health": {
+    "at": 1794004230,
+    "outcome": "ok",
+    "results": [],
+    "age_seconds": 167
+  },
+  "timer": {"ActiveState": "active", "UnitFileState": "enabled"},
+  "apache": "Syntax OK; preexisting global ServerName warning remains",
+  "remote_command_exit": 0
+}

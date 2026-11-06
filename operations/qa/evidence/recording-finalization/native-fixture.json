@@ -1,0 +1,1 @@
+{"native_sha256": "a9837929fcda93d4ca238eb0f06ac5d2fc3198c3029c2e6132f29fe3091c25c0", "database": "DBI double; NO live writes", "synthetic_seconds": 1, "empty_companion": true, "byte_identical": true, "https_location_generated": true, "repeated_run_no_duplicate_update": true, "native_returncode": 0, "repeated_returncode": 0}

@@ -1,0 +1,42 @@
+{
+  "streaming_primitive_candidates": [
+    {
+      "path": "/var/www/html/vicidial/admin.php",
+      "hits": [
+        {
+          "line": 52777,
+          "text": "readfile('custom_report_links.html');"
+        }
+      ]
+    },
+    {
+      "path": "/var/www/html/vicidial/admin_modify_lead.php",
+      "hits": [
+        {
+          "line": 942,
+          "text": "readfile($zipname);"
+        }
+      ]
+    }
+  ],
+  "lookup_files": [
+    {
+      "path": "/var/www/html/vicidial/recording_lookup.php",
+      "bytes": 7,
+      "removed": true
+    },
+    {
+      "path": "/var/www/html/vicidial/recording_lookup_DIRECT.php",
+      "bytes": 7,
+      "removed": true
+    }
+  ],
+  "apr_dbd_modules": [
+    "apr_crypto_openssl.so",
+    "apr_crypto_openssl-1.so",
+    "apr_dbm_lmdb.so",
+    "apr_dbm_lmdb-1.so"
+  ],
+  "recording_aliases": [],
+  "webroot_recording_symlinks": []
+}

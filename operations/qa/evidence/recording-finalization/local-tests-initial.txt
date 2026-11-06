@@ -1,0 +1,332 @@
+test_query_is_read_only_bounded_and_excludes_historical (test_finalize.QueryTests.test_query_is_read_only_bounded_and_excludes_historical) ... ok
+test_unsafe_name_rejected (test_finalize.QueryTests.test_unsafe_name_rejected) ... ok
+test_active_metadata_waits_without_native_or_database_write (test_finalize.RecordingTests.test_active_metadata_waits_without_native_or_database_write) ... ok
+test_capacity_check_preserves_originals (test_finalize.RecordingTests.test_capacity_check_preserves_originals) ... ERROR
+test_database_update_failure_is_not_success (test_finalize.RecordingTests.test_database_update_failure_is_not_success) ... ERROR
+test_duplicate_database_filename_is_rejected (test_finalize.RecordingTests.test_duplicate_database_filename_is_rejected) ... ok
+test_duration_mismatch_is_rejected (test_finalize.RecordingTests.test_duration_mismatch_is_rejected) ... ERROR
+test_empty_input_is_rejected (test_finalize.RecordingTests.test_empty_input_is_rejected) ... ERROR
+test_existing_final_collision_is_rejected (test_finalize.RecordingTests.test_existing_final_collision_is_rejected) ... ERROR
+test_existing_location_is_not_replaced (test_finalize.RecordingTests.test_existing_location_is_not_replaced) ... ok
+test_false_native_success_without_file_is_rejected (test_finalize.RecordingTests.test_false_native_success_without_file_is_rejected) ... ERROR
+test_finalize_header_only_companion_and_native_https (test_finalize.RecordingTests.test_finalize_header_only_companion_and_native_https) ... ERROR
+test_hardlink_is_rejected (test_finalize.RecordingTests.test_hardlink_is_rejected) ... ok
+test_metadata_race_prevents_native_run (test_finalize.RecordingTests.test_metadata_race_prevents_native_run) ... ERROR
+test_native_nonzero_preserves_originals_and_has_no_receipt (test_finalize.RecordingTests.test_native_nonzero_preserves_originals_and_has_no_receipt) ... ERROR
+test_nonempty_output_is_not_discarded (test_finalize.RecordingTests.test_nonempty_output_is_not_discarded) ... ERROR
+test_open_writer_is_detected_and_deferred (test_finalize.RecordingTests.test_open_writer_is_detected_and_deferred) ... ERROR
+test_read_only_descriptor_does_not_block (test_finalize.RecordingTests.test_read_only_descriptor_does_not_block) ... ERROR
+test_receipt_conflict_is_rejected (test_finalize.RecordingTests.test_receipt_conflict_is_rejected) ... ERROR
+test_recent_end_waits (test_finalize.RecordingTests.test_recent_end_waits) ... ok
+test_recent_file_is_deferred (test_finalize.RecordingTests.test_recent_file_is_deferred) ... ERROR
+test_repeated_run_skips_native (test_finalize.RecordingTests.test_repeated_run_skips_native) ... ERROR
+test_symlink_is_rejected (test_finalize.RecordingTests.test_symlink_is_rejected) ... ok
+test_truncated_wav_is_rejected (test_finalize.RecordingTests.test_truncated_wav_is_rejected) ... ok
+
+======================================================================
+ERROR: test_capacity_check_preserves_originals (test_finalize.RecordingTests.test_capacity_check_preserves_originals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 188, in test_capacity_check_preserves_originals
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_database_update_failure_is_not_success (test_finalize.RecordingTests.test_database_update_failure_is_not_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 174, in test_database_update_failure_is_not_success
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_duration_mismatch_is_rejected (test_finalize.RecordingTests.test_duration_mismatch_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 109, in test_duration_mismatch_is_rejected
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_empty_input_is_rejected (test_finalize.RecordingTests.test_empty_input_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 114, in test_empty_input_is_rejected
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_existing_final_collision_is_rejected (test_finalize.RecordingTests.test_existing_final_collision_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 142, in test_existing_final_collision_is_rejected
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_false_native_success_without_file_is_rejected (test_finalize.RecordingTests.test_false_native_success_without_file_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 163, in test_false_native_success_without_file_is_rejected
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_finalize_header_only_companion_and_native_https (test_finalize.RecordingTests.test_finalize_header_only_companion_and_native_https)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 64, in test_finalize_header_only_companion_and_native_https
+    self.assertEqual(self.process(), 'finalized_private')
+                     ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_metadata_race_prevents_native_run (test_finalize.RecordingTests.test_metadata_race_prevents_native_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 182, in test_metadata_race_prevents_native_run
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_native_nonzero_preserves_originals_and_has_no_receipt (test_finalize.RecordingTests.test_native_nonzero_preserves_originals_and_has_no_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 156, in test_native_nonzero_preserves_originals_and_has_no_receipt
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_nonempty_output_is_not_discarded (test_finalize.RecordingTests.test_nonempty_output_is_not_discarded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 103, in test_nonempty_output_is_not_discarded
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_open_writer_is_detected_and_deferred (test_finalize.RecordingTests.test_open_writer_is_detected_and_deferred)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 89, in test_open_writer_is_detected_and_deferred
+    self.assertTrue(f.writer_open([self.input]))
+                    ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_read_only_descriptor_does_not_block (test_finalize.RecordingTests.test_read_only_descriptor_does_not_block)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 94, in test_read_only_descriptor_does_not_block
+    self.assertFalse(f.writer_open([self.input]))
+                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_receipt_conflict_is_rejected (test_finalize.RecordingTests.test_receipt_conflict_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 192, in test_receipt_conflict_is_rejected
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_recent_file_is_deferred (test_finalize.RecordingTests.test_recent_file_is_deferred)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 98, in test_recent_file_is_deferred
+    self.assertEqual(self.process(), 'waiting_for_writer')
+                     ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+======================================================================
+ERROR: test_repeated_run_skips_native (test_finalize.RecordingTests.test_repeated_run_skips_native)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 73, in test_repeated_run_skips_native
+    self.process()
+    ~~~~~~~~~~~~^^
+  File "/home/ra/Documents/almadial/operations/recording/test_finalize.py", line 58, in process
+    return f.process(self.row, self.state, self.raw, self.done)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 153, in process
+    if writer_open(originals) or any(time.time() - p.stat().st_mtime < 60 for p in originals):
+       ~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/ra/Documents/almadial/operations/recording/finalize.py", line 96, in writer_open
+    for fd in (process / 'fd').iterdir():
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 837, in iterdir
+    with os.scandir(root_dir) as scandir_it:
+         ~~~~~~~~~~^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/1/fd'
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.023s
+
+FAILED (errors=15)

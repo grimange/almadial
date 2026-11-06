@@ -1,0 +1,23 @@
+{
+  "scope": "installed code; private temporary state; mocked actions; NO live database/audio writes",
+  "tests": {
+    "missing_tools": {
+      "exit_code": 1,
+      "status": "failed",
+      "reason": "audio_tools_missing"
+    },
+    "source_pin": {
+      "exit_code": 1,
+      "status": "failed",
+      "reason": "native_source_changed_review_required"
+    },
+    "processing_failure": {
+      "exit_code": 1,
+      "status": "failed",
+      "reason": "synthetic_native_failure"
+    },
+    "overlap": "rejected without overwriting active-job status",
+    "recovery_from_failure": "successful empty fixture run restores healthy status",
+    "health": "root-only fixture status accepted"
+  }
+}

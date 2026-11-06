@@ -1,0 +1,11 @@
+[Unit]
+Description=Finalize closed VICIdial recordings every three minutes
+
+[Timer]
+OnBootSec=90s
+OnUnitInactiveSec=3min
+AccuracySec=10s
+Unit=alma-vicidial-recording.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,22 @@
+{
+  "utc": "2026-11-06T22:33:09.901457+00:00",
+  "origin": "development desktop, external to target VPS",
+  "scope": "HEAD only, no recording content requested",
+  "checks": [
+    {
+      "path": "/RECORDINGS/",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": "/RECORDINGS/PR01_SYNTHETIC-all.wav",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": "/RECORDINGS/20261107-024337_7000000001-all.wav",
+      "method": "HEAD",
+      "status": 403
+    }
+  ]
+}
