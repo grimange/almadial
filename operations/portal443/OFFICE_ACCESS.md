@@ -21,8 +21,9 @@ five-second countdown and Continue Now use the account's usual destination:
 With JavaScript disabled, refresh until confirmed, then use Continue Now.
 
 Office access covers only the issuer's server-verified current public IPv4.
-Devices sharing it can reach VICIdial and UDP 5061 / RTP 10000–20000 without
-additional portal logins. Each still needs its own VICIdial and SIP credentials.
+Devices sharing it can reach VICIdial, UDP 5060 (legacy SIP), UDP 5061 (PJSIP)
+and RTP 10000–20000 without additional portal logins. Each still needs its own
+VICIdial and SIP credentials.
 Network grants **cannot isolate different users behind the same NAT address**.
 No SSH, AMI, FastAGI, Cockpit or other management permission is added.
 
@@ -37,7 +38,7 @@ Repeating authorization selects the current grant without extending its expiry.
 After expiry, a fresh request creates a new full-duration grant. Revocation is
 account/IP/type scoped and includes older sessions for that same type; other
 accounts and the other grant type remain independent. Firewalls use the latest
-expiry of the remaining eligible grants on each IP, with two UDP rules per IP.
+expiry of the remaining eligible grants on each IP, with three UDP rules per IP.
 The worker rechecks identities and office permissions each cycle. Browser
 sessions still expire after 12 hours; office grants persist for 24 hours and can
 be viewed/revoked after signing in again.
@@ -90,6 +91,9 @@ aggregate permissions, scoped revocation, retry behavior and accelerated expiry.
 spoofing, TLS, ACME routing and native web resources. `guard_network_probe.py`
 uses isolated namespaces for UDP/conntrack/grace/expiry regression checks.
 These probes do not replace independent browser and actual SIP REGISTER tests.
+Legacy SIP deployment/acceptance and its task-specific rollback are documented in
+`LEGACY_SIP_5060_REPORT.md`. After that extension, use its rollback for SIP5060
+changes; do not use an older full office rollback for the later SIP policy.
 
 Independent checks needed for office acceptance:
 

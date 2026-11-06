@@ -1,0 +1,18 @@
+PASS no-grant effective three-service policy agrees with native membership
+PASS authorized effective three-service policy agrees with native membership
+PASS revoked effective three-service policy agrees with native membership
+PASS reauthorized effective three-service policy agrees with native membership
+PASS final effective three-service policy agrees with native membership
+PASS UDP5060 distinct successful binding responses in B and D; no revoked-state binding
+PASS UDP5060 revoked REGISTER attempts received no SIP replies (39 attempts)
+PASS UDP5060 revoked input drop counter increased
+PASS UDP5061 distinct successful binding responses in B and D; no revoked-state binding
+PASS UDP5061 revoked REGISTER attempts received no SIP replies (13 attempts)
+PASS UDP5061 revoked input drop counter increased
+PASS final services, Asterisk PID, both SIP listeners, SSH22222 and Apache syntax
+PASS no temporary, permanent or global SIP bypass
+PASS both early policy chains current, priority -10, 16 rules
+PASS unrelated grants and expiry preserved
+PASS 13 unrelated control-file hashes unchanged
+PASS three installed source hashes match local implementation
+PASS export contains no IP-address literals

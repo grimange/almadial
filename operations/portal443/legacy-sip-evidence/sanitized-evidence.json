@@ -1,0 +1,1341 @@
+{
+  "format": "sanitized-legacy-sip-evidence-v1",
+  "staged-tests.txt": "test_agent_cannot_issue_office_or_choose_ip_duration (test_office.OfficeHTTP.test_agent_cannot_issue_office_or_choose_ip_duration) ... ok\ntest_client_fields_cannot_escalate_role_or_supply_destination (test_office.OfficeHTTP.test_client_fields_cannot_escalate_role_or_supply_destination) ... ok\ntest_expired_revoked_failed_stale_worker_do_not_continue (test_office.OfficeHTTP.test_expired_revoked_failed_stale_worker_do_not_continue) ... ok\ntest_fixed_public_assets_and_no_asset_path_expansion (test_office.OfficeHTTP.test_fixed_public_assets_and_no_asset_path_expansion) ... ok\ntest_login_csrf_origin_and_ip_binding (test_office.OfficeHTTP.test_login_csrf_origin_and_ip_binding) ... FORM_REJECT reason=csrf\nFORM_REJECT reason=origin\nok\ntest_owned_grants_hide_other_issuers (test_office.OfficeHTTP.test_owned_grants_hide_other_issuers) ... ok\ntest_public_session_cookie_and_no_basic_challenge (test_office.OfficeHTTP.test_public_session_cookie_and_no_basic_challenge) ... ok\ntest_queue_is_not_active_and_both_fixed_redirects (test_office.OfficeHTTP.test_queue_is_not_active_and_both_fixed_redirects) ... ok\ntest_rate_limit_and_log_redaction (test_office.OfficeHTTP.test_rate_limit_and_log_redaction) ... ok\ntest_reauthorization_waits_for_new_worker_confirmation (test_office.OfficeHTTP.test_reauthorization_waits_for_new_worker_confirmation) ... ok\ntest_supervisor_office_options_owned_view_and_scoped_revokes (test_office.OfficeHTTP.test_supervisor_office_options_owned_view_and_scoped_revokes) ... ok\ntest_worker_timeout_and_logout (test_office.OfficeHTTP.test_worker_timeout_and_logout) ... ok\ntest_durations_idempotence_coexistence_both_revoke_orders_and_grace (test_office.OfficeWorker.test_durations_idempotence_coexistence_both_revoke_orders_and_grace) ... ok\ntest_expiry_stale_queue_reauthorize_and_typed_tombstones (test_office.OfficeWorker.test_expiry_stale_queue_reauthorize_and_typed_tombstones) ... REQUEST_REJECTED\nREQUEST_REJECTED\nREQUEST_REJECTED\nok\ntest_native_office_permission_policy (test_office.OfficeWorker.test_native_office_permission_policy) ... ok\ntest_permissions_recheck_invalid_user_and_worker_failure (test_office.OfficeWorker.test_permissions_recheck_invalid_user_and_worker_failure) ... REQUEST_REJECTED\nREQUEST_REJECTED\nFIREWALL_RECONCILE_FAILED\nok\ntest_bcrypt_legacy_suffix (test_portal.Authentication.test_bcrypt_legacy_suffix) ... ok\ntest_plaintext_valid_invalid_disabled (test_portal.Authentication.test_plaintext_valid_invalid_disabled) ... ok\ntest_policy (test_portal.Authentication.test_policy) ... ok\ntest_account_revoke_defeats_pending_grant_and_preserves_other_users (test_portal.FirewallLeases.test_account_revoke_defeats_pending_grant_and_preserves_other_users) ... REQUEST_REJECTED\nok\ntest_firewall_confirm_failure_and_revoke (test_portal.FirewallLeases.test_firewall_confirm_failure_and_revoke) ... FIREWALL_RECONCILE_FAILED\nok\ntest_shared_ip_and_roles (test_portal.FirewallLeases.test_shared_ip_and_roles) ... ok\ntest_worker_rechecks_eligibility_and_publishes_only_after_confirm (test_portal.FirewallLeases.test_worker_rechecks_eligibility_and_publishes_only_after_confirm) ... FIREWALL_RECONCILE_FAILED\nSIP_GUARD_RECONCILE_FAILED\nSIP_GUARD_RECONCILE_FAILED\nSIP_GUARD_RECONCILE_FAILED\nok\ntest_client_fields_cannot_escalate_role_or_supply_destination (test_portal.PortalHTTP.test_client_fields_cannot_escalate_role_or_supply_destination) ... ok\ntest_expired_revoked_failed_stale_worker_do_not_continue (test_portal.PortalHTTP.test_expired_revoked_failed_stale_worker_do_not_continue) ... ok\ntest_fixed_public_assets_and_no_asset_path_expansion (test_portal.PortalHTTP.test_fixed_public_assets_and_no_asset_path_expansion) ... ok\ntest_login_csrf_origin_and_ip_binding (test_portal.PortalHTTP.test_login_csrf_origin_and_ip_binding) ... FORM_REJECT reason=csrf\nFORM_REJECT reason=origin\nok\ntest_public_session_cookie_and_no_basic_challenge (test_portal.PortalHTTP.test_public_session_cookie_and_no_basic_challenge) ... ok\ntest_queue_is_not_active_and_both_fixed_redirects (test_portal.PortalHTTP.test_queue_is_not_active_and_both_fixed_redirects) ... ok\ntest_rate_limit_and_log_redaction (test_portal.PortalHTTP.test_rate_limit_and_log_redaction) ... ok\ntest_worker_timeout_and_logout (test_portal.PortalHTTP.test_worker_timeout_and_logout) ... ok\ntest_native_monitor_permissions_and_account_eligibility (test_portal.SupervisorPhonePolicy.test_native_monitor_permissions_and_account_eligibility) ... ok\ntest_current_policy_bootstrap_does_not_duplicate_rules (test_sip_guard.SipGuard.test_current_policy_bootstrap_does_not_duplicate_rules) ... ok\ntest_existing_policy_upgrade_preserves_sets_and_is_atomic (test_sip_guard.SipGuard.test_existing_policy_upgrade_preserves_sets_and_is_atomic) ... ok\ntest_freshness_and_absolute_expiry_atomic_confirmation (test_sip_guard.SipGuard.test_freshness_and_absolute_expiry_atomic_confirmation) ... ok\ntest_grace_deadlines_and_shared_ip (test_sip_guard.SipGuard.test_grace_deadlines_and_shared_ip) ... ok\ntest_guard_covers_both_directions_before_established_accept (test_sip_guard.SipGuard.test_guard_covers_both_directions_before_established_accept) ... ok\ntest_unconfirmed_or_failed_guard_never_succeeds (test_sip_guard.SipGuard.test_unconfirmed_or_failed_guard_never_succeeds) ... ok\n\n----------------------------------------------------------------------\nRan 38 tests in 1.473s\n\nOK",
+  "guard-probe.txt": "PASS no grant fresh SIP5060 blocked\nPASS no grant fresh SIP5061 blocked\nPASS valid agent fresh SIP5060 passes\nPASS valid agent fresh SIP5061 passes\nPASS valid agent RTP passes and is marked\nPASS policy upgrade preserves established SIP5060 grant\nPASS policy upgrade preserves established SIP5061 grant\nPASS revoked established SIP5060 blocked before downstream ct accept\nPASS revoked fresh SIP5060 blocked\nPASS revoked established SIP5061 blocked before downstream ct accept\nPASS revoked fresh SIP5061 blocked\nPASS established authorized RTP survives within grace\nPASS new RTP flow cannot use grace\nPASS established RTP blocked after native grace timeout\nPASS short valid grant fresh SIP5060 passes\nPASS short valid grant fresh SIP5061 passes\nPASS native grant expiry blocks established SIP5060 without worker\nPASS native grant expiry blocks established SIP5061 without worker\nPASS web-only supervisor has no SIP5060 grant\nPASS web-only supervisor has no SIP5061 grant\nISOLATED_NETWORK_PROBE_PASS",
+  "rollback-rehearsal.txt": "ROLLBACK_5060_DENIED_5061_AND_RTP_PRESERVED\nactive\nactive\nactive\nactive\nactive\nLEGACY_SIP_ROLLBACK_COMPLETE",
+  "rollback-hashes.txt": "common.py: OK\nsip_guard.py: OK\napply_requests.py: OK\nportal.py: OK\nphone_policy.py: OK\napp.css: OK\naccess.lua: OK\nvicidial_auth.py: OK\npublic.xml: OK\nsip.conf: OK\npjsip.conf: OK\nextensions.conf: OK\n02-alma-vicidial-ssl.conf: OK\nalma-portal.local: OK\nadmin.php: OK\nvicidial.php: OK",
+  "deploy.txt": "active\nactive\nactive\nactive\nactive\nactive\nactive\nactive\nLEGACY_SIP_DEPLOYED",
+  "office-probe.txt": "PASS live agent office rejection; nonexistent user rejection\nPASS office24h; aggregate timed firewall/nft grant; cookie-free peer reaches native logins; native admin authentication still required\nPASS repeat office authorization retains expiry\nPASS personal12h and revoke preserves office phone/web access\nPASS office revoke preserves independent personal phone/web access\nPASS last revoke closes fresh SIP/web, preserves bounded RTP grace; stale queue cannot reactivate\nPASS accelerated office expiry blocks firewall/nft/web; pre-expiry queue cannot extend\nPASS fresh authorization after expiry succeeds\nPASS fixture cleaned; unrelated personal grants and expiries preserved",
+  "personal-probe.txt": "PASS live queue -> account recheck -> timed SIP/RTP rules -> active status/web grant\nPASS repeated personal request is idempotent and retains expiry\nPASS shared IP: revoking personal access preserves another issuer supervisor grant\nPASS shared IP: supervisor retains web; SIP matches native monitoring permission: True\nPASS account-scoped revoke clears old sessions; stale queued grant cannot reactivate access\nPASS live per-lease revoke removes web and owned SIP/RTP rules; fixture cleaned\nPASS live ineligible account request fails closed",
+  "https-probe.txt": "PASS VICIdial logo/CSS/JS exact public routes; integrated login; restrictive CSP\nPASS TLS trust/IP SAN; root portal; private status and continue\nPASS browser303 fixed root; API/AJAX/resource403; no open redirect; useful portal notice\nPASS default-deny paths, encoded paths, aliases, PHP, host and header spoofing\nPASS HTTP deny; real ACME webroot challenge file\nPASS temporary server-IP web fixture reaches native login pages\nPASS authorized CSS, JavaScript and image assets; unauthorized assets denied above\nPASS expired web grant denied\nPASS revoked web grant denied; fixture removed",
+  "restart-check.txt": "PASS worker timer restart and fresh worker invocation preserve grants and expiries\nPASS exactly16 guard rules; both policy chains current, no duplicate rules",
+  "health-deployed.json": {
+    "at": 1793984432,
+    "checksums": {
+      "common.py": {
+        "before": "5d2e554cd40ad79f47c85dc8581c1b288adbabe9d24b6272674ab7eec3bf81d2",
+        "after": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74"
+      },
+      "sip_guard.py": {
+        "before": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49",
+        "after": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf"
+      },
+      "apply_requests.py": {
+        "before": "f33272fef7fd7ab6006ac91356926875527455db65af61372558780beb0087ec",
+        "after": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956"
+      },
+      "portal.py": {
+        "before": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2",
+        "after": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+      },
+      "phone_policy.py": {
+        "before": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc",
+        "after": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+      },
+      "app.css": {
+        "before": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89",
+        "after": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89"
+      },
+      "access.lua": {
+        "before": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+        "after": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+      },
+      "vicidial_auth.py": {
+        "before": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+        "after": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac"
+      },
+      "public.xml": {
+        "before": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5",
+        "after": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5"
+      },
+      "sip.conf": {
+        "before": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+        "after": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+      },
+      "pjsip.conf": {
+        "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+        "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+      },
+      "extensions.conf": {
+        "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+        "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde"
+      },
+      "02-alma-vicidial-ssl.conf": {
+        "before": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+        "after": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7"
+      },
+      "alma-portal.local": {
+        "before": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524",
+        "after": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524"
+      },
+      "admin.php": {
+        "before": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+        "after": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8"
+      },
+      "vicidial.php": {
+        "before": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+        "after": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358"
+      }
+    },
+    "unrelated_grants_preserved": true,
+    "phone_ports": [
+      "5060",
+      "5061",
+      "10000-20000"
+    ],
+    "effective_web_IPs": 1,
+    "effective_phone_IPs": 1,
+    "owned_rule_counts": {
+      "5060": 1,
+      "5061": 1,
+      "10000-20000": 1
+    },
+    "test_network": {
+      "web": true,
+      "phone": true,
+      "owned_rules": {
+        "5060": true,
+        "5061": true,
+        "10000-20000": true
+      },
+      "native_phone": true
+    },
+    "temporary_test_rule_present": false,
+    "permanent_rich_rules": 0,
+    "runtime_unprioritized_SIP_accepts": 0,
+    "global_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "permanent_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "guard_hooks": {
+      "input": -10,
+      "output": -10
+    },
+    "guard_policy_chains": [
+      "input",
+      "output"
+    ],
+    "guard_rule_count": 16,
+    "guard_SIP_drop_counters": {
+      "input": {
+        "5060": 22,
+        "5061": 0
+      },
+      "output": {
+        "5060": 0,
+        "5061": 0
+      }
+    },
+    "services": {
+      "alma-portal-443.service": "active",
+      "alma-portal-443-apply.timer": "active",
+      "alma-portal-sip-guard.service": "active",
+      "asterisk": "active",
+      "httpd": "active",
+      "mariadb": "active",
+      "firewalld": "active",
+      "fail2ban": "active",
+      "sshd": "active"
+    },
+    "asterisk_pid_unchanged": true,
+    "asterisk_channels": "0 active channels\n0 active calls\n18 calls processed",
+    "sip_listeners": {
+      "5060": true,
+      "5061": true
+    },
+    "ssh_22222_listener": true,
+    "legacy_9091_listener": false,
+    "cockpit_9090_listener": false,
+    "apache_syntax_rc": 0,
+    "selinux": "Permissive"
+  },
+  "health-no-grant.json": {
+    "at": 1793984578,
+    "checksums": {
+      "common.py": {
+        "before": "5d2e554cd40ad79f47c85dc8581c1b288adbabe9d24b6272674ab7eec3bf81d2",
+        "after": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74"
+      },
+      "sip_guard.py": {
+        "before": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49",
+        "after": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf"
+      },
+      "apply_requests.py": {
+        "before": "f33272fef7fd7ab6006ac91356926875527455db65af61372558780beb0087ec",
+        "after": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956"
+      },
+      "portal.py": {
+        "before": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2",
+        "after": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+      },
+      "phone_policy.py": {
+        "before": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc",
+        "after": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+      },
+      "app.css": {
+        "before": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89",
+        "after": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89"
+      },
+      "access.lua": {
+        "before": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+        "after": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+      },
+      "vicidial_auth.py": {
+        "before": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+        "after": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac"
+      },
+      "public.xml": {
+        "before": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5",
+        "after": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5"
+      },
+      "sip.conf": {
+        "before": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+        "after": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+      },
+      "pjsip.conf": {
+        "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+        "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+      },
+      "extensions.conf": {
+        "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+        "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde"
+      },
+      "02-alma-vicidial-ssl.conf": {
+        "before": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+        "after": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7"
+      },
+      "alma-portal.local": {
+        "before": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524",
+        "after": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524"
+      },
+      "admin.php": {
+        "before": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+        "after": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8"
+      },
+      "vicidial.php": {
+        "before": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+        "after": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358"
+      }
+    },
+    "unrelated_grants_preserved": true,
+    "phone_ports": [
+      "5060",
+      "5061",
+      "10000-20000"
+    ],
+    "effective_web_IPs": 0,
+    "effective_phone_IPs": 0,
+    "owned_rule_counts": {
+      "5060": 0,
+      "5061": 0,
+      "10000-20000": 0
+    },
+    "test_network": {
+      "web": false,
+      "phone": false,
+      "owned_rules": {
+        "5060": false,
+        "5061": false,
+        "10000-20000": false
+      },
+      "native_phone": false
+    },
+    "temporary_test_rule_present": false,
+    "permanent_rich_rules": 0,
+    "runtime_unprioritized_SIP_accepts": 0,
+    "global_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "permanent_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "guard_hooks": {
+      "input": -10,
+      "output": -10
+    },
+    "guard_policy_chains": [
+      "input",
+      "output"
+    ],
+    "guard_rule_count": 16,
+    "guard_SIP_drop_counters": {
+      "input": {
+        "5060": 56,
+        "5061": 0
+      },
+      "output": {
+        "5060": 0,
+        "5061": 0
+      }
+    },
+    "services": {
+      "alma-portal-443.service": "active",
+      "alma-portal-443-apply.timer": "active",
+      "alma-portal-sip-guard.service": "active",
+      "asterisk": "active",
+      "httpd": "active",
+      "mariadb": "active",
+      "firewalld": "active",
+      "fail2ban": "active",
+      "sshd": "active"
+    },
+    "asterisk_pid_unchanged": true,
+    "native_logger_events_since_observer_start": {
+      "legacy_registered": 0,
+      "pjsip_contact_added": 0,
+      "pjsip_contact_removed": 0
+    },
+    "asterisk_channels": "0 active channels\n0 active calls\n18 calls processed",
+    "sip_listeners": {
+      "5060": true,
+      "5061": true
+    },
+    "ssh_22222_listener": true,
+    "legacy_9091_listener": false,
+    "cockpit_9090_listener": false,
+    "apache_syntax_rc": 0,
+    "selinux": "Permissive"
+  },
+  "health-authorized.json": {
+    "at": 1793984863,
+    "checksums": {
+      "common.py": {
+        "before": "5d2e554cd40ad79f47c85dc8581c1b288adbabe9d24b6272674ab7eec3bf81d2",
+        "after": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74"
+      },
+      "sip_guard.py": {
+        "before": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49",
+        "after": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf"
+      },
+      "apply_requests.py": {
+        "before": "f33272fef7fd7ab6006ac91356926875527455db65af61372558780beb0087ec",
+        "after": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956"
+      },
+      "portal.py": {
+        "before": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2",
+        "after": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+      },
+      "phone_policy.py": {
+        "before": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc",
+        "after": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+      },
+      "app.css": {
+        "before": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89",
+        "after": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89"
+      },
+      "access.lua": {
+        "before": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+        "after": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+      },
+      "vicidial_auth.py": {
+        "before": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+        "after": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac"
+      },
+      "public.xml": {
+        "before": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5",
+        "after": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5"
+      },
+      "sip.conf": {
+        "before": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+        "after": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+      },
+      "pjsip.conf": {
+        "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+        "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+      },
+      "extensions.conf": {
+        "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+        "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde"
+      },
+      "02-alma-vicidial-ssl.conf": {
+        "before": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+        "after": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7"
+      },
+      "alma-portal.local": {
+        "before": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524",
+        "after": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524"
+      },
+      "admin.php": {
+        "before": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+        "after": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8"
+      },
+      "vicidial.php": {
+        "before": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+        "after": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358"
+      }
+    },
+    "unrelated_grants_preserved": true,
+    "phone_ports": [
+      "5060",
+      "5061",
+      "10000-20000"
+    ],
+    "effective_web_IPs": 1,
+    "effective_phone_IPs": 1,
+    "owned_rule_counts": {
+      "5060": 1,
+      "5061": 1,
+      "10000-20000": 1
+    },
+    "test_network": {
+      "web": true,
+      "phone": true,
+      "owned_rules": {
+        "5060": true,
+        "5061": true,
+        "10000-20000": true
+      },
+      "native_phone": true
+    },
+    "temporary_test_rule_present": false,
+    "permanent_rich_rules": 0,
+    "runtime_unprioritized_SIP_accepts": 0,
+    "global_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "permanent_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "guard_hooks": {
+      "input": -10,
+      "output": -10
+    },
+    "guard_policy_chains": [
+      "input",
+      "output"
+    ],
+    "guard_rule_count": 16,
+    "guard_SIP_drop_counters": {
+      "input": {
+        "5060": 123,
+        "5061": 0
+      },
+      "output": {
+        "5060": 0,
+        "5061": 0
+      }
+    },
+    "services": {
+      "alma-portal-443.service": "active",
+      "alma-portal-443-apply.timer": "active",
+      "alma-portal-sip-guard.service": "active",
+      "asterisk": "active",
+      "httpd": "active",
+      "mariadb": "active",
+      "firewalld": "active",
+      "fail2ban": "active",
+      "sshd": "active"
+    },
+    "asterisk_pid_unchanged": true,
+    "native_logger_events_since_observer_start": {
+      "legacy_registered": 1,
+      "pjsip_contact_added": 2,
+      "pjsip_contact_removed": 2
+    },
+    "asterisk_channels": "0 active channels\n0 active calls\n18 calls processed",
+    "sip_listeners": {
+      "5060": true,
+      "5061": true
+    },
+    "ssh_22222_listener": true,
+    "legacy_9091_listener": false,
+    "cockpit_9090_listener": false,
+    "apache_syntax_rc": 0,
+    "selinux": "Permissive"
+  },
+  "health-revoked.json": {
+    "at": 1793985358,
+    "checksums": {
+      "common.py": {
+        "before": "5d2e554cd40ad79f47c85dc8581c1b288adbabe9d24b6272674ab7eec3bf81d2",
+        "after": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74"
+      },
+      "sip_guard.py": {
+        "before": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49",
+        "after": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf"
+      },
+      "apply_requests.py": {
+        "before": "f33272fef7fd7ab6006ac91356926875527455db65af61372558780beb0087ec",
+        "after": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956"
+      },
+      "portal.py": {
+        "before": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2",
+        "after": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+      },
+      "phone_policy.py": {
+        "before": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc",
+        "after": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+      },
+      "app.css": {
+        "before": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89",
+        "after": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89"
+      },
+      "access.lua": {
+        "before": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+        "after": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+      },
+      "vicidial_auth.py": {
+        "before": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+        "after": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac"
+      },
+      "public.xml": {
+        "before": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5",
+        "after": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5"
+      },
+      "sip.conf": {
+        "before": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+        "after": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+      },
+      "pjsip.conf": {
+        "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+        "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+      },
+      "extensions.conf": {
+        "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+        "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde"
+      },
+      "02-alma-vicidial-ssl.conf": {
+        "before": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+        "after": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7"
+      },
+      "alma-portal.local": {
+        "before": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524",
+        "after": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524"
+      },
+      "admin.php": {
+        "before": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+        "after": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8"
+      },
+      "vicidial.php": {
+        "before": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+        "after": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358"
+      }
+    },
+    "unrelated_grants_preserved": true,
+    "phone_ports": [
+      "5060",
+      "5061",
+      "10000-20000"
+    ],
+    "effective_web_IPs": 0,
+    "effective_phone_IPs": 0,
+    "owned_rule_counts": {
+      "5060": 0,
+      "5061": 0,
+      "10000-20000": 0
+    },
+    "test_network": {
+      "web": false,
+      "phone": false,
+      "owned_rules": {
+        "5060": false,
+        "5061": false,
+        "10000-20000": false
+      },
+      "native_phone": false
+    },
+    "temporary_test_rule_present": false,
+    "permanent_rich_rules": 0,
+    "runtime_unprioritized_SIP_accepts": 0,
+    "global_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "permanent_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "guard_hooks": {
+      "input": -10,
+      "output": -10
+    },
+    "guard_policy_chains": [
+      "input",
+      "output"
+    ],
+    "guard_rule_count": 16,
+    "guard_SIP_drop_counters": {
+      "input": {
+        "5060": 242,
+        "5061": 11
+      },
+      "output": {
+        "5060": 0,
+        "5061": 0
+      }
+    },
+    "services": {
+      "alma-portal-443.service": "active",
+      "alma-portal-443-apply.timer": "active",
+      "alma-portal-sip-guard.service": "active",
+      "asterisk": "active",
+      "httpd": "active",
+      "mariadb": "active",
+      "firewalld": "active",
+      "fail2ban": "active",
+      "sshd": "active"
+    },
+    "asterisk_pid_unchanged": true,
+    "native_logger_events_since_observer_start": {
+      "legacy_registered": 1,
+      "pjsip_contact_added": 2,
+      "pjsip_contact_removed": 2
+    },
+    "asterisk_channels": "0 active channels\n0 active calls\n18 calls processed",
+    "sip_listeners": {
+      "5060": true,
+      "5061": true
+    },
+    "ssh_22222_listener": true,
+    "legacy_9091_listener": false,
+    "cockpit_9090_listener": false,
+    "apache_syntax_rc": 0,
+    "selinux": "Permissive"
+  },
+  "health-reauthorized.json": {
+    "at": 1793985464,
+    "checksums": {
+      "common.py": {
+        "before": "5d2e554cd40ad79f47c85dc8581c1b288adbabe9d24b6272674ab7eec3bf81d2",
+        "after": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74"
+      },
+      "sip_guard.py": {
+        "before": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49",
+        "after": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf"
+      },
+      "apply_requests.py": {
+        "before": "f33272fef7fd7ab6006ac91356926875527455db65af61372558780beb0087ec",
+        "after": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956"
+      },
+      "portal.py": {
+        "before": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2",
+        "after": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+      },
+      "phone_policy.py": {
+        "before": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc",
+        "after": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+      },
+      "app.css": {
+        "before": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89",
+        "after": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89"
+      },
+      "access.lua": {
+        "before": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+        "after": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+      },
+      "vicidial_auth.py": {
+        "before": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+        "after": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac"
+      },
+      "public.xml": {
+        "before": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5",
+        "after": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5"
+      },
+      "sip.conf": {
+        "before": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+        "after": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+      },
+      "pjsip.conf": {
+        "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+        "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+      },
+      "extensions.conf": {
+        "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+        "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde"
+      },
+      "02-alma-vicidial-ssl.conf": {
+        "before": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+        "after": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7"
+      },
+      "alma-portal.local": {
+        "before": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524",
+        "after": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524"
+      },
+      "admin.php": {
+        "before": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+        "after": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8"
+      },
+      "vicidial.php": {
+        "before": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+        "after": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358"
+      }
+    },
+    "unrelated_grants_preserved": true,
+    "phone_ports": [
+      "5060",
+      "5061",
+      "10000-20000"
+    ],
+    "effective_web_IPs": 1,
+    "effective_phone_IPs": 1,
+    "owned_rule_counts": {
+      "5060": 1,
+      "5061": 1,
+      "10000-20000": 1
+    },
+    "test_network": {
+      "web": true,
+      "phone": true,
+      "owned_rules": {
+        "5060": true,
+        "5061": true,
+        "10000-20000": true
+      },
+      "native_phone": true
+    },
+    "temporary_test_rule_present": false,
+    "permanent_rich_rules": 0,
+    "runtime_unprioritized_SIP_accepts": 0,
+    "global_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "permanent_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "guard_hooks": {
+      "input": -10,
+      "output": -10
+    },
+    "guard_policy_chains": [
+      "input",
+      "output"
+    ],
+    "guard_rule_count": 16,
+    "guard_SIP_drop_counters": {
+      "input": {
+        "5060": 282,
+        "5061": 24
+      },
+      "output": {
+        "5060": 0,
+        "5061": 0
+      }
+    },
+    "services": {
+      "alma-portal-443.service": "active",
+      "alma-portal-443-apply.timer": "active",
+      "alma-portal-sip-guard.service": "active",
+      "asterisk": "active",
+      "httpd": "active",
+      "mariadb": "active",
+      "firewalld": "active",
+      "fail2ban": "active",
+      "sshd": "active"
+    },
+    "asterisk_pid_unchanged": true,
+    "native_logger_events_since_observer_start": {
+      "legacy_registered": 2,
+      "pjsip_contact_added": 4,
+      "pjsip_contact_removed": 4
+    },
+    "asterisk_channels": "0 active channels\n0 active calls\n18 calls processed",
+    "sip_listeners": {
+      "5060": true,
+      "5061": true
+    },
+    "ssh_22222_listener": true,
+    "legacy_9091_listener": false,
+    "cockpit_9090_listener": false,
+    "apache_syntax_rc": 0,
+    "selinux": "Permissive"
+  },
+  "health-final.json": {
+    "at": 1793985500,
+    "checksums": {
+      "common.py": {
+        "before": "5d2e554cd40ad79f47c85dc8581c1b288adbabe9d24b6272674ab7eec3bf81d2",
+        "after": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74"
+      },
+      "sip_guard.py": {
+        "before": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49",
+        "after": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf"
+      },
+      "apply_requests.py": {
+        "before": "f33272fef7fd7ab6006ac91356926875527455db65af61372558780beb0087ec",
+        "after": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956"
+      },
+      "portal.py": {
+        "before": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2",
+        "after": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+      },
+      "phone_policy.py": {
+        "before": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc",
+        "after": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+      },
+      "app.css": {
+        "before": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89",
+        "after": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89"
+      },
+      "access.lua": {
+        "before": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+        "after": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+      },
+      "vicidial_auth.py": {
+        "before": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+        "after": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac"
+      },
+      "public.xml": {
+        "before": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5",
+        "after": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5"
+      },
+      "sip.conf": {
+        "before": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+        "after": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+      },
+      "pjsip.conf": {
+        "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+        "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+      },
+      "extensions.conf": {
+        "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+        "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde"
+      },
+      "02-alma-vicidial-ssl.conf": {
+        "before": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+        "after": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7"
+      },
+      "alma-portal.local": {
+        "before": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524",
+        "after": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524"
+      },
+      "admin.php": {
+        "before": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+        "after": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8"
+      },
+      "vicidial.php": {
+        "before": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+        "after": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358"
+      }
+    },
+    "unrelated_grants_preserved": true,
+    "phone_ports": [
+      "5060",
+      "5061",
+      "10000-20000"
+    ],
+    "effective_web_IPs": 1,
+    "effective_phone_IPs": 1,
+    "owned_rule_counts": {
+      "5060": 1,
+      "5061": 1,
+      "10000-20000": 1
+    },
+    "test_network": {
+      "web": true,
+      "phone": true,
+      "owned_rules": {
+        "5060": true,
+        "5061": true,
+        "10000-20000": true
+      },
+      "native_phone": true
+    },
+    "temporary_test_rule_present": false,
+    "permanent_rich_rules": 0,
+    "runtime_unprioritized_SIP_accepts": 0,
+    "global_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "permanent_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "guard_hooks": {
+      "input": -10,
+      "output": -10
+    },
+    "guard_policy_chains": [
+      "input",
+      "output"
+    ],
+    "guard_rule_count": 16,
+    "guard_SIP_drop_counters": {
+      "input": {
+        "5060": 288,
+        "5061": 24
+      },
+      "output": {
+        "5060": 0,
+        "5061": 0
+      }
+    },
+    "services": {
+      "alma-portal-443.service": "active",
+      "alma-portal-443-apply.timer": "active",
+      "alma-portal-sip-guard.service": "active",
+      "asterisk": "active",
+      "httpd": "active",
+      "mariadb": "active",
+      "firewalld": "active",
+      "fail2ban": "active",
+      "sshd": "active"
+    },
+    "asterisk_pid_unchanged": true,
+    "native_logger_events_since_observer_start": {
+      "legacy_registered": 2,
+      "pjsip_contact_added": 4,
+      "pjsip_contact_removed": 4
+    },
+    "asterisk_channels": "0 active channels\n0 active calls\n18 calls processed",
+    "sip_listeners": {
+      "5060": true,
+      "5061": true
+    },
+    "ssh_22222_listener": true,
+    "legacy_9091_listener": false,
+    "cockpit_9090_listener": false,
+    "apache_syntax_rc": 0,
+    "selinux": "Permissive"
+  },
+  "register-counts.json": {
+    "started_at": 1793984436,
+    "updated_at": 1793985503,
+    "counts": {
+      "udp5060:no_phone:incoming_REGISTER": 89,
+      "udp5060:phone_granted:incoming_REGISTER": 14,
+      "udp5060:phone_granted:outgoing_401": 8,
+      "udp5060:phone_granted:outgoing_200_binding": 4,
+      "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 2,
+      "udp5061:phone_granted:incoming_REGISTER": 12,
+      "udp5061:phone_granted:outgoing_401": 4,
+      "udp5061:phone_granted:outgoing_200_binding": 4,
+      "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 4,
+      "udp5061:no_phone:incoming_REGISTER": 24
+    },
+    "ten_second_buckets": {
+      "1793984550": {
+        "udp5060:no_phone:incoming_REGISTER": 6
+      },
+      "1793984560": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984570": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984580": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793984590": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984600": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984610": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984620": {
+        "udp5060:no_phone:incoming_REGISTER": 4
+      },
+      "1793984630": {
+        "udp5060:no_phone:incoming_REGISTER": 1,
+        "udp5060:phone_granted:incoming_REGISTER": 5,
+        "udp5060:phone_granted:outgoing_401": 3,
+        "udp5060:phone_granted:outgoing_200_binding": 2
+      },
+      "1793984640": {
+        "udp5060:phone_granted:incoming_REGISTER": 2,
+        "udp5060:phone_granted:outgoing_401": 1,
+        "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      },
+      "1793984800": {
+        "udp5061:phone_granted:incoming_REGISTER": 5,
+        "udp5061:phone_granted:outgoing_401": 2,
+        "udp5061:phone_granted:outgoing_200_binding": 2,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      },
+      "1793984810": {
+        "udp5061:phone_granted:incoming_REGISTER": 1,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      },
+      "1793985240": {
+        "udp5060:no_phone:incoming_REGISTER": 4
+      },
+      "1793985250": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985260": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985270": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985280": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793985290": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985300": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985310": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793985320": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985330": {
+        "udp5060:no_phone:incoming_REGISTER": 3,
+        "udp5061:no_phone:incoming_REGISTER": 8
+      },
+      "1793985340": {
+        "udp5061:no_phone:incoming_REGISTER": 2,
+        "udp5060:no_phone:incoming_REGISTER": 4
+      },
+      "1793985350": {
+        "udp5060:no_phone:incoming_REGISTER": 3,
+        "udp5061:no_phone:incoming_REGISTER": 3
+      },
+      "1793985360": {
+        "udp5060:no_phone:incoming_REGISTER": 3,
+        "udp5061:no_phone:incoming_REGISTER": 3
+      },
+      "1793985370": {
+        "udp5060:no_phone:incoming_REGISTER": 2,
+        "udp5061:no_phone:incoming_REGISTER": 1
+      },
+      "1793985380": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793985390": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985400": {
+        "udp5060:no_phone:incoming_REGISTER": 2,
+        "udp5061:no_phone:incoming_REGISTER": 4
+      },
+      "1793985410": {
+        "udp5060:no_phone:incoming_REGISTER": 5,
+        "udp5061:no_phone:incoming_REGISTER": 2
+      },
+      "1793985420": {
+        "udp5060:no_phone:incoming_REGISTER": 1,
+        "udp5061:no_phone:incoming_REGISTER": 1,
+        "udp5060:phone_granted:incoming_REGISTER": 2,
+        "udp5060:phone_granted:outgoing_401": 1,
+        "udp5060:phone_granted:outgoing_200_binding": 1,
+        "udp5061:phone_granted:incoming_REGISTER": 5,
+        "udp5061:phone_granted:outgoing_401": 2,
+        "udp5061:phone_granted:outgoing_200_binding": 2,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      },
+      "1793985430": {
+        "udp5060:phone_granted:incoming_REGISTER": 4,
+        "udp5060:phone_granted:outgoing_401": 2,
+        "udp5060:phone_granted:outgoing_200_binding": 1
+      },
+      "1793985440": {
+        "udp5060:phone_granted:outgoing_401": 1,
+        "udp5060:phone_granted:incoming_REGISTER": 1,
+        "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5061:phone_granted:incoming_REGISTER": 1,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      }
+    }
+  },
+  "register-no-grant.json": {
+    "started_at": 1793984436,
+    "updated_at": 1793984580,
+    "counts": {
+      "udp5060:no_phone:incoming_REGISTER": 11
+    },
+    "ten_second_buckets": {
+      "1793984550": {
+        "udp5060:no_phone:incoming_REGISTER": 6
+      },
+      "1793984560": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984570": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      }
+    }
+  },
+  "register-authorized.json": {
+    "counts": {
+      "udp5060:no_phone:incoming_REGISTER": 29,
+      "udp5060:phone_granted:incoming_REGISTER": 7,
+      "udp5060:phone_granted:outgoing_200_binding": 2,
+      "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+      "udp5060:phone_granted:outgoing_401": 4,
+      "udp5061:phone_granted:incoming_REGISTER": 6,
+      "udp5061:phone_granted:outgoing_200_binding": 2,
+      "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 2,
+      "udp5061:phone_granted:outgoing_401": 2
+    },
+    "started_at": 1793984436,
+    "ten_second_buckets": {
+      "1793984550": {
+        "udp5060:no_phone:incoming_REGISTER": 6
+      },
+      "1793984560": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984570": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984580": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793984590": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984600": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984610": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984620": {
+        "udp5060:no_phone:incoming_REGISTER": 4
+      },
+      "1793984630": {
+        "udp5060:no_phone:incoming_REGISTER": 1,
+        "udp5060:phone_granted:incoming_REGISTER": 5,
+        "udp5060:phone_granted:outgoing_200_binding": 2,
+        "udp5060:phone_granted:outgoing_401": 3
+      },
+      "1793984640": {
+        "udp5060:phone_granted:incoming_REGISTER": 2,
+        "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5060:phone_granted:outgoing_401": 1
+      },
+      "1793984800": {
+        "udp5061:phone_granted:incoming_REGISTER": 5,
+        "udp5061:phone_granted:outgoing_200_binding": 2,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5061:phone_granted:outgoing_401": 2
+      },
+      "1793984810": {
+        "udp5061:phone_granted:incoming_REGISTER": 1,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      }
+    },
+    "updated_at": 1793984866
+  },
+  "register-revoked.json": {
+    "counts": {
+      "udp5060:no_phone:incoming_REGISTER": 68,
+      "udp5060:phone_granted:incoming_REGISTER": 7,
+      "udp5060:phone_granted:outgoing_200_binding": 2,
+      "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+      "udp5060:phone_granted:outgoing_401": 4,
+      "udp5061:no_phone:incoming_REGISTER": 13,
+      "udp5061:phone_granted:incoming_REGISTER": 6,
+      "udp5061:phone_granted:outgoing_200_binding": 2,
+      "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 2,
+      "udp5061:phone_granted:outgoing_401": 2
+    },
+    "started_at": 1793984436,
+    "ten_second_buckets": {
+      "1793984550": {
+        "udp5060:no_phone:incoming_REGISTER": 6
+      },
+      "1793984560": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984570": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984580": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793984590": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984600": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984610": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984620": {
+        "udp5060:no_phone:incoming_REGISTER": 4
+      },
+      "1793984630": {
+        "udp5060:no_phone:incoming_REGISTER": 1,
+        "udp5060:phone_granted:incoming_REGISTER": 5,
+        "udp5060:phone_granted:outgoing_200_binding": 2,
+        "udp5060:phone_granted:outgoing_401": 3
+      },
+      "1793984640": {
+        "udp5060:phone_granted:incoming_REGISTER": 2,
+        "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5060:phone_granted:outgoing_401": 1
+      },
+      "1793984800": {
+        "udp5061:phone_granted:incoming_REGISTER": 5,
+        "udp5061:phone_granted:outgoing_200_binding": 2,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5061:phone_granted:outgoing_401": 2
+      },
+      "1793984810": {
+        "udp5061:phone_granted:incoming_REGISTER": 1,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      },
+      "1793985240": {
+        "udp5060:no_phone:incoming_REGISTER": 4
+      },
+      "1793985250": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985260": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985270": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985280": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793985290": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985300": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985310": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793985320": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985330": {
+        "udp5060:no_phone:incoming_REGISTER": 3,
+        "udp5061:no_phone:incoming_REGISTER": 8
+      },
+      "1793985340": {
+        "udp5060:no_phone:incoming_REGISTER": 4,
+        "udp5061:no_phone:incoming_REGISTER": 2
+      },
+      "1793985350": {
+        "udp5060:no_phone:incoming_REGISTER": 3,
+        "udp5061:no_phone:incoming_REGISTER": 3
+      }
+    },
+    "updated_at": 1793985360
+  },
+  "register-reauthorized.json": {
+    "counts": {
+      "udp5060:no_phone:incoming_REGISTER": 89,
+      "udp5060:phone_granted:incoming_REGISTER": 14,
+      "udp5060:phone_granted:outgoing_200_binding": 4,
+      "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 2,
+      "udp5060:phone_granted:outgoing_401": 8,
+      "udp5061:no_phone:incoming_REGISTER": 24,
+      "udp5061:phone_granted:incoming_REGISTER": 12,
+      "udp5061:phone_granted:outgoing_200_binding": 4,
+      "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 4,
+      "udp5061:phone_granted:outgoing_401": 4
+    },
+    "started_at": 1793984436,
+    "ten_second_buckets": {
+      "1793984550": {
+        "udp5060:no_phone:incoming_REGISTER": 6
+      },
+      "1793984560": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984570": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984580": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793984590": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793984600": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984610": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793984620": {
+        "udp5060:no_phone:incoming_REGISTER": 4
+      },
+      "1793984630": {
+        "udp5060:no_phone:incoming_REGISTER": 1,
+        "udp5060:phone_granted:incoming_REGISTER": 5,
+        "udp5060:phone_granted:outgoing_200_binding": 2,
+        "udp5060:phone_granted:outgoing_401": 3
+      },
+      "1793984640": {
+        "udp5060:phone_granted:incoming_REGISTER": 2,
+        "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5060:phone_granted:outgoing_401": 1
+      },
+      "1793984800": {
+        "udp5061:phone_granted:incoming_REGISTER": 5,
+        "udp5061:phone_granted:outgoing_200_binding": 2,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5061:phone_granted:outgoing_401": 2
+      },
+      "1793984810": {
+        "udp5061:phone_granted:incoming_REGISTER": 1,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      },
+      "1793985240": {
+        "udp5060:no_phone:incoming_REGISTER": 4
+      },
+      "1793985250": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985260": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985270": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985280": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793985290": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985300": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985310": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793985320": {
+        "udp5060:no_phone:incoming_REGISTER": 2
+      },
+      "1793985330": {
+        "udp5060:no_phone:incoming_REGISTER": 3,
+        "udp5061:no_phone:incoming_REGISTER": 8
+      },
+      "1793985340": {
+        "udp5060:no_phone:incoming_REGISTER": 4,
+        "udp5061:no_phone:incoming_REGISTER": 2
+      },
+      "1793985350": {
+        "udp5060:no_phone:incoming_REGISTER": 3,
+        "udp5061:no_phone:incoming_REGISTER": 3
+      },
+      "1793985360": {
+        "udp5060:no_phone:incoming_REGISTER": 3,
+        "udp5061:no_phone:incoming_REGISTER": 3
+      },
+      "1793985370": {
+        "udp5060:no_phone:incoming_REGISTER": 2,
+        "udp5061:no_phone:incoming_REGISTER": 1
+      },
+      "1793985380": {
+        "udp5060:no_phone:incoming_REGISTER": 5
+      },
+      "1793985390": {
+        "udp5060:no_phone:incoming_REGISTER": 3
+      },
+      "1793985400": {
+        "udp5060:no_phone:incoming_REGISTER": 2,
+        "udp5061:no_phone:incoming_REGISTER": 4
+      },
+      "1793985410": {
+        "udp5060:no_phone:incoming_REGISTER": 5,
+        "udp5061:no_phone:incoming_REGISTER": 2
+      },
+      "1793985420": {
+        "udp5060:no_phone:incoming_REGISTER": 1,
+        "udp5060:phone_granted:incoming_REGISTER": 2,
+        "udp5060:phone_granted:outgoing_200_binding": 1,
+        "udp5060:phone_granted:outgoing_401": 1,
+        "udp5061:no_phone:incoming_REGISTER": 1,
+        "udp5061:phone_granted:incoming_REGISTER": 5,
+        "udp5061:phone_granted:outgoing_200_binding": 2,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5061:phone_granted:outgoing_401": 2
+      },
+      "1793985430": {
+        "udp5060:phone_granted:incoming_REGISTER": 4,
+        "udp5060:phone_granted:outgoing_200_binding": 1,
+        "udp5060:phone_granted:outgoing_401": 2
+      },
+      "1793985440": {
+        "udp5060:phone_granted:incoming_REGISTER": 1,
+        "udp5060:phone_granted:outgoing_200_unregister_or_unspecified": 1,
+        "udp5060:phone_granted:outgoing_401": 1,
+        "udp5061:phone_granted:incoming_REGISTER": 1,
+        "udp5061:phone_granted:outgoing_200_unregister_or_unspecified": 1
+      }
+    },
+    "updated_at": 1793985467
+  }
+}
