@@ -105,6 +105,14 @@ def session_overlay(name, data):
            "JOIN vicidial_live_agents a ON a.user=s.user AND a.server_ip=s.server_ip AND a.conf_exten=s.conf_exten "
            "WHERE w.session_name='$session_name' AND w.server_ip='$server_ip' AND s.user='$user';")
     text = replace_once(data.decode(), old, new)
+    if name == 'conf_exten_check.php':
+        # Concurrent visibility batches can repeat (user, visibility, end epoch).
+        # Preserve the first audit observation on that unique-key collision;
+        # other strict SQL failures must still fail. No INSERT IGNORE/sql_mode.
+        audit = "visibility='$visibility_type',agent_log_id='$agent_log_id';"
+        text = replace_once(text, audit,
+                            "visibility='$visibility_type',agent_log_id='$agent_log_id' "
+                            "ON DUPLICATE KEY UPDATE event_end_epoch=VALUES(event_end_epoch);")
     if name == 'vdc_db_query.php':
         # The UI sends a workflow label; alt_dial is the six-character dial type.
         old_dob = "date_of_birth='\" . mysqli_real_escape_string($link, $date_of_birth) . \"'"
@@ -281,6 +289,15 @@ def updater_overlay(data):
         if text.count(old) != count:
             raise ValueError('Unexpected updater channel parser marker')
         text = text.replace(old, new)
+    # AST_update stores PJSIP clients in live_sip_channels. The legacy park
+    # validator only checks live_channels and deletes a still-parked client
+    # after six misses. Match the actual upstream park AGI data, not merely
+    # any live client channel (which could already have resumed).
+    marker = '$stmtB = "SELECT count(*) FROM $live_channels where server_ip=\'$server_ip\' and channel=\'$PQchannel\' and ( (extension=\'$PQextension\') or (extension LIKE \\"%.agi\\") );";'
+    text = replace_once(text, marker, marker + '''
+                if (($AST_ver =~ /^22\\./i) && ($PQchannel =~ /^PJSIP\\//)) {
+                    $stmtB = "SELECT count(*) FROM $live_sip_channels where server_ip='$server_ip' and channel='$PQchannel' and (channel_data='park_CID.agi' or channel_data LIKE '%/park_CID.agi');";
+                }''')
     return text.encode()
 
 

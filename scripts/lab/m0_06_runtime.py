@@ -92,10 +92,12 @@ def recording_interval(events, duration):
     return round(start), round(stop), round(duration)
 
 
-def run(name, full=False):
+def run(name, full=False, authorized_host='almadial-alma10'):
     if not re.fullmatch(r'[a-z0-9-]{1,40}', name):
         raise ValueError('invalid run ID')
-    if command(['hostname']).strip() != 'almadial-alma10':
+    if authorized_host not in ('almadial-alma10', 'almadial-alma10-repeat'):
+        raise ValueError('unauthorized guest selection')
+    if command(['hostname']).strip() != authorized_host:
         raise ValueError('wrong guest')
     if '0 active channels' not in cli('core show channels count'):
         raise ValueError('active calls before test')
@@ -225,5 +227,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('run')
     parser.add_argument('--full', action='store_true')
+    parser.add_argument('--authorized-host', choices=['almadial-alma10', 'almadial-alma10-repeat'],
+                        default='almadial-alma10', help='explicit authorized lab guest; no auto-discovery')
     args = parser.parse_args()
-    run(args.run, args.full)
+    run(args.run, args.full, args.authorized_host)

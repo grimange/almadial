@@ -163,13 +163,15 @@ if(JSON.stringify(sent.children.map(x=>[x.name,x.value]))!==JSON.stringify([['us
         if name == 'vdc_db_query.php':
             source += "\ndate_of_birth='\" . mysqli_real_escape_string($link, $date_of_birth) . \"'"
             source += "\nif ($ACTION == 'manDiaLlogCaLL')\n{\n// start and end share this operation\n}"
+        if name == 'conf_exten_check.php':
+            source += "\nvisibility='$visibility_type',agent_log_id='$agent_log_id';"
         count = {'vdc_db_query.php': 19, 'manager_send.php': 22, 'conf_exten_check.php': 0}[name]
         return (source + "\nINSERT INTO vicidial_manager values('',''," * count).encode()
 
     def test_logout_session_authorization_and_fresh_login(self):
         source = self.session_source('conf_exten_check.php')
         with patch.dict(assets.SESSION_PINS, {'conf_exten_check.php': assets.digest(source)}):
-            query = assets.session_overlay('conf_exten_check.php', source).decode()
+            query = assets.session_overlay('conf_exten_check.php', source).decode().splitlines()[0]
         query = query.replace("'$session_name'", ':session').replace("'$server_ip'", ':server').replace("'$user'", ':user')
         db = sqlite3.connect(':memory:')
         self.addCleanup(db.close)
@@ -204,6 +206,9 @@ INSERT INTO vicidial_live_agents VALUES('fixture','loopback','9600000');''')
                 self.assertIn("if ($alt_dial === 'MANUAL_DIALNOW') {$alt_dial = 'MANUAL';}", operation)
                 self.assertIn("date_of_birth=NULLIF('", result)
                 self.assertIn(",'')", result)
+            if name == 'conf_exten_check.php':
+                self.assertIn('ON DUPLICATE KEY UPDATE event_end_epoch=VALUES(event_end_epoch)', result)
+                self.assertNotIn('INSERT IGNORE', result)
 
     def test_listener_handles_modern_event_fields_without_changing_other_versions(self):
         block = '@command_line=split(/\\n/, $input_lines[$ILcount]);'
@@ -237,7 +242,8 @@ die 'uniqueid position' unless $command_line[3] eq 'Uniqueid: 123.4';
                   "where protocol='SIP' and server_ip='$server_ip'\n" * 2 +
                   '/^Zap|^IAX2|^SIP|^Local|^DAHDI/\n' * 2 +
                   '/^SIP|^Zap|^IAX2|^DAHDI/\n' + '/^SIP/\n' * 2 +
-                  's/^SIP\\///gi\n').encode()
+                  's/^SIP\\///gi\n' +
+                  '$stmtB = "SELECT count(*) FROM $live_channels where server_ip=\'$server_ip\' and channel=\'$PQchannel\' and ( (extension=\'$PQextension\') or (extension LIKE \\"%.agi\\") );";\n').encode()
         with patch.object(assets, 'UPDATER_PIN', assets.digest(source)):
             derived = assets.updater_overlay(source).decode()
         self.assertEqual(derived.count("protocol IN ('SIP','PJSIP')"), 2)
@@ -251,6 +257,21 @@ die 'missing terminator' unless $list_channels[-1] eq "--END COMMAND--\\n";
 $AST_ver='18.0'; @list_channels=("Message: Command output follows\\n","Output: untouched\\n");
 ''' + fragment + '''
 die 'other version modified' unless $list_channels[1] eq "Output: untouched\\n";
+'''
+        subprocess.run(['perl', '-e', script], check=True, capture_output=True)
+        park = derived[derived.index('$stmtB ='):]
+        script = '''$server_ip='127.0.0.1'; $live_channels='live_channels';
+$live_sip_channels='live_sip_channels'; $PQextension='park';
+$AST_ver='22.12.0'; $PQchannel='PJSIP/9052-test';
+''' + park + '''
+die 'PJSIP park not checked in client table' unless $stmtB =~ /FROM live_sip_channels/;
+die 'must check actual park AGI' unless $stmtB =~ /channel_data='park_CID.agi'/;
+$AST_ver='18.0';
+''' + park + '''
+die 'other version changed' unless $stmtB =~ /FROM live_channels/;
+$AST_ver='22.12.0'; $PQchannel='Local/test';
+''' + park + '''
+die 'other channel changed' unless $stmtB =~ /FROM live_channels/;
 '''
         subprocess.run(['perl', '-e', script], check=True, capture_output=True)
 

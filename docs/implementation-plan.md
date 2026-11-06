@@ -433,7 +433,7 @@ M0 must be **experimental, evidence-led, and narrow**: prove the exact stack's a
 - `tests/fixtures/` — sanitized manifests and evidence expectations; never export credentials.
 - Repeatable manual installation guide with clean-snapshot provenance and exact commands.
 
-**M0 pass gate:** A manually assembled, exact-version AlmaLinux 10 single server meets every required end-to-end test, and the installation can be repeated on a second fresh VM. A partial success or unverified conferencing is `NOT_READY`.
+**M0 pass gate:** A manually assembled, exact-version AlmaLinux 10 single server meets every required local/LAN end-to-end test, and the installation can be repeated on a second fresh VM with documented commands, verified provenance, deterministic compatibility derivations, fresh schema/configuration generation, security and reboot persistence. A partial local success or unverified conferencing is `NOT_READY`. Direct-public, 1:1 NAT and remote-home-agent qualification is deployment-specific, not a prerequisite for accepting the local software stack. Independent QA and explicit maintainer acceptance remain required before lock promotion; see the [authorized product-scope decision](planning/alm-8-product-scope-realignment.md).
 
 ---
 
@@ -472,15 +472,15 @@ Agent browser (HTTPS) ----> Apache / VICIdial application
 | Scenario | Priority | Expected outcome |
 |---|---|---|
 | Agent and server on same LAN, valid trusted TLS | P0 | Registration and two-way audio. |
-| Public FQDN, directly attached public IP | P0 | Registration, dial, bridge, recording. |
-| Server behind 1:1 NAT with correct forwarding | P0 | ICE/media and SIP routing verified. |
-| Remote agent behind common home NAT | P0 | WSS and bidirectional media. |
+| Public FQDN, directly attached public IP | Deployment-specific | Registration, dial, bridge, recording. |
+| Server behind 1:1 NAT with correct forwarding | Deployment-specific | ICE/media and SIP routing verified. |
+| Remote agent behind common home NAT | Deployment-specific | WSS and bidirectional media. |
 | Browser refresh / WSS reconnect | P0 | No stranded bridge or duplicate registration. |
 | Restricted symmetric NAT or corporate firewall | P1 | Explicit unsupported/needs-TURN diagnostic, or tested TURN support if introduced. |
 | IPv6/dual stack | P1 | Either supported and tested, or detected and clearly rejected. |
 | TLS cert expired/mismatch | P0 negative | Connection fails with actionable diagnosis, never insecure override. |
 
-ALM-7's task-specific acceptance is local/LAN compatibility, with explicit approved deferral of the direct-public, 1:1 NAT and remote-home-agent profiles. Those profiles remain mandatory under ALM-27 / M3-05 and ALM-29 / M4-01 before remote-agent/deployment or release-readiness claims. Local acceptance is not public-network qualification. This task-specific boundary does not amend the aggregate M0 exit gate in §§9.3 and 14 or ALM-8's complete-baseline repetition requirements.
+The operator's authorized ALM-8 product-scope realignment establishes local/LAN single-server compatibility and reproducibility as the M0 and core installer-release boundary. ALM-27 / M3-05 retains these external procedures for deployment-specific qualification: qualify the topology a deployment actually uses, not all three universally. ALM-29 / M4-01 requires evidence for any external capability explicitly advertised by that release. Untested profiles remain NOT_RUN; local/LAN success does not establish public/NAT/home-agent success. Preserve TLS, addressing, ICE/RTP, call-control/recovery, recording, cleanup and management-isolation checks for each selected external configuration. This supersedes the earlier ALM-7-only deferral's aggregate-gate restriction; the original decision and criteria remain historical in [the ALM-7 proposal](planning/alm-7-network-scope-proposal.md), with exact before/after changes in [the current authorized decision](planning/alm-8-product-scope-realignment.md). No infrastructure or spending authority is implied.
 
 Operator approval and preserved original criteria: [ALM-7 scope decision](planning/alm-7-network-scope-proposal.md), approved 2026-11-06 UTC.
 
@@ -693,10 +693,10 @@ An independent clean-VM acceptance test is required in addition to code-level te
 | M0-04 | VICIdial pinned SVN/schema/PHP installation | Revision, schema, agent/admin UI evidence. |
 | M0-05 | PJSIP config generation audit | Generated endpoint and dialplan diffs; no unsupported channel assumptions. |
 | M0-06 | ConfBridge/AMI/AGI/recording integration | Real agent/call/recording lifecycle evidence. |
-| M0-07 | Self-hosted VICIphone + browser E2E | Local/LAN registration, SRTP, ICE, audio, heartbeat, supported call controls, logout revocation, documented WSS recovery and independent QA; external profiles remain NOT_RUN pending mandatory qualification. |
-| M0-08 | Repeatability and lock promotion | Second clean VM pass; accepted lock manifest. |
+| M0-07 | Self-hosted VICIphone + browser E2E | Local/LAN registration, SRTP, ICE, audio, heartbeat, supported call controls, logout revocation, documented WSS recovery and independent QA; external profiles remain NOT_RUN pending qualification of the deployment topology actually used. |
+| M0-08 | Repeatability and lock-promotion proposal | Second clean VM local/LAN pass, executable recipe and cross-VM evidence; independent QA and maintainer approval before accepted lock promotion. |
 
-**Exit criterion:** All required acceptance probes pass twice, with no undocumented interventions. If not, M0 reports `BLOCKED_COMPATIBILITY` or `NOT_READY` and identifies the minimum corrective experiment.
+**Exit criterion:** All required local/LAN software-stack acceptance probes pass twice, with a second clean installation and no unresolved undocumented interventions. Verify source/package identities, database initialization, actual generated configuration, native WebRTC/conference/recording, agent lifecycle, security and reboot persistence. Document observed corrections, update the executable recipe and repeat affected checks; a third clean installation is required only by a demonstrated substantive reproducibility defect. Independent AGY QA and explicit maintainer acceptance decide M0 closure and lock promotion. Unexecuted deployment-specific external profiles remain NOT_RUN and do not block this core gate. If a required local case fails or lacks evidence, M0 reports `BLOCKED_COMPATIBILITY` or `NOT_READY` and identifies the minimum corrective experiment.
 
 ### M1 — Installer framework
 
@@ -737,13 +737,13 @@ An independent clean-VM acceptance test is required in addition to code-level te
 | M3-05 | Call/ConfBridge/media/recording acceptance probes | End-to-end session evidence. |
 | M3-06 | Operator handover view and diagnostics | Usable URL, status, redacted report. |
 
-**Exit criterion:** A fresh remote agent can authenticate, register, join a test conference, communicate bidirectionally and complete a controlled test call after one guided installation.
+**Exit criterion:** A fresh browser agent can authenticate, register, join a local/LAN test conference, communicate bidirectionally and complete a controlled test call after one guided installation. Any explicitly advertised external configuration additionally requires attributable qualification evidence for that particular topology.
 
 ### M4 — Independent QA, release qualification and packaging
 
 | Task | Deliverable | Evidence |
 |---|---|---|
-| M4-01 | Clean VM matrix with direct IP and NAT scenarios | Repeatable VM evidence. |
+| M4-01 | Clean single-server VM installer replay and release qualification | Two clean installations; core local/LAN P0 evidence and evidence for each explicitly advertised external capability. |
 | M4-02 | Failure injection/resume/second-run suite | Idempotence and recovery matrix. |
 | M4-03 | Security review and external exposure audit | Scan, SELinux, firewall, secret tests. |
 | M4-04 | Licensing/SBOM/source notice review | Signed-off attribution and artifact inventory. |
@@ -751,7 +751,7 @@ An independent clean-VM acceptance test is required in addition to code-level te
 | M4-06 | Operator unassisted acceptance | Independent reviewer installation log. |
 | M4-07 | Release binary/checksum/signature and docs | Reproducible release with known limitations. |
 
-**Exit criterion:** All P0 gates pass without implementer intervention; documentation matches behavior; third-party compliance and release integrity accepted.
+**Exit criterion:** All core installer/local-LAN P0 gates pass without implementer intervention; documentation matches behavior; third-party compliance and release integrity are accepted. Dependency resolution, verified source pins, generated configuration, services after reboot, local telephony, predictable error/recovery behavior, security and reproducible evidence remain mandatory. Every explicitly advertised external capability has evidence for its particular configuration; constructing all three external profiles is not a universal release prerequisite.
 
 ---
 
@@ -815,13 +815,13 @@ flowchart TD
 
 | Metric | Target for v0.1 acceptance |
 |---|---|
-| Clean-install repeatability | Two fresh VM installations using same manifest pass all P0 tests. |
+| Clean-install repeatability | Two fresh VM installations using the same manifest pass all core installer/local-LAN P0 tests; evidence supports each explicitly advertised external configuration. |
 | Silent manual edits | **Zero** undocumented actions. |
 | Postcondition coverage | Every mutating stage has at least one actual-state check. |
 | Crash recovery | Every chosen injection point stops safely and resumes/rejects deterministically. |
 | Concurrent installers | Second invocation is rejected before mutation. |
 | Credential leakage | Zero detected secrets in logs/evidence/process args. |
-| WebRTC acceptance | Registration, media and reconnection confirmed in supported browsers/topologies. |
+| WebRTC acceptance | Registration, media and documented recovery confirmed in supported browsers on local/LAN; each explicitly advertised external configuration has its own qualification evidence. Untested profiles remain NOT_RUN. |
 | Security posture | No blanket firewall/SELinux disablement, no open MariaDB/AMI. |
 | Release provenance | SHA-256 digest + source/version manifest + license inventory. |
 
@@ -917,7 +917,7 @@ Use the code model and toolset available in the actual execution environment; ca
 | R02 | PHP/Perl/MariaDB incompatibility | High | Pin known-good revision and execute actual application flows. |
 | R03 | Installer runs root code from untrusted source | Critical | Locked artifact digest, signed repos, no remote pipelines, provenance audit. |
 | R04 | Public SIP leads to toll fraud | Critical | Carrier allowlists, unique credentials, minimal public exposure. |
-| R05 | WebRTC signaling works but audio fails | High | ICE/DTLS/SRTP + actual browser audio in multiple topologies. |
+| R05 | WebRTC signaling works but audio fails | High | ICE/DTLS/SRTP + actual browser audio on local/LAN and each external configuration explicitly claimed supported. |
 | R06 | Firewall changes disrupt operator SSH | Critical | Never modify SSH policy, preserve foreign rules, apply bounded changes. |
 | R07 | SELinux workarounds weaken server | High | Enforcing policy with reviewed labels/allow rules and AVC tests. |
 | R08 | Crash during schema import corrupts state | High | Backup before irreversible work, journal, schema recognition, stop on ambiguity. |

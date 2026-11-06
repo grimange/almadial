@@ -163,3 +163,25 @@ class CleanupTests(unittest.TestCase):
                  mock.patch.object(runtime,'AMI',side_effect=ConnectionError('fixture refusal')):
                 with self.assertRaises(ConnectionError): runtime.run('failure-fixture')
             self.assertTrue(any("SET extension=''" in q for q in calls))
+
+class RuntimeHostTests(unittest.TestCase):
+    def test_default_does_not_authorize_repeat_guest(self):
+        import m0_06_runtime as runtime
+        with mock.patch.object(runtime, 'command', return_value='almadial-alma10-repeat\n') as cmd:
+            with self.assertRaisesRegex(ValueError, 'wrong guest'):
+                runtime.run('test')
+            self.assertEqual(cmd.call_args_list, [mock.call(['hostname'])])
+
+    def test_explicit_repeat_selection_still_checks_actual_host(self):
+        import m0_06_runtime as runtime
+        with mock.patch.object(runtime, 'command', return_value='another-guest\n') as cmd:
+            with self.assertRaisesRegex(ValueError, 'wrong guest'):
+                runtime.run('test', authorized_host='almadial-alma10-repeat')
+            self.assertEqual(cmd.call_args_list, [mock.call(['hostname'])])
+
+    def test_unknown_host_rejected_before_command(self):
+        import m0_06_runtime as runtime
+        with mock.patch.object(runtime, 'command') as cmd:
+            with self.assertRaisesRegex(ValueError, 'unauthorized guest selection'):
+                runtime.run('test', authorized_host='production')
+            cmd.assert_not_called()
