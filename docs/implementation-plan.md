@@ -480,6 +480,10 @@ Agent browser (HTTPS) ----> Apache / VICIdial application
 | IPv6/dual stack | P1 | Either supported and tested, or detected and clearly rejected. |
 | TLS cert expired/mismatch | P0 negative | Connection fails with actionable diagnosis, never insecure override. |
 
+ALM-7's task-specific acceptance is local/LAN compatibility, with explicit approved deferral of the direct-public, 1:1 NAT and remote-home-agent profiles. Those profiles remain mandatory under ALM-27 / M3-05 and ALM-29 / M4-01 before remote-agent/deployment or release-readiness claims. Local acceptance is not public-network qualification. This task-specific boundary does not amend the aggregate M0 exit gate in §§9.3 and 14 or ALM-8's complete-baseline repetition requirements.
+
+Operator approval and preserved original criteria: [ALM-7 scope decision](planning/alm-7-network-scope-proposal.md), approved 2026-11-06 UTC.
+
 ### 10.4 Browser-phone source policy
 
 - Prefer an exact self-hosted, accepted VICIphone revision to avoid an opaque third-party hosted dependency.
@@ -689,7 +693,7 @@ An independent clean-VM acceptance test is required in addition to code-level te
 | M0-04 | VICIdial pinned SVN/schema/PHP installation | Revision, schema, agent/admin UI evidence. |
 | M0-05 | PJSIP config generation audit | Generated endpoint and dialplan diffs; no unsupported channel assumptions. |
 | M0-06 | ConfBridge/AMI/AGI/recording integration | Real agent/call/recording lifecycle evidence. |
-| M0-07 | Self-hosted VICIphone + browser E2E | Registration, SRTP, ICE, audio, reconnect evidence. |
+| M0-07 | Self-hosted VICIphone + browser E2E | Local/LAN registration, SRTP, ICE, audio, heartbeat, supported call controls, logout revocation, documented WSS recovery and independent QA; external profiles remain NOT_RUN pending mandatory qualification. |
 | M0-08 | Repeatability and lock promotion | Second clean VM pass; accepted lock manifest. |
 
 **Exit criterion:** All required acceptance probes pass twice, with no undocumented interventions. If not, M0 reports `BLOCKED_COMPATIBILITY` or `NOT_READY` and identifies the minimum corrective experiment.
