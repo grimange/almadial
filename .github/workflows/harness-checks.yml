@@ -16,3 +16,32 @@ jobs:
         run: python3 scripts/validate_scaffold.py
       - name: Test validator
         run: python3 -m unittest discover -s scripts/tests -v
+  go:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      GOTOOLCHAIN: local
+      GOENV: 'off'
+      GOPROXY: 'off'
+      GOSUMDB: 'off'
+      ALMADIAL_VERSION: dev
+      ALMADIAL_COMMIT: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: .go-version
+          cache: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Go foundation
+        run: make fmt-check module-check test vet race build
+      - name: Verify deterministic Linux amd64 artifact
+        run: |
+          python3 scripts/build_go.py --output dist/almadial-repeat
+          cmp dist/almadial dist/almadial-repeat
+          sha256sum dist/almadial dist/almadial-repeat
+          dist/almadial --help
+          dist/almadial --version
