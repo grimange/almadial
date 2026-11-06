@@ -11,13 +11,13 @@ import stat
 import subprocess
 import time
 
-from common import BASE, QUEUE, LIFETIME, LIFETIMES, HEARTBEAT, atomic_json, public_ip, grant_key
+from common import BASE, QUEUE, LIFETIME, LIFETIMES, HEARTBEAT, SIP_PORTS, atomic_json, public_ip, grant_key
 from vicidial_auth import current_role, USER_PATTERN
 from sip_guard import grace_state, refresh as guard_refresh
 from phone_policy import supervisor_phone, office_supervisor
 
 ID = re.compile(r'^[a-f0-9]{32}$')
-PORTS = ('5061', '10000-20000')
+PORTS = (*SIP_PORTS, '10000-20000')
 
 
 def rule(ip, port):
@@ -67,7 +67,7 @@ def reconcile(sip, previous, now, command=firewall):
                 synced[ip] = expiry
                 confirmed.add(ip)
         except (RuntimeError, subprocess.SubprocessError):
-            # Keep ownership for retry even if only one of the two rules was added.
+            # Keep ownership for retry even if only some service rules were added.
             synced[ip] = previous.get(ip, expiry)
             print('FIREWALL_RECONCILE_FAILED', flush=True)
     return confirmed, synced

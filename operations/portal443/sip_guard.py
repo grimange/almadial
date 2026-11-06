@@ -5,11 +5,12 @@ import json
 import subprocess
 import time
 
-from common import HEARTBEAT, public_ip
+from common import HEARTBEAT, SIP_PORTS, public_ip
 
 TABLE = 'alma_portal_sip'
 GRACE = 120
 MARK = '0x40000000'
+POLICY = 'alma-phone-sip-' + '-'.join(SIP_PORTS) + '-v1'
 
 
 def nft(*args, script=None):
@@ -17,36 +18,47 @@ def nft(*args, script=None):
                           capture_output=True, timeout=8, check=False)
 
 
+def chain_rules(chain):
+    direction, address, interface = ('dport', 'saddr', 'iifname') if chain == 'input' else ('sport', 'daddr', 'oifname')
+    rules = [f'{interface} "lo" return']
+    for port in SIP_PORTS:
+        rules.extend((f'udp {direction} {port} ip {address} @agents4 return',
+                      f'udp {direction} {port} counter drop'))
+    rules.extend((
+        f'udp {direction} 10000-20000 ip {address} @agents4 ct mark set ct mark | {MARK} return',
+        f'udp {direction} 10000-20000 ip {address} @grace4 ct state established ct mark & {MARK} != 0 return',
+        f'udp {direction} 10000-20000 counter drop comment "{POLICY}"'))
+    return rules
+
+
 def template():
     # priority -10 precedes firewalld's input/output priority +10, including
     # its unconditional established/related accept. Return still runs firewalld.
-    return f'''table inet {TABLE} {{
-      set agents4 {{ type ipv4_addr; flags timeout; }}
-      set grace4 {{ type ipv4_addr; flags timeout; }}
-      chain input {{
-        type filter hook input priority -10; policy accept;
-        iifname "lo" return
-        udp dport 5061 ip saddr @agents4 return
-        udp dport 5061 counter drop
-        udp dport 10000-20000 ip saddr @agents4 ct mark set ct mark | {MARK} return
-        udp dport 10000-20000 ip saddr @grace4 ct state established ct mark & {MARK} != 0 return
-        udp dport 10000-20000 counter drop
-      }}
-      chain output {{
-        type filter hook output priority -10; policy accept;
-        oifname "lo" return
-        udp sport 5061 ip daddr @agents4 return
-        udp sport 5061 counter drop
-        udp sport 10000-20000 ip daddr @agents4 ct mark set ct mark | {MARK} return
-        udp sport 10000-20000 ip daddr @grace4 ct state established ct mark & {MARK} != 0 return
-        udp sport 10000-20000 counter drop
-      }}
-    }}'''
+    lines = [f'table inet {TABLE} {{',
+             'set agents4 { type ipv4_addr; flags timeout; }',
+             'set grace4 { type ipv4_addr; flags timeout; }']
+    for chain in ('input', 'output'):
+        lines.extend((f'chain {chain} {{', f'type filter hook {chain} priority -10; policy accept;'))
+        lines.extend(chain_rules(chain))
+        lines.append('}')
+    return '\n'.join(lines + ['}'])
 
 
 def bootstrap(command=nft):
-    result = command('list', 'table', 'inet', TABLE)
+    result = command('-j', 'list', 'table', 'inet', TABLE)
     if result.returncode == 0:
+        installed = {item['rule']['chain'] for item in json.loads(result.stdout)['nftables']
+                     if item.get('rule', {}).get('comment') == POLICY}
+        if installed == {'input', 'output'}:
+            return
+        # Upgrade only this table's chains in one transaction. Preserve live
+        # allowlist/grace members and their original native timeout deadlines.
+        lines = []
+        for chain in ('input', 'output'):
+            lines.append(f'flush chain inet {TABLE} {chain}')
+            lines.extend(f'add rule inet {TABLE} {chain} {rule}' for rule in chain_rules(chain))
+        if command('-f', '-', script='\n'.join(lines)).returncode:
+            raise RuntimeError('SIP guard policy update failed')
         return
     # A syntax/check error must not be mistaken for a successful guard.
     result = command('-f', '-', script=template())

@@ -119,7 +119,7 @@ def main():
         for target, grant_data in grants:
             queue({**grant_data, 'kind': 'revoke', 'target': target, 'at': int(time.time())})
         run_worker()
-        # Fallback cleanup is limited to the two test-specific owned rules.
+        # Fallback cleanup is limited to the test-specific owned rules.
         for port in PORTS:
             if command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 0:
                 command('firewall-cmd', '--zone=public', '--remove-rich-rule=' + rule(IP, port))

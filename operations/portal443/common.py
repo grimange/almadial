@@ -11,6 +11,7 @@ QUEUE = Path('/var/lib/alma-portal/requests-443')
 LIFETIME = 43200
 LIFETIMES = {'personal': LIFETIME, 'office': 86400}
 HEARTBEAT = 35
+SIP_PORTS = ('5060', '5061')
 DESTINATIONS = {'agent': '/agc/vicidial.php', 'web': '/vicidial/admin.php'}
 
 

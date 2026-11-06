@@ -47,7 +47,7 @@ try:
     fixture = '''table inet fixture_firewalld {
       chain input { type filter hook input priority 10; policy drop;
         ct state established,related accept
-        udp dport { 5061, 10000-20000 } accept
+        udp dport { 5060, 5061, 10000-20000 } accept
       }
       chain output { type filter hook output priority 10; policy accept;
         ct state established,related accept
@@ -56,7 +56,7 @@ try:
     assert nft('-f', '-', script=fixture).returncode == 0
     echo = child(server_ns, '''import socket,select
 sockets=[]
-for port in (5061,10000):
+for port in (5060,5061,10000):
  s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);s.bind(('198.18.0.1',port));sockets.append(s)
 print('READY',flush=True)
 while True:
@@ -87,25 +87,40 @@ for line in sys.stdin:
 
     now = int(time.time())
     sip_guard.refresh({}, {}, now, nft)
-    check('no grant fresh SIP blocked', 'sip-none', 5061, False)
+    for port in (5060, 5061):
+        check(f'no grant fresh SIP{port} blocked', f'sip-none-{port}', port, False)
     sip_guard.refresh({CLIENT: now + 300}, {}, now, nft)
-    check('valid agent fresh SIP passes', 'sip-old', 5061, True)
+    for port in (5060, 5061):
+        check(f'valid agent fresh SIP{port} passes', f'sip-old-{port}', port, True)
     check('valid agent RTP passes and is marked', 'rtp-old', 10000, True)
+    before = nft('-j', 'list', 'set', 'inet', sip_guard.TABLE, 'agents4').stdout
+    # Empty fixture chains to exercise an existing-table upgrade (isolated only).
+    assert nft('-f', '-', script='\n'.join(
+        f'flush chain inet {sip_guard.TABLE} {chain}' for chain in ('input', 'output'))).returncode == 0
+    sip_guard.bootstrap(nft)
+    after = nft('-j', 'list', 'set', 'inet', sip_guard.TABLE, 'agents4').stdout
+    assert json.loads(before)['nftables'][-1]['set']['elem'][0]['elem']['val'] == json.loads(after)['nftables'][-1]['set']['elem'][0]['elem']['val']
+    for port in (5060, 5061):
+        check(f'policy upgrade preserves established SIP{port} grant', f'sip-old-{port}', port, True)
     now = int(time.time())
     sip_guard.refresh({}, {CLIENT: now + 3}, now, nft)
-    check('revoked established SIP blocked before downstream ct accept', 'sip-old', 5061, False)
-    check('revoked fresh SIP blocked', 'sip-new', 5061, False)
+    for port in (5060, 5061):
+        check(f'revoked established SIP{port} blocked before downstream ct accept', f'sip-old-{port}', port, False)
+        check(f'revoked fresh SIP{port} blocked', f'sip-new-{port}', port, False)
     check('established authorized RTP survives within grace', 'rtp-old', 10000, True)
     check('new RTP flow cannot use grace', 'rtp-new', 10000, False)
     time.sleep(3.1)
     check('established RTP blocked after native grace timeout', 'rtp-old', 10000, False)
     now = int(time.time())
     sip_guard.refresh({CLIENT: now + 2}, {}, now, nft)
-    check('short valid grant fresh SIP passes', 'sip-expiry', 5061, True)
+    for port in (5060, 5061):
+        check(f'short valid grant fresh SIP{port} passes', f'sip-expiry-{port}', port, True)
     time.sleep(2.1)
-    check('native grant expiry blocks established SIP without worker', 'sip-expiry', 5061, False)
+    for port in (5060, 5061):
+        check(f'native grant expiry blocks established SIP{port} without worker', f'sip-expiry-{port}', port, False)
     sip_guard.refresh({}, {}, int(time.time()), nft)
-    check('web-only supervisor has no SIP grant', 'sip-supervisor', 5061, False)
+    for port in (5060, 5061):
+        check(f'web-only supervisor has no SIP{port} grant', f'sip-supervisor-{port}', port, False)
     print('ISOLATED_NETWORK_PROBE_PASS', flush=True)
 finally:
     for p in children:

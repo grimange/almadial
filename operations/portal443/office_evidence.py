@@ -67,7 +67,7 @@ def main():
              if v.get('grant_type','personal')==kind and v['expires_at']>now and v.get('eligible') and not v.get('revoked'))
              for kind in ('personal','office')},
         effective_web_IP_count=len(web), effective_phone_IP_count=len(sip),
-        expected_UDP_rule_count=2*len(sip), runtime_rich_rule_count=len(runtime),
+        expected_UDP_rule_count=len(PORTS)*len(sip), runtime_rich_rule_count=len(runtime),
         effective_rules_present=rules_present, permanent_rich_rule_count=len(permanent),
         guard_agent_element_count=len(agent_elements), guard_hook_priorities=priorities,
         firewall_ports=run('firewall-cmd','--zone=public','--list-ports').stdout.strip(),

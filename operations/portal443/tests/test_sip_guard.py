@@ -21,6 +21,9 @@ class SipGuard(unittest.TestCase):
         calls = []
         def command(*args, script=None):
             calls.append((args, script))
+            if args[:3] == ('-j', 'list', 'table'):
+                return types.SimpleNamespace(returncode=0, stdout=json.dumps({'nftables': [
+                    {'rule': {'chain': chain, 'comment': guard.POLICY}} for chain in ('input', 'output')]}))
             if args[0] == '-j':
                 members = ['8.8.8.8', '9.9.9.9'] if args[-1] == 'agents4' else ['8.8.8.8', '9.9.9.9', '1.1.1.1']
                 data = {'nftables': [{'set': {'elem': [{'elem': {'val': ip}} for ip in members]}}]}
@@ -48,11 +51,40 @@ class SipGuard(unittest.TestCase):
         script = guard.template()
         self.assertEqual(script.count('priority -10'), 2)
         for direction in ('dport', 'sport'):
-            self.assertIn(f'udp {direction} 5061 counter drop', script)
+            for port in ('5060', '5061'):
+                self.assertIn(f'udp {direction} {port} counter drop', script)
             self.assertIn(f'udp {direction} 10000-20000 counter drop', script)
         self.assertEqual(script.count('ct state established ct mark & 0x40000000 != 0 return'), 2)
         self.assertNotIn('flush ruleset', script)
         self.assertNotIn(' accept\n', script)
+
+    def test_existing_policy_upgrade_preserves_sets_and_is_atomic(self):
+        calls = []
+        def command(*args, script=None):
+            calls.append((args, script))
+            return types.SimpleNamespace(returncode=0, stdout='{"nftables":[]}')
+        guard.bootstrap(command)
+        self.assertEqual(len(calls), 2)
+        script = calls[1][1]
+        for chain in ('input', 'output'):
+            self.assertIn(f'flush chain inet {guard.TABLE} {chain}', script)
+        self.assertNotIn('flush set', script)
+        self.assertNotIn('delete table', script)
+        self.assertIn('udp dport 5060 counter drop', script)
+        self.assertIn('udp sport 5061 counter drop', script)
+        # Failure cannot be advertised as a successful policy migration.
+        with self.assertRaises(RuntimeError):
+            guard.bootstrap(lambda *a, **k: types.SimpleNamespace(
+                returncode=1 if a[0] == '-f' else 0, stdout='{"nftables":[]}'))
+
+    def test_current_policy_bootstrap_does_not_duplicate_rules(self):
+        calls = []
+        def command(*args, **kwargs):
+            calls.append(args)
+            return types.SimpleNamespace(returncode=0, stdout=json.dumps({'nftables': [
+                {'rule': {'chain': chain, 'comment': guard.POLICY}} for chain in ('input', 'output')]}))
+        guard.bootstrap(command)
+        self.assertEqual(len(calls), 1)
 
 
 if __name__ == '__main__':

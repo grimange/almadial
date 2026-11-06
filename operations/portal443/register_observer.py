@@ -3,7 +3,7 @@
 
 Never writes packets, headers, credentials, challenge values, or identifiers.
 Packet buffers are inspected in memory and discarded. Scoped to the test IP
-and UDP5061. Run through SSH, as root, during the operator's private tests.
+and UDP5060/5061. Run through SSH, as root, during the operator's private tests.
 """
 from collections import Counter
 import ipaddress
@@ -17,7 +17,7 @@ import time
 
 CLIENT = ipaddress.ip_address('158.62.74.253').packed
 SERVER = ipaddress.ip_address('2.29.153.161').packed
-OUTPUT = Path('/root/alma-portal-revoke-backup/register-counts.json')
+OUTPUT = Path('/root/alma-portal-5060-backup/register-counts.json')
 STATE = Path('/var/lib/alma-portal-443/state.json')
 os.umask(0o077)
 started = int(time.time())
@@ -28,7 +28,7 @@ sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.htons(0x0003))
 sock.bind(('eth0', 0))
 sock.settimeout(1)
 last_save = 0
-while time.time() - started < 900:
+while time.time() - started < 1800:
     now = int(time.time())
     if now != last_save:
         tmp = OUTPUT.with_suffix('.tmp')
@@ -49,7 +49,8 @@ while time.time() - started < 900:
         continue
     offset = 14 + (packet[14] & 15) * 4
     sport, dport = struct.unpack('!HH', packet[offset:offset+4])
-    if (incoming and dport != 5061) or (outgoing and sport != 5061):
+    port = dport if incoming else sport
+    if port not in (5060, 5061):
         continue
     payload = packet[offset+8:]
     if not re.search(br'\r\nCSeq:\s*\d+\s+REGISTER\r\n', payload, re.I):
@@ -73,7 +74,7 @@ while time.time() - started < 900:
                      l['ip'] == '158.62.74.253' and l['expires_at'] > now for l in leases)
     except Exception:
         active = False
-    label = ('phone_granted:' if active else 'no_phone:') + event
+    label = f'udp{port}:' + ('phone_granted:' if active else 'no_phone:') + event
     counts[label] += 1
     bucket = str(now // 10 * 10)
     buckets.setdefault(bucket, {})[label] = buckets.get(bucket, {}).get(label, 0) + 1

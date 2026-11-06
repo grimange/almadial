@@ -128,7 +128,7 @@ class OfficeWorker(unittest.TestCase):
         self.assertEqual(self.state['leases'][personal]['expires_at'], 43300)
         self.assertEqual(self.state['leases'][office]['expires_at'], 86500)
         self.assertEqual(self.state['leases'][office]['services'], ['https', 'sip', 'rtp'])
-        self.assertEqual(len(self.rules), 2)  # aggregate per IP, never per user
+        self.assertEqual(len(self.rules), 3)  # aggregate per IP, never per user
         self.enqueue(grant_type='office', at=200)
         self.process(200)
         self.assertEqual(self.state['leases'][office]['expires_at'], 86500)
