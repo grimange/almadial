@@ -1,0 +1,4 @@
+ROLLBACK_ARCHIVE_REHEARSAL_PASS /root/alma-portal-tls-backup-20261106T203248Z
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message
+Syntax OK
+TLS_DEPLOYMENT_INSTALLED {"/usr/local/libexec/alma-portal-tls": "614a6a55f46a7d71957a3db55af2593403444cb9758b75ac965cbbd7469522ff", "/usr/local/sbin/alma-portal-cert-deploy": "fad1df74eb9800038ec2e9b57b886df73692cd85445fbb9a358df95d51a21403", "/etc/systemd/system/alma-portal-renew.service": "f22f962fca67f28cd825acca0460bacb969291df7719a8033e9b380280d598e4"}

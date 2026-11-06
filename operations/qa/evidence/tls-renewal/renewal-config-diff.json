@@ -1,0 +1,13 @@
+{
+  "diff": [
+    "--- before",
+    "+++ after",
+    "@@ -14,4 +14,4 @@",
+    " [[webroot_map]]",
+    " 2.29.153.161 = /var/www/alma-acme",
+    " [acme_renewal_info]",
+    "-ari_retry_after = 2026-11-06T09:38:33",
+    "+ari_retry_after = 2026-11-06T21:34:05"
+  ],
+  "permissions": "600 root root /etc/letsencrypt/renewal/2.29.153.161.conf\n"
+}

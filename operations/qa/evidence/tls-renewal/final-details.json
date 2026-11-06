@@ -1,0 +1,55 @@
+{
+  "portal_files": {
+    "portal.py": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2",
+    "vicidial_auth.py": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+    "phone_policy.py": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+  },
+  "routes": {
+    "/portal/app.css": {
+      "status": 200,
+      "type": "text/css; charset=utf-8"
+    },
+    "/portal/app.js": {
+      "status": 200,
+      "type": "application/javascript"
+    },
+    "/portal/logo.png": {
+      "status": 200,
+      "type": "image/png"
+    },
+    "/portal/status": {
+      "status": 401,
+      "type": "text/html; charset=utf-8"
+    }
+  },
+  "timer_boot_link": {
+    "rc": 0,
+    "stdout": "/etc/systemd/system/alma-portal-renew.timer\n",
+    "stderr": ""
+  },
+  "active_grants_worker": {
+    "rc": 0,
+    "stdout": "Result=success\nExecMainStatus=0\n",
+    "stderr": ""
+  },
+  "root_failed_units": {
+    "rc": 0,
+    "stdout": "  UNIT LOAD ACTIVE SUB DESCRIPTION\n\n0 loaded units listed.\n",
+    "stderr": ""
+  },
+  "httpd_reload_command": {
+    "rc": 0,
+    "stdout": "ExecReload={ path=/usr/sbin/httpd ; argv[]=/usr/sbin/httpd $OPTIONS -k graceful ; ignore_errors=no ; start_time=[Fri 2026-11-06 15:33:34 EST] ; stop_time=[Fri 2026-11-06 15:33:34 EST] ; pid=407683 ; code=exited ; status=0 }\n",
+    "stderr": ""
+  },
+  "renewal_config_validation": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "final_check": {
+    "rc": 0,
+    "stdout": "{\"stage\": \"certificate_chain\", \"time\": 1793997540, \"action\": \"start\"}\n{\"stage\": \"certificate_chain\", \"time\": 1793997540, \"action\": \"ok\"}\n{\"stage\": \"certificate_lifetime\", \"time\": 1793997540, \"action\": \"start\"}\n{\"stage\": \"certificate_lifetime\", \"time\": 1793997540, \"action\": \"ok\"}\n{\"stage\": \"certificate_dates\", \"time\": 1793997540, \"action\": \"start\"}\n{\"stage\": \"certificate_dates\", \"time\": 1793997540, \"action\": \"ok\"}\n{\"stage\": \"timer_enabled\", \"time\": 1793997540, \"action\": \"start\"}\n{\"stage\": \"timer_enabled\", \"time\": 1793997540, \"action\": \"ok\"}\n{\"stage\": \"timer_active\", \"time\": 1793997540, \"action\": \"start\"}\n{\"stage\": \"timer_active\", \"time\": 1793997540, \"action\": \"ok\"}\n{\"stage\": \"health_ok\", \"time\": 1793997540, \"certificate\": {\"fingerprint\": \"0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c\", \"notBefore\": \"Nov  5 19:05:55 2026 GMT\", \"notAfter\": \"Nov 12 11:05:54 2026 GMT\", \"serial\": \"0608FF6565BEA6657F26AB0FFF3DCBFA379A\"}, \"last_success_at\": 1793997294}\n",
+    "stderr": ""
+  }
+}

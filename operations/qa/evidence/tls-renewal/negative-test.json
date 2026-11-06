@@ -1,0 +1,22 @@
+{
+  "rejected_lineage": {
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Job for alma-portal-tls-negative.service failed because the control process exited with error code.\nSee \"systemctl status alma-portal-tls-negative.service\" and \"journalctl -xeu alma-portal-tls-negative.service\" for details.\n"
+  },
+  "failed_unit": {
+    "rc": 0,
+    "stdout": "Result=exit-code\nExecMainStatus=1\nActiveState=failed\n",
+    "stderr": ""
+  },
+  "health_check": {
+    "rc": 1,
+    "stdout": "{\"stage\": \"failure\", \"time\": 1793997197, \"error\": \"health: renewal or deployment has a persistent failure\"}\n",
+    "stderr": ""
+  },
+  "negative_journal": {
+    "rc": 0,
+    "stdout": "Nov 06 15:33:16 dialer01 systemd[1]: Starting alma-portal-tls-negative.service - [systemd-run] /usr/local/sbin/alma-portal-cert-deploy...\nNov 06 15:33:16 dialer01 alma-portal-cert-deploy[407598]: {\"stage\": \"failure\", \"time\": 1793997196, \"error\": \"lineage: unexpected renewal target\"}\nNov 06 15:33:16 dialer01 systemd[1]: alma-portal-tls-negative.service: Main process exited, code=exited, status=1/FAILURE\nNov 06 15:33:16 dialer01 systemd[1]: alma-portal-tls-negative.service: Failed with result 'exit-code'.\nNov 06 15:33:16 dialer01 systemd[1]: Failed to start alma-portal-tls-negative.service - [systemd-run] /usr/local/sbin/alma-portal-cert-deploy.\n",
+    "stderr": ""
+  }
+}

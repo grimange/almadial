@@ -1,0 +1,10 @@
+[Unit]
+Description=Renew and verify short-lived public IP TLS certificate
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/libexec/alma-portal-tls renew
+TimeoutStartSec=720
+UMask=0077

@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+set -euo pipefail
+exec /usr/bin/python3 /usr/local/libexec/alma-portal-tls deploy

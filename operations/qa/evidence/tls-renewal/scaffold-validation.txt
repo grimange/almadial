@@ -1,0 +1,1 @@
+PASS scaffold validation: 11 required files, 4 skills; no VM/runtime checks performed

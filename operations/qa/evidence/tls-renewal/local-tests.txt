@@ -1,0 +1,19 @@
+test_atomic_state_is_private (test_tls.TLSIntegrationTests.test_atomic_state_is_private) ... ok
+test_bad_config_never_reloads (test_tls.TLSIntegrationTests.test_bad_config_never_reloads) ... ok
+test_certbot_zero_cannot_hide_failed_hook (test_tls.TLSIntegrationTests.test_certbot_zero_cannot_hide_failed_hook) ... ok
+test_changed_certificate_requires_deploy_receipt (test_tls.TLSIntegrationTests.test_changed_certificate_requires_deploy_receipt) ... ok
+test_dry_run_explicitly_exercises_deploy_hook (test_tls.TLSIntegrationTests.test_dry_run_explicitly_exercises_deploy_hook) ... ok
+test_dry_run_without_receipt_fails (test_tls.TLSIntegrationTests.test_dry_run_without_receipt_fails) ... ok
+test_failed_reload_persists_failure (test_tls.TLSIntegrationTests.test_failed_reload_persists_failure) ... ok
+test_nonzero_subprocess_is_not_suppressed (test_tls.TLSIntegrationTests.test_nonzero_subprocess_is_not_suppressed) ... ok
+test_noop_does_not_reload_or_invoke_hook (test_tls.TLSIntegrationTests.test_noop_does_not_reload_or_invoke_hook) ... ok
+test_previous_failed_deployment_retried_on_noop (test_tls.TLSIntegrationTests.test_previous_failed_deployment_retried_on_noop) ... ok
+test_serve_mismatch_makes_deployment_fail (test_tls.TLSIntegrationTests.test_serve_mismatch_makes_deployment_fail) ... ok
+test_stale_or_failed_state_fails_health (test_tls.TLSIntegrationTests.test_stale_or_failed_state_fails_health) ... ok
+test_tls_connection_failure_attempts_deployment_recovery (test_tls.TLSIntegrationTests.test_tls_connection_failure_attempts_deployment_recovery) ... ok
+test_unexpected_lineage_fails_before_reload (test_tls.TLSIntegrationTests.test_unexpected_lineage_fails_before_reload) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.023s
+
+OK

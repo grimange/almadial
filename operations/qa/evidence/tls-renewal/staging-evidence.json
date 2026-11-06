@@ -1,0 +1,59 @@
+{
+  "acceptance_unit": {
+    "rc": 0,
+    "stdout": "Result=success\nExecMainStatus=0\nActiveState=inactive\n",
+    "stderr": ""
+  },
+  "acceptance_journal": {
+    "rc": 0,
+    "stdout": "Nov 06 15:33:30 dialer01 systemd[1]: Starting alma-portal-tls-acceptance.service - [systemd-run] /usr/bin/python3 /usr/local/libexec/alma-portal-tls renew --dry-run...\nNov 06 15:33:30 dialer01 python3[407660]: {\"stage\": \"certbot_dry_run\", \"time\": 1793997210, \"action\": \"start\"}\nNov 06 15:33:30 dialer01 python3[407661]: Saving debug log to /var/log/letsencrypt/letsencrypt.log\nNov 06 15:33:30 dialer01 python3[407661]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:33:30 dialer01 python3[407661]: Processing /etc/letsencrypt/renewal/2.29.153.161.conf\nNov 06 15:33:30 dialer01 python3[407661]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:33:31 dialer01 python3[407661]: Simulating renewal of an existing certificate for 2.29.153.161\nNov 06 15:33:34 dialer01 python3[407661]: Hook 'deploy-hook' ran with output:\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"certificate_chain\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"certificate_chain\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"certificate_lifetime\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"certificate_lifetime\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"certificate_dates\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"certificate_dates\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"apache_config\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"apache_config\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"apache_active\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"apache_active\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"apache_reload\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"apache_reload\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407661]:  {\"stage\": \"deployment_verified\", \"time\": 1793997214, \"fingerprint\": \"0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c\"}\nNov 06 15:33:34 dialer01 python3[407661]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:33:34 dialer01 python3[407661]: Congratulations, all simulated renewals succeeded:\nNov 06 15:33:34 dialer01 python3[407661]:   /etc/letsencrypt/live/2.29.153.161/fullchain.pem (success)\nNov 06 15:33:34 dialer01 python3[407661]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:33:34 dialer01 python3[407660]: {\"stage\": \"certbot_dry_run\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407660]: {\"stage\": \"certificate_chain\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407660]: {\"stage\": \"certificate_chain\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407660]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407660]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407660]: {\"stage\": \"certificate_dates\", \"time\": 1793997214, \"action\": \"start\"}\nNov 06 15:33:34 dialer01 python3[407660]: {\"stage\": \"certificate_dates\", \"time\": 1793997214, \"action\": \"ok\"}\nNov 06 15:33:34 dialer01 python3[407660]: {\"stage\": \"renewal_verified\", \"time\": 1793997214, \"dry_run\": true, \"deployed\": true, \"certificate_changed\": false}\nNov 06 15:33:35 dialer01 systemd[1]: alma-portal-tls-acceptance.service: Deactivated successfully.\nNov 06 15:33:35 dialer01 systemd[1]: Finished alma-portal-tls-acceptance.service - [systemd-run] /usr/bin/python3 /usr/local/libexec/alma-portal-tls renew --dry-run.\n",
+    "stderr": ""
+  },
+  "apache_journal": {
+    "rc": 0,
+    "stdout": "Nov 06 15:33:34 dialer01 systemd[1]: Reloading httpd.service - The Apache HTTP Server...\nNov 06 15:33:34 dialer01 (httpd)[407683]: httpd.service: Referenced but unset environment variable evaluates to an empty string: OPTIONS\nNov 06 15:33:34 dialer01 httpd[407683]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nNov 06 15:33:34 dialer01 systemd[1]: Reloaded httpd.service - The Apache HTTP Server.\nNov 06 15:33:34 dialer01 httpd[26973]: Server configured, listening on: port 443, port 80\n",
+    "stderr": ""
+  },
+  "health_check": {
+    "rc": 0,
+    "stdout": "{\"stage\": \"certificate_chain\", \"time\": 1793997261, \"action\": \"start\"}\n{\"stage\": \"certificate_chain\", \"time\": 1793997261, \"action\": \"ok\"}\n{\"stage\": \"certificate_lifetime\", \"time\": 1793997261, \"action\": \"start\"}\n{\"stage\": \"certificate_lifetime\", \"time\": 1793997261, \"action\": \"ok\"}\n{\"stage\": \"certificate_dates\", \"time\": 1793997261, \"action\": \"start\"}\n{\"stage\": \"certificate_dates\", \"time\": 1793997261, \"action\": \"ok\"}\n{\"stage\": \"timer_enabled\", \"time\": 1793997261, \"action\": \"start\"}\n{\"stage\": \"timer_enabled\", \"time\": 1793997261, \"action\": \"ok\"}\n{\"stage\": \"timer_active\", \"time\": 1793997261, \"action\": \"start\"}\n{\"stage\": \"timer_active\", \"time\": 1793997261, \"action\": \"ok\"}\n{\"stage\": \"health_ok\", \"time\": 1793997261, \"certificate\": {\"fingerprint\": \"0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c\", \"notBefore\": \"Nov  5 19:05:55 2026 GMT\", \"notAfter\": \"Nov 12 11:05:54 2026 GMT\", \"serial\": \"0608FF6565BEA6657F26AB0FFF3DCBFA379A\"}, \"last_success_at\": 1793997214}\n",
+    "stderr": ""
+  },
+  "backup_permissions": {
+    "rc": 0,
+    "stdout": "700 root root /root/alma-portal-tls-backup-20261106T203248Z\n600 root root /root/alma-portal-tls-backup-20261106T203248Z/originals.tar\n700 root root /root/alma-portal-tls-backup-20261106T203248Z/rollback.sh\n700 root root /var/lib/alma-portal-tls\n600 root root /var/lib/alma-portal-tls/deployment.json\n600 root root /var/lib/alma-portal-tls/status.json\n",
+    "stderr": ""
+  },
+  "state": {
+    "status.json": {
+      "certificate": {
+        "fingerprint": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+        "notAfter": "Nov 12 11:05:54 2026 GMT",
+        "notBefore": "Nov  5 19:05:55 2026 GMT",
+        "serial": "0608FF6565BEA6657F26AB0FFF3DCBFA379A"
+      },
+      "certificate_changed": false,
+      "deployed": true,
+      "dry_run": true,
+      "finished_at": 1793997214,
+      "last_success_at": 1793997214,
+      "operation": "renew",
+      "outcome": "ok",
+      "run_id": "41af7b52d0db4860a7c8409eae7aa432",
+      "started_at": 1793997210
+    },
+    "deployment.json": {
+      "certificate": {
+        "fingerprint": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+        "notAfter": "Nov 12 11:05:54 2026 GMT",
+        "notBefore": "Nov  5 19:05:55 2026 GMT",
+        "serial": "0608FF6565BEA6657F26AB0FFF3DCBFA379A"
+      },
+      "finished_at": 1793997214,
+      "operation": "deploy",
+      "outcome": "ok",
+      "run_id": "41af7b52d0db4860a7c8409eae7aa432",
+      "started_at": 1793997214
+    }
+  }
+}

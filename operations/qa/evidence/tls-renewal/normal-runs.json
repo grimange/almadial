@@ -1,0 +1,86 @@
+{
+  "1": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "state_1": {
+    "certificate": {
+      "fingerprint": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+      "notAfter": "Nov 12 11:05:54 2026 GMT",
+      "notBefore": "Nov  5 19:05:55 2026 GMT",
+      "serial": "0608FF6565BEA6657F26AB0FFF3DCBFA379A"
+    },
+    "certificate_changed": false,
+    "deployed": false,
+    "dry_run": false,
+    "finished_at": 1793997294,
+    "last_success_at": 1793997294,
+    "operation": "renew",
+    "outcome": "ok",
+    "run_id": "beb95e33c3d74adab1647a931c9566ab",
+    "started_at": 1793997293
+  },
+  "2": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "state_2": {
+    "certificate": {
+      "fingerprint": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+      "notAfter": "Nov 12 11:05:54 2026 GMT",
+      "notBefore": "Nov  5 19:05:55 2026 GMT",
+      "serial": "0608FF6565BEA6657F26AB0FFF3DCBFA379A"
+    },
+    "certificate_changed": false,
+    "deployed": false,
+    "dry_run": false,
+    "finished_at": 1793997294,
+    "last_success_at": 1793997294,
+    "operation": "renew",
+    "outcome": "ok",
+    "run_id": "a3bde7f2c4b44bbfa775d99a5c614036",
+    "started_at": 1793997294
+  },
+  "timer_restart": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "timer_enablement": {
+    "rc": 0,
+    "stdout": "enabled\n",
+    "stderr": ""
+  },
+  "timer_details": {
+    "rc": 0,
+    "stdout": "TimersCalendar={ OnCalendar=*-*-* 16:15:00 ; next_elapse=Fri 2026-11-06 16:15:00 EST }\nTimersCalendar={ OnCalendar=*-*-* 04:15:00 ; next_elapse=Sat 2026-11-07 04:15:00 EST }\nNextElapseUSecRealtime=Fri 2026-11-06 16:23:11 EST\nPersistent=yes\nActiveState=active\nUnitFileState=enabled\n",
+    "stderr": ""
+  },
+  "unit_details": {
+    "rc": 0,
+    "stdout": "Result=success\nExecMainStatus=0\nExecStart={ path=/usr/bin/python3 ; argv[]=/usr/bin/python3 /usr/local/libexec/alma-portal-tls renew ; ignore_errors=no ; start_time=[Fri 2026-11-06 15:34:54 EST] ; stop_time=[Fri 2026-11-06 15:34:54 EST] ; pid=408187 ; code=exited ; status=0 }\n",
+    "stderr": ""
+  },
+  "renew_journal": {
+    "rc": 0,
+    "stdout": "Nov 06 15:34:53 dialer01 systemd[1]: Starting alma-portal-renew.service - Renew and verify short-lived public IP TLS certificate...\nNov 06 15:34:53 dialer01 python3[408179]: {\"stage\": \"certbot_renew\", \"time\": 1793997293, \"action\": \"start\"}\nNov 06 15:34:53 dialer01 python3[408180]: Saving debug log to /var/log/letsencrypt/letsencrypt.log\nNov 06 15:34:53 dialer01 python3[408180]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:53 dialer01 python3[408180]: Processing /etc/letsencrypt/renewal/2.29.153.161.conf\nNov 06 15:34:53 dialer01 python3[408180]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408180]: Certificate not yet due for renewal\nNov 06 15:34:54 dialer01 python3[408180]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408180]: The following certificates are not due for renewal yet:\nNov 06 15:34:54 dialer01 python3[408180]:   /etc/letsencrypt/live/2.29.153.161/fullchain.pem expires on 2026-11-12 (skipped)\nNov 06 15:34:54 dialer01 python3[408180]: No renewals were attempted.\nNov 06 15:34:54 dialer01 python3[408180]: No hooks were run.\nNov 06 15:34:54 dialer01 python3[408180]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certbot_renew\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"renewal_verified\", \"time\": 1793997294, \"dry_run\": false, \"deployed\": false, \"certificate_changed\": false}\nNov 06 15:34:54 dialer01 systemd[1]: alma-portal-renew.service: Deactivated successfully.\nNov 06 15:34:54 dialer01 systemd[1]: Finished alma-portal-renew.service - Renew and verify short-lived public IP TLS certificate.\nNov 06 15:34:54 dialer01 systemd[1]: Starting alma-portal-renew.service - Renew and verify short-lived public IP TLS certificate...\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certbot_renew\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408188]: Saving debug log to /var/log/letsencrypt/letsencrypt.log\nNov 06 15:34:54 dialer01 python3[408188]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408188]: Processing /etc/letsencrypt/renewal/2.29.153.161.conf\nNov 06 15:34:54 dialer01 python3[408188]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408188]: Certificate not yet due for renewal\nNov 06 15:34:54 dialer01 python3[408188]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408188]: The following certificates are not due for renewal yet:\nNov 06 15:34:54 dialer01 python3[408188]:   /etc/letsencrypt/live/2.29.153.161/fullchain.pem expires on 2026-11-12 (skipped)\nNov 06 15:34:54 dialer01 python3[408188]: No renewals were attempted.\nNov 06 15:34:54 dialer01 python3[408188]: No hooks were run.\nNov 06 15:34:54 dialer01 python3[408188]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certbot_renew\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"renewal_verified\", \"time\": 1793997294, \"dry_run\": false, \"deployed\": false, \"certificate_changed\": false}\nNov 06 15:34:54 dialer01 systemd[1]: alma-portal-renew.service: Deactivated successfully.\nNov 06 15:34:54 dialer01 systemd[1]: Finished alma-portal-renew.service - Renew and verify short-lived public IP TLS certificate.\n",
+    "stderr": ""
+  },
+  "apache_journal": {
+    "rc": 0,
+    "stdout": "Nov 06 15:33:34 dialer01 systemd[1]: Reloading httpd.service - The Apache HTTP Server...\nNov 06 15:33:34 dialer01 (httpd)[407683]: httpd.service: Referenced but unset environment variable evaluates to an empty string: OPTIONS\nNov 06 15:33:34 dialer01 httpd[407683]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nNov 06 15:33:34 dialer01 systemd[1]: Reloaded httpd.service - The Apache HTTP Server.\nNov 06 15:33:34 dialer01 httpd[26973]: Server configured, listening on: port 443, port 80\n",
+    "stderr": ""
+  },
+  "health": {
+    "rc": 0,
+    "stdout": "{\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"start\"}\n{\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"ok\"}\n{\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"start\"}\n{\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"ok\"}\n{\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"start\"}\n{\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"ok\"}\n{\"stage\": \"timer_enabled\", \"time\": 1793997294, \"action\": \"start\"}\n{\"stage\": \"timer_enabled\", \"time\": 1793997295, \"action\": \"ok\"}\n{\"stage\": \"timer_active\", \"time\": 1793997295, \"action\": \"start\"}\n{\"stage\": \"timer_active\", \"time\": 1793997295, \"action\": \"ok\"}\n{\"stage\": \"health_ok\", \"time\": 1793997295, \"certificate\": {\"fingerprint\": \"0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c\", \"notBefore\": \"Nov  5 19:05:55 2026 GMT\", \"notAfter\": \"Nov 12 11:05:54 2026 GMT\", \"serial\": \"0608FF6565BEA6657F26AB0FFF3DCBFA379A\"}, \"last_success_at\": 1793997294}\n",
+    "stderr": ""
+  },
+  "test_unit_cleanup": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

@@ -1,0 +1,6 @@
+Running as unit: alma-portal-tls-acceptance.service; invocation ID: 15e7d1e1faac4c88b8715f752a7739c4
+Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+Service runtime: 4.787s
+CPU time consumed: 612ms
+Memory peak: 50.2M (swap: 0B)

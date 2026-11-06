@@ -1,0 +1,117 @@
+{
+  "root_cron": {
+    "rc": 1,
+    "stdout": "",
+    "stderr": "no crontab for root\n"
+  },
+  "asterisk_cron": {
+    "rc": 1,
+    "stdout": "",
+    "stderr": "no crontab for asterisk\n"
+  },
+  "all_timers": {
+    "rc": 0,
+    "stdout": "NEXT                            LEFT LAST                           PASSED UNIT                         ACTIVATES\nFri 2026-11-06 15:34:05 EST       6s Fri 2026-11-06 15:33:55 EST    3s ago alma-portal-443-apply.timer  alma-portal-443-apply.service\nFri 2026-11-06 16:18:28 EST    44min Thu 2026-11-05 16:18:28 EST   23h ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service\nFri 2026-11-06 16:19:02 EST    45min Fri 2026-11-06 04:16:39 EST   11h ago alma-portal-renew.timer      alma-portal-renew.service\nFri 2026-11-06 16:33:27 EST    59min Fri 2026-11-06 15:01:32 EST 32min ago dnf-makecache.timer          dnf-makecache.service\nFri 2026-11-06 16:36:05 EST  1h 2min Fri 2026-11-06 15:18:33 EST 15min ago fwupd-refresh.timer          fwupd-refresh.service\nSat 2026-11-07 00:18:06 EST       8h Fri 2026-11-06 00:18:53 EST   15h ago logrotate.timer              logrotate.service\nSun 2026-11-08 01:00:00 EST 1 day 9h Wed 2026-11-04 15:23:30 EST         - raid-check.timer             raid-check.service\nMon 2026-11-09 01:39:17 EST   2 days Wed 2026-11-04 15:57:45 EST         - fstrim.timer                 fstrim.service\n\n8 timers listed.\n",
+    "stderr": ""
+  },
+  "backup_units": {
+    "rc": 1,
+    "stdout": "UNIT FILE STATE PRESET\n\n0 unit files listed.\n",
+    "stderr": ""
+  },
+  "certbot_version": {
+    "rc": 0,
+    "stdout": "certbot 5.9.0\n",
+    "stderr": ""
+  },
+  "backup_metadata": [
+    {
+      "path": "/root/alma-portal-revoke-backup",
+      "mode": "0o700",
+      "uid": 0,
+      "size": 4096,
+      "is_dir": true
+    },
+    {
+      "path": "/root/alma-portal-443-backup",
+      "mode": "0o700",
+      "uid": 0,
+      "size": 4096,
+      "is_dir": true
+    },
+    {
+      "path": "/root/alma-portal-5060-backup",
+      "mode": "0o700",
+      "uid": 0,
+      "size": 4096,
+      "is_dir": true
+    },
+    {
+      "path": "/root/alma-portal-tls-backup-20261106T203248Z",
+      "mode": "0o700",
+      "uid": 0,
+      "size": 4096,
+      "is_dir": true
+    },
+    {
+      "path": "/root/alma-portal-office-backup",
+      "mode": "0o700",
+      "uid": 0,
+      "size": 4096,
+      "is_dir": true
+    },
+    {
+      "path": "/root/alma-portal-ui-backup",
+      "mode": "0o700",
+      "uid": 0,
+      "size": 4096,
+      "is_dir": true
+    },
+    {
+      "path": "/root/asterisk-before-pjsip.sql",
+      "mode": "0o600",
+      "uid": 0,
+      "size": 1231978,
+      "is_dir": false
+    },
+    {
+      "path": "/root/vicidial-schema.sql",
+      "mode": "0o644",
+      "uid": 0,
+      "size": 285858,
+      "is_dir": false
+    },
+    {
+      "path": "/root/vicidial-first-server.sql",
+      "mode": "0o644",
+      "uid": 0,
+      "size": 26141,
+      "is_dir": false
+    },
+    {
+      "path": "/root/vicidial-confbridges.sql",
+      "mode": "0o644",
+      "uid": 0,
+      "size": 37200,
+      "is_dir": false
+    },
+    {
+      "path": "/root/vicidial-servers-before-ami-fix.sql",
+      "mode": "0o600",
+      "uid": 0,
+      "size": 5739,
+      "is_dir": false
+    }
+  ],
+  "cron_files": {
+    "/etc/crontab": "SHELL=/bin/bash\nPATH=/sbin:/bin:/usr/sbin:/usr/bin\nMAILTO=root\n\n# For details see man 4 crontabs\n\n# Example of job definition:\n# .---------------- minute (0 - 59)\n# |  .------------- hour (0 - 23)\n# |  |  .---------- day of month (1 - 31)\n# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...\n# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat\n# |  |  |  |  |\n# *  *  *  *  * user-name  command to be executed\n\n",
+    "/etc/cron.d/vicidial": "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin\n\n# VICIdial process supervision\n* * * * * root /usr/share/astguiclient/ADMIN_keepalive_ALL.pl\n\n# Hopper\n* * * * * root /usr/share/astguiclient/AST_VDhopper.pl -q\n\n# Hung call cleanup\n* * * * * root /usr/share/astguiclient/AST_manager_kill_hung_congested.pl\n\n# Voicemail status\n* * * * * root /usr/share/astguiclient/AST_vm_update.pl\n\n# Flush database action queue\n11 * * * * root /usr/share/astguiclient/AST_flush_DBqueue.pl -q\n\n# Agent log cleanup\n33 * * * * root /usr/share/astguiclient/AST_cleanup_agent_log.pl\n\n# Recording mixing\n*/3 * * * * root /usr/share/astguiclient/AST_CRON_audio_1_move_mix.pl --MIX\n",
+    "/etc/cron.d/0hourly": "# Run the hourly jobs\nSHELL=/bin/bash\nPATH=/sbin:/bin:/usr/sbin:/usr/bin\nMAILTO=root\n01 * * * * root run-parts /etc/cron.hourly\n",
+    "/etc/cron.hourly/0anacron": "#!/usr/bin/sh\n# Check whether 0anacron was run today already\nif test -r /var/spool/anacron/cron.daily; then\n    day=`cat /var/spool/anacron/cron.daily`\nfi\nif [ `date +%Y%m%d` = \"$day\" ]; then\n    exit 0\nfi\n\n# Check whether run on battery should be allowed\nif test -r /etc/default/anacron; then\n    . /etc/default/anacron\nfi\n\nif [ \"$ANACRON_RUN_ON_BATTERY_POWER\" != \"yes\" ]; then\n\n    # Do not run jobs when on battery power\n    online=1\n    for psupply in /sys/class/power_supply/* ; do\n        if [ `cat \"$psupply/type\" 2>/dev/null`x = Mainsx ] && [ -f \"$psupply/online\" ]; then\n            if [ `cat \"$psupply/online\" 2>/dev/null`x = 1x ]; then\n                online=1\n                break\n            else\n                online=0\n            fi\n        fi\n    done\n    if [ $online = 0 ]; then\n        exit 0\n    fi\n\nfi\n/usr/sbin/anacron -s\n",
+    "/etc/cron.daily/exim-tidydb": "#!/usr/bin/bash\n\nSPOOLDIR=/var/spool/exim\n\ncd $SPOOLDIR/db\nfor a in retry misc wait-* callout ratelimit; do\n    [ -r \"$a\" ] || continue\n    [ \"${a%%.lockfile}\" = \"$a\" ] || continue\n    /usr/sbin/exim_tidydb $SPOOLDIR $a >/dev/null\ndone\n"
+  },
+  "certbot_deploy_source": {
+    "hooks.py": "232:def _run_deploy_hook(command: str, sans: list[san.SAN], lineage_path: str, dry_run: bool,\n233:                     run_deploy_hooks: bool) -> None:\n234:    \"\"\"Run the specified deploy-hook (if not doing a dry run).\n235:\n236:    If dry_run is True, command is not run and a message is logged\n237:    saying that it was skipped. If dry_run is False, the hook is run\n238:    after setting the appropriate environment variables.\n239:\n240:    :param str command: command to run as a deploy-hook\n241:    :param sans: domains and/or IP addresses in the obtained certificate\n242:    :type sans: `list` of `san.SAN`\n243:    :param str lineage_path: live directory path for the new cert\n244:    :param bool dry_run: True iff Certbot is doing a dry run\n245:    :param bool run_deploy_hooks: True if deploy hooks should run despite Certbot doing a dry run\n246:\n247:    \"\"\"\n248:    if dry_run and not run_deploy_hooks:\n249:        logger.info(\"Dry run: skipping deploy hook command: %s\",\n250:                       command)\n251:        return\n252:\n253:    os.environ[\"RENEWED_DOMAINS\"] = \" \".join(map(str, sans))\n254:    os.environ[\"RENEWED_LINEAGE\"] = lineage_path\n255:    _run_hook(\"deploy-hook\", command)\n256:\n257:\n258:def _run_hook(cmd_name: str, shell_cmd: str, extra_env: Optional[dict[str, str]] = None) -> str:\n259:    \"\"\"Run a hook command.\n260:\n261:    :param str cmd_name: the user facing name of the hook being run\n262:    :param shell_cmd: shell command to execute\n263:    :type shell_cmd: `list` of `str` or `str`\n264:    :param dict extra_env: extra environment variables to set\n265:    :type extra_env: `dict` of `str` to `str`\n266:\n267:    :returns: stderr if there was any\"\"\"\n268:    env = util.env_no_snap_for_external_calls()\n269:    env.update(extra_env or {})\n270:    returncode, err, out = misc.execute_command_status(\n271:        cmd_name, shell_cmd, env=env)\n272:    display_ops.report_executed_command(f\"Hook '{cmd_name}'\", returncode, out, err)\n273:    return err\n274:\n275:\n276:def list_hooks(dir_path: str) -> list[str]:\n277:    \"\"\"List paths to all hooks found in dir_path in sorted order.\n278:\n279:    :param str dir_path: directory to search\n280:",
+    "renewal.py": "560:    if config.reuse_key and not config.new_key:\n561:        new_key = os.path.normpath(lineage.privkey)\n562:        _update_renewal_params_from_key(new_key, config)\n563:    else:\n564:        new_key = None\n565:    new_cert, new_chain, new_key, _ = le_client.obtain_certificate(sans, new_key)\n566:    if config.dry_run:\n567:        logger.debug(\"Dry run: skipping updating lineage at %s\", os.path.dirname(lineage.cert))\n568:    else:\n569:        prior_version = lineage.latest_common_version()\n570:        # TODO: Check return value of save_successor\n571:        lineage.save_successor(prior_version, new_cert, new_key.pem, new_chain, config)\n572:        lineage.update_all_links_to(lineage.latest_common_version())\n573:        lineage.truncate()\n574:\n575:    hooks.deploy_hook(config, sans, lineage.live_dir)\n576:\n577:\n578:def report(msgs: Iterable[str], category: str) -> str:\n579:    \"\"\"Format a results report for a category of renewal outcomes\"\"\"\n580:    lines = (\"%s (%s)\" % (m, category) for m in msgs)\n581:    return \"  \" + \"\\n  \".join(lines)\n582:\n583:\n584:def _renew_describe_results(config: configuration.NamespaceConfig, renew_successes: list[str],\n585:                            renew_failures: list[str], renew_skipped: list[str],"
+  }
+}

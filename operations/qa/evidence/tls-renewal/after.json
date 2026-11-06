@@ -1,0 +1,346 @@
+{
+  "time_utc": "2026-11-06T20:38:34Z",
+  "hostname": "dialer01",
+  "files": {
+    "/usr/local/sbin/alma-portal-cert-deploy": {
+      "mode": "0o755",
+      "uid": 0,
+      "gid": 0,
+      "size": 98,
+      "sha256": "fad1df74eb9800038ec2e9b57b886df73692cd85445fbb9a358df95d51a21403",
+      "content": "#!/usr/bin/bash\nset -euo pipefail\nexec /usr/bin/python3 /usr/local/libexec/alma-portal-tls deploy\n"
+    },
+    "/usr/local/libexec/alma-portal-tls": {
+      "mode": "0o755",
+      "uid": 0,
+      "gid": 0,
+      "size": 9833,
+      "sha256": "614a6a55f46a7d71957a3db55af2593403444cb9758b75ac965cbbd7469522ff"
+    },
+    "/etc/systemd/system/alma-portal-renew.service": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 253,
+      "sha256": "f22f962fca67f28cd825acca0460bacb969291df7719a8033e9b380280d598e4",
+      "content": "[Unit]\nDescription=Renew and verify short-lived public IP TLS certificate\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/python3 /usr/local/libexec/alma-portal-tls renew\nTimeoutStartSec=720\nUMask=0077\n"
+    },
+    "/etc/systemd/system/alma-portal-renew.timer": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 225,
+      "sha256": "50a4bc8e1406c5443c5ec3c71755938e328998885f473e75f111b6ed5aab32b0",
+      "content": "[Unit]\nDescription=Check IP certificate renewal twice daily\n\n[Timer]\nOnCalendar=*-*-* 04:15:00\nOnCalendar=*-*-* 16:15:00\nRandomizedDelaySec=600\nPersistent=true\nUnit=alma-portal-renew.service\n\n[Install]\nWantedBy=timers.target\n"
+    },
+    "/etc/letsencrypt/renewal/2.29.153.161.conf": {
+      "mode": "0o600",
+      "uid": 0,
+      "gid": 0,
+      "size": 620,
+      "sha256": "1cb2440080e04102f2ae9d69ed6e39e7d6295e43548bf1164e48ecd653db3231"
+    },
+    "/etc/httpd/conf.d/00-alma-acme.conf": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 852,
+      "sha256": "eff27d628e0da49669c469708e91ab9dc0a811373a6800d5db1b8c8a2595ddd0",
+      "content": "# URL-level deny also covers inherited aliases and PHP/CGI handlers.\n<VirtualHost *:80>\n  ServerName 2.29.153.161\n  DocumentRoot \"/var/www/alma-acme\"\n  TraceEnable Off\n  <Directory \"/var/www/alma-acme\">\n    Options -Indexes -FollowSymLinks\n    AllowOverride None\n    Require all denied\n  </Directory>\n  <Directory \"/var/www/alma-acme/.well-known/acme-challenge\">\n    Options -Indexes -FollowSymLinks\n    AllowOverride None\n    Require all granted\n  </Directory>\n  <LocationMatch \"^/\">\n    Require all denied\n    ErrorDocument 403 \"HTTP is available only for certificate challenges.\"\n  </LocationMatch>\n  <LocationMatch \"^/\\.well-known/acme-challenge/[A-Za-z0-9_-]+$\">\n    Require all granted\n    SetHandler default-handler\n  </LocationMatch>\n  ErrorLog logs/alma-acme-error.log\n  CustomLog logs/alma-acme-access.log \"%a %t %m %U %>s %b\"\n</VirtualHost>\n"
+    },
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 1791,
+      "sha256": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+      "content": "# All HTTPS paths require worker-confirmed IP state except the exact portal routes.\nListen 443 https\nLuaAuthzProvider portal443 /opt/alma-portal-443/access.lua authorize\n<VirtualHost *:443>\n  ServerName 2.29.153.161\n  LuaHookTranslateName /opt/alma-portal-443/access.lua browser_redirect early\n  DocumentRoot \"/var/www/html\"\n  SSLEngine on\n  SSLProtocol -all +TLSv1.2 +TLSv1.3\n  SSLCertificateFile \"/etc/letsencrypt/live/2.29.153.161/fullchain.pem\"\n  SSLCertificateKeyFile \"/etc/letsencrypt/live/2.29.153.161/privkey.pem\"\n  AllowEncodedSlashes Off\n  TraceEnable Off\n  ProxyRequests Off\n  ProxyPreserveHost On\n  ProxyAddHeaders Off\n  <Directory \"/var/www/html\">\n    Options -Indexes +FollowSymLinks\n    AllowOverride None\n    Require all granted\n  </Directory>\n  ProxyPassMatch \"^(/|/portal/|/portal/(?:login|grant|status|continue|logout|app\\.js|app\\.css|logo\\.png))$\" \"http://127.0.0.1:19091$1\" connectiontimeout=2 timeout=10\n  <LocationMatch \"^/\">\n    Require portal443\n    ErrorDocument 403 \"Access requires authorization at https://2.29.153.161/\"\n    Header always set Cache-Control \"no-store, private\"\n    Header always set Strict-Transport-Security \"max-age=604800\"\n  </LocationMatch>\n  <LocationMatch \"^(/|/portal/|/portal/(?:login|grant|status|continue|logout|app\\.js|app\\.css|logo\\.png))$\">\n    RequestHeader unset X-Alma-Source\n    RequestHeader set X-Alma-Source \"expr=%{CONN_REMOTE_ADDR}\"\n    # Cached VICIdial Basic credentials must never authenticate at the portal.\n    RequestHeader unset Authorization\n    RequestHeader unset Proxy-Authorization\n  </LocationMatch>\n  ErrorLog logs/alma-vicidial-ssl-error.log\n  # Avoid query strings, credentials, cookies and Referer in the migrated vhost log.\n  CustomLog logs/alma-vicidial-ssl-access.log \"%a %t %m %U %>s %b\"\n</VirtualHost>\n"
+    },
+    "/opt/alma-portal-443/access.lua": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 2372,
+      "sha256": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+    },
+    "/opt/alma-portal-443/portal.py": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 24060,
+      "sha256": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+    },
+    "/opt/alma-portal-443/common.py": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 1627,
+      "sha256": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74"
+    },
+    "/opt/alma-portal-443/apply_requests.py": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 11833,
+      "sha256": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956"
+    },
+    "/opt/alma-portal-443/sip_guard.py": {
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "size": 4980,
+      "sha256": "c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf"
+    }
+  },
+  "certificate": {
+    "rc": 0,
+    "stdout": "notBefore=Nov  5 19:05:55 2026 GMT\nnotAfter=Nov 12 11:05:54 2026 GMT\nserial=0608FF6565BEA6657F26AB0FFF3DCBFA379A\nsha256 Fingerprint=0F:0F:23:C3:A6:DC:A0:A5:04:0F:E4:19:DF:14:1F:1B:03:D5:15:23:67:66:48:6B:A2:B8:9A:BB:CE:C4:FD:6C\nX509v3 Subject Alternative Name: critical\n    IP Address:2.29.153.161\n",
+    "stderr": ""
+  },
+  "certificate_chain": {
+    "rc": 0,
+    "stdout": "/etc/letsencrypt/live/2.29.153.161/cert.pem: OK\n",
+    "stderr": ""
+  },
+  "served": {
+    "127.0.0.1": {
+      "sha256": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+      "protocol": "TLSv1.3",
+      "verified_ip": "2.29.153.161"
+    },
+    "2.29.153.161": {
+      "sha256": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+      "protocol": "TLSv1.3",
+      "verified_ip": "2.29.153.161"
+    }
+  },
+  "commands": {
+    "apache_syntax": {
+      "rc": 0,
+      "stdout": "",
+      "stderr": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nSyntax OK\n"
+    },
+    "apache_vhosts": {
+      "rc": 0,
+      "stdout": "VirtualHost configuration:\n*:80                   2.29.153.161 (/etc/httpd/conf.d/00-alma-acme.conf:2)\n*:443                  2.29.153.161 (/etc/httpd/conf.d/02-alma-vicidial-ssl.conf:4)\nServerRoot: \"/etc/httpd\"\nMain DocumentRoot: \"/var/www/html\"\nMain ErrorLog: \"/etc/httpd/logs/error_log\"\nMutex rewrite-map: using_defaults\nMutex ssl-stapling-refresh: using_defaults\nMutex authdigest-client: using_defaults\nMutex lua-ivm-shm: using_defaults\nMutex ssl-stapling: using_defaults\nMutex proxy: using_defaults\nMutex authn-socache: using_defaults\nMutex ssl-cache: using_defaults\nMutex default: dir=\"/etc/httpd/run/\" mechanism=default \nMutex cache-socache: using_defaults\nMutex watchdog-callback: using_defaults\nMutex proxy-balancer-shm: using_defaults\nPidFile: \"/etc/httpd/run/httpd.pid\"\nDefine: DUMP_VHOSTS\nDefine: DUMP_RUN_CFG\nUser: name=\"apache\" id=48\nGroup: name=\"apache\" id=48\n",
+      "stderr": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\n"
+    },
+    "timer": {
+      "rc": 0,
+      "stdout": "TimersCalendar={ OnCalendar=*-*-* 16:15:00 ; next_elapse=Fri 2026-11-06 16:15:00 EST }\nTimersCalendar={ OnCalendar=*-*-* 04:15:00 ; next_elapse=Sat 2026-11-07 04:15:00 EST }\nNextElapseUSecRealtime=Fri 2026-11-06 16:23:11 EST\nLastTriggerUSec=Fri 2026-11-06 04:16:39 EST\nPersistent=yes\nActiveState=active\nUnitFileState=enabled\n",
+      "stderr": ""
+    },
+    "renewal_service": {
+      "rc": 0,
+      "stdout": "TimeoutStartUSec=12min\nResult=success\nExecMainStatus=0\nExecStart={ path=/usr/bin/python3 ; argv[]=/usr/bin/python3 /usr/local/libexec/alma-portal-tls renew ; ignore_errors=no ; start_time=[Fri 2026-11-06 15:34:54 EST] ; stop_time=[Fri 2026-11-06 15:34:54 EST] ; pid=408187 ; code=exited ; status=0 }\n",
+      "stderr": ""
+    },
+    "listeners": {
+      "rc": 0,
+      "stdout": "Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                                                                                                                                                                                                  \nudp   UNCONN 0      0          127.0.0.1:323        0.0.0.0:*    users:((\"chronyd\",pid=879,fd=4))                                                                                                                                                                                        \nudp   UNCONN 0      0            0.0.0.0:4520       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=16))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:4569       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=14))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:5000       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=18))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:5060       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=15))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:5061       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=11))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:42911      0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=9))                                                                                                                                                                                    \nudp   UNCONN 0      0              [::1]:323           [::]:*    users:((\"chronyd\",pid=879,fd=5))                                                                                                                                                                                        \nudp   UNCONN 0      0               [::]:34772         [::]:*    users:((\"asterisk\",pid=143137,fd=10))                                                                                                                                                                                   \ntcp   LISTEN 0      10         127.0.0.1:5038       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=7))                                                                                                                                                                                    \ntcp   LISTEN 0      4096         0.0.0.0:4577       0.0.0.0:*    users:((\"FastAGI_log.pl\",pid=388484,fd=3),(\"FastAGI_log.pl\",pid=388340,fd=3),(\"FastAGI_log.pl\",pid=168218,fd=3),(\"FastAGI_log.pl\",pid=168087,fd=3),(\"FastAGI_log.pl\",pid=157241,fd=3),(\"FastAGI_log.pl\",pid=63588,fd=3))\ntcp   LISTEN 0      128          0.0.0.0:22222      0.0.0.0:*    users:((\"sshd\",pid=993,fd=7))                                                                                                                                                                                           \ntcp   LISTEN 0      32         127.0.0.1:19091      0.0.0.0:*    users:((\"python\",pid=232072,fd=3))                                                                                                                                                                                      \ntcp   LISTEN 0      80         127.0.0.1:3306       0.0.0.0:*    users:((\"mariadbd\",pid=61646,fd=20))                                                                                                                                                                                    \ntcp   LISTEN 0      511                *:443              *:*    users:((\"httpd\",pid=407716,fd=6),(\"httpd\",pid=407694,fd=6),(\"httpd\",pid=407687,fd=6),(\"httpd\",pid=26973,fd=6))                                                                                                          \ntcp   LISTEN 0      511                *:80               *:*    users:((\"httpd\",pid=407716,fd=4),(\"httpd\",pid=407694,fd=4),(\"httpd\",pid=407687,fd=4),(\"httpd\",pid=26973,fd=4))                                                                                                          \ntcp   LISTEN 0      128             [::]:22222         [::]:*    users:((\"sshd\",pid=993,fd=8))                                                                                                                                                                                           \n",
+      "stderr": ""
+    },
+    "firewall_runtime": {
+      "rc": 0,
+      "stdout": "public (default, active)\n  target: default\n  ingress-priority: 0\n  egress-priority: 0\n  icmp-block-inversion: no\n  interfaces: eth0\n  sources: \n  services: cockpit dhcpv6-client ssh\n  ports: 22/tcp 80/tcp 443/tcp 22222/tcp\n  protocols: \n  forward: yes\n  masquerade: no\n  forward-ports: \n  source-ports: \n  icmp-blocks: \n  rich rules: \n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"5061\" protocol=\"udp\" accept\n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"10000-20000\" protocol=\"udp\" accept\n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"5060\" protocol=\"udp\" accept\n",
+      "stderr": ""
+    },
+    "firewall_permanent": {
+      "rc": 0,
+      "stdout": "public (default)\n  target: default\n  ingress-priority: 0\n  egress-priority: 0\n  icmp-block-inversion: no\n  interfaces: \n  sources: \n  services: cockpit dhcpv6-client ssh\n  ports: 22/tcp 80/tcp 443/tcp 22222/tcp\n  protocols: \n  forward: yes\n  masquerade: no\n  forward-ports: \n  source-ports: \n  icmp-blocks: \n  rich rules: \n",
+      "stderr": ""
+    },
+    "sip_guard": {
+      "rc": 0,
+      "stdout": "table inet alma_portal_sip {\n\tset agents4 {\n\t\ttype ipv4_addr\n\t\tflags timeout\n\t\telements = { 158.62.74.253 timeout 35s expires 30s553ms }\n\t}\n\n\tset grace4 {\n\t\ttype ipv4_addr\n\t\tflags timeout\n\t\telements = { 158.62.74.253 timeout 2m35s expires 2m30s553ms }\n\t}\n\n\tchain input {\n\t\ttype filter hook input priority filter - 10; policy accept;\n\t\tiifname \"lo\" return\n\t\tudp dport 5060 ip saddr @agents4 return\n\t\tudp dport 5060 counter packets 2186 bytes 1630357 drop\n\t\tudp dport 5061 ip saddr @agents4 return\n\t\tudp dport 5061 counter packets 24 bytes 17616 drop\n\t\tudp dport 10000-20000 ip saddr @agents4 ct mark set ct mark | 0x40000000 return\n\t\tudp dport 10000-20000 ip saddr @grace4 ct state established ct mark & 0x40000000 != 0x00000000 return\n\t\tudp dport 10000-20000 counter packets 27 bytes 8307 drop comment \"alma-phone-sip-5060-5061-v1\"\n\t}\n\n\tchain output {\n\t\ttype filter hook output priority filter - 10; policy accept;\n\t\toifname \"lo\" return\n\t\tudp sport 5060 ip daddr @agents4 return\n\t\tudp sport 5060 counter packets 0 bytes 0 drop\n\t\tudp sport 5061 ip daddr @agents4 return\n\t\tudp sport 5061 counter packets 0 bytes 0 drop\n\t\tudp sport 10000-20000 ip daddr @agents4 ct mark set ct mark | 0x40000000 return\n\t\tudp sport 10000-20000 ip daddr @grace4 ct state established ct mark & 0x40000000 != 0x00000000 return\n\t\tudp sport 10000-20000 counter packets 13 bytes 949 drop comment \"alma-phone-sip-5060-5061-v1\"\n\t}\n}\n",
+      "stderr": ""
+    },
+    "timers": {
+      "rc": 0,
+      "stdout": "NEXT                            LEFT LAST                           PASSED UNIT                         ACTIVATES\nFri 2026-11-06 15:38:40 EST       5s Fri 2026-11-06 15:38:30 EST    4s ago alma-portal-443-apply.timer  alma-portal-443-apply.service\nFri 2026-11-06 16:18:28 EST    39min Thu 2026-11-05 16:18:28 EST   23h ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service\nFri 2026-11-06 16:23:11 EST    44min Fri 2026-11-06 04:16:39 EST   11h ago alma-portal-renew.timer      alma-portal-renew.service\nFri 2026-11-06 16:33:27 EST    54min Fri 2026-11-06 15:01:32 EST 37min ago dnf-makecache.timer          dnf-makecache.service\nFri 2026-11-06 16:36:05 EST    57min Fri 2026-11-06 15:18:33 EST 20min ago fwupd-refresh.timer          fwupd-refresh.service\nSat 2026-11-07 00:18:06 EST       8h Fri 2026-11-06 00:18:53 EST   15h ago logrotate.timer              logrotate.service\nSun 2026-11-08 01:00:00 EST 1 day 9h Wed 2026-11-04 15:23:30 EST         - raid-check.timer             raid-check.service\nMon 2026-11-09 01:39:17 EST   2 days Wed 2026-11-04 15:57:45 EST         - fstrim.timer                 fstrim.service\n\n8 timers listed.\n",
+      "stderr": ""
+    },
+    "root_cron": {
+      "rc": 1,
+      "stdout": "",
+      "stderr": "no crontab for root\n"
+    },
+    "asterisk_cron": {
+      "rc": 1,
+      "stdout": "",
+      "stderr": "no crontab for asterisk\n"
+    },
+    "recent_renewal": {
+      "rc": 0,
+      "stdout": "Nov 05 16:16:37 dialer01 systemd[1]: Starting alma-portal-renew.service - Renew short-lived public IP TLS certificate...\nNov 05 16:16:38 dialer01 systemd[1]: alma-portal-renew.service: Deactivated successfully.\nNov 05 16:16:38 dialer01 systemd[1]: Finished alma-portal-renew.service - Renew short-lived public IP TLS certificate.\nNov 06 04:16:39 dialer01 systemd[1]: Starting alma-portal-renew.service - Renew short-lived public IP TLS certificate...\nNov 06 04:16:40 dialer01 systemd[1]: alma-portal-renew.service: Deactivated successfully.\nNov 06 04:16:40 dialer01 systemd[1]: Finished alma-portal-renew.service - Renew short-lived public IP TLS certificate.\nNov 06 15:34:53 dialer01 systemd[1]: Starting alma-portal-renew.service - Renew and verify short-lived public IP TLS certificate...\nNov 06 15:34:53 dialer01 python3[408179]: {\"stage\": \"certbot_renew\", \"time\": 1793997293, \"action\": \"start\"}\nNov 06 15:34:53 dialer01 python3[408180]: Saving debug log to /var/log/letsencrypt/letsencrypt.log\nNov 06 15:34:53 dialer01 python3[408180]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:53 dialer01 python3[408180]: Processing /etc/letsencrypt/renewal/2.29.153.161.conf\nNov 06 15:34:53 dialer01 python3[408180]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408180]: Certificate not yet due for renewal\nNov 06 15:34:54 dialer01 python3[408180]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408180]: The following certificates are not due for renewal yet:\nNov 06 15:34:54 dialer01 python3[408180]:   /etc/letsencrypt/live/2.29.153.161/fullchain.pem expires on 2026-11-12 (skipped)\nNov 06 15:34:54 dialer01 python3[408180]: No renewals were attempted.\nNov 06 15:34:54 dialer01 python3[408180]: No hooks were run.\nNov 06 15:34:54 dialer01 python3[408180]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certbot_renew\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408179]: {\"stage\": \"renewal_verified\", \"time\": 1793997294, \"dry_run\": false, \"deployed\": false, \"certificate_changed\": false}\nNov 06 15:34:54 dialer01 systemd[1]: alma-portal-renew.service: Deactivated successfully.\nNov 06 15:34:54 dialer01 systemd[1]: Finished alma-portal-renew.service - Renew and verify short-lived public IP TLS certificate.\nNov 06 15:34:54 dialer01 systemd[1]: Starting alma-portal-renew.service - Renew and verify short-lived public IP TLS certificate...\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certbot_renew\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408188]: Saving debug log to /var/log/letsencrypt/letsencrypt.log\nNov 06 15:34:54 dialer01 python3[408188]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408188]: Processing /etc/letsencrypt/renewal/2.29.153.161.conf\nNov 06 15:34:54 dialer01 python3[408188]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408188]: Certificate not yet due for renewal\nNov 06 15:34:54 dialer01 python3[408188]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408188]: The following certificates are not due for renewal yet:\nNov 06 15:34:54 dialer01 python3[408188]:   /etc/letsencrypt/live/2.29.153.161/fullchain.pem expires on 2026-11-12 (skipped)\nNov 06 15:34:54 dialer01 python3[408188]: No renewals were attempted.\nNov 06 15:34:54 dialer01 python3[408188]: No hooks were run.\nNov 06 15:34:54 dialer01 python3[408188]: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certbot_renew\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_chain\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_lifetime\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"start\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"certificate_dates\", \"time\": 1793997294, \"action\": \"ok\"}\nNov 06 15:34:54 dialer01 python3[408187]: {\"stage\": \"renewal_verified\", \"time\": 1793997294, \"dry_run\": false, \"deployed\": false, \"certificate_changed\": false}\nNov 06 15:34:54 dialer01 systemd[1]: alma-portal-renew.service: Deactivated successfully.\nNov 06 15:34:54 dialer01 systemd[1]: Finished alma-portal-renew.service - Renew and verify short-lived public IP TLS certificate.\n",
+      "stderr": ""
+    },
+    "asterisk_version": {
+      "rc": 0,
+      "stdout": "Asterisk 20.21.0 built by root @ dialer01 on a x86_64 running Linux on 2026-11-04 21:37:40 UTC\n",
+      "stderr": ""
+    }
+  },
+  "services": {
+    "httpd": {
+      "rc": 0,
+      "stdout": "MainPID=26973\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:15:42 EST\nActiveState=active\nSubState=running\n",
+      "stderr": ""
+    },
+    "asterisk": {
+      "rc": 0,
+      "stdout": "MainPID=143137\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 10:25:33 EST\nActiveState=active\nSubState=running\n",
+      "stderr": ""
+    },
+    "mariadb": {
+      "rc": 0,
+      "stdout": "MainPID=61646\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:47:10 EST\nActiveState=active\nSubState=running\n",
+      "stderr": ""
+    },
+    "alma-portal-443": {
+      "rc": 0,
+      "stdout": "MainPID=232072\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 20:26:01 EST\nActiveState=active\nSubState=running\n",
+      "stderr": ""
+    },
+    "alma-portal-443-apply.timer": {
+      "rc": 0,
+      "stdout": "ActiveState=active\nSubState=waiting\n",
+      "stderr": ""
+    },
+    "alma-portal-sip-guard": {
+      "rc": 0,
+      "stdout": "MainPID=0\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 17:01:25 EST\nActiveState=active\nSubState=exited\n",
+      "stderr": ""
+    },
+    "firewalld": {
+      "rc": 0,
+      "stdout": "MainPID=142982\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 10:24:24 EST\nActiveState=active\nSubState=running\n",
+      "stderr": ""
+    },
+    "fail2ban": {
+      "rc": 0,
+      "stdout": "MainPID=178535\nNRestarts=0\nExecMainStartTimestamp=Thu 2026-11-05 15:28:22 EST\nActiveState=active\nSubState=running\n",
+      "stderr": ""
+    },
+    "sshd": {
+      "rc": 0,
+      "stdout": "MainPID=993\nNRestarts=0\nExecMainStartTimestamp=Wed 2026-11-04 16:03:29 EST\nActiveState=active\nSubState=running\n",
+      "stderr": ""
+    }
+  },
+  "state": {
+    "status.json": {
+      "certificate": {
+        "fingerprint": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+        "notAfter": "Nov 12 11:05:54 2026 GMT",
+        "notBefore": "Nov  5 19:05:55 2026 GMT",
+        "serial": "0608FF6565BEA6657F26AB0FFF3DCBFA379A"
+      },
+      "certificate_changed": false,
+      "deployed": false,
+      "dry_run": false,
+      "finished_at": 1793997294,
+      "last_success_at": 1793997294,
+      "operation": "renew",
+      "outcome": "ok",
+      "run_id": "a3bde7f2c4b44bbfa775d99a5c614036",
+      "started_at": 1793997294
+    },
+    "deployment.json": {
+      "certificate": {
+        "fingerprint": "0f0f23c3a6dca0a5040fe419df141f1b03d515236766486ba2b89abbcec4fd6c",
+        "notAfter": "Nov 12 11:05:54 2026 GMT",
+        "notBefore": "Nov  5 19:05:55 2026 GMT",
+        "serial": "0608FF6565BEA6657F26AB0FFF3DCBFA379A"
+      },
+      "finished_at": 1793997214,
+      "operation": "deploy",
+      "outcome": "ok",
+      "run_id": "41af7b52d0db4860a7c8409eae7aa432",
+      "started_at": 1793997214
+    }
+  },
+  "http": [
+    {
+      "scheme": "https",
+      "path": "/",
+      "accept": "text/html",
+      "ajax": false,
+      "code": 303,
+      "location": "/portal/",
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "scheme": "https",
+      "path": "/portal/",
+      "accept": "text/html",
+      "ajax": false,
+      "code": 200,
+      "location": null,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "scheme": "https",
+      "path": "/agc/vicidial.php",
+      "accept": "text/html",
+      "ajax": false,
+      "code": 303,
+      "location": "https://2.29.153.161/",
+      "content_type": "text/html; charset=iso-8859-1"
+    },
+    {
+      "scheme": "https",
+      "path": "/vicidial/admin.php",
+      "accept": "text/html",
+      "ajax": false,
+      "code": 303,
+      "location": "https://2.29.153.161/",
+      "content_type": "text/html; charset=iso-8859-1"
+    },
+    {
+      "scheme": "https",
+      "path": "/agc/vicidial.php",
+      "accept": "application/json",
+      "ajax": true,
+      "code": 403,
+      "location": null,
+      "content_type": "text/html; charset=iso-8859-1"
+    },
+    {
+      "scheme": "https",
+      "path": "/vicidial/admin.php",
+      "accept": "application/json",
+      "ajax": true,
+      "code": 403,
+      "location": null,
+      "content_type": "text/html; charset=iso-8859-1"
+    },
+    {
+      "scheme": "https",
+      "path": "/agc/nonexistent-qa-resource.js",
+      "accept": "*/*",
+      "ajax": false,
+      "code": 403,
+      "location": null,
+      "content_type": "text/html; charset=iso-8859-1"
+    },
+    {
+      "scheme": "http",
+      "path": "/",
+      "accept": "text/html",
+      "ajax": false,
+      "code": 403,
+      "location": null,
+      "content_type": "text/html; charset=iso-8859-1"
+    },
+    {
+      "scheme": "http",
+      "path": "/.well-known/acme-challenge/pr08-read-only-missing",
+      "accept": "*/*",
+      "ajax": false,
+      "code": 404,
+      "location": null,
+      "content_type": "text/html; charset=iso-8859-1"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "file": "letsencrypt.log.2",
+    "line": "2026-11-06 15:33:31,635:INFO:certbot._internal.auth_handler:Performing the following challenges:"
+  },
+  {
+    "file": "letsencrypt.log.2",
+    "line": "2026-11-06 15:33:31,827:INFO:certbot._internal.auth_handler:Waiting for verification..."
+  },
+  {
+    "file": "letsencrypt.log.2",
+    "line": "2026-11-06 15:33:33,015:INFO:certbot._internal.auth_handler:Cleaning up challenges"
+  },
+  {
+    "file": "letsencrypt.log.2",
+    "line": "2026-11-06 15:33:34,876:DEBUG:certbot._internal.display.obj:Notifying user: Congratulations, all simulated renewals succeeded: "
+  }
+]
