@@ -1,0 +1,263 @@
+{
+  "format": "sanitized-office-evidence-v1",
+  "redaction": "No client IPs, usernames, grant records, tokens, credentials or absolute server paths.",
+  "staged-tests.txt": "test_agent_cannot_issue_office_or_choose_ip_duration (test_office.OfficeHTTP.test_agent_cannot_issue_office_or_choose_ip_duration) ... ok\ntest_client_fields_cannot_escalate_role_or_supply_destination (test_office.OfficeHTTP.test_client_fields_cannot_escalate_role_or_supply_destination) ... ok\ntest_expired_revoked_failed_stale_worker_do_not_continue (test_office.OfficeHTTP.test_expired_revoked_failed_stale_worker_do_not_continue) ... ok\ntest_fixed_public_assets_and_no_asset_path_expansion (test_office.OfficeHTTP.test_fixed_public_assets_and_no_asset_path_expansion) ... ok\ntest_login_csrf_origin_and_ip_binding (test_office.OfficeHTTP.test_login_csrf_origin_and_ip_binding) ... FORM_REJECT reason=csrf\nFORM_REJECT reason=origin\nok\ntest_owned_grants_hide_other_issuers (test_office.OfficeHTTP.test_owned_grants_hide_other_issuers) ... ok\ntest_public_session_cookie_and_no_basic_challenge (test_office.OfficeHTTP.test_public_session_cookie_and_no_basic_challenge) ... ok\ntest_queue_is_not_active_and_both_fixed_redirects (test_office.OfficeHTTP.test_queue_is_not_active_and_both_fixed_redirects) ... ok\ntest_rate_limit_and_log_redaction (test_office.OfficeHTTP.test_rate_limit_and_log_redaction) ... ok\ntest_reauthorization_waits_for_new_worker_confirmation (test_office.OfficeHTTP.test_reauthorization_waits_for_new_worker_confirmation) ... ok\ntest_supervisor_office_options_owned_view_and_scoped_revokes (test_office.OfficeHTTP.test_supervisor_office_options_owned_view_and_scoped_revokes) ... ok\ntest_worker_timeout_and_logout (test_office.OfficeHTTP.test_worker_timeout_and_logout) ... ok\ntest_durations_idempotence_coexistence_both_revoke_orders_and_grace (test_office.OfficeWorker.test_durations_idempotence_coexistence_both_revoke_orders_and_grace) ... ok\ntest_expiry_stale_queue_reauthorize_and_typed_tombstones (test_office.OfficeWorker.test_expiry_stale_queue_reauthorize_and_typed_tombstones) ... REQUEST_REJECTED\nREQUEST_REJECTED\nREQUEST_REJECTED\nok\ntest_native_office_permission_policy (test_office.OfficeWorker.test_native_office_permission_policy) ... ok\ntest_permissions_recheck_invalid_user_and_worker_failure (test_office.OfficeWorker.test_permissions_recheck_invalid_user_and_worker_failure) ... REQUEST_REJECTED\nREQUEST_REJECTED\nFIREWALL_RECONCILE_FAILED\nok\ntest_bcrypt_legacy_suffix (test_portal.Authentication.test_bcrypt_legacy_suffix) ... ok\ntest_plaintext_valid_invalid_disabled (test_portal.Authentication.test_plaintext_valid_invalid_disabled) ... ok\ntest_policy (test_portal.Authentication.test_policy) ... ok\ntest_account_revoke_defeats_pending_grant_and_preserves_other_users (test_portal.FirewallLeases.test_account_revoke_defeats_pending_grant_and_preserves_other_users) ... REQUEST_REJECTED\nok\ntest_firewall_confirm_failure_and_revoke (test_portal.FirewallLeases.test_firewall_confirm_failure_and_revoke) ... FIREWALL_RECONCILE_FAILED\nok\ntest_shared_ip_and_roles (test_portal.FirewallLeases.test_shared_ip_and_roles) ... ok\ntest_worker_rechecks_eligibility_and_publishes_only_after_confirm (test_portal.FirewallLeases.test_worker_rechecks_eligibility_and_publishes_only_after_confirm) ... FIREWALL_RECONCILE_FAILED\nSIP_GUARD_RECONCILE_FAILED\nSIP_GUARD_RECONCILE_FAILED\nSIP_GUARD_RECONCILE_FAILED\nok\ntest_client_fields_cannot_escalate_role_or_supply_destination (test_portal.PortalHTTP.test_client_fields_cannot_escalate_role_or_supply_destination) ... ok\ntest_expired_revoked_failed_stale_worker_do_not_continue (test_portal.PortalHTTP.test_expired_revoked_failed_stale_worker_do_not_continue) ... ok\ntest_fixed_public_assets_and_no_asset_path_expansion (test_portal.PortalHTTP.test_fixed_public_assets_and_no_asset_path_expansion) ... ok\ntest_login_csrf_origin_and_ip_binding (test_portal.PortalHTTP.test_login_csrf_origin_and_ip_binding) ... FORM_REJECT reason=csrf\nFORM_REJECT reason=origin\nok\ntest_public_session_cookie_and_no_basic_challenge (test_portal.PortalHTTP.test_public_session_cookie_and_no_basic_challenge) ... ok\ntest_queue_is_not_active_and_both_fixed_redirects (test_portal.PortalHTTP.test_queue_is_not_active_and_both_fixed_redirects) ... ok\ntest_rate_limit_and_log_redaction (test_portal.PortalHTTP.test_rate_limit_and_log_redaction) ... ok\ntest_worker_timeout_and_logout (test_portal.PortalHTTP.test_worker_timeout_and_logout) ... ok\ntest_native_monitor_permissions_and_account_eligibility (test_portal.SupervisorPhonePolicy.test_native_monitor_permissions_and_account_eligibility) ... ok\ntest_freshness_and_absolute_expiry_atomic_confirmation (test_sip_guard.SipGuard.test_freshness_and_absolute_expiry_atomic_confirmation) ... ok\ntest_grace_deadlines_and_shared_ip (test_sip_guard.SipGuard.test_grace_deadlines_and_shared_ip) ... ok\ntest_guard_covers_both_directions_before_established_accept (test_sip_guard.SipGuard.test_guard_covers_both_directions_before_established_accept) ... ok\ntest_unconfirmed_or_failed_guard_never_succeeds (test_sip_guard.SipGuard.test_unconfirmed_or_failed_guard_never_succeeds) ... ok\n\n----------------------------------------------------------------------\nRan 36 tests in 1.472s\n\nOK",
+  "deploy.txt": "Syntax OK\nactive\nactive\nactive\nactive\nactive\nactive\nactive\nactive\nSyntax OK\nSHARED_OFFICE_DEPLOYED",
+  "active-office-rollback.txt": "Syntax OK\nactive\nactive\nactive\nSHARED_OFFICE_ROLLBACK_COMPLETE",
+  "rollback-hashes.txt": "common.py: OK\nportal.py: OK\nphone_policy.py: OK\napply_requests.py: OK\napp.css: OK\nvicidial_auth.py: OK\nsip_guard.py: OK\naccess.lua: OK\npublic.xml: OK\npjsip.conf: OK\nextensions.conf: OK\nadmin.php: OK\nnon_agent_api.php: OK\n02-alma-vicidial-ssl.conf: OK\nalma-portal.local: OK",
+  "office-probe-final.txt": "PASS live agent office rejection; nonexistent user rejection\nPASS office24h; aggregate timed firewall/nft grant; cookie-free peer reaches native logins; native admin authentication still required\nPASS repeat office authorization retains expiry\nPASS personal12h and revoke preserves office phone/web access\nPASS office revoke preserves independent personal phone/web access\nPASS last revoke closes fresh SIP/web, preserves bounded RTP grace; stale queue cannot reactivate\nPASS accelerated office expiry blocks firewall/nft/web; pre-expiry queue cannot extend\nPASS fresh authorization after expiry succeeds\nPASS fixture cleaned; unrelated personal grants and expiries preserved",
+  "personal-probe-final.txt": "PASS live queue -> account recheck -> timed SIP/RTP rules -> active status/web grant\nPASS repeated personal request is idempotent and retains expiry\nPASS shared IP: revoking personal access preserves another issuer supervisor grant\nPASS shared IP: supervisor retains web; SIP matches native monitoring permission: True\nPASS account-scoped revoke clears old sessions; stale queued grant cannot reactivate access\nPASS live per-lease revoke removes web and owned SIP/RTP rules; fixture cleaned\nPASS live ineligible account request fails closed",
+  "https-probe.txt": "PASS VICIdial logo/CSS/JS exact public routes; integrated login; restrictive CSP\nPASS TLS trust/IP SAN; root portal; private status and continue\nPASS browser303 fixed root; API/AJAX/resource403; no open redirect; useful portal notice\nPASS default-deny paths, encoded paths, aliases, PHP, host and header spoofing\nPASS HTTP deny; real ACME webroot challenge file\nPASS temporary server-IP web fixture reaches native login pages\nPASS authorized CSS, JavaScript and image assets; unauthorized assets denied above\nPASS expired web grant denied\nPASS revoked web grant denied; fixture removed",
+  "guard-probe.txt": "PASS no grant fresh SIP blocked\nPASS valid agent fresh SIP passes\nPASS valid agent RTP passes and is marked\nPASS revoked established SIP blocked before downstream ct accept\nPASS revoked fresh SIP blocked\nPASS established authorized RTP survives within grace\nPASS new RTP flow cannot use grace\nPASS established RTP blocked after native grace timeout\nPASS short valid grant fresh SIP passes\nPASS native grant expiry blocks established SIP without worker\nPASS web-only supervisor has no SIP grant\nISOLATED_NETWORK_PROBE_PASS",
+  "unit-verify.txt": "",
+  "health-office-active.json": {
+    "at": 1793928538,
+    "baseline_grant_expiries_revocations_preserved": false,
+    "changed_files": [
+      "common.py",
+      "portal.py",
+      "phone_policy.py",
+      "apply_requests.py",
+      "app.css"
+    ],
+    "unchanged_files": [
+      "vicidial_auth.py",
+      "sip_guard.py",
+      "access.lua",
+      "public.xml",
+      "pjsip.conf",
+      "extensions.conf",
+      "admin.php",
+      "non_agent_api.php",
+      "02-alma-vicidial-ssl.conf",
+      "alma-portal.local"
+    ],
+    "checksums": {
+      "common.py": {
+        "before": "89939aff2b2a0f85765156bec77ec4dc8636bbcc6228cb182cff60b3f9dd3dbb",
+        "after": "5d2e554cd40ad79f47c85dc8581c1b288adbabe9d24b6272674ab7eec3bf81d2"
+      },
+      "portal.py": {
+        "before": "6028bda31d5ae71af18591957a7f732819bb18c1696ce8ac6c35fa5706d86e91",
+        "after": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+      },
+      "phone_policy.py": {
+        "before": "d816bb73ae3741aef1ee6a8de2c5f24def57f3138da385d24dbbce1c8a33b79a",
+        "after": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+      },
+      "apply_requests.py": {
+        "before": "5603c76e36895a69ca2e256d294a2f48db6c9a209066503075c94d38780c4711",
+        "after": "f33272fef7fd7ab6006ac91356926875527455db65af61372558780beb0087ec"
+      },
+      "app.css": {
+        "before": "76374a9f25aacf66854662088b75cc9bb32b6de653520064dccd616707181003",
+        "after": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89"
+      },
+      "vicidial_auth.py": {
+        "before": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+        "after": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac"
+      },
+      "sip_guard.py": {
+        "before": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49",
+        "after": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49"
+      },
+      "access.lua": {
+        "before": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+        "after": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+      },
+      "public.xml": {
+        "before": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5",
+        "after": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5"
+      },
+      "pjsip.conf": {
+        "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+        "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+      },
+      "extensions.conf": {
+        "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+        "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde"
+      },
+      "admin.php": {
+        "before": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+        "after": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8"
+      },
+      "non_agent_api.php": {
+        "before": "ca2606774e3a25cb54e3815cb096b7847462eedb4804a38d857a98a15838481a",
+        "after": "ca2606774e3a25cb54e3815cb096b7847462eedb4804a38d857a98a15838481a"
+      },
+      "02-alma-vicidial-ssl.conf": {
+        "before": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+        "after": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7"
+      },
+      "alma-portal.local": {
+        "before": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524",
+        "after": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524"
+      }
+    },
+    "active_grants_by_type": {
+      "personal": 1,
+      "office": 1
+    },
+    "effective_web_IP_count": 2,
+    "effective_phone_IP_count": 2,
+    "expected_UDP_rule_count": 4,
+    "runtime_rich_rule_count": 11,
+    "effective_rules_present": true,
+    "permanent_rich_rule_count": 1,
+    "guard_agent_element_count": 2,
+    "guard_hook_priorities": {
+      "input": -10,
+      "output": -10
+    },
+    "firewall_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "services": {
+      "alma-portal-443.service": "active",
+      "alma-portal-443-apply.timer": "active",
+      "alma-portal-sip-guard.service": "active",
+      "asterisk": "active",
+      "httpd": "active",
+      "mariadb": "active",
+      "sshd": "active",
+      "firewalld": "active",
+      "fail2ban": "active"
+    },
+    "asterisk_pid": "MainPID=143137",
+    "asterisk_pid_unchanged": true,
+    "asterisk_version": "Asterisk 20.21.0 built by root @ TARGET_HOST on a x86_64 running Linux on 2026-11-04 21:37:40 UTC",
+    "asterisk_channels": "0 active channels\n0 active calls\n16 calls processed",
+    "selinux": "Permissive",
+    "apache_syntax": 0,
+    "ssh_22222_listener": true,
+    "legacy_9091_listener": false,
+    "certificate": "notBefore=Nov  5 19:05:55 2026 GMT\nnotAfter=Nov 12 11:05:54 2026 GMT\nX509v3 Subject Alternative Name: critical\n    IP Address:REDACTED_IP"
+  },
+  "health-final.json": {
+    "at": 1793928679,
+    "office_network_aggregate": {
+      "historical_office_network_count": 1,
+      "networks_with_effective_web": 0,
+      "networks_with_effective_phone": 0,
+      "networks_with_native_web_file": 0,
+      "networks_with_native_phone_member": 0,
+      "networks_with_native_UDP_rule": 0
+    },
+    "baseline_grant_expiries_revocations_preserved": false,
+    "changed_files": [
+      "common.py",
+      "portal.py",
+      "phone_policy.py",
+      "apply_requests.py",
+      "app.css"
+    ],
+    "unchanged_files": [
+      "vicidial_auth.py",
+      "sip_guard.py",
+      "access.lua",
+      "public.xml",
+      "pjsip.conf",
+      "extensions.conf",
+      "admin.php",
+      "non_agent_api.php",
+      "02-alma-vicidial-ssl.conf",
+      "alma-portal.local"
+    ],
+    "checksums": {
+      "common.py": {
+        "before": "89939aff2b2a0f85765156bec77ec4dc8636bbcc6228cb182cff60b3f9dd3dbb",
+        "after": "5d2e554cd40ad79f47c85dc8581c1b288adbabe9d24b6272674ab7eec3bf81d2"
+      },
+      "portal.py": {
+        "before": "6028bda31d5ae71af18591957a7f732819bb18c1696ce8ac6c35fa5706d86e91",
+        "after": "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2"
+      },
+      "phone_policy.py": {
+        "before": "d816bb73ae3741aef1ee6a8de2c5f24def57f3138da385d24dbbce1c8a33b79a",
+        "after": "65be6f8299805df73446c495ef04e84f9459ecc10e5b273e3757f1132fc243dc"
+      },
+      "apply_requests.py": {
+        "before": "5603c76e36895a69ca2e256d294a2f48db6c9a209066503075c94d38780c4711",
+        "after": "f33272fef7fd7ab6006ac91356926875527455db65af61372558780beb0087ec"
+      },
+      "app.css": {
+        "before": "76374a9f25aacf66854662088b75cc9bb32b6de653520064dccd616707181003",
+        "after": "93d94f7d53e6d09b6c95c3a5cc523b78623962e2e0fe39d705e17198274aef89"
+      },
+      "vicidial_auth.py": {
+        "before": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+        "after": "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac"
+      },
+      "sip_guard.py": {
+        "before": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49",
+        "after": "d1314314273942070421d549f3fa92ff6e3909a684c110fcf6687ef596122b49"
+      },
+      "access.lua": {
+        "before": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+        "after": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c"
+      },
+      "public.xml": {
+        "before": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5",
+        "after": "b5402e9b7109f66a9219832d731834bc47af015ef5db76f0886e20530d229ce5"
+      },
+      "pjsip.conf": {
+        "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+        "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+      },
+      "extensions.conf": {
+        "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+        "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde"
+      },
+      "admin.php": {
+        "before": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+        "after": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8"
+      },
+      "non_agent_api.php": {
+        "before": "ca2606774e3a25cb54e3815cb096b7847462eedb4804a38d857a98a15838481a",
+        "after": "ca2606774e3a25cb54e3815cb096b7847462eedb4804a38d857a98a15838481a"
+      },
+      "02-alma-vicidial-ssl.conf": {
+        "before": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7",
+        "after": "4b928d1d5202734530559605f57e8210c19a36eeaf56318ab86d65903d429fc7"
+      },
+      "alma-portal.local": {
+        "before": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524",
+        "after": "bedd090397b704cb4c052b820ba0eee8ba70d01a93008def546552aa44ac0524"
+      }
+    },
+    "active_grants_by_type": {
+      "personal": 1,
+      "office": 0
+    },
+    "effective_web_IP_count": 1,
+    "effective_phone_IP_count": 1,
+    "expected_UDP_rule_count": 2,
+    "runtime_rich_rule_count": 9,
+    "effective_rules_present": true,
+    "permanent_rich_rule_count": 0,
+    "guard_agent_element_count": 1,
+    "guard_hook_priorities": {
+      "input": -10,
+      "output": -10
+    },
+    "firewall_ports": "22/tcp 80/tcp 443/tcp 22222/tcp",
+    "services": {
+      "alma-portal-443.service": "active",
+      "alma-portal-443-apply.timer": "active",
+      "alma-portal-sip-guard.service": "active",
+      "asterisk": "active",
+      "httpd": "active",
+      "mariadb": "active",
+      "sshd": "active",
+      "firewalld": "active",
+      "fail2ban": "active"
+    },
+    "asterisk_pid": "MainPID=143137",
+    "asterisk_pid_unchanged": true,
+    "asterisk_version": "Asterisk 20.21.0 built by root @ TARGET_HOST on a x86_64 running Linux on 2026-11-04 21:37:40 UTC",
+    "asterisk_channels": "0 active channels\n0 active calls\n16 calls processed",
+    "selinux": "Permissive",
+    "apache_syntax": 0,
+    "ssh_22222_listener": true,
+    "legacy_9091_listener": false,
+    "certificate": "notBefore=Nov  5 19:05:55 2026 GMT\nnotAfter=Nov 12 11:05:54 2026 GMT\nX509v3 Subject Alternative Name: critical\n    IP Address:REDACTED_IP"
+  }
+}

@@ -1,0 +1,7 @@
+PASS pending does not start countdown; confirmation reloads server-rendered success
+PASS five checked seconds; fixed continuation ignores supplied destination
+PASS failed halts countdown and removes continuation
+PASS expired halts countdown and removes continuation
+PASS revoked halts countdown and removes continuation
+PASS nearly expired grant does not redirect
+PASS status transport failure removes continuation and shows retry guidance

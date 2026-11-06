@@ -14,7 +14,7 @@ import sys
 import time
 
 sys.path.insert(0, '/opt/alma-portal-443')
-from common import BASE, QUEUE
+from common import BASE, QUEUE, grant_key
 from apply_requests import rule, PORTS
 from vicidial_auth import _connect
 from sip_guard import TABLE
@@ -67,7 +67,8 @@ def main():
     for port in PORTS:
         assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 1
     data = {'ip': IP, 'user': user, 'role': 'agent', 'at': int(time.time()), 'kind': 'grant'}
-    key = queue(data)
+    queue(data)
+    key = grant_key(user, IP)
     grants = [(key, data)]
     try:
         run_worker()
@@ -79,21 +80,26 @@ def main():
         for port in PORTS:
             assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 0
         print('PASS live queue -> account recheck -> timed SIP/RTP rules -> active status/web grant')
-        second = queue({**data, 'at': int(time.time())})
+        queue({**data, 'at': int(time.time())})
+        second = key
         grants.append((second, data))
         web_data = {**data, 'user': supervisor, 'role': 'web', 'at': int(time.time())}
-        web_key = queue(web_data)
+        queue(web_data)
+        web_key = grant_key(supervisor, IP)
         grants.append((web_key, web_data))
         run_worker()
         assert status(second)['state'] == status(web_key)['state'] == 'active'
+        assert status(second)['expires_at'] == current['expires_at']
+        print('PASS repeated personal request is idempotent and retains expiry')
         assert guarded()
         queue({**data, 'kind': 'revoke', 'target': key, 'at': int(time.time())})
         run_worker()
         assert status(key)['state'] == 'revoked'
-        assert status(second)['state'] == status(web_key)['state'] == 'active'
+        assert status(second)['state'] == 'revoked'
+        assert status(web_key)['state'] == 'active'
         for port in PORTS:
-            assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 0
-        print('PASS shared IP: revoking one agent lease preserves another agent lease and supervisor web lease')
+            assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == (0 if supervisor_has_phone else 1)
+        print('PASS shared IP: revoking personal access preserves another issuer supervisor grant')
         revoke_at = int(time.time())
         queue({**data, 'kind': 'revoke_user', 'at': revoke_at})
         run_worker()
@@ -104,9 +110,10 @@ def main():
         for port in PORTS:
             assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == (0 if supervisor_has_phone else 1)
         print('PASS shared IP: supervisor retains web; SIP matches native monitoring permission: ' + str(supervisor_has_phone))
-        stale = queue({**data, 'at': revoke_at})
+        queue({**data, 'at': revoke_at})
+        stale = key
         run_worker()
-        assert status(stale)['state'] == 'failed'
+        assert status(stale)['state'] in ('failed', 'revoked')
         print('PASS account-scoped revoke clears old sessions; stale queued grant cannot reactivate access')
     finally:
         for target, grant_data in grants:
@@ -122,7 +129,8 @@ def main():
     for port in PORTS:
         assert command('firewall-cmd', '--zone=public', '--query-rich-rule=' + rule(IP, port)).returncode == 1
     print('PASS live per-lease revoke removes web and owned SIP/RTP rules; fixture cleaned')
-    key = queue({**data, 'user': 'nonexistent-test-account', 'at': int(time.time())})
+    queue({**data, 'user': 'nonexistent-test-account', 'at': int(time.time())})
+    key = grant_key('nonexistent-test-account', IP)
     run_worker()
     assert status(key)['state'] == 'failed'
     assert not (BASE/'web'/IP).exists()
