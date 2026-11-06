@@ -132,6 +132,7 @@ class OfficeWorker(unittest.TestCase):
         self.enqueue(grant_type='office', at=200)
         self.process(200)
         self.assertEqual(self.state['leases'][office]['expires_at'], 86500)
+        self.assertEqual(self.state['leases'][office]['requested_at'], 200)
         self.enqueue('revoke_user', at=201)
         self.process(201)
         self.assertEqual(self.state['sip_previous'], {'8.8.8.8': 86500})

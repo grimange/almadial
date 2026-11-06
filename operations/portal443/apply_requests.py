@@ -133,7 +133,7 @@ def process(state, now, role_check=current_role, command=firewall, gate=guard_re
                     (v['user'], v['ip'], v.get('grant_type', 'personal')) == (user, ip, grant_type)
                     and v['expires_at'] <= now), default=0)
                 if existing:
-                    leases[status_id] = {**existing, 'grant_id': status_id}
+                    leases[status_id] = {**existing, 'grant_id': status_id, 'requested_at': at}
                 elif at <= ended:
                     raise ValueError('Queued request predates expiry')
                 else:
