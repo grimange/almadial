@@ -27,3 +27,23 @@ def supervisor_phone(username):
             return monitor_allowed(cursor.fetchone())
     finally:
         conn.close()
+
+
+def office_allowed(row):
+    # Native admin.php gates user management on modify_users=1. Office grants
+    # also require the existing supervisor monitoring/phone permission.
+    return monitor_allowed(row) and str(row.get('modify_users', '')) == '1'
+
+
+def office_supervisor(username):
+    if not isinstance(username, str) or not USER_PATTERN.fullmatch(username):
+        return False
+    conn = _connect()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT active,user_level,api_only_user,force_change_password,'
+                           'vdc_agent_api_access,api_allowed_functions,modify_users '
+                           'FROM vicidial_users WHERE user=%s LIMIT 1', (username,))
+            return office_allowed(cursor.fetchone())
+    finally:
+        conn.close()

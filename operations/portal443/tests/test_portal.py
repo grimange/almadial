@@ -26,7 +26,7 @@ import vicidial_auth as auth
 import portal
 import apply_requests as worker
 from phone_policy import monitor_allowed
-from common import public_ip, atomic_json
+from common import public_ip, atomic_json, grant_key
 
 
 def row(**values):
@@ -143,18 +143,18 @@ class PortalHTTP(unittest.TestCase):
         csrf = re.search('name="csrf" value="([a-f0-9]+)"', body)[1]
         with patch.object(portal, 'authenticate', return_value=role):
             code, headers, _ = self.request('/portal/login', 'POST',
-                                            {'csrf': csrf, 'username': 'mockagent', 'password': 'fake-password-only'})
+                                            {'csrf': csrf, 'username': 'mocksupervisor' if role == 'web' else 'mockagent', 'password': 'fake-password-only'})
         self.assertEqual(code, 303)
         return next(iter(portal.SESSIONS.values()))
 
     def grant(self, s):
         self.assertEqual(self.request('/portal/grant', 'POST', {'csrf': s['csrf']})[0], 303)
-        self.assertTrue((self.base / 'queue' / (s['request'] + '.request')).exists())
+        self.assertTrue(any(json.loads(p.read_text())['kind'] == 'grant' for p in (self.base/'queue').iterdir()))
 
     def activate(self, s, **overrides):
         now = int(time.time())
         status = dict(ip=s['ip'], user=s['user'], role=s['role'], state='active',
-                      expires_at=now+43200, checked_until=now+35)
+                      expires_at=now+43200, checked_until=now+35, requested_at=s.get('queued_at', now))
         status.update(overrides)
         (self.base / 'status' / s['request']).write_text(json.dumps(status))
         (self.base / 'web' / s['ip']).write_text(str(now+35))
@@ -195,7 +195,7 @@ class PortalHTTP(unittest.TestCase):
         code, _, _ = self.request('/portal/grant', 'POST',
                                   {'csrf': s['csrf'], 'role': 'web', 'destination': '/vicidial/admin.php'})
         self.assertEqual(code, 303)
-        queued = json.loads((self.base/'queue'/(s['request']+'.request')).read_text())
+        queued = json.loads(next((self.base/'queue').iterdir()).read_text())
         self.assertEqual(queued['role'], 'agent')
         self.assertNotIn('destination', queued)
         self.activate(s)
@@ -298,15 +298,15 @@ class FirewallLeases(unittest.TestCase):
                                    gate=lambda sip, grace, now:set(sip))
                 process(100)
                 self.assertFalse(worker.aggregate(state['leases'], 100)[1])
-                self.assertEqual(state['revoked_before']['mockagent@8.8.8.8'], 100)
+                self.assertEqual(state['revoked_before']['mockagent@8.8.8.8:personal'], 100)
                 enqueue('c'*32, 'grant', 101)
                 process(101)
-                self.assertTrue(state['leases']['c'*32]['sip_enabled'])
+                self.assertTrue(state['leases'][grant_key('mockagent', '8.8.8.8')]['sip_enabled'])
                 state['leases']['e'*32] = dict(ip='8.8.8.8', user='anotheruser', role='agent',
                                                 expires_at=500, eligible=True, requested_at=99)
                 enqueue('d'*32, 'revoke_user', 102)
                 process(102)
-                self.assertTrue(state['leases']['c'*32]['revoked'])
+                self.assertTrue(state['leases'][grant_key('mockagent', '8.8.8.8')]['revoked'])
                 self.assertEqual(state['leases']['e'*32]['expires_at'], 500)
                 self.assertEqual(state['sip_previous'], {'8.8.8.8': 500})
 

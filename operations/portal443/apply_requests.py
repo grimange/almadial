@@ -11,10 +11,10 @@ import stat
 import subprocess
 import time
 
-from common import BASE, QUEUE, LIFETIME, HEARTBEAT, atomic_json, public_ip
+from common import BASE, QUEUE, LIFETIME, LIFETIMES, HEARTBEAT, atomic_json, public_ip, grant_key
 from vicidial_auth import current_role, USER_PATTERN
 from sip_guard import grace_state, refresh as guard_refresh
-from phone_policy import supervisor_phone
+from phone_policy import supervisor_phone, office_supervisor
 
 ID = re.compile(r'^[a-f0-9]{32}$')
 PORTS = ('5061', '10000-20000')
@@ -73,7 +73,8 @@ def reconcile(sip, previous, now, command=firewall):
     return confirmed, synced
 
 
-def process(state, now, role_check=current_role, command=firewall, gate=guard_refresh, phone_check=supervisor_phone):
+def process(state, now, role_check=current_role, command=firewall, gate=guard_refresh, phone_check=supervisor_phone,
+            office_check=office_supervisor):
     portal_uid = pwd.getpwnam('alma-portal').pw_uid
     portal_gid = grp.getgrnam('alma-portal').gr_gid
     leases = state.setdefault('leases', {})
@@ -84,6 +85,7 @@ def process(state, now, role_check=current_role, command=firewall, gate=guard_re
     for path in sorted(QUEUE.glob('*.request'))[:50]:
         request_id = path.stem
         data = None
+        status_id = request_id
         try:
             if not ID.fullmatch(request_id):
                 raise ValueError('Invalid ID')
@@ -99,32 +101,51 @@ def process(state, now, role_check=current_role, command=firewall, gate=guard_re
                 raise ValueError('Invalid identity')
             if type(at) is not int or not 0 <= now - at <= 120:
                 raise ValueError('Stale request')
+            grant_type = data.get('grant_type', 'personal')
+            status_id = grant_key(user, ip, grant_type)
             identity = user + '@' + ip
+            scope = identity + ':' + grant_type
             if data['kind'] == 'revoke_user':
                 # Clear this account's old browser sessions, not another user
                 # sharing the IP. Tombstones also defeat queued grant races.
-                revocations[identity] = max(revocations.get(identity, 0), at)
+                revocations[scope] = max(revocations.get(scope, 0), at)
                 for lease in leases.values():
-                    if (lease['user'], lease['ip']) == (user, ip) and lease.get('requested_at', 0) <= at:
+                    if ((lease['user'], lease['ip'], lease.get('grant_type', 'personal')) == (user, ip, grant_type)
+                            and lease.get('requested_at', 0) <= at):
                         lease['expires_at'] = min(lease['expires_at'], now)
                         lease['revoked'] = True
             elif data['kind'] == 'revoke':
                 target = data['target']
                 lease = leases.get(target)
                 if lease and (lease['user'], lease['ip']) == (user, ip):
-                    lease['expires_at'] = now
+                    lease['expires_at'] = min(lease['expires_at'], now)
                     lease['revoked'] = True
             elif data['kind'] == 'grant' and role_check(user) == role:
-                if at <= revocations.get(identity, 0):
+                if at <= max(revocations.get(identity, 0), revocations.get(scope, 0)):
                     raise ValueError('Grant predates account revocation')
-                leases[request_id] = {'ip': ip, 'user': user, 'role': role,
-                                      'expires_at': now + LIFETIME, 'eligible': True, 'requested_at': at}
+                if grant_type == 'office' and (role != 'web' or not office_check(user)):
+                    raise ValueError('Office management permission required')
+                # A retry selects the existing grant without extending its expiry.
+                existing = next((v for v in leases.values() if
+                    (v['user'], v['ip'], v.get('grant_type', 'personal')) == (user, ip, grant_type)
+                    and v['expires_at'] > now and not v.get('revoked')), None)
+                ended = max((v['expires_at'] for v in leases.values() if
+                    (v['user'], v['ip'], v.get('grant_type', 'personal')) == (user, ip, grant_type)
+                    and v['expires_at'] <= now), default=0)
+                if existing:
+                    leases[status_id] = {**existing, 'grant_id': status_id}
+                elif at <= ended:
+                    raise ValueError('Queued request predates expiry')
+                else:
+                    leases[status_id] = {'ip': ip, 'user': user, 'role': role,
+                        'grant_type': grant_type, 'grant_id': status_id, 'issued_at': now,
+                        'expires_at': now + LIFETIMES[grant_type], 'eligible': True, 'requested_at': at}
             else:
                 raise ValueError('Account no longer eligible')
         except Exception:
             if ID.fullmatch(request_id) and isinstance(data, dict):
-                atomic_json(BASE / 'status' / request_id,
-                            {'ip': data.get('ip'), 'user': data.get('user'), 'state': 'failed'}, gid=portal_gid)
+                atomic_json(BASE / 'status' / status_id,
+                            {'ip': data.get('ip'), 'user': data.get('user'), 'requested_at': data.get('at', 0), 'state': 'failed'}, gid=portal_gid)
             print('REQUEST_REJECTED', flush=True)
         finally:
             # A crash must not consume a revoke without persisting its intent.
@@ -132,8 +153,11 @@ def process(state, now, role_check=current_role, command=firewall, gate=guard_re
             path.unlink(missing_ok=True)
 
     # Account disable/role changes fail closed even for previously granted leases.
-    roles, phones = {}, {}
-    for lease in leases.values():
+    roles, phones, offices = {}, {}, {}
+    for key, lease in leases.items():
+        lease.setdefault('grant_type', 'personal')
+        lease.setdefault('grant_id', key)
+        lease.setdefault('issued_at', lease.get('requested_at', lease['expires_at'] - LIFETIME))
         user = lease['user']
         if user not in roles:
             try:
@@ -146,8 +170,16 @@ def process(state, now, role_check=current_role, command=firewall, gate=guard_re
                 phones[user] = roles[user] == 'web' and phone_check(user)
             except Exception:
                 phones[user] = False
+        if lease['grant_type'] == 'office':
+            if user not in offices:
+                try:
+                    offices[user] = roles[user] == 'web' and bool(office_check(user))
+                except Exception:
+                    offices[user] = False
+            lease['eligible'] = lease['eligible'] and offices[user]
         # Never accept phone capability from a request, browser, or stale state.
-        lease['sip_enabled'] = lease['eligible'] and (roles[user] == 'agent' or bool(phones[user]))
+        lease['sip_enabled'] = lease['eligible'] and (lease['grant_type'] == 'office' or roles[user] == 'agent' or bool(phones[user]))
+        lease['services'] = ['https'] + (['sip', 'rtp'] if lease['sip_enabled'] else [])
     web, sip = aggregate(leases, now)
     previous_sip = state.get('sip_previous', state.get('synced', {}))
     state['rtp_grace'] = grace_state(sip, previous_sip, state.get('rtp_grace', {}), now)

@@ -1,5 +1,6 @@
 """Shared file formats; no credentials or browser tokens are persisted here."""
 import ipaddress
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -8,8 +9,16 @@ import secrets
 BASE = Path('/var/lib/alma-portal-443')
 QUEUE = Path('/var/lib/alma-portal/requests-443')
 LIFETIME = 43200
+LIFETIMES = {'personal': LIFETIME, 'office': 86400}
 HEARTBEAT = 35
 DESTINATIONS = {'agent': '/agc/vicidial.php', 'web': '/vicidial/admin.php'}
+
+
+def grant_key(user, ip, grant_type='personal'):
+    """Stable identity, not a bearer token. Requests still have random filenames."""
+    if grant_type not in LIFETIMES:
+        raise ValueError('Unknown grant type')
+    return hashlib.sha256(f'{user}\0{ip}\0{grant_type}'.encode()).hexdigest()[:32]
 
 
 def public_ip(value):

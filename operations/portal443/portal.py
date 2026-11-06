@@ -13,8 +13,9 @@ import threading
 import time
 from urllib.parse import parse_qs
 
-from common import BASE, QUEUE, DESTINATIONS, LIFETIME, atomic_json, public_ip
+from common import BASE, QUEUE, DESTINATIONS, LIFETIME, LIFETIMES, atomic_json, public_ip, grant_key
 from vicidial_auth import authenticate
+from phone_policy import office_supervisor
 
 PUBLIC_IP = os.environ.get('PORTAL_PUBLIC_IP', '2.29.153.161')
 ORIGIN = 'https://' + PUBLIC_IP
@@ -35,8 +36,12 @@ def grant_status(session, now=None):
         return {'state': 'idle'}
     try:
         status = json.loads((BASE / 'status' / session['request']).read_text())
-        if status.get('ip') != session['ip'] or status.get('user') != session['user']:
+        if status.get('ip') != session['ip'] or status.get('user') != session['user'] or (status.get('role') and status['role'] != session['role']):
             raise ValueError('Identity mismatch')
+        if status.get('requested_at', 0) < session.get('awaiting_at', 0):
+            if now - session['awaiting_at'] <= 120:
+                return {'state': 'pending', 'message': 'Authorizing your IP...'}
+            return {'state': 'failed', 'message': 'The authorization worker did not confirm this request. Please retry.'}
         if status['state'] == 'active':
             try:
                 web_expiry = int((BASE / 'web' / session['ip']).read_text().strip())
@@ -53,6 +58,27 @@ def grant_status(session, now=None):
         return {'state': 'failed', 'message': 'The authorization worker did not confirm access. Please retry.'}
     except (OSError, ValueError, KeyError, TypeError):
         return {'state': 'failed', 'message': 'Authorization could not be verified. Please retry.'}
+
+
+def own_grants(session):
+    """Read root-published status only; never expose another issuer's grants."""
+    result = {}
+    for path in (BASE / 'status').iterdir():
+        if len(path.name) != 32 or any(c not in '0123456789abcdef' for c in path.name):
+            continue
+        candidate = grant_status({**session, 'request': path.name, 'queued_at': 0})
+        kind = candidate.get('grant_type', 'personal')
+        if candidate['state'] == 'active' and kind in LIFETIMES:
+            if candidate['expires_at'] > result.get(kind, {}).get('expires_at', 0):
+                result[kind] = {**candidate, 'grant_id': path.name}
+    return result
+
+
+def can_issue_office(session):
+    try:
+        return session['role'] == 'web' and office_supervisor(session['user'])
+    except Exception:
+        return False
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -151,11 +177,18 @@ class Handler(BaseHTTPRequestHandler):
                             '<div class="form-actions"><button class="button primary">Sign in</button></div>', 'login-form')
             content += '<p class="form-note">Use your existing account. Passwords are used only to verify sign-in.</p></div>'
         else:
+            owned = own_grants(s)
+            office_eligible = can_issue_office(s)
+            selected = s.get('grant_type', 'personal')
+            label = 'Shared Office Access' if selected == 'office' else 'My Access'
             role = 'Supervisor' if s['role'] == 'web' else 'Agent'
             destination = DESTINATIONS[s['role']]
             content += '<h2 id="panel-title" class="panel-title">Access Authorization</h2><div class="panel-body">'
             content += f'<dl class="details"><div><dt>VICIdial username</dt><dd>{html.escape(s["user"])}</dd></div><div><dt>Account access type</dt><dd>{role}</dd></div>'
             content += f'<div><dt>{"Authorized public IP" if active else "Public IP"}</dt><dd><code>{self.ip}</code></dd></div></dl>'
+            content += f'<p>Selected authorization: <strong>{label}</strong></p>'
+            if message:
+                content += f'<p class="notice" role="status">{html.escape(message)}</p>'
             if active:
                 content += '<p class="form-note">' + ('Phone access: SIP/RTP enabled for agent or authorized supervisor monitoring.' if status.get('sip_enabled', s['role'] == 'agent') else 'Phone access: web-only; this account has no supervisor monitoring permission.') + '</p>'
             content += f'<section class="authorization {status["state"]}" aria-labelledby="state">'
@@ -170,21 +203,44 @@ class Handler(BaseHTTPRequestHandler):
                 content += '<h3 id="state" role="status">Authorizing your IP...</h3><p>Waiting for access to be confirmed. This page will update automatically.</p><p id="countdown" hidden></p>'
             else:
                 content += '<h3 id="state" role="status">' + html.escape(status.get('message', 'Ready to authorize')) + '</h3>'
-                content += '<p>Authorize this public IP for up to 12 hours to continue to VICIdial.</p>'
-                content += form('grant', '<button class="button primary">Authorize my current IP</button>')
+                content += '<p>Choose an authorization option below.</p>'
             content += '</section>'
+            content += '<div class="grant-options">'
+            for kind in ('personal', 'office'):
+                if kind == 'office' and not office_eligible and kind not in owned:
+                    continue
+                title = 'My Access — 12 hours' if kind == 'personal' else 'Shared Office Access — 24 hours'
+                explanation = ('Authorize this network for your access for 12 hours.' if kind == 'personal' else
+                               'Authorize this office network for everyone sharing this public IP for 24 hours.')
+                content += f'<section class="grant-option"><h3>{title}</h3><p>{explanation}</p>'
+                hidden = f'<input type="hidden" name="grant_type" value="{kind}">'
+                if kind in owned:
+                    grant = owned[kind]
+                    expiry = datetime.fromtimestamp(grant['expires_at'], timezone.utc)
+                    minutes = grant['remaining'] // 60
+                    content += f'<p class="expiry">Active · {minutes // 60}h {minutes % 60}m remaining<br>Expires {expiry.strftime("%d %b %Y, %H:%M:%S UTC")}</p>'
+                if kind == 'personal' or office_eligible:
+                    text = 'Continue with My Access' if kind == 'personal' and kind in owned else 'Authorize My Access'
+                    if kind == 'office':
+                        text = 'Continue with Shared Office Access' if kind in owned else 'Authorize Shared Office Access'
+                    content += form('grant', hidden + f'<button class="button primary">{text}</button>')
+                if kind in owned:
+                    content += form('grant', hidden + '<input type="hidden" name="action" value="revoke">'
+                                    + f'<button class="text-button">Revoke {"My Access" if kind == "personal" else "Shared Office Access"}</button>')
+                content += '</section>'
+            content += '</div>'
             content += f'<p class="destination">Destination: <code>{destination}</code></p>'
             content += '<div class="session-actions"><a href="/portal/">Refresh authorization status</a>'
-            content += form('logout', '<button class="text-button">Revoke my grants on this IP &amp; sign out</button>') + '</div>'
-            content += '<p class="form-note">Revocation includes your older browser sessions on this IP. Other users with valid phone grants on the same IP keep access.</p>'
+            content += form('logout', '<button class="text-button">Revoke My Access &amp; sign out</button>') + '</div>'
+            content += '<p class="form-note">My Access revocation includes your older personal grants on this IP. Shared Office Access continues until separately revoked or expired. Other users’ independent grants are preserved.</p>'
             content += '<noscript><p class="notice">JavaScript is disabled. Refresh this page to confirm authorization. Continue Now appears only after server confirmation.</p></noscript></div>'
-            if status['state'] in ('active', 'pending'):
+            if status['state'] in ('active', 'pending') and s.get('redirect', False):
                 content += '<script src="/portal/app.js" defer></script>'
         content += '</section>'
         help_title = 'Continue to VICIdial' if signed_in else 'Secure access to your dialer'
         help_body = ('Your account determines the destination. VICIdial will ask you to sign in separately and complete any required two-factor authentication.'
                      if signed_in else 'Sign in, authorize your current public IP, then continue to your VICIdial application.')
-        help_body += '</p><p>Access expires automatically. Other users on this public IP share network access; each uses their own VICIdial account.'
+        help_body += '</p><p>Access expires automatically. Network grants cannot isolate users behind the same public IP. Each user still needs their own VICIdial login and SIP phone credentials.'
         return ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
                 '<title>VICIdial Secure Access</title><link rel="stylesheet" href="/portal/app.css"></head><body>'
                 '<a class="skip-link" href="#main">Skip to main content</a>'
@@ -297,7 +353,7 @@ class Handler(BaseHTTPRequestHandler):
             with LOCK:
                 if self.path == '/portal/logout':
                     try:
-                        self.queue(s, 'revoke_user')
+                        self.queue(s, 'revoke_user', 'personal')
                     except OSError:
                         self.send(503, 'Revocation could not be queued. Please retry.')
                         return
@@ -306,25 +362,47 @@ class Handler(BaseHTTPRequestHandler):
                             del SESSIONS[key]
                     self.send(303, location='/portal/')
                     return
-                if grant_status(s)['state'] not in ('active', 'pending'):
-                    try:
-                        self.queue(s, 'grant')
-                    except OSError:
-                        self.send(503, 'Authorization could not be queued. Please retry.')
+                kind = fields.get('grant_type', 'personal')
+                action = fields.get('action', 'authorize')
+                if kind not in LIFETIMES or action not in ('authorize', 'revoke'):
+                    self.send(400, 'Invalid authorization option')
+                    return
+                if action == 'authorize' and kind == 'office' and not can_issue_office(s):
+                    self.send(403, 'Supervisor management and monitoring permission required')
+                    return
+                try:
+                    if action == 'revoke':
+                        self.queue(s, 'revoke_user', kind)
+                        s.pop('request', None)
+                        s['redirect'] = False
+                        self.send(200, self.page(s, 'Revocation queued. Refresh after 10 seconds to confirm.'))
                         return
+                    owned = own_grants(s).get(kind)
+                    if owned:
+                        s.pop('awaiting_at', None)
+                        s['request'] = owned['grant_id']
+                        s['queued_at'] = int(time.time())
+                    elif s.get('grant_type') != kind or grant_status(s)['state'] != 'pending':
+                        self.queue(s, 'grant', kind)
+                    s['grant_type'] = kind
+                    s['redirect'] = True
+                except OSError:
+                    self.send(503, 'Authorization request could not be queued. Please retry.')
+                    return
             self.send(303, location='/portal/')
         else:
             self.send(403, 'Sign in required or invalid action')
 
-    def queue(self, s, kind):
+    def queue(self, s, kind, grant_type='personal'):
         request_id = secrets.token_hex(16)
-        data = {'ip': s['ip'], 'user': s['user'], 'role': s['role'], 'at': int(time.time()), 'kind': kind}
+        data = {'ip': s['ip'], 'user': s['user'], 'role': s['role'], 'at': int(time.time()), 'kind': kind, 'grant_type': grant_type}
         if kind == 'revoke':
             data['target'] = s['request']
         atomic_json(QUEUE / (request_id + '.request'), data, 0o600)
         if kind == 'grant':
-            s['request'] = request_id
+            s['request'] = grant_key(s['user'], s['ip'], grant_type)
             s['queued_at'] = data['at']
+            s['awaiting_at'] = data['at']
 
 
 class Server(ThreadingHTTPServer):
