@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "network": {"bind_address": "2001:db8::10", "hostname": "dial.example.invalid"},
+  "sip": {"port": 5060},
+  "rtp": {"start": 10000, "end": 20000},
+  "webrtc": {
+    "enabled": true,
+    "wss_port": 8089,
+    "tls": {
+      "certificate_file": "/etc/almadial/tls/fullchain.pem",
+      "private_key_file": "/etc/almadial/tls/private.key"
+    }
+  },
+  "credentials": {
+    "database": {"type": "file", "source": "/run/almadial-secrets/database"},
+    "ami": {"type": "env", "source": "ALMADIAL_AMI_PASSWORD"},
+    "sip": {"type": "env", "source": "ALMADIAL_SIP_PASSWORD"},
+    "admin": {"type": "env", "source": "ALMADIAL_ADMIN_PASSWORD"}
+  }
+}
