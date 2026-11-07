@@ -36,6 +36,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Acquire pinned Go parser dependency (checksum database required)
+        run: GOPROXY=https://proxy.golang.org GOSUMDB=sum.golang.org go mod download
       - name: Validate Go foundation
         run: make fmt-check module-check test vet race build
       - name: Verify deterministic Linux amd64 artifact
