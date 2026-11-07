@@ -16,6 +16,7 @@ from urllib.parse import parse_qs
 from common import BASE, QUEUE, DESTINATIONS, LIFETIME, LIFETIMES, atomic_json, public_ip, grant_key
 from vicidial_auth import authenticate
 from phone_policy import office_supervisor
+import recording_media
 
 PUBLIC_IP = os.environ.get('PORTAL_PUBLIC_IP', '2.29.153.161')
 ORIGIN = 'https://' + PUBLIC_IP
@@ -256,6 +257,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if not self.checks():
             return
+        if recording_media.serve(self):
+            return
         if self.path == '/':
             self.send(303, location='/portal/')
             return
@@ -290,6 +293,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         if not self.checks():
+            return
+        if recording_media.serve(self):
             return
         s, _ = self.session()
         reason = 'form'
@@ -403,6 +408,21 @@ class Handler(BaseHTTPRequestHandler):
             s['request'] = grant_key(s['user'], s['ip'], grant_type)
             s['queued_at'] = data['at']
             s['awaiting_at'] = data['at']
+
+
+    def do_HEAD(self):
+        if self.checks() and not recording_media.serve(self):
+            self.send_response(405)
+            self.send_header('Content-Length', '0')
+            self.end_headers()
+
+    def do_PUT(self):
+        if self.checks() and not recording_media.serve(self):
+            self.send(405, 'Method not allowed')
+
+    do_DELETE = do_PUT
+    do_PATCH = do_PUT
+    do_OPTIONS = do_PUT
 
 
 class Server(ThreadingHTTPServer):

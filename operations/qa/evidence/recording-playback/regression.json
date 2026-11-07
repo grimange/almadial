@@ -1,0 +1,80 @@
+{
+  "file_changes": {
+    "/opt/alma-portal-443/portal.py": [
+      "867821317115919640e69c35cd70e16874d9869bb5c8ee490030c3e21d0428e2",
+      "a8f8912d391775c7501fba9cde72f635b2ad9e5a749db19d689191a12237d225"
+    ],
+    "/opt/alma-portal-443/vicidial_auth.py": [
+      "e850b4e98150b451d137e6e3718b8a0234a02f325227e0ea407497c151e761ac",
+      "11a1892872df79215020a58244edcbe6d6568bb59607f7400cca8cd8d20f094d"
+    ],
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": [
+      "01f6a2fe048bb1cc112f22cba922614758593442a00c78d7bc9c7fc294869ec8",
+      "86495765ac47d8a738f9b30bd8dba75f6c05703d07c89f2f9961a386ec6147ed"
+    ]
+  },
+  "permanent_firewall_identical": true,
+  "runtime_firewall_identical": true,
+  "services": {
+    "httpd": {
+      "before": "MainPID=26973\nExecMainStartTimestamp=Wed 2026-11-04 16:15:42 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "after": "MainPID=26973\nExecMainStartTimestamp=Wed 2026-11-04 16:15:42 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled"
+    },
+    "asterisk": {
+      "before": "MainPID=143137\nExecMainStartTimestamp=Thu 2026-11-05 10:25:33 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "after": "MainPID=143137\nExecMainStartTimestamp=Thu 2026-11-05 10:25:33 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled"
+    },
+    "mariadb": {
+      "before": "MainPID=61646\nExecMainStartTimestamp=Wed 2026-11-04 16:47:10 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "after": "MainPID=61646\nExecMainStartTimestamp=Wed 2026-11-04 16:47:10 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled"
+    },
+    "php-fpm": {
+      "before": "MainPID=26963\nExecMainStartTimestamp=Wed 2026-11-04 16:15:41 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "after": "MainPID=26963\nExecMainStartTimestamp=Wed 2026-11-04 16:15:41 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled"
+    },
+    "alma-portal-443": {
+      "before": "MainPID=232072\nExecMainStartTimestamp=Thu 2026-11-05 20:26:01 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "after": "MainPID=443916\nExecMainStartTimestamp=Fri 2026-11-06 18:47:34 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled"
+    },
+    "alma-portal-443-apply.timer": {
+      "before": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+      "after": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled"
+    },
+    "alma-portal-sip-guard": {
+      "before": "MainPID=0\nExecMainStartTimestamp=Thu 2026-11-05 17:01:25 EST\nActiveState=active\nSubState=exited\nUnitFileState=enabled",
+      "after": "MainPID=0\nExecMainStartTimestamp=Thu 2026-11-05 17:01:25 EST\nActiveState=active\nSubState=exited\nUnitFileState=enabled"
+    },
+    "alma-vicidial-recording.timer": {
+      "before": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+      "after": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled"
+    },
+    "alma-vicidial-backup.timer": {
+      "before": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+      "after": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled"
+    },
+    "alma-portal-renew.timer": {
+      "before": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+      "after": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled"
+    },
+    "fail2ban": {
+      "before": "MainPID=178535\nExecMainStartTimestamp=Thu 2026-11-05 15:28:22 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "after": "MainPID=178535\nExecMainStartTimestamp=Thu 2026-11-05 15:28:22 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled"
+    }
+  },
+  "final_recording": {
+    "before": {
+      "size": 892204,
+      "sha256": "f726a1d5615d50767c8a0f4794f68a544322ffa70037d1ef1a7bb3667aa4be59",
+      "mode": 384,
+      "uid": 0,
+      "gid": 0
+    },
+    "after": {
+      "size": 892204,
+      "sha256": "f726a1d5615d50767c8a0f4794f68a544322ffa70037d1ef1a7bb3667aa4be59",
+      "mode": 416,
+      "uid": 0,
+      "gid": 991
+    }
+  }
+}

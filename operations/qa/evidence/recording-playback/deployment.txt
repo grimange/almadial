@@ -1,0 +1,50 @@
+ROLLBACK_READY /root/alma-recording-pr01c-20261106T234734Z
+{
+  "backup": "/root/alma-recording-pr01c-20261106T234734Z",
+  "rollback": "Verified archive extraction, metadata equality, compile, --check; no live rollback executed",
+  "enrollment": "RECORDING_ENROLL id=2 outcome=enrolled\nRECORDING_ENROLL verified=1\n",
+  "repeat": "RECORDING_ENROLL id=2 outcome=already_enrolled\nRECORDING_ENROLL verified=1\n",
+  "added_select_columns": {
+    "system_settings": [
+      "allow_ip_lists",
+      "log_recording_access",
+      "system_ip_blacklist",
+      "two_factor_auth_hours"
+    ],
+    "vicidial_users": [
+      "access_recordings",
+      "failed_login_count",
+      "last_login_date",
+      "user_group",
+      "view_reports"
+    ],
+    "vicidial_user_groups": [
+      "admin_viewable_groups",
+      "allowed_campaigns",
+      "allowed_reports",
+      "user_group"
+    ],
+    "recording_log": [
+      "end_epoch",
+      "filename",
+      "length_in_sec",
+      "location",
+      "recording_id"
+    ]
+  },
+  "files": {
+    "/opt/alma-portal-443/portal.py": "a8f8912d391775c7501fba9cde72f635b2ad9e5a749db19d689191a12237d225",
+    "/opt/alma-portal-443/vicidial_auth.py": "11a1892872df79215020a58244edcbe6d6568bb59607f7400cca8cd8d20f094d",
+    "/opt/alma-portal-443/recording_media.py": "a9731d3f8ead7e0b38c1425585257a82702ec36c3e76cc0ca57a6c1d14946831",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "86495765ac47d8a738f9b30bd8dba75f6c05703d07c89f2f9961a386ec6147ed",
+    "/usr/local/sbin/alma-vicidial-recording-enroll": "5fd9124f5cbdd4c489cc3d0240e1014bc077f08a0ebc51833142c07aec642e27",
+    "/etc/systemd/system/alma-portal-443.service.d/recording-playback.conf": "70d05b91b5efd05b15fec091b0bc548f09d0da8a8c3c206cba4dbb894db9e3c6",
+    "/etc/systemd/system/alma-vicidial-recording.service.d/playback-enroll.conf": "875cbdd572e7f1626a99878e55a49ccbe65230313c80644b66706cf1d02bcf27"
+  },
+  "apache": "Syntax OK; graceful reload",
+  "service_actions": [
+    "daemon-reload",
+    "restart alma-portal-443",
+    "reload httpd"
+  ]
+}

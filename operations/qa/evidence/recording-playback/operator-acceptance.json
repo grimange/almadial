@@ -1,0 +1,30 @@
+{
+  "date_local": "2026-11-07 Asia/Manila",
+  "category": "independent operator browser confirmation via conversation",
+  "recording_id": 2,
+  "test_supervisor": "6666",
+  "replies": [
+    {
+      "question_scope": "User Stats link/playback",
+      "reply": "the link on the recordings in user stats works now that is confirmed"
+    },
+    {
+      "question_scope": "Same authorized public IP, fresh private browser cancelling Basic prompt; separate ordinary account without recording permission",
+      "reply": "yes it's confirmed both"
+    },
+    {
+      "question_scope": "Lead Details lead 8 plays recording 2, BOTH pages no extra prompt and seeking works, identify any untested item",
+      "reply": "yes"
+    }
+  ],
+  "accepted": {
+    "lead_details_playback": true,
+    "user_stats_playback": true,
+    "no_extra_prompt_both": true,
+    "seeking_both": true,
+    "unauthenticated_same_ip_denied": true,
+    "unentitled_same_ip_denied": true
+  },
+  "audio_intelligibility": "Both voices previously confirmed by operator in finalized WAV; final SHA remains identical. No audio collected by worker.",
+  "limits": "Operator evidence, not worker-observed live browser instrumentation or independent source review."
+}

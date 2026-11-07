@@ -127,36 +127,41 @@ def authenticate(username, password):
             settings = cursor.fetchone()
             if settings is None:
                 raise AuthConfigurationError('VICIdial system_settings is empty')
-            mode = str(settings['pass_hash_enabled']).upper()
-            if mode in ('N', 'NO', '0', 'DISABLED', ''):
-                stored = row.get('pass')
-                if not isinstance(stored, str):
-                    return None
-                return role if hmac.compare_digest(password.encode('utf-8'), stored.encode('utf-8')) else None
-            if mode not in ('Y', 'YES', '1', 'ENABLED'):
-                raise AuthConfigurationError('Unknown VICIdial pass_hash_enabled value')
-            stored_hash = row.get('pass_hash')
-            if not isinstance(stored_hash, str) or not re.fullmatch(r'[./A-Za-z0-9]{31}', stored_hash):
-                return None
-            try:
-                cost = int(settings['pass_cost'])
-            except (TypeError, ValueError) as e:
-                raise AuthConfigurationError('Invalid VICIdial bcrypt cost') from e
-            if not 4 <= cost <= 15:
-                raise AuthConfigurationError('Unsupported or excessive VICIdial bcrypt cost')
-            key = settings['pass_key']
-            if isinstance(key, bytes):
-                key = key.decode('utf-8')
-            if not isinstance(key, str):
-                raise AuthConfigurationError('Invalid VICIdial bcrypt salt')
-            if len(key) == 16:
-                salt = _bcrypt_base64(key.encode('utf-8'))
-            elif len(key) == 22 and re.fullmatch(r'[./A-Za-z0-9]{22}', key):
-                salt = key
-            else:
-                raise AuthConfigurationError('Unsupported VICIdial pass_key encoding')
-            setting = f'$2a${cost:02d}${salt}'.encode('ascii')
-            actual = bcrypt.hashpw(password.encode('utf-8'), setting)
-            return role if hmac.compare_digest(actual[29:60], stored_hash.encode('ascii')) else None
+            return role if verify_password(row, settings, password) else None
     finally:
         conn.close()
+
+
+def verify_password(row, settings, password):
+    """Shared existing plaintext / native bcrypt-suffix verifier; no persistence."""
+    mode = str(settings['pass_hash_enabled']).upper()
+    if mode in ('N', 'NO', '0', 'DISABLED', ''):
+        stored = row.get('pass')
+        if not isinstance(stored, str):
+            return None
+        return hmac.compare_digest(password.encode('utf-8'), stored.encode('utf-8'))
+    if mode not in ('Y', 'YES', '1', 'ENABLED'):
+        raise AuthConfigurationError('Unknown VICIdial pass_hash_enabled value')
+    stored_hash = row.get('pass_hash')
+    if not isinstance(stored_hash, str) or not re.fullmatch(r'[./A-Za-z0-9]{31}', stored_hash):
+        return None
+    try:
+        cost = int(settings['pass_cost'])
+    except (TypeError, ValueError) as e:
+        raise AuthConfigurationError('Invalid VICIdial bcrypt cost') from e
+    if not 4 <= cost <= 15:
+        raise AuthConfigurationError('Unsupported or excessive VICIdial bcrypt cost')
+    key = settings['pass_key']
+    if isinstance(key, bytes):
+        key = key.decode('utf-8')
+    if not isinstance(key, str):
+        raise AuthConfigurationError('Invalid VICIdial bcrypt salt')
+    if len(key) == 16:
+        salt = _bcrypt_base64(key.encode('utf-8'))
+    elif len(key) == 22 and re.fullmatch(r'[./A-Za-z0-9]{22}', key):
+        salt = key
+    else:
+        raise AuthConfigurationError('Unsupported VICIdial pass_key encoding')
+    setting = f'$2a${cost:02d}${salt}'.encode('ascii')
+    actual = bcrypt.hashpw(password.encode('utf-8'), setting)
+    return hmac.compare_digest(actual[29:60], stored_hash.encode('ascii'))

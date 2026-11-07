@@ -1,0 +1,65 @@
+{
+  "permanent_firewall_identical": true,
+  "runtime_firewall_identical": true,
+  "nft_policy_and_membership_identical_ignoring_expiry_countdowns_and_packet_counters": true,
+  "final_recording_bytes_identical": true,
+  "unchanged_scoped_native_config_files": [
+    "/opt/alma-portal-443/access.lua",
+    "/usr/local/sbin/alma-vicidial-recording",
+    "/etc/alma-vicidial-recording.json",
+    "/etc/systemd/system/alma-vicidial-recording.timer",
+    "/etc/cron.d/vicidial",
+    "/usr/local/sbin/alma-portal-cert-deploy",
+    "/var/www/html/vicidial/admin.php",
+    "/var/www/html/vicidial/functions.php",
+    "/var/www/html/vicidial/user_stats.php",
+    "/var/www/html/vicidial/admin_modify_lead.php",
+    "/var/www/html/vicidial/recording_log_redirect.php"
+  ],
+  "service_health": {
+    "httpd": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "asterisk": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "mariadb": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "php-fpm": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "alma-portal-443": {
+      "active": true,
+      "pid_and_start_unchanged": false
+    },
+    "alma-portal-443-apply.timer": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "alma-portal-sip-guard": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "alma-vicidial-recording.timer": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "alma-vicidial-backup.timer": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "alma-portal-renew.timer": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    },
+    "fail2ban": {
+      "active": true,
+      "pid_and_start_unchanged": true
+    }
+  }
+}

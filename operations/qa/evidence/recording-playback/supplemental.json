@@ -1,0 +1,45 @@
+{
+  "raw_files_unchanged": {
+    "input": {
+      "bytes": 892204,
+      "mode": "0644",
+      "owner": "asterisk:asterisk",
+      "sha256": "f726a1d5615d50767c8a0f4794f68a544322ffa70037d1ef1a7bb3667aa4be59"
+    },
+    "output": {
+      "bytes": 44,
+      "mode": "0644",
+      "owner": "asterisk:asterisk",
+      "sha256": "4f8734c5e13ac599e168cf247a51c1dd0758537ce00bf16d7fed1a3d14d07041"
+    }
+  },
+  "enroller": {
+    "mode": "0700",
+    "uid": 0,
+    "gid": 0,
+    "bytes": 6008,
+    "sha256": "849bb015fdd8baebc8a0737b2134cd46b3af705246b1deeb02bd236703ec6513"
+  },
+  "rollback_check": {
+    "exit": 0,
+    "output": "Rollback metadata and archive present; production unchanged"
+  },
+  "automatic_enrollment": {
+    "source": "systemd recording service journal",
+    "repeated_observed_result": "RECORDING_ENROLL id=2 outcome=already_enrolled; RECORDING_ENROLL verified=1; service finished successfully",
+    "observed_finalizer_epoch_values": [
+      1794009101,
+      1794009283
+    ]
+  },
+  "journal_response_aggregate": {
+    "source": "alma-portal-443 journal since deployment 2026-11-06 18:47:00 EST",
+    "counts": {
+      "401": 8,
+      "307": 8,
+      "200": 2,
+      "206": 2
+    },
+    "limits": "Statuses corroborate activity but do not independently prove account identity or browser UX."
+  }
+}

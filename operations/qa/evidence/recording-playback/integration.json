@@ -1,0 +1,127 @@
+{
+  "loopback_missing_credentials": {
+    "status": 401,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Length": "0",
+      "WWW-Authenticate": "Basic realm=\"CONTACT-CENTER-ADMIN\""
+    }
+  },
+  "loopback_legacy": {
+    "status": 307,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Location": "/vicidial/recordings/20261107-024337_7000000001-all.wav",
+      "Content-Length": "0"
+    }
+  },
+  "public_homepage": {
+    "status": 303,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Type": "text/html; charset=utf-8",
+      "Content-Length": "0",
+      "Location": "/portal/"
+    },
+    "body_bytes": 0
+  },
+  "public_portal": {
+    "status": 200,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Type": "text/html; charset=utf-8",
+      "Content-Length": "2483"
+    },
+    "body_bytes": 2483
+  },
+  "unauthorized_canonical": {
+    "status": 403,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Type": "text/html; charset=iso-8859-1"
+    }
+  },
+  "unauthorized_legacy": {
+    "status": 403,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Type": "text/html; charset=iso-8859-1"
+    }
+  },
+  "spoofed_source": {
+    "status": 403,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Type": "text/html; charset=iso-8859-1"
+    }
+  },
+  "directory": {
+    "status": 403,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Type": "text/html; charset=iso-8859-1"
+    }
+  },
+  "raw": {
+    "status": 403,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Type": "text/html; charset=iso-8859-1"
+    }
+  },
+  "agent_browser": {
+    "status": 303,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Location": "https://2.29.153.161/",
+      "Content-Length": "228",
+      "Content-Type": "text/html; charset=iso-8859-1"
+    },
+    "body_bytes": 228
+  },
+  "admin_browser": {
+    "status": 303,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Location": "https://2.29.153.161/",
+      "Content-Length": "228",
+      "Content-Type": "text/html; charset=iso-8859-1"
+    },
+    "body_bytes": 228
+  },
+  "agent_api": {
+    "status": 403,
+    "headers": {
+      "Cache-Control": "no-store, private",
+      "Content-Length": "54",
+      "Content-Type": "text/html; charset=iso-8859-1"
+    },
+    "body_bytes": 54
+  },
+  "http_root": {
+    "status": 403,
+    "headers": {
+      "Content-Type": "text/html; charset=iso-8859-1"
+    }
+  },
+  "unprivileged_metadata_and_file": {
+    "user": {
+      "access_recordings": "1",
+      "view_reports": "1",
+      "user_group": "ADMIN",
+      "failed_login_count": 0
+    },
+    "settings": {
+      "two_factor_auth_hours": 0,
+      "allow_ip_lists": "0",
+      "blacklist_length": 0,
+      "log_recording_access": "0"
+    },
+    "global_group": {
+      "allowed_campaigns": " -ALL-CAMPAIGNS- - -",
+      "allowed_reports": "ALL REPORTS",
+      "admin_viewable_groups": " ---ALL--- "
+    },
+    "open_verified_inode_size": 892204
+  }
+}
