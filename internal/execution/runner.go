@@ -11,7 +11,8 @@ import (
 )
 
 // Command contains non-secret values only. No shell, PATH lookup, inherited
-// environment or credential transport is provided by this foundation.
+// environment is provided. Transient stdin is supplied separately through
+// RunInput and is never part of a command, graph, journal or diagnostic.
 type Command struct {
 	Executable  string        `json:"executable"`
 	Args        []string      `json:"args"`
@@ -174,8 +175,15 @@ func (r *Runner) Validate(c Command) error {
 // Run drains and discards excess bytes until exit/deadline, then reports overflow
 // as failure. Timeout/cancellation take priority over overflow and process exit.
 func (r *Runner) Run(ctx context.Context, c Command) (Result, error) {
+	return r.RunInput(ctx, c, nil)
+}
+
+// RunInput uses the same bounded process lifecycle as Run. Input is limited to
+// 4 MiB, copied before launch and never returned. Callers must register secrets
+// with NewRunner and keep SQL/client diagnostics from exposing transformed data.
+func (r *Runner) RunInput(ctx context.Context, c Command, input []byte) (Result, error) {
 	out := Result{ExitCode: -1}
-	if r == nil || ctx == nil {
+	if r == nil || ctx == nil || len(input) > 4<<20 {
 		return out, failure(Contract)
 	}
 	if err := r.Validate(c); err != nil {
@@ -188,6 +196,9 @@ func (r *Runner) Run(ctx context.Context, c Command) (Result, error) {
 	defer cancel()
 	cmd := exec.CommandContext(bounded, c.Executable, append([]string(nil), c.Args...)...)
 	cmd.Env = []string{"LANG=C", "LC_ALL=C"}
+	if input != nil {
+		cmd.Stdin = bytes.NewReader(append([]byte(nil), input...))
+	}
 	stdout := &capture{limit: c.StdoutLimit}
 	stderr := &capture{limit: c.StderrLimit}
 	cmd.Stdout = stdout

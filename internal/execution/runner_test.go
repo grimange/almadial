@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"strconv"
@@ -23,6 +24,8 @@ func TestProcessHelper(t *testing.T) {
 			case "ok":
 				fmt.Print("hello")
 				fmt.Fprint(os.Stderr, "diagnostic")
+			case "stdin":
+				io.Copy(os.Stdout, os.Stdin)
 			case "empty":
 			case "exit":
 				fmt.Fprint(os.Stderr, "failure")
@@ -289,4 +292,41 @@ func TestProcessGroupCleanup(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestRunnerTransientInput(t *testing.T) {
+	r, _ := NewRunner([]string{"stdin-sensitive-test"})
+	for _, tc := range []struct{ name, input, want string }{
+		{"empty", "", ""}, {"literal SQL", "SELECT 1;\n", "SELECT 1;\n"}, {"secret redaction", "stdin-sensitive-test", "[REDACTED]"}, {"literal metacharacters", "$(touch /never-created); *", "$(touch /never-created); *"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			c := helper(t, "stdin")
+			out, e := r.RunInput(context.Background(), c, []byte(tc.input))
+			if e != nil || out.Stdout != tc.want {
+				t.Fatal("stdin transport or redaction failed", e)
+			}
+		})
+	}
+	t.Run("input bounded", func(t *testing.T) {
+		out, e := r.RunInput(context.Background(), helper(t, "stdin"), make([]byte, (4<<20)+1))
+		category(t, e, Contract)
+		if out.Started {
+			t.Fatal("oversized input executed")
+		}
+	})
+	t.Run("cancel", func(t *testing.T) {
+		ctx, cancel := context.WithCancel(context.Background())
+		cancel()
+		out, e := r.RunInput(ctx, helper(t, "stdin"), []byte("stdin-sensitive-test"))
+		category(t, e, Canceled)
+		if out.Started {
+			t.Fatal("cancelled input executed")
+		}
+	})
+	t.Run("timeout", func(t *testing.T) {
+		c := helper(t, "sleep")
+		c.Timeout = 50 * time.Millisecond
+		_, e := r.RunInput(context.Background(), c, make([]byte, 1<<20))
+		category(t, e, Timeout)
+	})
 }
