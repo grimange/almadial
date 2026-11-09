@@ -1,0 +1,67 @@
+{
+  "duplicates": [
+    {
+      "time": "[09-Nov-2026 14:14:42 America/New_York]",
+      "category": "Duplicate entry, value redacted",
+      "frames": [
+        {
+          "file": "/var/www/html/agc/functions.php",
+          "line": "2787"
+        },
+        {
+          "file": "/var/www/html/agc/conf_exten_check.php",
+          "line": "1751"
+        }
+      ]
+    },
+    {
+      "time": "[09-Nov-2026 14:15:32 America/New_York]",
+      "category": "Duplicate entry, value redacted",
+      "frames": [
+        {
+          "file": "/var/www/html/agc/functions.php",
+          "line": "2787"
+        },
+        {
+          "file": "/var/www/html/agc/conf_exten_check.php",
+          "line": "1751"
+        }
+      ]
+    },
+    {
+      "time": "[09-Nov-2026 14:16:37 America/New_York]",
+      "category": "Duplicate entry, value redacted",
+      "frames": [
+        {
+          "file": "/var/www/html/agc/functions.php",
+          "line": "2787"
+        },
+        {
+          "file": "/var/www/html/agc/conf_exten_check.php",
+          "line": "1751"
+        }
+      ]
+    },
+    {
+      "time": "[09-Nov-2026 14:19:51 America/New_York]",
+      "category": "Duplicate entry, value redacted",
+      "frames": [
+        {
+          "file": "/var/www/html/agc/functions.php",
+          "line": "2787"
+        },
+        {
+          "file": "/var/www/html/agc/conf_exten_check.php",
+          "line": "1751"
+        }
+      ]
+    }
+  ],
+  "asterisk_warning_sources": {
+    "chan_sip.c:Serious": 6,
+    "unclassified": 20,
+    "res_http_websocket.c:Web": 1,
+    "func_hangupcause.c:Unable": 10,
+    "app_confbridge.c:No": 2
+  }
+}

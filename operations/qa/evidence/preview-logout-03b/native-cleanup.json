@@ -1,0 +1,68 @@
+{
+  "recovered": [
+    {
+      "lead": 52,
+      "before": "ERI",
+      "after": "NI",
+      "options": [
+        "A",
+        "B",
+        "CALLBK",
+        "DAIR",
+        "DC",
+        "DEC",
+        "DNC",
+        "GVM",
+        "N",
+        "NI",
+        "NP",
+        "PVM",
+        "SALE",
+        "XFER",
+        "ERI",
+        "CBHOLD"
+      ],
+      "nativeLeadDetails": true
+    },
+    {
+      "lead": 54,
+      "before": "ERI",
+      "after": "NI",
+      "options": [
+        "A",
+        "B",
+        "CALLBK",
+        "DAIR",
+        "DC",
+        "DEC",
+        "DNC",
+        "GVM",
+        "N",
+        "NI",
+        "NP",
+        "PVM",
+        "SALE",
+        "XFER",
+        "ERI",
+        "CBHOLD"
+      ],
+      "nativeLeadDetails": true
+    }
+  ],
+  "lists": [
+    {
+      "id": 910016,
+      "active": "N"
+    }
+  ],
+  "campaign": {
+    "active": "N",
+    "dial_method": "MANUAL",
+    "auto_dial_level": "0",
+    "manual_dial_list_id": "910016",
+    "no_hopper_leads_logins": "N",
+    "local_call_time": "12pm-5pm",
+    "campaign_recording": "ONDEMAND",
+    "manual_preview_dial": "PREVIEW_AND_SKIP"
+  }
+}

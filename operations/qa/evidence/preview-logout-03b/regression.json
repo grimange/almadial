@@ -1,0 +1,67 @@
+{
+  "utc": "2026-11-09T19:22:30.371625+00:00",
+  "files": {
+    "/opt/alma-portal-443/portal.py": "a8f8912d391775c7501fba9cde72f635b2ad9e5a749db19d689191a12237d225",
+    "/opt/alma-portal-443/vicidial_auth.py": "11a1892872df79215020a58244edcbe6d6568bb59607f7400cca8cd8d20f094d",
+    "/opt/alma-portal-443/access.lua": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "f73b43ed2271d869e3335fa04b0688408ef4590261013a7a44e57e8d4297e820",
+    "/usr/local/sbin/alma-vicidial-recording": "52755bd6f5033b03c5147744be22a4a977225a7e28d7dc3aed4211a575ad410f",
+    "/etc/alma-vicidial-recording.json": "56939a23986ef559367734542a4f204b9b40d8cee835603f6c067d03c878dc9d",
+    "/etc/systemd/system/alma-vicidial-recording.timer": "9470917000e2353a54dae16ea436428f3b5c7b974caee8664dd9ac51a0c77977",
+    "/etc/cron.d/vicidial": "218590f37328cc45504b5d9fe05948880a797ac28c00bb61b962fa1873484d2d",
+    "/usr/local/sbin/alma-portal-cert-deploy": "fad1df74eb9800038ec2e9b57b886df73692cd85445fbb9a358df95d51a21403",
+    "/var/www/html/vicidial/admin.php": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+    "/var/www/html/vicidial/functions.php": "14d11c2b9229f1ce5acd397cbb0b16e6e27f9c5216a1e0ad4ad1ca86db506fac",
+    "/var/www/html/vicidial/user_stats.php": "ac25d88cf9a8febee004b1ee577136674541e089e72c3770ed0d1279b90cccc1",
+    "/var/www/html/vicidial/admin_modify_lead.php": "78c30912209ae16cea8ae1044fc7175f0ca5f2ab30b897a548ef69585b2b2803",
+    "/var/www/html/vicidial/recording_log_redirect.php": "6a002622b38424848c4e887c493a632844abf25f6f8be45556f4601df90c75fc",
+    "/var/www/html/agc/vicidial.php": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+    "/var/www/html/agc/vdc_db_query.php": "5aaeabd1d9b247dc563b9e94bb86d0b3323346b226b52d47a00ca2506897108d",
+    "/usr/share/astguiclient/AST_flush_DBqueue.pl": "f3e4fe7762078cdc4578bddb759afa05e6ba1d0b4c6a554d4da88248860b678b",
+    "/etc/asterisk/http.conf": "32146ec6f50eebc57ec1554aaa061841db2a5196b3f9f8f87cc778b6e7c2c4eb",
+    "/etc/asterisk/pjsip.conf": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+    "/etc/asterisk/sip.conf": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+  },
+  "cron": {
+    "rc": 0,
+    "stdout": "SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin\n\n# VICIdial process supervision\n* * * * * root /usr/share/astguiclient/ADMIN_keepalive_ALL.pl\n\n# Hopper\n* * * * * root /usr/share/astguiclient/AST_VDhopper.pl -q\n\n# Hung call cleanup\n* * * * * root /usr/share/astguiclient/AST_manager_kill_hung_congested.pl\n\n# Voicemail status\n* * * * * root /usr/share/astguiclient/AST_vm_update.pl\n\n# Flush database action queue\n11 * * * * root /usr/share/astguiclient/AST_flush_DBqueue.pl -q\n\n# Agent log cleanup\n33 * * * * root /usr/share/astguiclient/AST_cleanup_agent_log.pl\n\n# Recording mixing\n# PR01: replaced by alma-vicidial-recording.timer; old: */3 * * * * root /usr/share/astguiclient/AST_CRON_audio_1_move_mix.pl --MIX\n",
+    "stderr": ""
+  },
+  "backup": {
+    "rc": 0,
+    "stdout": "{\n  \"outcome\": \"ok\",\n  \"attempt_at\": \"2026-11-09T08:40:02.958817+00:00\",\n  \"pid\": 910284,\n  \"finished_at\": \"2026-11-09T08:40:18.689298+00:00\",\n  \"last_failure\": {\n    \"at\": \"2026-11-06T21:02:22.754013+00:00\",\n    \"reason\": \"required_dataset_missing\"\n  },\n  \"last_success\": {\n    \"id\": \"20261109T084003-23e8842a\",\n    \"completed_at\": \"2026-11-09T08:40:17.780215+00:00\",\n    \"bytes\": 1364673208,\n    \"database\": {\n      \"method\": \"mariadb-dump --all-databases --lock-all-tables\",\n      \"timeout_seconds\": 30,\n      \"lock_hold_upper_bound_seconds\": 0.8664,\n      \"completed_at\": \"2026-11-09T08:40:04.716349+00:00\"\n    },\n    \"integrity\": {\n      \"verified_at\": \"2026-11-09T08:40:17.563587+00:00\",\n      \"payloads\": 5,\n      \"archive_members\": 21340,\n      \"database_tables\": 376,\n      \"recording_files\": 7\n    },\n    \"archive_sha256\": \"4e8fbd3aec41f1fc15150870892f445fb0ec14d054d220e42ef3d32d04c0ccb7\"\n  },\n  \"newest_complete_age_seconds\": 38532.66313,\n  \"remaining_bytes\": 142300741632,\n  \"free_inodes\": 9778013,\n  \"last_success_verification_present\": true,\n  \"job_lock_held\": false\n}\n",
+    "stderr": ""
+  },
+  "services": {
+    "rc": 0,
+    "stdout": "active\nactive\nactive\nactive\nactive\nactive\n",
+    "stderr": ""
+  },
+  "timers": {
+    "rc": 0,
+    "stdout": "NEXT                            LEFT LAST                               PASSED UNIT                          ACTIVATES\nMon 2026-11-09 14:22:32 EST       2s Mon 2026-11-09 14:22:22 EST        7s ago alma-portal-443-apply.timer   alma-portal-443-apply.service\nMon 2026-11-09 14:23:22 EST      52s Mon 2026-11-09 14:20:22 EST   2min 7s ago alma-vicidial-recording.timer alma-vicidial-recording.service\nMon 2026-11-09 14:46:23 EST    23min Mon 2026-11-09 13:58:01 EST     24min ago fwupd-refresh.timer           fwupd-refresh.service\nMon 2026-11-09 15:21:58 EST    59min Mon 2026-11-09 13:50:49 EST     31min ago dnf-makecache.timer           dnf-makecache.service\nMon 2026-11-09 16:18:38 EST 1h 56min Sun 2026-11-08 16:18:38 EST       22h ago systemd-tmpfiles-clean.timer  systemd-tmpfiles-clean.service\nMon 2026-11-09 16:23:32 EST  2h 1min Mon 2026-11-09 04:22:23 EST       10h ago alma-portal-renew.timer       alma-portal-renew.service\nTue 2026-11-10 00:15:48 EST       9h Mon 2026-11-09 00:53:01 EST       13h ago logrotate.timer               logrotate.service\nTue 2026-11-10 03:40:00 EST      13h Mon 2026-11-09 03:40:02 EST       10h ago alma-vicidial-backup.timer    alma-vicidial-backup.service\nSun 2026-11-15 01:00:00 EST   5 days Sun 2026-11-08 01:00:02 EST 1 day 13h ago raid-check.timer              raid-check.service\nMon 2026-11-16 00:00:22 EST   6 days Mon 2026-11-09 00:11:00 EST       14h ago fstrim.timer                  fstrim.service\n\n10 timers listed.\n",
+    "stderr": ""
+  },
+  "svn": {
+    "rc": 0,
+    "stdout": "4037\n",
+    "stderr": ""
+  },
+  "roles_phones_records": {
+    "rc": 0,
+    "stdout": "user\tactive\tuser_level\tuser_group\taccess_recordings\tview_reports\tmodify_users\tmodify_campaigns\tmodify_lists\tmodify_phones\tload_leads\n6666\tY\t9\tADMIN\t1\t1\t1\t1\t1\t1\t1\nqaagent14\tY\t1\tQAPRD14\t0\t0\t0\t0\t0\t0\t0\nqasup14\tY\t7\tQAPRD14\t0\t1\t0\t0\t0\t0\t0\nuser_group\tallowed_campaigns\tadmin_viewable_groups\tagent_status_viewable_groups\tallowed_reports\nQAPRD14\t QAOUT01 -\t QAPRD14 \t QAPRD14 \t Real-Time Main Report\nextension\tprotocol\tactive\tstatus\ttemplate_id\tis_webphone\n1000\tPJSIP\tY\tACTIVE\t\tN\n1001\tSIP\tY\tACTIVE\t\tN\n1002\tSIP\tY\tACTIVE\tWEB00_SIP\tY\n1014\tSIP\tN\tSUSPENDED\t\tN\nrecording_id\tlead_id\tstart_epoch\tend_epoch\tlength_in_sec\tlocation\n2\t8\t1793990617\t1793990673\t56\thttps://2.29.153.161/RECORDINGS/20261107-024337_7000000001-all.wav\n3\t69\t1794244613\t1794244664\t51\thttps://2.29.153.161/RECORDINGS/20261109-121653_7000000001-all.wav\n4\t69\t1794244845\t1794244889\t44\thttps://2.29.153.161/RECORDINGS/20261109-122045_7000000001-all.wav\nCOUNT(*)\n0\n",
+    "stderr": ""
+  },
+  "php_error_review": {
+    "/var/log/httpd/error_log": {
+      "timestamp_filter": "2026-11-09 14:05 to capture EST; last 10000 lines",
+      "counts": {}
+    },
+    "/var/log/php-fpm/www-error.log": {
+      "timestamp_filter": "2026-11-09 14:05 to capture EST; last 10000 lines",
+      "counts": {
+        "warning": 6
+      }
+    }
+  }
+}

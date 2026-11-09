@@ -23,12 +23,12 @@ async (page) => {
       await p.locator('#private-fixture').setInputFiles(path);
       return p.evaluate(async()=>{const e=document.querySelector('#private-fixture');const v=JSON.parse(await e.files[0].text());e.remove();return v});
     }
-    await p.goto(origin + '/agc/vicidial.php');
+    await p.goto(origin + '/agc/vicidial.php', {waitUntil:'domcontentloaded'});
     const phone = await privateJSON(cfg.phoneCredentials || '/tmp/web00-phone.json');
     await p.locator('[name=phone_login]').fill(phone.login);
     await p.locator('[name=phone_pass]').fill(phone.password);
     await p.waitForFunction(()=>Number(document.querySelector('[name=JS_browser_height]')?.value)>0);
-    await Promise.all([p.waitForEvent('load'),p.locator('[name=login_sub]').click()]);
+    await Promise.all([p.waitForNavigation({waitUntil:'domcontentloaded'}),p.locator('[name=login_sub]').click()]);
     const users = await privateJSON(cfg.agentCredentials || '/tmp/prd-users.json');
     const agent=users.find(u=>u.username===(cfg.agent || 'qaagent14'));
     if (!agent) throw new Error('Designated synthetic agent missing');
@@ -38,23 +38,36 @@ async (page) => {
     await p.locator('[name=VD_campaign] option[value="QAOUT01"]').waitFor({state:'attached'});
     await p.locator('[name=VD_campaign]').selectOption('QAOUT01');
     await p.waitForFunction(()=>Number(document.querySelector('[name=JS_browser_height]')?.value)>0);
-    await Promise.all([p.waitForEvent('load'),p.locator('[name=login_sub]').click()]);
+    await Promise.all([p.waitForNavigation({waitUntil:'domcontentloaded'}),p.locator('[name=login_sub]').click()]);
     await p.waitForFunction(()=>Array.from(document.querySelectorAll('iframe')).some(f=>f.src.includes('viciphone-web00')),{},{timeout:30000});
-    const oldSession=p.locator('#DeactivateDOlDSessioNSpan');
-    if(await oldSession.isVisible()) await oldSession.getByRole('link',{name:'OK',exact:true}).click();
-    const frame=p.frames().find(f=>f.url().includes('/viciphone-web00/'));
+    const frame=p.frames().find(f=>f.url().includes('/viciphone-web00/')) || await p.waitForEvent('framenavigated',{
+      predicate:f=>f.url().includes('/viciphone-web00/'),timeout:30000
+    });
     page.web00.phone=frame;
     await frame.waitForFunction(()=>typeof myRegisterer==='object' && myRegisterer.state==='Registered',null,{timeout:30000});
     await frame.waitForFunction(()=>typeof mySession==='object' && mySession.state==='Established',null,{timeout:30000});
     await frame.waitForFunction(()=>mySession.sessionDescriptionHandler.peerConnection.connectionState==='connected',null,{timeout:30000});
+    // Phone initialization overlays can temporarily cover the old-session notice.
+    await p.locator('#LoadingBox').waitFor({state:'hidden',timeout:30000});
+    const oldSession=p.locator('#DeactivateDOlDSessioNSpan');
+    if(await oldSession.isVisible()) await oldSession.getByRole('link',{name:'OK',exact:true}).click();
   }
   const w=page.web00;
   if (!w) throw new Error('No active workflow');
   if (phase === 'preview') {
+    const expected = cfg.previewVendor || 'WEB00_001';
+    if (expected !== 'WEB00_001' && !/^GAP01B_\d{3}$/.test(expected)) throw new Error('Preview requires an identified synthetic lead');
     await w.p.locator('[name=LeadPreview]').check();
     await w.p.getByAltText('Dial Next Number',{exact:true}).click();
-    await w.p.waitForFunction(()=>document.querySelector('[name=vendor_lead_code]').value==='WEB00_001');
-    return {preview:'WEB00_001', customerCall:false};
+    await w.p.waitForFunction(v=>document.querySelector('[name=vendor_lead_code]').value===v,expected);
+    return {preview:expected, leadId:await w.p.locator('[name=lead_id]').inputValue(), customerCall:false};
+  }
+  if (phase === 'skip') {
+    const vendor=await w.p.locator('[name=vendor_lead_code]').inputValue();
+    if (!/^GAP01B_\d{3}$/.test(vendor) && vendor !== 'WEB00_001') throw new Error('Skip requires an identified synthetic lead');
+    await w.p.getByText('SKIP LEAD',{exact:true}).click();
+    await w.p.waitForFunction(()=>document.querySelector('[name=lead_id]').value==='');
+    return {skipped:vendor, customerCall:false};
   }
   if (phase === 'call') {
     if (!cfg.authorizeSingleCall || w.callPlaced) throw new Error('Single simulator call requires explicit authorization');
@@ -73,15 +86,19 @@ async (page) => {
     await w.p.waitForFunction(()=>document.querySelector('#DispoSelectBox').style.visibility==='hidden');
     return {hangup:true,disposition:'NI'};
   }
-  if (phase === 'finish') {
-    if(await w.p.getByText('SKIP LEAD',{exact:true}).isVisible()) throw new Error('Release preview through SKIP LEAD before logout');
+  if (phase === 'finish' || phase === 'direct-preview-logout') {
+    const previewOpen=await w.p.getByText('SKIP LEAD',{exact:true}).isVisible();
+    if (phase === 'direct-preview-logout') {
+      const vendor=await w.p.locator('[name=vendor_lead_code]').inputValue();
+      if (!cfg.authorizePreviewLogoutDiagnostic || !previewOpen || !/^GAP01B_\d{3}$/.test(vendor) || vendor!==cfg.previewVendor || w.callPlaced) throw new Error('Direct logout requires an explicit non-calling synthetic preview diagnostic');
+    } else if(previewOpen) throw new Error('Release preview through SKIP LEAD before logout');
     // Logout hides the embedded phone. Complete its native unregister action first.
     await w.phone.locator('#unregister').click();
     await w.phone.waitForFunction(()=>myRegisterer.state==='Unregistered',null,{timeout:15000});
     await w.p.getByRole('link',{name:'LOGOUT',exact:true}).click();
     await w.p.getByText('LOGOUT PROCESS COMPLETE, YOU MAY NOW CLOSE YOUR BROWSER OR LOG BACK IN',{exact:false}).waitFor({timeout:30000});
     await w.b.close();delete page.web00;
-    return {registration:'Unregistered', logout:true, browserClosed:true};
+    return {registration:'Unregistered', logout:true, browserClosed:true, openPreviewDiagnostic:phase==='direct-preview-logout'};
   }
   return {browser:w.b.version(), errors:w.errors, phone: await w.phone.evaluate(async()=>{
     const pc=typeof mySession==='object'?mySession.sessionDescriptionHandler.peerConnection:null;

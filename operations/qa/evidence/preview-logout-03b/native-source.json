@@ -1,0 +1,115 @@
+{
+  "provenance": "Read-only installed source, SVN r4037; no upstream files modified",
+  "files": {
+    "/var/www/html/agc/vicidial.php": {
+      "sha256": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+      "excerpts": [
+        {
+          "first_line": 4971,
+          "last_line": 4977,
+          "source": "\t\t\t$stmt=\"UPDATE vicidial_list set status='ERI', user='' where status IN('QUEUE','INCALL') and user ='$VD_login';\";\n\t\t\tif ($DB) {echo \"$stmt\\n\";}\n\t\t\t$rslt=mysql_to_mysqli($stmt, $link);\n\t\t\t\tif ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01036',$VD_login,$server_ip,$session_name,$one_mysql_log);}\n\t\t\t$vlERIaffected_rows = mysqli_affected_rows($link);\n\t\t\techo \"<!-- old QUEUE and INCALL reverted list:   |$vlERIaffected_rows| -->\\n\";\n"
+        },
+        {
+          "first_line": 12812,
+          "last_line": 12815,
+          "source": "\t\t\t\t\t{\n\t\t\t\t\tvar man_status = \"Preview the Lead then <a href=\\\"#\\\" onclick=\\\"ManualDialOnly('\" + manual_dial_only_type_flag + \"','YES','0')\\\"><font class=\\\"preview_text\\\"> <?php echo _QXZ(\"DIAL LEAD\"); ?></font></a> or <a href=\\\"#\\\" onclick=\\\"ManualDialSkip('YES')\\\"><font class=\\\"preview_text\\\"><?php echo _QXZ(\"SKIP LEAD\"); ?></font></a>\"; \n\t\t\t\t\tif (manual_preview_dial=='PREVIEW_ONLY')\n\t\t\t\t\t\t{"
+        },
+        {
+          "first_line": 19549,
+          "last_line": 19604,
+          "source": "\tfunction NormalLogout()\n\t\t{\n\t\tbutton_click_log = button_click_log + \"\" + SQLdate + \"-----NormalLogout---|\";\n\t\tif (logout_stop_timeouts < 1)\n\t\t\t{\n\t\t\tvar pausetrigger='';\n\t\t\tif (VDRP_stage != 'PAUSED')\n\t\t\t\t{\n\t\t\t\tpausetrigger='PAUSE';\n\t\t\t//\tAutoDial_ReSume_PauSe(\"VDADpause\",'','','',\"LOGOUT\");\n\t\t\t\t}\n\t\t\tLogouT('NORMAL',pausetrigger,'');\n\t\t\t}\n\t\t}\n\n\n// ################################################################################\n// Log the user out of the system, if active call or active dial is occuring, don't let them.\n\tfunction LogouT(tempreason,temppause,temp_pause_max_url_trigger)\n\t\t{\n\t\tbutton_click_log = button_click_log + \"\" + SQLdate + \"-----LogouT---\" + tempreason + \" \" + temppause + \" \" + temp_pause_max_url_trigger + \"|\";\n\t\tif (isVisible)\n\t\t\t{\n\t\t\tonHidden('1');\n\t\t\tonVisible('1');\n\t\t\t}\n\t\telse\n\t\t\t{\n\t\t\tonVisible('1');\n\t\t\tonHidden('1');\n\t\t\t}\n\t\tcheck_for_conf_calls(session_id, '0');\n\n\t\tif (MD_channel_look==1)\n\t\t\t{alert(\"<?php echo _QXZ(\"You cannot log out during a Dial attempt. Wait 50 seconds for the dial to fail out if it is not answered\"); ?>\");}\n\t\telse\n\t\t\t{\n\t\t\tif ( (VD_live_customer_call==1) || (MD_channel_look==1) )\n\t\t\t\t{\n\t\t\t\talert(\"<?php echo _QXZ(\"STILL A LIVE CALL! Hang it up then you can log out.\"); ?>\\n\" + VD_live_customer_call);\n\t\t\t\t}\n\t\t\telse\n\t\t\t\t{\n\t\t\t\tif (alt_dial_status_display==1)\n\t\t\t\t\t{\n\t\t\t\t\talert(\"<?php echo _QXZ(\"You are in ALT dial mode, you must finish the lead before logging out.\"); ?>\\n\" + reselect_alt_dial);\n\t\t\t\t\t}\n\t\t\t\telse\n\t\t\t\t\t{\n\t\t\t\t\tagent_events('logged_out', tempreason, aec);   aec++;\n\n\t\t\t\t\tdocument.getElementById(\"LogouTProcess\").innerHTML = \"<br /><br /><font class=\\\"loading_text\\\"><?php echo _QXZ(\"LOGOUT PROCESSING...\"); ?></font><br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src=\\\"./images/<?php echo _QXZ(\"agent_loading_animation.gif\"); ?>\\\" height=\\\"206px\\\" width=\\\"206px\\\" alt=\\\"<?php echo _QXZ(\"LOGOUT PROCESSING...\"); ?>\\\" />\";\n\t\t\t\t\t//\tdocument.getElementById(\"LogouTProcess\").innerHTML = \"<?php echo _QXZ(\"LOGOUT PROCESSING...\"); ?>\";\n\t\t\t\t\tvar xmlhttp=false;\n\t\t\t\t\t/*@cc_on @*/\n\t\t\t\t\t/*@if (@_jscript_version >= 5)"
+        },
+        {
+          "first_line": 13657,
+          "last_line": 13682,
+          "source": "\t\t\t\t\t\tMDSnextResponse = xmlhttp.responseText;\n\n\t\t\t\t\t\tvar MDSnextResponse_array=MDSnextResponse.split(\"\\n\");\n\t\t\t\t\t\tMDSnextCID = MDSnextResponse_array[0];\n\t\t\t\t\t\tif (MDSnextCID == \"LEAD NOT REVERTED\")\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\talert_box(\"<?php echo _QXZ(\"Lead was not reverted, there was an error:\"); ?>\\n\" + MDSnextResponse);\n\t\t\t\t\t\t\tbutton_click_log = button_click_log + \"\" + SQLdate + \"-----DialSkipFailRevert---\" + MDSnextResponse + \" \" + \"|\";\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\tdocument.vicidial_form.lead_id.value\t\t='';\n\t\t\t\t\t\t\tdocument.vicidial_form.vendor_lead_code.value='';\n\t\t\t\t\t\t\tdocument.vicidial_form.list_id.value\t\t='';\n\t\t\t\t\t\t\tdocument.vicidial_form.list_name.value\t\t='';\n\t\t\t\t\t\t\tdocument.vicidial_form.list_description.value='';\n\t\t\t\t\t\t\tdocument.vicidial_form.entry_list_id.value\t='';\n\t\t\t\t\t\t\tdocument.vicidial_form.gmt_offset_now.value\t='';\n\t\t\t\t\t\t\tdocument.vicidial_form.phone_code.value\t\t='';\n\t\t\t\t\t\t\tif ( (disable_alter_custphone=='Y') || (disable_alter_custphone=='HIDE') )\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tvar tmp_pn = document.getElementById(\"phone_numberDISP\");\n\t\t\t\t\t\t\t\ttmp_pn.innerHTML\t\t\t= ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ';\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tdocument.vicidial_form.phone_number.value\t='';\n\t\t\t\t\t\t\tdocument.vicidial_form.title.value\t\t\t='';"
+        },
+        {
+          "first_line": 19617,
+          "last_line": 19625,
+          "source": "\t\t\t\t\tif (!xmlhttp && typeof XMLHttpRequest!='undefined')\n\t\t\t\t\t\t{\n\t\t\t\t\t\txmlhttp = new XMLHttpRequest();\n\t\t\t\t\t\t}\n\t\t\t\t\tif (xmlhttp) \n\t\t\t\t\t\t{\n\t\t\t\t\t\tVDlogout_query = \"server_ip=\" + server_ip + \"&session_name=\" + session_name + \"&ACTION=userLOGout&format=text&user=\" + user + \"&pass=\" + pass + \"&campaign=\" + campaign + \"&conf_exten=\" + session_id + \"&extension=\" + extension + \"&protocol=\" + protocol + \"&agent_log_id=\" + agent_log_id + \"&no_delete_sessions=\" + no_delete_sessions + \"&phone_ip=\" + phone_ip + \"&enable_sipsak_messages=\" + enable_sipsak_messages + \"&LogouTKicKAlL=\" + LogouTKicKAlL + \"&ext_context=\" + ext_context + \"&qm_extension=\" + qm_extension + \"&stage=\" + tempreason + \"&pause_trigger=\" + temppause + \"&dial_method=\" + dial_method + \"&pause_max_url_trigger=\" + temp_pause_max_url_trigger;\n\t\t\t\t\t\txmlhttp.open('POST', 'vdc_db_query.php'); \n\t\t\t\t\t\txmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');"
+        },
+        {
+          "first_line": 4978,
+          "last_line": 4981,
+          "source": "\t\t\t$stmt=\"DELETE from vicidial_hopper where status IN('QUEUE','INCALL','DONE') and user ='$VD_login';\";\n\t\t\tif ($DB) {echo \"$stmt\\n\";}\n\t\t\t$rslt=mysql_to_mysqli($stmt, $link);\n\t\t\t\tif ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01037',$VD_login,$server_ip,$session_name,$one_mysql_log);}"
+        }
+      ]
+    },
+    "/var/www/html/agc/vdc_db_query.php": {
+      "sha256": "5aaeabd1d9b247dc563b9e94bb86d0b3323346b226b52d47a00ca2506897108d",
+      "excerpts": [
+        {
+          "first_line": 4783,
+          "last_line": 4784,
+          "source": "\t\t\t### flag the lead as called and change it's status to INCALL\n\t\t\t$stmt = \"UPDATE vicidial_list set status='INCALL', called_since_last_reset='$called_since_last_reset', called_count='$called_count',user='$user',last_local_call_time='$LLCT_DATE'$ownerSQL where lead_id='$lead_id';\";"
+        },
+        {
+          "first_line": 4855,
+          "last_line": 4860,
+          "source": "\t\t\t##### BEGIN if preview dialing, do not send the call #####\n\t\t\tif ( ($preview == 'YES') or ($manual_dial_validation == 'Y') )\n\t\t\t\t{\n\t\t\t\t### update the agent record with the preview_lead_id in vicidial_live_agents\n\t\t\t\t$stmt = \"UPDATE vicidial_live_agents set preview_lead_id='$lead_id' where user='$user' and server_ip='$server_ip';\";\n\t\t\t\tif ($DB) {echo \"$stmt\\n\";}"
+        },
+        {
+          "first_line": 6563,
+          "last_line": 6566,
+          "source": "\n################################################################################\n### manDiaLskip - for manual VICIDiaL dialing this skips the lead that was\n###               previewed in the step above and puts it back in orig status"
+        },
+        {
+          "first_line": 6589,
+          "last_line": 6602,
+          "source": "\n\t\t### clear the preview dial flag of the lead_id being previewed\n\t\t$stmt = \"UPDATE vicidial_live_agents set preview_lead_id='0' where user='$user';\";\n\t\tif ($DB) {echo \"$stmt\\n\";}\n\t\t$rslt=mysql_to_mysqli($stmt, $link);\n\t\t\tif ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'00591',$user,$server_ip,$session_name,$one_mysql_log);}\n\n\t\t$called_count = ($called_count - 1);\n\t\t### set the lead back to previous status and called_count\n\t\t$stmt = \"UPDATE vicidial_list set status='$stage', called_count='$called_count',user='$user' where lead_id='$lead_id';\";\n\t\tif ($DB) {echo \"$stmt\\n\";}\n\t\t$rslt=mysql_to_mysqli($stmt, $link);\n\t\t\tif ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'00042',$user,$server_ip,$session_name,$one_mysql_log);}\n"
+        },
+        {
+          "first_line": 6614,
+          "last_line": 6620,
+          "source": "\n\t\techo \"LEAD REVERTED\\n\";\n\t\t}\n\t}\n\n\n################################################################################"
+        },
+        {
+          "first_line": 18977,
+          "last_line": 18990,
+          "source": "if ($ACTION == 'userLOGout')\n\t{\n\t$MT[0]='';\n\t$row='';   $rowx='';\n\tif ( (strlen($campaign)<1) || (strlen($conf_exten)<1) )\n\t\t{\n\t\techo \"NO\\n\";\n\t\techo _QXZ(\"campaign %1s or conf_exten %2s is not valid\",0,'',$campaign,$conf_exten).\"\\n\";\n\t\tif ($SSagent_debug_logging > 0) {vicidial_ajax_log($NOW_TIME,$startMS,$link,$ACTION,$php_script,$user,$stage,$lead_id,$session_name,$stmt);}\n\t\texit;\n\t\t}\n\telse\n\t\t{\n\t\t$user_group='';"
+        },
+        {
+          "first_line": 4375,
+          "last_line": 4379,
+          "source": "\t\t\t\t\t\t\tif (preg_match(\"/DOWN TIMEZONE/i\",$lead_order)){$order_stmt = \"order by gmt_offset_now, $last_order\";}\n\n\t\t\t\t\t\t\t$stmt=\"UPDATE vicidial_list SET user='QUEUE$user' where called_since_last_reset='N' and ( (user NOT LIKE \\\"QUEUE%\\\") or (user is NULL) ) and status IN($Dsql) and ($list_id_sql) and ($all_gmtSQL) $CCLsql $DLTsql $fSQL $USERfSQL $adooSQL $vulnl_SQL $vulnlOVERALL_SQL $order_stmt LIMIT 1;\";\n\t\t\t\t\t\t\tif ($dial_next_callback > 0)\n\t\t\t\t\t\t\t\t{"
+        },
+        {
+          "first_line": 19045,
+          "last_line": 19049,
+          "source": "\n\t\t##### Delete the web_client_sessions\n\t\t$stmt=\"DELETE from web_client_sessions where server_ip='$server_ip' and session_name ='$session_name';\";\n\t\tif ($DB) {echo \"$stmt\\n\";}\n\t\t$rslt=mysql_to_mysqli($stmt, $link);"
+        },
+        {
+          "first_line": 19062,
+          "last_line": 19067,
+          "source": "\t\t\t$agent_channel = \"$row[0]\";\n\t\t\tif ($format=='debug') {echo \"\\n<!-- $row[0] -->\";}\n\t\t\t$stmt=\"INSERT INTO vicidial_manager values('','','$NOW_TIME','NEW','N','$server_ip','','Hangup','ULVD3452$StarTtime','Channel: $agent_channel','','','','','','','','','');\";\n\t\t\t\tif ($format=='debug') {echo \"\\n<!-- $stmt -->\";}\n\t\t\t$rslt=mysql_to_mysqli($stmt, $link);\n\t\t\t\tif ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'00134',$user,$server_ip,$session_name,$one_mysql_log);}"
+        },
+        {
+          "first_line": 19113,
+          "last_line": 19119,
+          "source": "\n\t\t##### Delete the vicidial_live_agents record for this session\n\t\t$stmt=\"DELETE from vicidial_live_agents where server_ip='$server_ip' and user ='$user';\";\n\t\tif ($DB) {echo \"$stmt\\n\";}\n\t\t$rslt=mysql_to_mysqli($stmt, $link);\n\t\t\tif ($mel > 0) {$errno = mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'00130',$user,$server_ip,$session_name,$one_mysql_log);}\n\t\t$retry_count=0;"
+        }
+      ]
+    },
+    "/usr/share/astguiclient/AST_flush_DBqueue.pl": {
+      "sha256": "f3e4fe7762078cdc4578bddb759afa05e6ba1d0b4c6a554d4da88248860b678b",
+      "excerpts": [
+        {
+          "first_line": 783,
+          "last_line": 800,
+          "source": "if ($reset_stuck_leads > 0) \n\t{\n\t$found_stuck_ct=0;\n\t# Gather possible stuck leads\n\t$stmtA = \"SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \\\"$SQLdate_NEG_sixhour\\\" and modify_date <= \\\"$SQLdate_NEG_2min\\\" $stuck_listsSQL order by modify_date limit 10000;\";\n\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;\n\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;\n\t$sthArowsSTUCK=$sthA->rows;\n\tif ($DBX) {print \"DEBUG: $sthArowsSTUCK|$stmtA|\\n\";}\n\t$a=0;\n\twhile ($sthArowsSTUCK > $a)\n\t\t{\n\t\t@aryA = $sthA->fetchrow_array;\n\t\t$ST_lead_id[$a] =\t\t\t\t$aryA[0];\n\t\t$ST_list_id[$a] =\t\t\t\t$aryA[1];\n\t\t$ST_status[$a] =\t\t\t\t$aryA[2];\n\t\t$ST_user[$a] =\t\t\t\t\t$aryA[3];\n\t\t$ST_last_local_call_time[$a] =\t$aryA[4];"
+        },
+        {
+          "first_line": 800,
+          "last_line": 832,
+          "source": "\t\t$ST_last_local_call_time[$a] =\t$aryA[4];\n\t\t$ST_called_count[$a] =\t\t\t$aryA[5];\n\t\t$ST_modify_date[$a] =\t\t\t$aryA[6];\n\t\t$a++;\n\t\t}\n\t$sthA->finish();\n\n\t$a=0;\n\twhile ($sthArowsSTUCK > $a)\n\t\t{\n\t\t$active_count=0;\n\t\t$log_count=0;\n\t\t$inbound_count=0;\n\t\t$dial_count=0;\n\t\t$preview_count=0;\n\n\t\t$stmtA = \"SELECT count(*) FROM vicidial_auto_calls where lead_id='$ST_lead_id[$a]';\";\n\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;\n\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;\n\t\t$sthArowsACTIVE=$sthA->rows;\n\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}\n\t\tif ($sthArowsACTIVE > 0)\n\t\t\t{\n\t\t\t@aryA = $sthA->fetchrow_array;\n\t\t\t$active_count =\t\t$aryA[0];\n\t\t\t}\n\t\t$sthA->finish();\n\n\t\tif ($active_count > 0) \n\t\t\t{if($DB){print STDERR \"Call active: $active_count|$ST_lead_id[$a]|\\n\";}}\n\t\telse\n\t\t\t{\n\t\t\t$stmtA = \"SELECT count(*) FROM vicidial_log where lead_id='$ST_lead_id[$a]' and call_date >= \\\"$SQLdate_MIDNIGHT\\\";\";"
+        },
+        {
+          "first_line": 833,
+          "last_line": 907,
+          "source": "\t\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;\n\t\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;\n\t\t\t$sthArowsACTIVE=$sthA->rows;\n\t\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}\n\t\t\tif ($sthArowsACTIVE > 0)\n\t\t\t\t{\n\t\t\t\t@aryA = $sthA->fetchrow_array;\n\t\t\t\t$log_count =\t$aryA[0];\n\t\t\t\t}\n\t\t\t$sthA->finish();\n\n\t\t\tif ($log_count > 0) \n\t\t\t\t{if($DB){print STDERR \"Lead has outbound log today: $log_count|$ST_lead_id[$a]|\\n\";}}\n\t\t\telse\n\t\t\t\t{\n\t\t\t\t$stmtA = \"SELECT count(*) FROM vicidial_closer_log where lead_id='$ST_lead_id[$a]' and call_date >= \\\"$SQLdate_MIDNIGHT\\\";\";\n\t\t\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;\n\t\t\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;\n\t\t\t\t$sthArowsACTIVE=$sthA->rows;\n\t\t\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}\n\t\t\t\tif ($sthArowsACTIVE > 0)\n\t\t\t\t\t{\n\t\t\t\t\t@aryA = $sthA->fetchrow_array;\n\t\t\t\t\t$inbound_count = \t$aryA[0];\n\t\t\t\t\t}\n\t\t\t\t$sthA->finish();\n\n\t\t\t\tif ($inbound_count > 0) \n\t\t\t\t\t{if($DB){print STDERR \"Lead has inbound log today: $inbound_count|$ST_lead_id[$a]|\\n\";}}\n\t\t\t\telse\n\t\t\t\t\t{\n\t\t\t\t\t$stmtA = \"SELECT count(*) FROM vicidial_dial_log where lead_id='$ST_lead_id[$a]' and call_date >= \\\"$SQLdate_MIDNIGHT\\\";\";\n\t\t\t\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;\n\t\t\t\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;\n\t\t\t\t\t$sthArowsACTIVE=$sthA->rows;\n\t\t\t\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}\n\t\t\t\t\tif ($sthArowsACTIVE > 0)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t@aryA = $sthA->fetchrow_array;\n\t\t\t\t\t\t$dial_count = \t$aryA[0];\n\t\t\t\t\t\t}\n\t\t\t\t\t$sthA->finish();\n\n\t\t\t\t\tif ($dial_count > 0) \n\t\t\t\t\t\t{if($DB){print STDERR \"Lead has dial log today: $dial_count|$ST_lead_id[$a]|\\n\";}}\n\t\t\t\t\telse\n\t\t\t\t\t\t{\n\t\t\t\t\t\t$stmtA = \"SELECT count(*) FROM vicidial_live_agents where preview_lead_id='$ST_lead_id[$a]' and last_state_change >= \\\"$SQLdate_MIDNIGHT\\\";\";\n\t\t\t\t\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;\n\t\t\t\t\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;\n\t\t\t\t\t\t$sthArowsACTIVE=$sthA->rows;\n\t\t\t\t\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}\n\t\t\t\t\t\tif ($sthArowsACTIVE > 0)\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t@aryA = $sthA->fetchrow_array;\n\t\t\t\t\t\t\t$preview_count = \t$aryA[0];\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t$sthA->finish();\n\n\t\t\t\t\t\tif ($preview_count > 0) \n\t\t\t\t\t\t\t{if($DB){print STDERR \"Lead is being previewed right now: $preview_count|$ST_lead_id[$a]|\\n\";}}\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\tif (!$Q) {print \" - stuck lead found: |$ST_modify_date[$a]|$ST_lead_id[$a]|$ST_list_id[$a]|$ST_status[$a]|$ST_user[$a]|$ST_last_local_call_time[$a]|$ST_called_count[$a]|\\n\";}\n\n\t\t\t\t\t\t\t$new_status='NEW';\n\t\t\t\t\t\t\t$affected_rows=0;\n\t\t\n\t\t\t\t\t\t\t# lead should be reset to allowed to be called again\n\t\t\t\t\t\t\t$stmtA = \"UPDATE vicidial_list SET status='$new_status',called_since_last_reset='N' where lead_id='$ST_lead_id[$a]';\";\n\t\t\t\t\t\t\tif($DB){print STDERR \"\\n|$stmtA|\\n\";}\n\t\t\t\t\t\t\tif (!$T) {$affected_rows = $dbhA->do($stmtA);}\n\t\t\t\t\t\t\tif ($DBX) {print \"DEBUG: $affected_rows|$stmtA|\\n\";}\n\t\t\t\t\t\t\t$found_stuck_ct++;\n\t\t\t\t\t\t\tif (!$Q) {print \" - stuck call has been reset: $ST_lead_id[$a]|$found_stuck_ct|\\n\";}"
+        }
+      ]
+    }
+  }
+}

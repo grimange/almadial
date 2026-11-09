@@ -1,0 +1,134 @@
+{
+  "kind": "offline consistency checks of actual saved native evidence; not independent runtime acceptance",
+  "utc": "2026-11-09T19:35:02.199159+00:00",
+  "checks": [
+    {
+      "check": "control51 claimed INCALL",
+      "result": "PASS"
+    },
+    {
+      "check": "control51 skipped to NEW/count0/calledY",
+      "result": "PASS"
+    },
+    {
+      "check": "direct52 remained INCALL immediately and after observation",
+      "result": "PASS"
+    },
+    {
+      "check": "observation at least 120 seconds without release",
+      "result": "PASS"
+    },
+    {
+      "check": "other account selected53 without releasing52",
+      "result": "PASS"
+    },
+    {
+      "check": "same-agent login changes52 to ERI and clears owner",
+      "result": "PASS"
+    },
+    {
+      "check": "next preview selects54 and leaves52 ERI",
+      "result": "PASS"
+    },
+    {
+      "check": "second direct logout leaves54 INCALL",
+      "result": "PASS"
+    },
+    {
+      "check": "next login changes54 to ERI",
+      "result": "PASS"
+    },
+    {
+      "check": "actual CLI control completed native preview55/skip/logout",
+      "result": "PASS"
+    },
+    {
+      "check": "actual Chromium registered established conference9600001",
+      "result": "PASS"
+    },
+    {
+      "check": "final native host identity",
+      "result": "PASS"
+    },
+    {
+      "check": "final campaign matches pretest relevant values",
+      "result": "PASS"
+    },
+    {
+      "check": "all four lists inactive",
+      "result": "PASS"
+    },
+    {
+      "check": "three controls retain NEW/count0/calledY",
+      "result": "PASS"
+    },
+    {
+      "check": "only direct diagnostics recovered NI/count1/calledY",
+      "result": "PASS"
+    },
+    {
+      "check": "unused56-68 still NEW/count0/calledN",
+      "result": "PASS"
+    },
+    {
+      "check": "final no INCALL, no live agent, no diagnostic call",
+      "result": "PASS"
+    },
+    {
+      "check": "recording and campaign call counts unchanged",
+      "result": "PASS"
+    },
+    {
+      "check": "accepted leads8/69 and prior diagnostic49/50 unchanged",
+      "result": "PASS"
+    },
+    {
+      "check": "no active channels/calls",
+      "result": "PASS"
+    },
+    {
+      "check": "1002 unregistered",
+      "result": "PASS"
+    },
+    {
+      "check": "all14 prior shared file hashes unchanged",
+      "result": "PASS"
+    },
+    {
+      "check": "native-source excerpts match collected hash identities",
+      "result": "PASS"
+    },
+    {
+      "check": "existing backup outcome and verification healthy",
+      "result": "PASS"
+    },
+    {
+      "check": "native lead recovery recorded only52/54",
+      "result": "PASS"
+    }
+  ],
+  "directObservationSeconds": 126.043418,
+  "sharedUnchangedFiles": 14,
+  "evidenceSha256": {
+    "cli-control-repeat-state.json": "29b659c5ce03bc970e2acd5fcff2147bfc5d0e8cd81c245a59f5d115bb66320b",
+    "cli-control-repeat.json": "a92da23c4555c239fdee58d15efd4b96d98667e7387bf261a12b7722d00a9d99",
+    "control-claimed.json": "48da7a72b41a72e8545c355225483a9d079a43b5a544ee1479852519aee4d3e8",
+    "control-logout.json": "b1be6d7a0bd25f6f35168af3b2c27936852a2fe667135acc507c1f3704c02ae1",
+    "control-skipped.json": "fa07c3122cd39ad2ee382fb3bbb68ac3511687766356fd2607c84c0068085c74",
+    "direct-after-maintenance-window.json": "9dd7077fbcacb7fb7d1041f357b7b3d84073f29cade0a07e5e1642cad4533f06",
+    "direct-claimed.json": "2c5c10432f26b7cfb075c2d554a522bfc54ab5d8e3eb5ef8cedc84d604c368cc",
+    "direct-immediate.json": "46bb873670529411f3c1faca8d3cd1d1fc1cb22784c3ecde11d612108cd399f2",
+    "direct-repeat-logout.json": "a8940129fd6918b2b51257952eedafdac0ec0533f5a8f1f2ccb0aeeea3614201",
+    "error-correlation.json": "a3a1fe69d44a968bc054a9574bee4bf5d421797fe9864ac083dcd1e345fd2605",
+    "error-review.json": "4cd19d46dcde752273492c38b96c6cead0298f36d69cee7eee41dd2c178b71e0",
+    "final-state.json": "1d8633e303ff4e10f20d5334786088ab08111cebc34c6b42a48836c4c215172b",
+    "native-activation.json": "5a0f48d787e68ed0d85f5df4c5265da60da818f644e2ebfeb652f4fb03d50cc6",
+    "native-cleanup.json": "acd851f885f93e0c9e83dc50aa0b321f988415d384a0f52b8752ac839a0fd8e1",
+    "native-source.json": "3a4a1c7f7a926035cf1c221b004a0661a6a7c6c05cf49a2a2395ced0402fceb5",
+    "other-agent-preview.json": "c87d4c8e4c203e9124a4c8081167e5e63e143f5fe636c1e857c8ac6b0e679ba3",
+    "pre-session.json": "5b6f874635592fcc4e4aa3fc64d639027ebe5ea1ea5c322db8241f2903eefe59",
+    "reconnect-next-preview.json": "d58e18ab4619874097928217cf37235203e5e2d7be585b400f26b2ef6ae8c72f",
+    "regression.json": "2e724bfdde4fe803bd17207774c831ac1c84c171f13dd1f20c1235958eccd15b",
+    "same-agent-relogin.json": "61d04e995b0f6067031cb1d9bf7a5a48ae0aaf28822d1beb746fed651e266c22"
+  }
+}
