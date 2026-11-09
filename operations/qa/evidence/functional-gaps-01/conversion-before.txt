@@ -1,0 +1,2 @@
+Can't locate Spreadsheet/Read.pm in @INC (you may need to install the Spreadsheet::Read module) (@INC entries checked: /usr/local/lib64/perl5/5.40 /usr/local/share/perl5/5.40 /usr/lib64/perl5/vendor_perl /usr/share/perl5/vendor_perl /usr/lib64/perl5 /usr/share/perl5) at ./sheet2tab.pl line 44.
+BEGIN failed--compilation aborted at ./sheet2tab.pl line 44.

@@ -1,2 +1,6 @@
 # Markdown uses two trailing spaces for intentional hard line breaks.
 *.md whitespace=-blank-at-eol
+
+# Preserve the exact CRLF CSV inputs exercised by native import acceptance.
+operations/qa/fixtures/prd-functional-gaps-01.csv -text
+operations/qa/fixtures/prd-functional-gaps-01-utf8.csv -text

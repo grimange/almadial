@@ -1,0 +1,197 @@
+ ADMINISTRATION
+
+
+ Reports
+
+
+ Users
+
+
+ Campaigns
+
+
+ Lists
+  Show Lists
+  Add A New List
+  Search For A Lead
+  Add A New Lead
+  Add-Delete DNC Number
+  Load New Leads
+
+
+ Scripts
+
+
+ Filters
+
+
+ Inbound
+
+
+ User Groups
+
+
+ Remote Agents
+
+
+ Admin
+
+
+ 	
+HOME | Timeclock | Chat | Logout (6666)	Monday November 9, 2026 23:43:54 PM  
+
+
+
+LIST ADDED: 910015
+
+MODIFY A LISTS RECORD: 910015
+List ID:	910015
+List Name:	
+List Description:	
+Campaign:	
+QAOUT01 - QA Outbound Synthetic Only
+test01 - Testing Campaign
+QAOUT01
+
+Active:	
+Y
+N
+N
+
+Reset Lead-Called-Status for this list:	
+Y
+N
+
+Reset Times:	
+
+Daily Reset Limit:	   Resets Today: 0   
+Expiration Date:	  
+Local Call Time:	
+Campaign - Use Campaign Settings
+12pm-5pm - default 12pm to 5pm calling
+12pm-9pm - default 12pm to 9pm calling
+24hours - default 24 hours calling
+5pm-9pm - default 5pm to 9pm calling
+9am-5pm - default 9am to 5pm calling
+9am-9pm - default 9am to 9pm calling
+Campaign - Use Campaign Settings
+
+Audit Comments:	
+Y
+N
+
+List Change Date:	2026-11-09 23:43:54   
+List Last Call Date:	  
+Agent Script Override:	
+NONE - INACTIVE
+CALLNOTES - Call Notes and Appointment Setting
+
+Inbound Script Override:	
+NONE - INACTIVE
+CALLNOTES - Call Notes and Appointment Setting
+
+Inbound Drop Voicemail Override:	 voicemail chooser
+Inbound After Hours Voicemail Override:	 voicemail chooser
+Campaign CID Override:	
+Campaign CID Group Override:	
+---DISABLED---
+
+Answering Machine Message Override:	 audio chooser 
+Drop Inbound Group Override:	
+AGENTDIRECT - Single Agent Direct Queue
+AGENTDIRECT_CHAT - Agent Direct Queue for Chats
+---NONE---
+
+Status Group Override:	
+NONE
+
+Web Form:	
+Web Form Two:	
+No Agent Call URL:	
+API New Lead URL:	
+Auto Alt Threshold Override:	number only 
+Dial Prefix Override:	 
+Transfer-Conf Number 1 Override:	
+Transfer-Conf Number 2 Override:	
+Transfer-Conf Number 3 Override:	
+Transfer-Conf Number 4 Override:	
+Transfer-Conf Number 5 Override:	
+Default Transfer Group:	
+---NONE---
+
+
+
+Inventory Report:	
+Y
+N
+Y
+
+Time Zone Setting:	
+COUNTRY_AND_AREA_CODE
+POSTAL_CODE
+NANPA_PREFIX
+OWNER_TIME_ZONE_CODE
+COUNTRY_AND_AREA_CODE
+
+
+
+STATUSES WITHIN THIS LIST:
+
+STATUS	STATUS NAME	CALLED	NOT CALLED	DIALABLE	PENETRATION
+SUBTOTALS	0	0	 	 
+TOTAL	0	0	0%  
+
+
+
+TIME ZONES WITHIN THIS LIST:
+
+GMT OFFSET NOW (local time)	CALLED	NOT CALLED
+SUBTOTALS	0	0
+TOTAL	0
+
+
+
+OWNERS WITHIN THIS LIST:
+
+OWNER	CALLED	NOT CALLED
+SUBTOTALS	0	0
+TOTAL	0
+
+
+
+RANKS WITHIN THIS LIST:
+
+RANK	CALLED	NOT CALLED
+SUBTOTALS	0	0
+TOTAL	0
+
+
+
+CALLED COUNTS WITHIN THIS LIST:
+
+STATUS	STATUS NAME	SUBTOTAL
+		0
+TOTAL	0
+
+
+
+
+Click here to see all CallBack Holds in this list
+
+
+Click here to download this list
+
+
+
+DELETE THIS LIST
+
+CLEAR THIS LIST
+
+Click here to see Admin changes to this list
+
+
+
+VERSION: 2.14-969a
+BUILD: 261102-0125
+© 2026 ViciDial Group
+	

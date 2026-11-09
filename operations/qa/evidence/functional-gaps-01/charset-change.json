@@ -1,0 +1,8 @@
+{
+  "setting": "use_non_latin",
+  "before": "0",
+  "after": "1",
+  "changedControlNames": [
+    "use_non_latin"
+  ]
+}

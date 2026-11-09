@@ -1,0 +1,109 @@
+Last metadata expiration check: 0:52:52 ago on Mon 09 Nov 2026 09:46:34 AM EST.
+No match for argument: perl-Data-Peek
+CSV_XS=::CSV_XS::VERSION
+					$o=0;
+					while ($fields_to_print > $o) 
+						{
+						$rowx=mysqli_fetch_row($rslt);
+						$A_field_label[$o] =	$rowx[1];
+						$A_field_type[$o] =		$rowx[6];
+						$A_field_encrypt[$o] =	$rowx[16];
+
+						if ($DB>0) {echo "$A_field_label[$o]|$A_field_type[$o]\n";}
+
+						if ( ($A_field_type[$o]!='DISPLAY') and ($A_field_type[$o]!='SCRIPT') and ($A_field_type[$o]!='SWITCH') and ($A_field_type[$o]!='BUTTON') )
+							{
+							if (!preg_match("/\|$A_field_label[$o]\|/",$vicidial_list_fields))
+								{
+								$custom_SQL .= ",$A_field_label[$o]";
+								}
+							}
+						$o++;
+						}
+
+					$fields_stmt = "SELECT vendor_lead_code, source_id, list_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner $custom_SQL from vicidial_list, custom_$list_id_override limit 1";
+
+					}
+				}
+			}
+		##### END custom fields columns list ###
+
+		if ($DB>0) {echo "$fields_stmt\n";}
+		$rslt=mysql_to_mysqli("$fields_stmt", $link);
+
+		# csv xls xlsx ods sxc conversion
+		$delim_set=0;
+		if (preg_match("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", $leadfile_name)) 
+			{
+			$leadfile_name = preg_replace('/[^-\.\_0-9a-zA-Z]/','_',$leadfile_name);
+			copy($LF_path, "/tmp/$leadfile_name");
+			$new_filename = preg_replace("/\.csv$|\.xls$|\.xlsx$|\.ods$|\.sxc$/i", '.txt', $leadfile_name);
+			$convert_command = "$WeBServeRRooT/$admin_web_directory/sheet2tab.pl /tmp/$leadfile_name /tmp/$new_filename";
+			passthru("$convert_command");
+			$lead_file = "/tmp/$new_filename";
+			if ($DB > 0) {echo "|$convert_command|";}
+
+			if (preg_match("/\.csv$/i", $leadfile_name)) {$delim_name="CSV: "._QXZ("Comma Separated Values");}
+			if (preg_match("/\.xls$/i", $leadfile_name)) {$delim_name="XLS: MS Excel 2000-XP";}
+			if (preg_match("/\.xlsx$/i", $leadfile_name)) {$delim_name="XLSX: MS Excel 2007+";}
+			if (preg_match("/\.ods$/i", $leadfile_name)) {$delim_name="ODS: OpenOffice.org OpenDocument "._QXZ("Spreadsheet");}
+			if (preg_match("/\.sxc$/i", $leadfile_name)) {$delim_name="SXC: OpenOffice.org "._QXZ("First Spreadsheet");}
+			$delim_set=1;
+			}
+		else
+			{
+			copy($LF_path, "/tmp/vicidial_temp_file.txt");
+			$lead_file = "/tmp/vicidial_temp_file.txt";
+			}
+		$file=fopen("$lead_file", "r");
+		if ($webroot_writable > 0)
+			{$stmt_file=fopen("$WeBServeRRooT/$admin_web_directory/listloader_stmts.txt", "w");}
+
+		$buffer=fgets($file, 4096);
+		$tab_count=substr_count($buffer, "\t");
+		$pipe_count=substr_count($buffer, "|");
+
+		if ($delim_set < 1)
+			{
+			if ($tab_count>$pipe_count)
+				{$delim_name=_QXZ("tab-delimited");} 
+			else 
+				{$delim_name=_QXZ("pipe-delimited");}
+			} 
+		if ($tab_count>$pipe_count)
+			{$delimiter="\t";}
+686:# 220128-0030 - Added more logging of dial alerts, force PauseCode MDSKIP when skipping previewed lead
+3255:				$stmt="SELECT park_ext,park_file_name,web_form_address,allow_closers,auto_dial_level,dial_timeout,dial_prefix,campaign_cid,campaign_vdad_exten,campaign_rec_exten,campaign_recording,campaign_rec_filename,campaign_script,get_call_launch,am_message_exten,xferconf_a_dtmf,xferconf_a_number,xferconf_b_dtmf,xferconf_b_number,alt_number_dialing,scheduled_callbacks,wrapup_seconds,wrapup_message,closer_campaigns,use_internal_dnc,allcalls_delay,omit_phone_code,agent_pause_codes_active,no_hopper_leads_logins,campaign_allow_inbound,manual_dial_list_id,default_xfer_group,xfer_groups,disable_alter_custphone,display_queue_count,manual_dial_filter,agent_clipboard_copy,use_campaign_dnc,three_way_call_cid,dial_method,three_way_dial_prefix,web_form_target,vtiger_screen_login,agent_allow_group_alias,default_group_alias,quick_transfer_button,prepopulate_transfer_preset,view_calls_in_queue,view_calls_in_queue_launch,call_requeue_button,pause_after_each_call,no_hopper_dialing,agent_dial_owner_only,agent_display_dialable_leads,web_form_address_two,agent_select_territories,crm_popup_login,crm_login_address,timer_action,timer_action_message,timer_action_seconds,start_call_url,dispo_call_url,xferconf_c_number,xferconf_d_number,xferconf_e_number,use_custom_cid,scheduled_callbacks_alert,scheduled_callbacks_count,manual_dial_override,blind_monitor_warning,blind_monitor_message,blind_monitor_filename,timer_action_destination,enable_xfer_presets,hide_xfer_number_to_dial,manual_dial_prefix,customer_3way_hangup_logging,customer_3way_hangup_seconds,customer_3way_hangup_action,ivr_park_call,manual_preview_dial,api_manual_dial,manual_dial_call_time_check,my_callback_option,per_call_notes,agent_lead_search,agent_lead_search_method,queuemetrics_phone_environment,auto_pause_precall,auto_pause_precall_code,auto_resume_precall,manual_dial_cid,custom_3way_button_transfer,callback_days_limit,disable_dispo_screen,disable_dispo_status,screen_labels,status_display_fields,pllb_grouping,pllb_grouping_limit,in_group_dial,in_group_dial_select,pause_after_next_call,owner_populate,manual_dial_lead_id,dead_max,dispo_max,pause_max,dead_max_dispo,dispo_max_dispo,max_inbound_calls,manual_dial_search_checkbox,hide_call_log_info,timer_alt_seconds,wrapup_bypass,wrapup_after_hotkey,callback_active_limit,callback_active_limit_override,comments_all_tabs,comments_dispo_screen,comments_callback_screen,qc_comment_history,show_previous_callback,clear_script,manual_dial_search_filter,web_form_address_three,manual_dial_override_field,status_display_ingroup,customer_gone_seconds,agent_display_fields,manual_dial_timeout,manual_auto_next,manual_auto_show,allow_required_fields,dead_to_dispo,agent_xfer_validation,ready_max_logout,callback_display_days,three_way_record_stop,hangup_xfer_record_start,max_inbound_calls_outcome,manual_auto_next_options,agent_screen_time_display,pause_max_dispo,script_top_dispo,routing_initiated_recordings,dead_trigger_seconds,dead_trigger_action,dead_trigger_repeat,dead_trigger_filename,scheduled_callbacks_force_dial,callback_hours_block,callback_display_days,scheduled_callbacks_timezones_container,three_way_volume_buttons,manual_dial_validation,mute_recordings,leave_vm_no_dispo,leave_vm_message_group_id,campaign_script_two,browser_alert_sound,browser_alert_volume,three_way_record_stop_exception,pause_max_exceptions,transfer_button_launch,leave_3way_start_recording,leave_3way_start_recording_exception,calls_waiting_vl_one,calls_waiting_vl_two,in_man_dial_next_ready_seconds,in_man_dial_next_ready_seconds_override,transfer_no_dispo,local_call_time,pause_max_url,agent_hide_hangup,ig_xfer_list_sort,script_tab_frame_size,user_group_script,agent_hangup_route,agent_hangup_value,agent_hangup_ig_override,show_confetti,custom_one,custom_two,custom_three,custom_four,custom_five,allow_chats,dead_stop_recording,force_per_call_notes,state_descriptions,script_tab_height,leave_3way_stop_recording,manual_minimum_ring_seconds,manual_minimum_attempt_seconds,manual_minimum_answer_seconds,sip_event_logging,stereo_recording,stereo_recording_agent,recording_dtmf_muting,hangup_again_link FROM vicidial_campaigns where campaign_id = '$VD_campaign';";
+3287:				$agent_pause_codes_active =	$row[27];
+3663:				if ( ($SSmanual_auto_next < 1) or ( ($dial_method != 'INBOUND_MAN') and ($dial_method != 'MANUAL') ) )
+4047:				if ( (preg_match('/Y/',$agent_pause_codes_active)) or (preg_match('/FORCE/',$agent_pause_codes_active)) )
+4090:				if ( ($campaign_allow_inbound == 'Y') and ($dial_method != 'MANUAL') )
+4924:		if ( ( ($campaign_allow_inbound == 'Y') and ($dial_method != 'MANUAL') ) || ($campaign_leads_to_call > 0) || (preg_match('/Y/',$no_hopper_leads_logins)) )
+5404:				if ( ($campaign_allow_inbound == 'Y') and ($dial_method != 'MANUAL') )
+6215:	var agent_pause_codes_active = '<?php echo $agent_pause_codes_active ?>';
+6574:	var PauseCode_HTML = '';
+8553:						var APIPauseCode_array = check_time_array[26].split("APIPaUseCodE: ");
+8554:						var api_pause_code = APIPauseCode_array[1];
+8645:								PauseCodeSelect_submit(api_pause_code);
+10585:			if ( (auto_pause_precall == 'Y') && ( (agent_pause_codes_active=='Y') || (agent_pause_codes_active=='FORCE') ) && (AutoDialWaiting == 1) && (VD_live_customer_call!=1) && (alt_dial_active!=1) && (MD_channel_look!=1) && (in_lead_preview_state!=1) )
+10930:		// alert("Both move_ons must be true plus at least one of the last 5 variables must be '1' to check.  Then all 7 non-move_on must be true to manual dial.:\nmove_on - starting_dial_level != 0 ("+starting_dial_level+")\nmove_on - dial_next_failed < 1 ("+dial_next_failed+")\n(N/A)dial_method = "+dial_method+"\n(N/A)custchanellive = "+custchannellive+"\nauto_pause_precall == 'Y' ("+auto_pause_precall+")\nagent_pause_codes_active=='Y' OR 'FORCE' ("+agent_pause_codes_active+")\nAutoDialWaiting == 1 ("+AutoDialWaiting+")\nVD_live_customer_call != 1 ("+VD_live_customer_call+")\nalt_dial_active != 1 ("+alt_dial_active+")\nMD_channel_look != 1 ("+MD_channel_look+")\nin_lead_preview_state != 1 ("+in_lead_preview_state+")");
+10932:		if (dial_method == 'MANUAL' && (lastcustchannel.length > 0 || manual_call_live > 0))
+10939:			if ((auto_pause_precall == 'Y') && ( (agent_pause_codes_active=='Y') || (agent_pause_codes_active=='FORCE') ) && (AutoDialWaiting == 1) && (VD_live_customer_call!=1) && (alt_dial_active!=1) && (MD_channel_look!=1) && (in_lead_preview_state!=1) )
+13805:				PauseCodeSelect_submit('MDSKIP');
+14246:					if ( (agent_pause_codes_active=='FORCE') && (temp_reason != 'LOGOUT') && (temp_reason != 'REQUEUE') && (temp_reason != 'DIALNEXT') && (temp_auto != '1') )
+14248:						PauseCodeSelectContent_create();
+17399:	function PauseCodeSelectContent_create(PCSclick)
+17402:			{button_click_log = button_click_log + "" + SQLdate + "-----PauseCodeSelectContent_create---|";}
+17406:			if ((auto_pause_precall == 'Y') && ( (agent_pause_codes_active=='Y') || (agent_pause_codes_active=='FORCE') ) && (AutoDialWaiting == 1) && (VD_live_customer_call!=1) && (alt_dial_active!=1) && (MD_channel_look!=1) && (in_lead_preview_state!=1) )
+17414:				button_click_log = button_click_log + "" + SQLdate + "-----PauseCodeOpenFailed---" + VDRP_stage + " " + "|";
+17421:				PauseCodeSelect_submit('NXDIAL');
+17426:				showDiv('PauseCodeSelectBox');
+17428:				PauseCode_HTML = '';
+17430:				document.vicidial_form.PauseCodeSelection.value = '';		
+17432:                PauseCode_HTML = "<table cellpadding=\"5\" cellspacing=\"5\" width=\"500px\"><tr><td colspan=\"2\"><font class=sh_text'> <?php echo _QXZ("PAUSE CODE"); ?></font></td></tr><tr><td bgcolor=\"#99FF99\" height=\"300px\" width=\"240px\" valign=\"top\"><font class=\"log_text\"><span id=\"PauseCodeSelectA\">";
+17441:						PauseCode_HTML = PauseCode_HTML + "<font size=\"3\" face=\"Arial, Helvetica, sans-serif\" style=\"BACKGROUND-COLOR: #FFFFCC\"><b><a href=\"#\" onclick=\"PauseCodeOpen_mgrapr('" + VARpause_codes[loop_ct] + "','" + VARpause_code_names[loop_ct] + "','YES');return false;\">" + VARpause_codes[loop_ct] + " - " + VARpause_code_names[loop_ct] + '' + temp_mgrapr + "</a></b></font><br /><br />";
+17445:						PauseCode_HTML = PauseCode_HTML + "<font size=\"3\" face=\"Arial, Helvetica, sans-serif\" style=\"BACKGROUND-COLOR: #FFFFCC\"><b><a href=\"#\" onclick=\"PauseCodeSelect_submit('" + VARpause_codes[loop_ct] + "','YES');return false;\">" + VARpause_codes[loop_ct] + " - " + VARpause_code_names[loop_ct] + "</a></b></font><br /><br />";
+17449:                        {PauseCode_HTML = PauseCode_HTML + "</span></font></td><td bgcolor=\"#99FF99\" height=\"300px\" width=\"240px\" valign=\"top\"><font class=\"log_text\"><span id=PauseCodeSelectB>";}
+17452:				if (agent_pause_codes_active=='FORCE')
+17455:                    {var Go_BacK_LinK = "<font size=\"3\" face=\"Arial, Helvetica, sans-serif\" style=\"BACKGROUND-COLOR: #FFFFCC\"><b><a href=\"#\" onclick=\"PauseCodeSelect_submit('','YES');return false;\"><?php echo _QXZ("Go Back"); ?></a>";}
+17457:                PauseCode_HTML = PauseCode_HTML + "</span></font></td></tr></table><br /><br />" + Go_BacK_LinK;

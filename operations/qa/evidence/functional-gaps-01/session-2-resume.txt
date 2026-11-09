@@ -1,0 +1,68 @@
+Logged in as User: qaagent14 on Phone: PJSIP/1000  to campaign: QAOUT01     	LOGOUT
+		  2026-11-10 00:03:11    session ID: 9600000
+   Calls in Queue: 0   	
+STATUS:
+
+
+
+
+ LEAD PREVIEW
+RECORDING FILE:
+
+
+RECORD ID:
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+	
+	  Customer Time:                         Channel:
+Customer Information:        
+
+Title:	  First:   MI:   Last : 
+Address1:	
+Address2:		Address3:	
+City:		State:		PostCode:	
+Province:		Vendor ID:		Gender:	
+U - Undefined
+M - Male
+F - Female
+
+Phone:	                   	DialCode:		Alt. Phone:	
+Show:		Email:	
+Comments:
+	
+	
+	
+ 
+ 
+ 
+    
+
+
+VERSION: 2.14-728c   BUILD: 261101-1945     Server: 2.29.153.161              
+Show conference call channel information
+
+ 	
+
+
+
+seconds:    
+
+
+
+ 
+
+Agents View +
+commit

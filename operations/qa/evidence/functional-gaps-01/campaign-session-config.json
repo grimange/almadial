@@ -1,0 +1,34 @@
+[
+  {
+    "name": "active",
+    "value": "Y"
+  },
+  {
+    "name": "campaign_allow_inbound",
+    "value": "N"
+  },
+  {
+    "name": "dial_method",
+    "value": "INBOUND_MAN"
+  },
+  {
+    "name": "auto_dial_level",
+    "value": "1.0"
+  },
+  {
+    "name": "agent_pause_codes_active",
+    "value": "N"
+  },
+  {
+    "name": "no_hopper_leads_logins",
+    "value": "Y"
+  },
+  {
+    "name": "manual_dial_list_id",
+    "value": "910016"
+  },
+  {
+    "name": "manual_preview_dial",
+    "value": "PREVIEW_AND_SKIP"
+  }
+]

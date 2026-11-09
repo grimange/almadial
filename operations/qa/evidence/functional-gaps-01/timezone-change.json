@@ -1,0 +1,9 @@
+{
+  "path": "/etc/php.d/99-vicidial.ini",
+  "backup": "/root/99-vicidial.ini.gap01-before",
+  "before_sha256": "eba8dd1f25f4ed1ab825fd25b086c2f58d5e8588dae9596a4cd2a8bf25e25298",
+  "after_sha256": "f7511fa973114cc62489bbc24955bfa2031a9ad3cb0919525a47cf806bc22cfa",
+  "change": "date.timezone Asia/Manila -> America/New_York; all other bytes retained",
+  "php_fpm_test": "[09-Nov-2026 10:49:11] NOTICE: configuration file /etc/php-fpm.conf test is successful\n",
+  "reload_rc": 0
+}

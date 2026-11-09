@@ -1,0 +1,39 @@
+{
+  "changed_protected_file_hashes": [],
+  "recording_unchanged": true,
+  "db_baseline_unchanged": true,
+  "permanent_firewall_unchanged": true,
+  "nft_output_equal": false,
+  "services": {
+    "httpd": "MainPID=26973\nExecMainStartTimestamp=Wed 2026-11-04 16:15:42 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "asterisk": "MainPID=143137\nExecMainStartTimestamp=Thu 2026-11-05 10:25:33 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "mariadb": "MainPID=61646\nExecMainStartTimestamp=Wed 2026-11-04 16:47:10 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "php-fpm": "MainPID=26963\nExecMainStartTimestamp=Wed 2026-11-04 16:15:41 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "alma-portal-443": "MainPID=443916\nExecMainStartTimestamp=Fri 2026-11-06 18:47:34 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "alma-portal-443-apply.timer": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+    "alma-portal-sip-guard": "MainPID=0\nExecMainStartTimestamp=Thu 2026-11-05 17:01:25 EST\nActiveState=active\nSubState=exited\nUnitFileState=enabled",
+    "alma-vicidial-recording.timer": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+    "alma-vicidial-backup.timer": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+    "alma-portal-renew.timer": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+    "fail2ban": "MainPID=178535\nExecMainStartTimestamp=Thu 2026-11-05 15:28:22 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled"
+  },
+  "backup_health_exit": 0,
+  "apache_config": {
+    "code": 0,
+    "stdout": "",
+    "stderr": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nSyntax OK"
+  },
+  "channels": {
+    "code": 0,
+    "stdout": "0 active channels\n0 active calls\n30 calls processed",
+    "stderr": ""
+  },
+  "changed_asterisk_hashes": [],
+  "test01_and_lead8_unchanged": {
+    "SELECT campaign_id,active,dial_method,auto_dial_level,dial_prefix,manual_dial_prefix,campaign_recording,user_group,dial_statuses FROM vicidial_campaigns WHERE campaign_id='test01'": true,
+    "SELECT lead_id,list_id,status,phone_number FROM vicidial_list WHERE lead_id=8": true,
+    "SELECT extension,protocol,active FROM phones WHERE extension IN ('1000','1001','1014')": true
+  },
+  "nft_rules_equal_after_removing_expiry_and_counters": true,
+  "service_status_and_main_pids_unchanged": true
+}

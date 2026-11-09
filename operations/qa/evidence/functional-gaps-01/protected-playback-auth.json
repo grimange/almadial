@@ -1,0 +1,46 @@
+[
+  {
+    "role": "admin",
+    "status": 200,
+    "content_type": "audio/wav",
+    "content_length": "892204"
+  },
+  {
+    "role": "agent",
+    "status": 403,
+    "content_type": "audio/x-wav"
+  },
+  {
+    "role": "agent",
+    "path": "/vicidial/admin.php?ADD=31&campaign_id=QAOUT01",
+    "status": 401,
+    "password_in_response": true,
+    "redacted_context": "Login incorrect, please try again: |qaagent14|[REDACTED]|BAD|\n"
+  },
+  {
+    "role": "agent",
+    "path": "/vicidial/admin_listloader_fifth_gen.php",
+    "status": 401,
+    "password_in_response": true,
+    "redacted_context": "Login incorrect, please try again: |qaagent14|[REDACTED]|BAD|\n"
+  },
+  {
+    "role": "supervisor",
+    "status": 403,
+    "content_type": "audio/x-wav"
+  },
+  {
+    "role": "supervisor",
+    "path": "/vicidial/admin.php?ADD=31&campaign_id=QAOUT01",
+    "status": 200,
+    "password_in_response": true,
+    "redacted_context": "else \n\t\t\t{\n\t\t\ttextBox.value += openField + insValue + closeField;\n\t\t\t}\n\t\t}\n\n\t\tvar pass = '[REDACTED]';\n\n\tmouseY=0;\n\tfunction getMousePos(event) {\n\t\tmouseY=event.pageY;\n\t}\n\tdocument.addEventListener(\"click\", getMousePos);\n\n\tvar chooser_field='';\n\tvar "
+  },
+  {
+    "role": "supervisor",
+    "path": "/vicidial/admin_listloader_fifth_gen.php",
+    "status": 401,
+    "password_in_response": true,
+    "redacted_context": "Login incorrect, please try again: |qasup14|[REDACTED]|BAD|\n"
+  }
+]

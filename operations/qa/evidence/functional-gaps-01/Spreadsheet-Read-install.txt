@@ -1,0 +1,93 @@
+Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Spreadsheet::Read
+Writing MYMETA.yml and MYMETA.json
+cp Read.pm blib/lib/Spreadsheet/Read.pm
+Manifying 1 pod document
+PERL_DL_NONLAZY=1 "/usr/bin/perl" "-MExtUtils::Command::MM" "-MTest::Harness" "-e" "undef *Test::Harness::Switches; test_harness(0, 'blib/lib', 'blib/arch')" t/*.t
+t/10_basics.t ..... ok
+t/11_call.t ....... ok
+t/200_csv.t ....... ok
+t/201_csv.t ....... ok
+t/202_csv.t ....... ok
+t/203_csv.t ....... ok
+t/204_csv.t ....... ok
+t/205_csv.t ....... ok
+t/210_csv.t ....... ok
+t/211_csv.t ....... ok
+t/212_csv.t ....... ok
+t/213_csv.t ....... ok
+t/214_csv.t ....... ok
+t/220_csv.t ....... skipped: Cannot use Text::CSV_PP
+t/221_csv.t ....... skipped: Cannot use Text::CSV_PP
+t/222_csv.t ....... skipped: Cannot use Text::CSV_PP
+t/223_csv.t ....... skipped: Cannot use Text::CSV_PP
+t/224_csv.t ....... skipped: Cannot use Text::CSV_PP
+t/30_xls.t ........ ok
+t/31_clr.t ........ ok
+t/32_fmt.t ........ ok
+t/33_misc.t ....... ok
+t/34_dates.t ...... ok
+t/35_perc.t ....... ok
+t/36_xls.t ........ ok
+t/37_merged.t ..... ok
+t/410_ods.t ....... skipped: Cannot use Spreadsheet::ParseODS
+t/411_clr.t ....... skipped: Cannot use Spreadsheet::ParseODS
+t/412_fmt.t ....... skipped: Cannot use Spreadsheet::ParseODS
+t/413_misc.t ...... skipped: Cannot use Spreadsheet::ParseODS
+t/414_dates.t ..... skipped: Cannot use Spreadsheet::ParseODS
+t/415_perc.t ...... skipped: Cannot use Spreadsheet::ParseODS
+t/417_merged.t .... skipped: Cannot use Spreadsheet::ParseODS
+t/420_sxc.t ....... skipped: No SXC parser found
+t/425_ods.t ....... skipped: No SXC parser found
+t/426_clr.t ....... ok
+t/50_sc.t ......... ok
+t/51_sc.t ......... ok
+t/600_xlsx.t ...... ok
+t/601_clr.t ....... ok
+t/602_fmt.t ....... ok
+t/603_misc.t ...... ok
+t/604_dates.t ..... ok
+t/605_perc.t ...... ok
+t/607_merged.t .... skipped: No merged cell support in Spreadsheet::XLSX
+t/610_xlsx.t ...... skipped: Cannot use Spreadsheet::ParseXLSX
+t/611_clr.t ....... skipped: Cannot use Spreadsheet::ParseXLSX
+t/612_fmt.t ....... skipped: Cannot use Spreadsheet::ParseXLSX
+t/613_misc.t ...... skipped: Cannot use Spreadsheet::ParseXLSX
+t/614_dates.t ..... skipped: Cannot use Spreadsheet::ParseXLSX
+t/615_perc.t ...... skipped: Cannot use Spreadsheet::ParseXLSX
+t/617_merged.t .... skipped: Cannot use Spreadsheet::ParseXLSX
+t/620_xlsx.t ...... ok
+t/621_clr.t ....... ok
+t/622_fmt.t ....... ok
+t/623_misc.t ...... ok
+t/624_dates.t ..... ok
+t/625_perc.t ...... ok
+t/627_merged.t .... ok
+t/630_xlsx.t ...... skipped: Cannot use Excel::ValueReader::XLSX
+t/631_clr.t ....... skipped: Cannot use Excel::ValueReader::XLSX
+t/632_fmt.t ....... skipped: Cannot use Excel::ValueReader::XLSX
+t/633_misc.t ...... skipped: Cannot use Excel::ValueReader::XLSX
+t/634_dates.t ..... skipped: Cannot use Excel::ValueReader::XLSX
+t/635_perc.t ...... skipped: Cannot use Excel::ValueReader::XLSX
+t/637_merged.t .... skipped: Cannot use Excel::ValueReader::XLSX
+t/700_gnumeric.t .. skipped: No Gnumeric parser found
+t/701_clr.t ....... skipped: No Gnumeric parser found
+t/702_fmt.t ....... skipped: No Gnumeric parser found
+t/704_dates.t ..... skipped: Cannot use Spreadsheet::ReadGnumeric
+t/707_merged.t .... skipped: Cannot use Spreadsheet::ReadGnumeric
+t/999_fail.t ...... ok
+All tests successful.
+Files=72, Tests=3885,  8 wallclock secs ( 0.33 usr  0.18 sys +  6.64 cusr  1.42 csys =  8.57 CPU)
+Result: PASS
+Manifying 1 pod document
+Installing /usr/local/share/perl5/5.40/Spreadsheet/Read.pm
+Installing /usr/local/share/man/man3/Spreadsheet::Read.3pm
+Appending installation info to /usr/lib64/perl5/perllocal.pod
+# Parser: Text::CSV_XS-1.65
+# Parser: Text::CSV_XS-1.65
+# Parser: Spreadsheet::ParseExcel-0.66
+# Parser: Spreadsheet::Read-0.95
+# Parser: Spreadsheet::XLSX-0.20
+# Parser: Spreadsheet::XLSX-0.20

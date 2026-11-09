@@ -1,0 +1,102 @@
+[
+  {
+    "name": "vendor_lead_code_field",
+    "value": "0"
+  },
+  {
+    "name": "source_id_field",
+    "value": "-1"
+  },
+  {
+    "name": "list_id_field",
+    "value": "5"
+  },
+  {
+    "name": "phone_code_field",
+    "value": "1"
+  },
+  {
+    "name": "phone_number_field",
+    "value": "2"
+  },
+  {
+    "name": "title_field",
+    "value": "-1"
+  },
+  {
+    "name": "first_name_field",
+    "value": "3"
+  },
+  {
+    "name": "middle_initial_field",
+    "value": "-1"
+  },
+  {
+    "name": "last_name_field",
+    "value": "4"
+  },
+  {
+    "name": "address1_field",
+    "value": "-1"
+  },
+  {
+    "name": "address2_field",
+    "value": "-1"
+  },
+  {
+    "name": "address3_field",
+    "value": "-1"
+  },
+  {
+    "name": "city_field",
+    "value": "8"
+  },
+  {
+    "name": "state_field",
+    "value": "-1"
+  },
+  {
+    "name": "province_field",
+    "value": "-1"
+  },
+  {
+    "name": "postal_code_field",
+    "value": "-1"
+  },
+  {
+    "name": "country_code_field",
+    "value": "-1"
+  },
+  {
+    "name": "gender_field",
+    "value": "-1"
+  },
+  {
+    "name": "date_of_birth_field",
+    "value": "-1"
+  },
+  {
+    "name": "alt_phone_field",
+    "value": "-1"
+  },
+  {
+    "name": "email_field",
+    "value": "6"
+  },
+  {
+    "name": "security_phrase_field",
+    "value": "-1"
+  },
+  {
+    "name": "comments_field",
+    "value": "7"
+  },
+  {
+    "name": "rank_field",
+    "value": "-1"
+  },
+  {
+    "name": "owner_field",
+    "value": "-1"
+  }
+]

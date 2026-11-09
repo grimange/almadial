@@ -1,84 +1,90 @@
 # VICIdial outbound synthetic acceptance fixture
 
-Assignment: `VICIDIAL_PRD_01_02_03_14_ACCEPTANCE`  
-Executed: 2026-11-09 on `dialer01`  
-Owner: native administrator; fixture retained for bounded follow-up acceptance.
+Created by `VICIDIAL_PRD_01_02_03_14_ACCEPTANCE`; updated by `VICIDIAL_PRD_FUNCTIONAL_GAPS_01`, 2026-11-09 UTC / 2026-11-10 Asia/Manila. All configuration and lead changes used native Administration; database verification was read-only.
 
-This fixture was created through native VICIdial Administration. It is **inactive at handoff**. It does not authorize customer calls, automatic dialing, predictive dialing, carrier provisioning, or changes to the known-good baseline. Acceptance results and evidence are in [the acceptance report](VICIDIAL_PRD_01_02_03_14_ACCEPTANCE.md).
+The fixture is **inactive at handoff**. No customer call, automatic dialing, predictive dialing or carrier provisioning is authorized by retaining it. See [original acceptance](VICIDIAL_PRD_01_02_03_14_ACCEPTANCE.md) and [functional remediation acceptance](VICIDIAL_PRD_FUNCTIONAL_GAPS_01_ACCEPTANCE.md). The latter supersedes the original CSV dependency and agent-control findings; open-preview logout still requires attention.
 
-## Object register and final settings
+## Current object register
 
-| Object | Identifier | Final configuration / purpose |
+| Object | Identifier | Retained configuration / purpose |
 |---|---|---|
-| Campaign | `QAOUT01` | `QA Outbound Synthetic Only`; active `N`; method `MANUAL`; automatic dial level `0`; administration ownership group `ADMIN` |
-| List | `910014` | `QA PRD synthetic only`; campaign `QAOUT01`; active `N`; expiration `2099-12-31` |
-| User group | `QAPRD14` | `QA PRD synthetic restricted`; allowed campaign only `QAOUT01`; admin-viewable and agent-status-viewable groups only `QAPRD14` |
-| Agent | `qaagent14` | Active `Y`, level `1`, group `QAPRD14`; reports `0`, protected recording access `0`; users/campaigns/lists/phones modification and lead loading `0` |
-| Supervisor | `qasup14` | Active `Y`, level `7`, group `QAPRD14`; reports `1`, protected recording access `0`; users/campaigns/lists/phones modification and lead loading `0` |
-| Inactive phone | `1014` | Extension, dialplan number, voicemail, outbound CID and native login `1014`; protocol `SIP`; active `N`; status `SUSPENDED`; type `QA INACTIVE`; fullname `QA PRD inactive only`; group `QAPRD14`; blank template |
-| Leads | `9`–`28` | 20 synthetic records; vendor IDs `PRD14_001`–`PRD14_020`; list `910014` |
-| Preview lead | `9` | `PRD14_001`; phone `7000000001`; final status `NI`, called flag `N` after native list reset |
-| Non-routed leads | `10`–`28` | Phones `0000000102`–`0000000120`; final status `DNC`; no matching full prefixed Asterisk route |
+| Campaign | `QAOUT01` | `QA Outbound Synthetic Only`; active `N`; method `MANUAL`; automatic level `0`; owner group `ADMIN` |
+| Original list | `910014` | `QA PRD synthetic only`; QAOUT01; active `N`; expiration `2099-12-31` |
+| Diagnostic CSV list | `910015` | `GAP01CSVsyntheticOnly`; QAOUT01; active `N`; retain only as evidence of pre-correction Unicode storage |
+| Clean CSV list | `910016` | `GAP01UTF8CSVsyntheticOnly`; QAOUT01; active `N`; preferred follow-up fixture |
+| User group | `QAPRD14` | Restricted; allowed campaign only QAOUT01; admin-viewable and agent-status-viewable groups only QAPRD14 |
+| Agent | `qaagent14` | Active `Y`, level `1`, QAPRD14; reports `0`, protected recording access `0`; users/campaigns/lists/phones modification and lead loading `0` |
+| Supervisor | `qasup14` | Active `Y`, level `7`, QAPRD14; reports `1`, protected recording access `0`; users/campaigns/lists/phones modification and lead loading `0` |
+| Inactive phone | `1014` | SIP, active `N`, status `SUSPENDED`, type `QA INACTIVE`, native login/extension `1014`, fullname `QA PRD inactive only`, group QAPRD14; no registered client |
+| Original leads | `9`–`28` | List 910014; vendor IDs `PRD14_001`–`PRD14_020`; lead 9 NI, 10–28 DNC; preserved |
+| Diagnostic leads | `29`–`48` | List 910015; `GAP01_001`–`GAP01_020`; 20 NEW; some non-ASCII values contain mojibake; do not reuse as canonical data |
+| Clean leads | `49`–`68` | List 910016; `GAP01B_001`–`GAP01B_020`; imported 20 NEW; final lead 50 NI after logout comparison/recovery, other 19 NEW |
 
-Campaign settings reopened and verified through UI: both dial prefixes `2221`; manual list `910014`; manual dial and manual search filters `CAMPLISTS_ONLY`; recording `ONDEMAND`; local call time `12pm-5pm`; no-hopper-leads logins `N`; hopper minimum `1`. Final dialable status string is ` NI NEW -`. `NI` was added through the campaign UI for a repeat preview attempt after lead 9 was cleared from `INCALL`. Other 19 leads remain `DNC` and are not in the campaign's dialable statuses.
+Campaign: both dial prefixes `2221`; manual list **910016**; manual dial/search filters `CAMPLISTS_ONLY`; recording `ONDEMAND`; local call time `12pm-5pm`; no-hopper-leads logins `N`; hopper minimum `1`; dialable statuses ` NI NEW -`; preview `PREVIEW_AND_SKIP`; inbound `N`; max-inbound outcome `DEFAULT`. No new route or carrier exists. A retained hopper READY row is not a live agent or INCALL claim; inactive campaign/list and MANUAL level zero prevent operation.
 
-Final manual preview mode is `PREVIEW_AND_SKIP`. The successful preview used the earlier `PREVIEW_ONLY` setting. The final skip mode persisted, but a second agent login was refused because the hopper remained empty after native status change/list reset. Skip completion is **not accepted**.
+The group permits only `Real-Time Main Report`. Its queue-groups default remains `-ALL-GROUPS-`; no inbound group was assigned. Default agent `vicidial_recording=1` permits the native recording button, independently of protected-file retrieval. Both test users retain `access_recordings=0`; user 6666 remains unchanged.
 
-The group permits only `Real-Time Main Report`. Its queue-groups default remains `-ALL-GROUPS-`; no inbound-group routing or inbound acceptance was configured. Do not reuse this group for inbound testing without reviewing that setting. Default agent `vicidial_recording=1` permits the native recording button; it does not confer protected-file retrieval. Both test users have `access_recordings=0`.
+Passwords are intentionally absent. Use the existing private credential handoff, or reset only synthetic accounts through native Administration if separately needed. Phone 1014 must remain suspended unless an assignment explicitly covers activation.
 
-Passwords are intentionally absent. Test-user credentials were generated privately for this execution. Use the existing private credential handoff or have the authorized administrator reset only these synthetic accounts through native Administration if a later operator needs access. Phone 1014 has no registered client and must remain inactive unless a later task explicitly covers it.
+## CSV fixtures and native mapping
 
-## Lead file and native loader mappings
+The original [prd-outbound-leads.csv](fixtures/prd-outbound-leads.csv) and its prior TSV acceptance remain historical evidence. Its source status column was not a native status import target: fifth-generation custom mapping guessed it as State. All leads initially loaded as NEW, then the original operator workflow changed 19 to DNC and lead 9 to NI. These were explicit native changes, not a demonstrated status-parser defect.
 
-Canonical fixture: [prd-outbound-leads.csv](fixtures/prd-outbound-leads.csv). UTF-8, comma-separated, header plus 20 records, nine columns. Treat phone numbers as strings to preserve leading zeros.
+New fixtures, UTF-8 with CRLF, header plus 20 records:
 
-| CSV column | Zero-based index | Native custom mapping |
-|---|---:|---|
-| vendor_lead_code | 0 | Vendor Lead Code |
-| phone_code | 1 | Phone Code |
-| phone_number | 2 | Phone Number |
-| first_name | 3 | First Name |
-| last_name | 4 | Last Name |
-| status | 5 | No status target offered by the tested fifth-generation custom mapper |
-| list_id | 6 | List ID |
-| email | 7 | Email |
-| comments | 8 | Comments |
+- [prd-functional-gaps-01.csv](fixtures/prd-functional-gaps-01.csv): diagnostic batch, list 910015 / vendor prefix GAP01_. Imported before the supported UTF-8 connection setting was enabled; retain isolated.
+- [prd-functional-gaps-01-utf8.csv](fixtures/prd-functional-gaps-01-utf8.csv): clean batch, list 910016 / vendor prefix GAP01B_. All declared fields and initial NEW statuses verified against SQL and native views.
 
-Expected source statuses: first record `NEW`, remaining 19 `DNC`. All names are `QA SYNTHETIC_nnn`, addresses use `example.invalid`, and comments state `SYNTHETIC ONLY - NO CALL AUTHORIZATION`.
+| Zero-based column | Native custom mapping |
+|---:|---|
+| 0 | Vendor Lead Code |
+| 1 | Phone Code |
+| 2 | Phone Number |
+| 3 | First Name |
+| 4 | Last Name |
+| 5 | List ID |
+| 6 | Email |
+| 7 | Comments |
+| 8 | City |
 
-**CSV upload currently fails before field mapping** because the native converter cannot load `Spreadsheet::Read`. No CSV record was imported. A tab-separated derivative of the same file was uploaded through the same native loader to assess subsequent behavior. Derive it locally with Python's standard `csv` reader/writer and delimiter `\t`; no server-side converter replacement is needed for this diagnostic workaround.
+Use `admin_listloader_fifth_gen.php`, custom layout, `DUPLIST`, USA/Canada validation `NONE`, and invalid-phone replacement `DISABLED`. Clear every unused mapping to `-1`. Keep phone numbers as strings. No status column is supplied; expected import status is native NEW. Header is predictably rejected as one invalid phone row: summary good 20, bad 1, total 21. Reupload with DUPLIST: good 0, bad 21, duplicates 20, invalid 1; count stays 20. DUPLIST is per-list: duplicate phones deliberately exist across the two new lists. Do not assume DUPCAMP has the same behavior.
 
-The native TSV custom mapper auto-detected the source `status` column as **State**. Clear `state_field` to `-1` before processing. Map the other eight fields as above. Select `DUPLIST`, `NONE` for USA/Canada validation, and leave invalid-phone replacement disabled. The file supplies list `910014`. The loader has no status mapping and initialized every imported lead as `NEW`. Keep campaign and list inactive while importing. Through native Lead Details, set leads 10–28 to `DNC` before enabling either object.
+Phones `0000000201`–`0000000220`, names SYNTHETIC, email domain `example.invalid`, and explicit NO CALLS comments are synthetic. Quoted commas are parsed correctly. Native conversion strips embedded double quotes and semicolons, so expected stored comment is `SYNTHETIC ONLY, quoted CSV NO CALLS`. José, München and empty cities verify encoding and empty fields. The clean batch required native **Use Non-Latin (UTF8) = 1**; see [dependency record](../dependencies/VICIDIAL_PERL_CSV_IMPORT.md).
 
-First TSV import: good `20`, bad `1`, total `21`; the header was counted as an invalid phone-length row. Duplicate reupload: good `0`, bad `21`, total `21`, duplicates `20`, invalid `1`. List count remained 20. `DUPLIST` compares phone numbers within the specified list; it does not make arbitrary reimports with another duplicate mode safe. No deliberately invalid customer-like telephone row was needed: the header exercised invalid-row reporting.
+## Agent controls and preview lifecycle
 
-## Routing and operation limits
+MANUAL's lack of Ready/Pause controls is expected for this screen. To qualify those controls, the remediation temporarily used **INBOUND_MAN**, no inbound groups, inbound disabled and **ALLOW_MI_PAUSE**. Without ALLOW_MI_PAUSE and without groups, the frontend falls back to MANUAL. Administration coerces INBOUND_MAN's displayed/stored dial level to 1.0; the outbound dialer explicitly excludes both MANUAL and INBOUND_MAN, so no automatic outbound call was enabled or placed. Final mode is MANUAL / zero.
 
-Only lead 9 uses the established simulator number. Full `22217000000001@default` resolves to the existing `Dial(SIP/1001,45,To)` route. All 19 full `2221`-prefixed zero-leading numbers were checked with `asterisk -rx 'dialplan show NUMBER@default'` and had no matching extension. Existing carriers were inactive when inspected. No carrier or dialplan was created.
+The outcome selector is visible only with inbound enabled. To repeat this configuration through the UI, keep the campaign inactive, choose INBOUND_MAN, briefly enable inbound with no assigned groups, save/reopen, select ALLOW_MI_PAUSE, then disable inbound and save/reopen. Verify the persisted controls and absence of assigned groups before login. This is a bounded manual agent-state test configuration, not authorization for inbound service or automatic dialing.
 
-The existing agent phone 1000 was used only for the authorized agent conference login. There was no customer call. Phone 1014 deliberately produces no active Asterisk peer. Campaign 0 dial level, MANUAL mode, list/campaign inactivity, restricted campaign access, DNC statuses and verified route absence are the fixture safeguards; none should be removed casually.
+Session evidence demonstrated visible Ready → Pause → Resume transitions and corresponding READY/PAUSED live state and 31/45/36/43-second pause/wait intervals. Agent conference used existing PJSIP/1000 and ConfBridge 9600000 only.
 
-## Safe reuse procedure
+**Always select SKIP LEAD before LOGOUT when merely previewing.** Lead 49: preview claimed INCALL; visible SKIP LEAD restored NEW, called flag Y, called count 0; subsequent normal logout left no claim. Skip does not automatically reset the list's called flag.
 
-1. Open native Administration as the authorized administrator. Verify IDs, current count 20, statuses, MANUAL method and automatic level 0. Recheck route absence and carrier state if either may have changed.
-2. Review the acceptance report's unresolved CSV, hopper and manual lifecycle issues. Do not assume the retained configuration completes a repeat session unchanged.
-3. Keep campaign/list inactive for import or lead edits. Reupload only with `DUPLIST` and inspect the summary; do not use SQL to repair import results.
-4. For an authorized non-calling session, activate only QAOUT01 and list 910014, keep dial level 0, inspect hopper eligibility and use the visible Lead Preview checkbox. Do not click DIAL LEAD. The prior login required a hopper lead; a later repeat attempt after NI/reset had none and was refused.
-5. Use qaagent14 and the existing authorized phone login. Answer only the agent's conference login call. Verify native session, runtime association and visible controls. If the installed MANUAL workflow still lacks ready/pause/resume, record the gap; do not switch to automatic dialing to force acceptance.
-6. Complete preview using visible native controls if available. Verify status and called flag after skip/logout. If logout strands this synthetic lead in `INCALL`, record the behavior and use native Lead Details to set `NI`; do not edit tables.
-7. Log out normally. Confirm no QA live agents or Asterisk channels. Deactivate campaign and list again through native Administration and reopen to verify persistence.
-8. A customer call and fresh recording regression require separate explicit operator authorization even for simulator lead 9.
+Comparison: lead 50 preview followed directly by LOGOUT closed the session/channels but retained INCALL. Native logout does not perform ManualDialSkip. Lead Details offered ordinary dispositions but not NEW for that claimed lead, so the administrator selected NI to recover it. No SQL write was used. Open-preview logout is an unresolved native lifecycle limitation; do not assume logout releases a preview. Final state has no synthetic INCALL claim.
 
-## Cleanup / rollback
+## Time and routing limits
 
-Safe deactivation is preferred. This assignment left campaign QAOUT01 and list 910014 inactive, phone 1014 inactive/SUSPENDED, and no live session.
+PHP `date.timezone` in `/etc/php.d/99-vicidial.ini` now matches OS/MariaDB `America/New_York`; backup `/root/99-vicidial.ini.gap01-before`. Native paired event-date/epoch fields now agree. Existing records written with Asia/Manila retain their demonstrated 13-hour DATETIME interpretation error; use stored epochs for correlation. Browser header time uses the browser's Asia/Manila clock and can display the next date. No historical data was rewritten; OS/MariaDB timezone and server GMT settings were not changed.
 
-- Native Campaigns → QAOUT01 → Active `N` → save/reopen. Preserve MANUAL and level 0.
-- Native Lists → 910014 → Active `N` → save/reopen. Retain synthetic lead history and DNC safeguards.
-- Native Users → qaagent14 / qasup14 → Active `N` → save/reopen if retiring accounts. Do not change 6666 or agent 1000.
-- Native Phones → 1014 → inactive/SUSPENDED. No endpoint/client cleanup is needed; none was registered.
-- If revoking fixture access, change only QAPRD14's QAOUT01 and report permissions after disabling its accounts. Do not edit ADMIN.
-- Keep leads isolated in inactive list 910014. Delete only after a separate explicit decision; identify them by both list ID and vendor prefix, not a global phone-number match.
-- No global native settings, source, generated config, credentials of existing users, SIP endpoints, recording integration, timers or firewall settings were changed; no whole-database restore is appropriate.
+Only original lead 9 has the established simulator `7000000001`, full route `22217000000001@default` to SIP/1001. All other fixture numbers are non-routed; recheck exact full prefixed destinations and carrier state before reuse. No customer call was placed during this remediation. Existing 1000 was used for agent conference login only. A fresh customer call/recording regression still requires explicit authorization.
 
-Never delete or repurpose test01, lead 8, recording 2, the previous successful call, phone 1000/1001, or user 6666 to clean up this fixture.
+## Safe reuse
+
+1. Verify current campaign/list settings, counts, statuses, route absence and inactive carriers. Prefer clean list 910016; leave diagnostic 910015 and original 910014 inactive.
+2. Keep campaign/list inactive for CSV import. Confirm dependencies and Use Non-Latin = 1. Use DUPLIST and review both summary and field values; never repair via SQL.
+3. For authorized non-calling preview, activate only QAOUT01 and clean list, keep MANUAL / zero, and ensure a NEW eligible hopper lead. Use native list reset only when intended; Skip sets the called flag Y. Empty-hopper login can instead be allowed by the native no-hopper-leads logins option within the synthetic campaign.
+4. Have extension 1000 ready; answer only the agent conference login call. Authenticate qaagent14, select QAOUT01 and check Lead Preview. Do not click DIAL LEAD.
+5. Use visible SKIP LEAD to release preview, then LOGOUT. Verify lead status, no QA live agent and no Asterisk channels. Direct logout with an open preview requires the administrative recovery described above.
+6. If Ready/Pause testing is authorized, use the bounded INBOUND_MAN configuration above; restore MANUAL/zero afterward. Do not use RATIO, ADAPT or predictive modes.
+7. Deactivate campaign and all three lists; leave 1014 suspended. Confirm no INCALL claims. Do not grant recording permissions to test accounts merely to make playback succeed.
+
+## Cleanup and rollback
+
+Prefer deactivation; preserve synthetic history. Native Campaigns → QAOUT01: active N, MANUAL, level 0, inbound N, outcome DEFAULT, no-hopper logins N, save/reopen. Native Lists → 910014, 910015, 910016: active N, save/reopen. Native Users → qaagent14/qasup14: active N if retiring. Revoke only QAPRD14 test-specific rights if retiring it, after disabling accounts. Leave phone 1014 inactive/SUSPENDED.
+
+Identify leads by both list ID and vendor prefix. Retain diagnostic bad-Unicode batch inactive rather than silently rewriting it. Remove records only after a separate deletion decision. Recover an unintended synthetic INCALL claim through Lead Details using an available appropriate disposition; verify the correct lead ID first.
+
+The remediation changed native use_non_latin from 0 to 1, the dedicated PHP timezone override, and the documented Perl dependencies. Rollback for those changes is in the [acceptance report](VICIDIAL_PRD_FUNCTIONAL_GAPS_01_ACCEPTANCE.md) and [dependency record](../dependencies/VICIDIAL_PERL_CSV_IMPORT.md). Reverting encoding/timezone reintroduces demonstrated problems; no whole-database restore is appropriate.
+
+Never delete or repurpose test01, lead 8, recording 2, the accepted call, phones 1000/1001 or user 6666 to clean up this fixture. Do not modify portal/firewall, recording integration, backup/TLS timers or generated Asterisk configuration.

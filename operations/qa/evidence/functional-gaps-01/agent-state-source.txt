@@ -1,0 +1,77 @@
+	###### second lookup leads and place calls for each campaign/server_ip
+	######     go one lead at a time and place the call by inserting a record into vicidial_manager
+	###############################################################################
+
+		$user_CIPct = 0;
+		foreach(@DBIPcampaign)
+			{
+			$calls_placed=0;
+			if ( ($DBIPdial_method[$user_CIPct] =~ /MANUAL|INBOUND_MAN/) || ($outbound_autodial_active < 1) || ($disable_auto_dial > 0) )
+				{
+				$event_string="$DBIPcampaign[$user_CIPct] $DBIPaddress[$user_CIPct]: MANUAL DIAL CAMPAIGN, NO DIALING";
+				&event_logger;
+				}
+			else
+				{
+				if ( ( ($DBIPinbound_queue_no_dial[$user_CIPct] =~ /ENABLED|ALL_SERVERS/) && ( ($DBIPexistcalls_IN_LIVE[$user_CIPct] > 0) || ($DBIPexistcalls_QUEUE_LIVE[$user_CIPct] > 0) ) ) || ( ($DBIPinbound_queue_no_dial[$user_CIPct] =~ /CHAT/) && ($DBIPexistchats_IN_LIVE[$user_CIPct] > 0) ) )
+					{
+					$event_string="$DBIPcampaign[$user_CIPct] $DBIPexistcalls_IN_LIVE[$user_CIPct] $DBIPexistcalls_QUEUE_LIVE[$user_CIPct] $DBIPexistchats_IN_LIVE[$user_CIPct]: INBOUND QUEUE NO DIAL, NO DIALING ($DBIPinbound_queue_no_dial[$user_CIPct])";
+					&event_logger;
+				if ($SSmanual_dial_validation == '0') {$manual_dial_validation='N';}
+
+				$scheduled_callbacks_timezones_enabled=0;
+				if ( ($scheduled_callbacks_timezones_container != 'DISABLED') and (strlen($scheduled_callbacks_timezones_container) > 0) )
+					{$scheduled_callbacks_timezones_enabled++;}
+
+				$MI_PAUSE = 0;
+				if (preg_match("/MI_PAUSE/",$max_inbound_calls_outcome))
+					{$MI_PAUSE = 1;}
+
+				if ($VU_ready_max_logout >= 0)
+				{
+				hideDiv('CloserSelectBox');
+				agent_events('ingroup_screen_closed', '', aec);   aec++;
+				MainPanelToFront();
+				var CloserSelecting = 0;
+				if ( (dial_method == "INBOUND_MAN") && (MI_PAUSE != '1') )
+					{
+					dial_method = "MANUAL";
+					auto_dial_level=0;
+					starting_dial_level=0;
+					document.getElementById("DiaLControl").innerHTML = DiaLControl_manual_HTML;
+					}
+				}
+			if (territoryCOUNT > 0)
+				{
+				showDiv('TerritorySelectBox');
+				if ($DB) {echo "$stmt\n";}
+				$rslt=mysql_to_mysqli($stmt, $link);
+						if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01083',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+				$affected_rows = mysqli_affected_rows($link);
+				$url_id = mysqli_insert_id($link);
+				echo "<!-- vicidial_urls record inserted: |$affected_rows|$url_id| -->\n";
+				}
+
+			### insert an entry into the user log for the login event
+			$vul_data = "$vlERIaffected_rows|$vhICaffected_rows|$vlaLIaffected_rows|$vliaLIaffected_rows";
+			$stmt = "INSERT INTO vicidial_user_log (user,event,campaign_id,event_date,event_epoch,user_group,session_id,server_ip,extension,computer_ip,browser,data,phone_login,server_phone,phone_ip,webserver,login_url,browser_width,browser_height) values('$VD_login','LOGIN','$VD_campaign','$NOW_TIME','$StarTtimE','$VU_user_group','$session_id','$server_ip','$protocol/$extension','$ip','$browser','$vul_data','$original_phone_login','$phone_login','LOOKUP','$webserver_id','$url_id','$JS_browser_width','$JS_browser_height');";
+			if ($DB) {echo "|$stmt|\n";}
+			$rslt=mysql_to_mysqli($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01031',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+
+        #   echo "<b>You have logged in as user: $VD_login on phone: $SIP_user to campaign: $VD_campaign</b><br />\n";
+			$VICIDiaL_is_logged_in=1;
+			{
+			$useIE=0;
+			echo "<!-- client web browser used: W3C-Compliant |$browser|$useIE| -->\n";
+			}
+
+		$StarTtimE = date("U");
+		$NOW_TIME = date("Y-m-d H:i:s");
+		##### Agent is going to log in so insert the vicidial_agent_log entry now
+		$stmt="INSERT INTO vicidial_agent_log (user,server_ip,event_time,campaign_id,pause_epoch,pause_sec,wait_epoch,user_group,sub_status,pause_type) values('$VD_login','$server_ip','$NOW_TIME','$VD_campaign','$StarTtimE','0','$StarTtimE','$VU_user_group','LOGIN','AGENT');";
+		if ($DB) {echo "$stmt\n";}
+		$rslt=mysql_to_mysqli($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01050',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+		$affected_rows = mysqli_affected_rows($link);
+		$agent_log_id = mysqli_insert_id($link);

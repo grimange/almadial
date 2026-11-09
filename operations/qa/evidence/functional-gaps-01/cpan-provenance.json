@@ -1,0 +1,220 @@
+[
+  {
+    "name": "Data-Peek-0.54",
+    "author": "HMBRAND",
+    "version": "0.54",
+    "date": "2026-01-25T12:57:35",
+    "download_url": "https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/Data-Peek-0.54.tgz",
+    "checksum_sha256": "4dbf2205d43fb7d963ba29902cd563a5ea6c3c6bb49a9493c40ce8b0f8572980",
+    "license": [
+      "perl_5"
+    ],
+    "dependency": [
+      {
+        "module": "perl",
+        "phase": "build",
+        "relationship": "requires",
+        "version": "5.008001"
+      },
+      {
+        "module": "Test::More",
+        "phase": "test",
+        "relationship": "recommends",
+        "version": "1.302219"
+      },
+      {
+        "module": "Test::More",
+        "phase": "test",
+        "relationship": "requires",
+        "version": "0.90"
+      },
+      {
+        "module": "Test::Warnings",
+        "phase": "test",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "ExtUtils::MakeMaker",
+        "phase": "configure",
+        "relationship": "suggests",
+        "version": "7.76"
+      },
+      {
+        "module": "ExtUtils::MakeMaker",
+        "phase": "configure",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "ExtUtils::MakeMaker",
+        "phase": "configure",
+        "relationship": "recommends",
+        "version": "7.22"
+      },
+      {
+        "module": "Perl::Tidy",
+        "phase": "runtime",
+        "relationship": "recommends",
+        "version": "0"
+      },
+      {
+        "module": "Data::Dumper",
+        "phase": "runtime",
+        "relationship": "recommends",
+        "version": "2.183"
+      },
+      {
+        "module": "Data::Dumper",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "XSLoader",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "perl",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "5.008001"
+      }
+    ]
+  },
+  {
+    "name": "Spreadsheet-Read-0.95",
+    "author": "HMBRAND",
+    "version": "0.95",
+    "date": "2026-01-25T12:39:53",
+    "download_url": "https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/Spreadsheet-Read-0.95.tgz",
+    "checksum_sha256": "99fe77002189b6b90d9a2d502b9c597ac0beb57b4ad8531a356a5912db72107e",
+    "license": [
+      "perl_5"
+    ],
+    "dependency": [
+      {
+        "module": "ExtUtils::MakeMaker",
+        "phase": "configure",
+        "relationship": "suggests",
+        "version": "7.76"
+      },
+      {
+        "module": "ExtUtils::MakeMaker",
+        "phase": "configure",
+        "relationship": "recommends",
+        "version": "7.22"
+      },
+      {
+        "module": "ExtUtils::MakeMaker",
+        "phase": "configure",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "Test::Harness",
+        "phase": "test",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "Test::More",
+        "phase": "test",
+        "relationship": "requires",
+        "version": "0.88"
+      },
+      {
+        "module": "Test::NoWarnings",
+        "phase": "test",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "Test::More",
+        "phase": "test",
+        "relationship": "recommends",
+        "version": "1.302219"
+      },
+      {
+        "module": "Encode",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "Data::Peek",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "perl",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "5.008001"
+      },
+      {
+        "module": "Exporter",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "Data::Dumper",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "File::Temp",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0.22"
+      },
+      {
+        "module": "List::Util",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "Carp",
+        "phase": "runtime",
+        "relationship": "requires",
+        "version": "0"
+      },
+      {
+        "module": "IO::Scalar",
+        "phase": "runtime",
+        "relationship": "recommends",
+        "version": "0"
+      },
+      {
+        "module": "File::Temp",
+        "phase": "runtime",
+        "relationship": "recommends",
+        "version": "0.2312"
+      },
+      {
+        "module": "Data::Dumper",
+        "phase": "runtime",
+        "relationship": "recommends",
+        "version": "2.183"
+      },
+      {
+        "module": "Data::Peek",
+        "phase": "runtime",
+        "relationship": "recommends",
+        "version": "0.53"
+      },
+      {
+        "module": "Encode",
+        "phase": "runtime",
+        "relationship": "recommends",
+        "version": "3.21"
+      }
+    ]
+  }
+]

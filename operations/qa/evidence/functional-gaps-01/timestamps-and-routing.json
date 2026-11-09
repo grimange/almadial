@@ -1,0 +1,57 @@
+{
+  "utc": "2026-11-09T16:14:26.525633+00:00",
+  "timestamps": {
+    "query": "SELECT event,event_date,event_epoch,UNIX_TIMESTAMP(event_date) AS interpreted_epoch,UNIX_TIMESTAMP(event_date)-event_epoch AS delta_seconds FROM vicidial_user_log WHERE user='qaagent14' ORDER BY event_epoch; SELECT agent_log_id,event_time,pause_epoch,pause_sec,wait_epoch,wait_sec,talk_sec,dispo_sec FROM vicidial_agent_log WHERE user='qaagent14' ORDER BY agent_log_id;",
+    "returncode": 0,
+    "stdout": "event\tevent_date\tevent_epoch\tinterpreted_epoch\tdelta_seconds\nLOGIN\t2026-11-09 23:08:40\t1794236920\t1794283720\t46800\nLOGOUT\t2026-11-09 23:13:00\t1794237180\t1794283980\t46800\nLOGIN\t2026-11-09 10:53:09\t1794239589\t1794239589\t0\nLOGOUT\t2026-11-09 11:00:08\t1794240008\t1794240008\t0\nLOGIN\t2026-11-09 11:01:19\t1794240079\t1794240079\t0\nLOGOUT\t2026-11-09 11:04:46\t1794240286\t1794240286\t0\nagent_log_id\tevent_time\tpause_epoch\tpause_sec\twait_epoch\twait_sec\ttalk_sec\tdispo_sec\n11\t2026-11-09 23:08:40\t1794236920\t260\t1794237180\t0\t0\t0\n12\t2026-11-09 10:53:09\t1794239589\t324\t1794239589\t0\t0\t0\n13\t2026-11-09 10:58:33\t1794239913\t95\t1794240008\t0\t0\t0\n14\t2026-11-09 11:01:19\t1794240079\t31\t1794240110\t45\t0\t0\n15\t2026-11-09 11:02:35\t1794240155\t36\t1794240191\t43\t0\t0\n16\t2026-11-09 11:03:54\t1794240234\t52\t1794240286\t0\t0\t0\n",
+    "stderr": ""
+  },
+  "routes": {
+    "22210000000201": "There is no existence of 22210000000201@default extension\nCommand 'dialplan show 22210000000201@default' failed.\n",
+    "22210000000202": "There is no existence of 22210000000202@default extension\nCommand 'dialplan show 22210000000202@default' failed.\n",
+    "22210000000203": "There is no existence of 22210000000203@default extension\nCommand 'dialplan show 22210000000203@default' failed.\n",
+    "22210000000204": "There is no existence of 22210000000204@default extension\nCommand 'dialplan show 22210000000204@default' failed.\n",
+    "22210000000205": "There is no existence of 22210000000205@default extension\nCommand 'dialplan show 22210000000205@default' failed.\n",
+    "22210000000206": "There is no existence of 22210000000206@default extension\nCommand 'dialplan show 22210000000206@default' failed.\n",
+    "22210000000207": "There is no existence of 22210000000207@default extension\nCommand 'dialplan show 22210000000207@default' failed.\n",
+    "22210000000208": "There is no existence of 22210000000208@default extension\nCommand 'dialplan show 22210000000208@default' failed.\n",
+    "22210000000209": "There is no existence of 22210000000209@default extension\nCommand 'dialplan show 22210000000209@default' failed.\n",
+    "22210000000210": "There is no existence of 22210000000210@default extension\nCommand 'dialplan show 22210000000210@default' failed.\n",
+    "22210000000211": "There is no existence of 22210000000211@default extension\nCommand 'dialplan show 22210000000211@default' failed.\n",
+    "22210000000212": "There is no existence of 22210000000212@default extension\nCommand 'dialplan show 22210000000212@default' failed.\n",
+    "22210000000213": "There is no existence of 22210000000213@default extension\nCommand 'dialplan show 22210000000213@default' failed.\n",
+    "22210000000214": "There is no existence of 22210000000214@default extension\nCommand 'dialplan show 22210000000214@default' failed.\n",
+    "22210000000215": "There is no existence of 22210000000215@default extension\nCommand 'dialplan show 22210000000215@default' failed.\n",
+    "22210000000216": "There is no existence of 22210000000216@default extension\nCommand 'dialplan show 22210000000216@default' failed.\n",
+    "22210000000217": "There is no existence of 22210000000217@default extension\nCommand 'dialplan show 22210000000217@default' failed.\n",
+    "22210000000218": "There is no existence of 22210000000218@default extension\nCommand 'dialplan show 22210000000218@default' failed.\n",
+    "22210000000219": "There is no existence of 22210000000219@default extension\nCommand 'dialplan show 22210000000219@default' failed.\n",
+    "22210000000220": "There is no existence of 22210000000220@default extension\nCommand 'dialplan show 22210000000220@default' failed.\n"
+  },
+  "known_instants": [
+    {
+      "epoch": 1794236920,
+      "UTC": "2026-11-09T15:08:40+00:00",
+      "America/New_York": "2026-11-09T10:08:40-05:00",
+      "Asia/Manila": "2026-11-09T23:08:40+08:00"
+    },
+    {
+      "epoch": 1794239589,
+      "UTC": "2026-11-09T15:53:09+00:00",
+      "America/New_York": "2026-11-09T10:53:09-05:00",
+      "Asia/Manila": "2026-11-09T23:53:09+08:00"
+    },
+    {
+      "epoch": 1794240079,
+      "UTC": "2026-11-09T16:01:19+00:00",
+      "America/New_York": "2026-11-09T11:01:19-05:00",
+      "Asia/Manila": "2026-11-10T00:01:19+08:00"
+    },
+    {
+      "epoch": 1794240286,
+      "UTC": "2026-11-09T16:04:46+00:00",
+      "America/New_York": "2026-11-09T11:04:46-05:00",
+      "Asia/Manila": "2026-11-10T00:04:46+08:00"
+    }
+  ]
+}

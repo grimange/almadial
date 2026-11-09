@@ -1,0 +1,56 @@
+  	   Reports  	   Users  	   Campaigns  	   Lists  	   Scripts  	   Filters  	   Inbound  	   User Groups  	   Remote Agents  	   Admin  
+Lead file:	prd-functional-gaps-01-utf8.csv
+List ID Override:	
+Phone Code Override:	
+USA-Canada Check:	NONE
+Lead Duplicate Check:	DUPLIST
+Lead Time Zone Lookup:	AREA
+State Abbreviation Lookup:	
+Required Phone Number Length:	
+Invalid Phone Number Replacement:	DISABLED
+
+Load Another Lead File         VERSION: 2.14-85     BUILD: 260912-0956
+
+
+
+
+
+Processing file... (s-1)
+LEAD DUPLICATE CHECK: DUPLIST
+
+
+
+Load Summary
+Good:	0
+Bad:	21
+Total:	21
+Duplicates:	20
+Invalid Numbers:	1
+
+
+Duplicate Details
+Phone Number	Count	Found In Lists
+0000000201	1	910016
+0000000202	1	910016
+0000000203	1	910016
+0000000204	1	910016
+0000000205	1	910016
+0000000206	1	910016
+0000000207	1	910016
+0000000208	1	910016
+0000000209	1	910016
+0000000210	1	910016
+0000000211	1	910016
+0000000212	1	910016
+0000000213	1	910016
+0000000214	1	910016
+0000000215	1	910016
+0000000216	1	910016
+0000000217	1	910016
+0000000218	1	910016
+0000000219	1	910016
+0000000220	1	910016
+
+
+Invalid Number Details
+INVALID PHONE NUMBER LENGTH (1)	

@@ -1,0 +1,18 @@
+Timeclock
+
+
+
+
+
+	Re-Login
+ 
+Phone Login:	
+Phone Password:	
+User Login:	
+User Password:	
+Campaign:	
+QAOUT01 - QA Outbound Synthetic Only
+
+   
+
+VERSION: 2.14-728c       BUILD: 261101-1945

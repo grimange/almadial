@@ -1,0 +1,36 @@
+perl(:VERSION) >= 5.6.0
+perl(Archive::Zip)
+perl(Exporter)
+perl(Spreadsheet::ParseExcel)
+perl(Spreadsheet::ParseExcel::Workbook)
+perl(Spreadsheet::XLSX::Fmt2007)
+perl(Spreadsheet::XLSX::Utility2007)
+perl(base)
+perl(strict)
+perl(vars)
+perl(warnings)
+perl-libs
+rpmlib(CompressedFileNames) <= 3.0.4-1
+rpmlib(FileDigests) <= 4.6.0-1
+rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+rpmlib(PayloadIsZstd) <= 5.4.18-1
+perl-Text-CSV_XS-1.65-1.el10_2.x86_64
+America/New_York 2026-11-09T11:12:15-05:00 1794240735
+use_non_latin
+1
+NOW()	UTC_TIMESTAMP()	@@global.time_zone	@@session.time_zone	@@system_time_zone
+2026-11-09 11:12:15	2026-11-09 16:12:15	SYSTEM	SYSTEM	EST
+list_id	active	campaign_id
+910014	N	QAOUT01
+910015	N	QAOUT01
+910016	N	QAOUT01
+list_id	status	COUNT(*)
+910014	DNC	19
+910014	NI	1
+910015	NEW	20
+910016	NEW	19
+910016	NI	1
+live_agents
+0
+stale_synthetic_claims
+0

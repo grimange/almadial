@@ -1,0 +1,8 @@
+{
+  "known_credential_scan": "PASS",
+  "local_document_links": "PASS",
+  "json_parse": "PASS",
+  "csv_rows_columns_crlf": "PASS",
+  "files_checked": 99,
+  "note": "Private credential contents were used only for comparison and are not recorded. Screenshot fields reviewed separately."
+}

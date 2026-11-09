@@ -1,0 +1,211 @@
+{
+  "clocks": {
+    "rc": 0,
+    "out": "NOW()\tUTC_TIMESTAMP()\t@@global.time_zone\t@@session.time_zone\t@@system_time_zone\n2026-11-09 10:46:54\t2026-11-09 15:46:54\tSYSTEM\tSYSTEM\tEST\ncampaign_id\tactive\tdial_method\tauto_dial_level\tcampaign_allow_inbound\tcloser_campaigns\ntest01\tY\tMANUAL\t0\tN\tNULL\nQAOUT01\tN\tMANUAL\t0\tN\tNULL\nserver_ip\tlocal_gmt\n2.29.153.161\t-5.00\nlead_id\tvendor_lead_code\tphone_code\tphone_number\tfirst_name\tlast_name\tlist_id\temail\tcomments\tcity\tstatus\tHEX(first_name)\tHEX(city)\n29\tGAP01_001\t1\t0000000201\tJos\u00c3\u00a9_001\tSYNTHETIC_001\t910015\tgap01-001@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t4A6F73C383C2A95F303031\t4DC383C2BC6E6368656E\n30\tGAP01_002\t1\t0000000202\tQA_002\tSYNTHETIC_002\t910015\tgap01-002@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303032\t\n31\tGAP01_003\t1\t0000000203\tQA_003\tSYNTHETIC_003\t910015\tgap01-003@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303033\t4DC383C2BC6E6368656E\n32\tGAP01_004\t1\t0000000204\tQA_004\tSYNTHETIC_004\t910015\tgap01-004@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303034\t\n33\tGAP01_005\t1\t0000000205\tQA_005\tSYNTHETIC_005\t910015\tgap01-005@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303035\t4DC383C2BC6E6368656E\n34\tGAP01_006\t1\t0000000206\tQA_006\tSYNTHETIC_006\t910015\tgap01-006@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303036\t\n35\tGAP01_007\t1\t0000000207\tQA_007\tSYNTHETIC_007\t910015\tgap01-007@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303037\t4DC383C2BC6E6368656E\n36\tGAP01_008\t1\t0000000208\tQA_008\tSYNTHETIC_008\t910015\tgap01-008@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303038\t\n37\tGAP01_009\t1\t0000000209\tQA_009\tSYNTHETIC_009\t910015\tgap01-009@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303039\t4DC383C2BC6E6368656E\n38\tGAP01_010\t1\t0000000210\tQA_010\tSYNTHETIC_010\t910015\tgap01-010@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303130\t\n39\tGAP01_011\t1\t0000000211\tQA_011\tSYNTHETIC_011\t910015\tgap01-011@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303131\t4DC383C2BC6E6368656E\n40\tGAP01_012\t1\t0000000212\tQA_012\tSYNTHETIC_012\t910015\tgap01-012@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303132\t\n41\tGAP01_013\t1\t0000000213\tQA_013\tSYNTHETIC_013\t910015\tgap01-013@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303133\t4DC383C2BC6E6368656E\n42\tGAP01_014\t1\t0000000214\tQA_014\tSYNTHETIC_014\t910015\tgap01-014@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303134\t\n43\tGAP01_015\t1\t0000000215\tQA_015\tSYNTHETIC_015\t910015\tgap01-015@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303135\t4DC383C2BC6E6368656E\n44\tGAP01_016\t1\t0000000216\tQA_016\tSYNTHETIC_016\t910015\tgap01-016@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303136\t\n45\tGAP01_017\t1\t0000000217\tQA_017\tSYNTHETIC_017\t910015\tgap01-017@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303137\t4DC383C2BC6E6368656E\n46\tGAP01_018\t1\t0000000218\tQA_018\tSYNTHETIC_018\t910015\tgap01-018@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303138\t\n47\tGAP01_019\t1\t0000000219\tQA_019\tSYNTHETIC_019\t910015\tgap01-019@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\tM\u00c3\u00bcnchen\tNEW\t51415F303139\t4DC383C2BC6E6368656E\n48\tGAP01_020\t1\t0000000220\tQA_020\tSYNTHETIC_020\t910015\tgap01-020@example.invalid\tSYNTHETIC ONLY, quoted CSV NO CALLS\t\tNEW\t51415F303230\t\nuser\tevent\tevent_date\tUNIX_TIMESTAMP(event_date)\nqaagent14\tLOGOUT\t2026-11-09 23:13:00\t1794283980\nqaagent14\tLOGIN\t2026-11-09 23:08:40\t1794283720\nagent_log_id\tevent_time\tpause_epoch\tUNIX_TIMESTAMP(event_time)\tdifference\n11\t2026-11-09 23:08:40\t1794236920\t1794283720\t46800\n",
+    "err": ""
+  },
+  "php": {
+    "rc": 0,
+    "out": "Asia/Manila\n2026-11-09T23:08:40+08:00\n1794236920\n",
+    "err": ""
+  },
+  "os": {
+    "rc": 0,
+    "out": "Timezone=America/New_York\n",
+    "err": ""
+  },
+  "/var/www/html/agc/vicidial.php": {
+    "sha256": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+    "hits": [
+      {
+        "line": 888,
+        "source": "$NOW_TIME = date(\"Y-m-d H:i:s\");"
+      },
+      {
+        "line": 5009,
+        "source": "\t\t\t\t$stmt=\"UPDATE vicidial_max_inbound_cache set status='OLD',notes=CONCAT(notes,'|LOGIN') where user='$VD_login' and status='NEW';\";"
+      },
+      {
+        "line": 5570,
+        "source": "\t\t$NOW_TIME = date(\"Y-m-d H:i:s\");"
+      }
+    ]
+  },
+  "/var/www/html/agc/vdc_db_query.php": {
+    "sha256": "5aaeabd1d9b247dc563b9e94bb86d0b3323346b226b52d47a00ca2506897108d",
+    "hits": [
+      {
+        "line": 1078,
+        "source": "$NOW_TIME = date(\"Y-m-d H:i:s\");"
+      },
+      {
+        "line": 2087,
+        "source": "\t\t\t$stmt=\"UPDATE vicidial_max_inbound_cache set status='OLD',notes=CONCAT(notes,'|regCLOSER') where user='$user' and status='NEW';\";"
+      },
+      {
+        "line": 5570,
+        "source": "\t\t\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','$exten','$NOW_TIME','$StarTtime','$recording_filename','$lead_id','$user','$MqueryCID')\";"
+      },
+      {
+        "line": 5607,
+        "source": "\t\t\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','$exten','$NOW_TIME','$StarTtime','$recording_filename','$lead_id','$user','$MqueryCID')\";"
+      },
+      {
+        "line": 7629,
+        "source": "\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','$exten','$NOW_TIME','$StarTtime','$recording_filename','$lead_id','$user','$MqueryCID')\";"
+      },
+      {
+        "line": 7672,
+        "source": "\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','$exten','$NOW_TIME','$StarTtime','$recording_filename','$lead_id','$user','$MqueryCID')\";"
+      },
+      {
+        "line": 8538,
+        "source": "\t\t\t\t\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','SPCO','$NOW_TIME','$StarTtime','$temp_parallel_rec_co_filename','$lead_id','$user','$uniqueid')\";"
+      },
+      {
+        "line": 8591,
+        "source": "\t\t\t\t\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','SPCM','$NOW_TIME','$StarTtime','$temp_parallel_rec_cm_filename','$lead_id','$user','$uniqueid')\";"
+      },
+      {
+        "line": 8644,
+        "source": "\t\t\t\t\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','SPFR','$NOW_TIME','$StarTtime','$temp_parallel_rec_fr_filename','$lead_id','$user','$uniqueid')\";"
+      },
+      {
+        "line": 8691,
+        "source": "\t\t\t\t\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','$stereo_exten','$NOW_TIME','$StarTtime','$temp_parallel_rec_ag_filename','$lead_id','$user','$uniqueid')\";"
+      },
+      {
+        "line": 8741,
+        "source": "\t\t\t\t\t\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id) values('$channel','$server_ip','$rl_exten','$NOW_TIME','$StarTtime','$stereo_rec_filename','$lead_id','$user','$uniqueid')\";"
+      },
+      {
+        "line": 9070,
+        "source": "\t\t\t$stmt=\"INSERT INTO vicidial_log (uniqueid,lead_id,list_id,campaign_id,call_date,start_epoch,status,phone_code,phone_number,user,comments,processed,user_group,alt_dial,called_count) values('$uniqueid','$lead_id','$list_id','$campaign','$NOW_TIME','$StarTtime','INCALL','$phone_code','$phone_number','$user','MANUAL','N','$user_group','$alt_dial','$called_count');\";"
+      },
+      {
+        "line": 9105,
+        "source": "\t#\t$stmt = \"INSERT INTO call_log (uniqueid,channel,server_ip,extension,number_dialed,caller_code,start_time,start_epoch) values('$uniqueid','$channel','$server_ip','$exten','$phone_code$phone_number','MD $user $lead_id','$NOW_TIME','$StarTtime')\";"
+      },
+      {
+        "line": 10534,
+        "source": "\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id,length_in_sec) values('$channel','$server_ip','$exten','$NOW_TIME','$StarTtime','$leave_3way_start_recording_filename','$lead_id','$user','$uniqueid','0')\";"
+      },
+      {
+        "line": 10577,
+        "source": "\t\t\t$stmt = \"INSERT INTO recording_log (channel,server_ip,extension,start_time,start_epoch,filename,lead_id,user,vicidial_id,length_in_sec) values('$channel','$server_ip','$exten','$NOW_TIME','$StarTtime','$leave_3way_start_recording_filename','$lead_id','$user','$uniqueid','0')\";"
+      },
+      {
+        "line": 15400,
+        "source": "\t\t\t\t\t\t$stmtC = \"INSERT INTO vicidial_max_inbound_cache SET user='$user', campaign_id='$campaign_id', event_date=NOW(), blended='$outbound_autodial', closer_campaigns='$RAWcloser_campaigns', max_inbound_count='$max_inbound_calls', call_count_today='$max_inbound_count', status='NEW', notes='VAS';\";"
+      },
+      {
+        "line": 15680,
+        "source": "\t\t$stmt=\"INSERT INTO vicidial_agent_log SET user='$user',server_ip='$server_ip',event_time='$NOW_TIME',campaign_id='$campaign',pause_epoch='$StarTtime',pause_sec='0',wait_epoch='$StarTtime',user_group='$user_group',pause_type='AGENT'$MAN_insert_leadIDsql;\";"
+      },
+      {
+        "line": 19021,
+        "source": "\t\t\t$stmt=\"INSERT INTO vicidial_user_log (user,event,campaign_id,event_date,event_epoch,user_group) values('$user','$user_log_event','$campaign','$NOW_TIME','$StarTtime','$user_group');\";"
+      },
+      {
+        "line": 22961,
+        "source": "\t\t\t$stmt=\"SELECT event_time,UNIX_TIMESTAMP(event_time) from vicidial_agent_log order by agent_log_id limit 1;\";"
+      }
+    ]
+  },
+  "/var/www/html/vicidial/admin_listloader_fifth_gen.php": {
+    "sha256": "d0d9d28be9c2f9a2f52adc481777c39ba91e452767234a53565a6e39a26a4ab7",
+    "hits": [
+      {
+        "line": 717,
+        "source": "$NOW_TIME = date(\"Y-m-d H:i:s\");"
+      },
+      {
+        "line": 766,
+        "source": "\techo \"$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\\n\";"
+      },
+      {
+        "line": 1620,
+        "source": "\t\t\t\t$status =\t\t\t\t\"NEW\";"
+      },
+      {
+        "line": 2168,
+        "source": "\t\t\t\t\t$status =\t\t\t\t\"NEW\";"
+      },
+      {
+        "line": 2688,
+        "source": "\t\t\t\t\t$status =\t\t\t\t\"NEW\";"
+      }
+    ]
+  },
+  "/var/www/html/vicidial/admin.php": {
+    "sha256": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+    "hits": [
+      {
+        "line": 8045,
+        "source": "\techo \"$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\\n\";"
+      },
+      {
+        "line": 17985,
+        "source": "\t\t\t\t$stmt = \"SELECT campaign_id,blended,closer_campaigns,max_inbound_count,call_count_today,notes,event_date,CHAR_LENGTH(closer_campaigns) as sorder FROM vicidial_max_inbound_cache where user='$user' and status='NEW' and closer_campaigns NOT IN('',' ',' -') and (max_inbound_count < $max_inbound_calls) order by sorder desc limit 1;\";"
+      },
+      {
+        "line": 18065,
+        "source": "\t\t\t\t\t\t$stmt = \"UPDATE vicidial_max_inbound_cache SET status='RESELECTED', notes=CONCAT(notes, '|RESELECTED at $SQLdate by $PHP_AUTH_USER') where user='$user' and campaign_id='$VMIC_campaign_id' and status='NEW' and closer_campaigns NOT IN('',' ',' -') and (max_inbound_count < $max_inbound_calls) and event_date='$VMIC_event_date';\";"
+      },
+      {
+        "line": 18072,
+        "source": "\t\t\t\t\t\t$stmt = \"UPDATE vicidial_max_inbound_cache SET status='OLD', notes=CONCAT(notes, '|OLD at $SQLdate by $PHP_AUTH_USER') where user='$user' and campaign_id='$VMIC_campaign_id' and status='NEW';\";"
+      },
+      {
+        "line": 18388,
+        "source": "\t\t\t\t$stmt = \"SELECT campaign_id,blended,closer_campaigns,max_inbound_count,call_count_today,notes,event_date,CHAR_LENGTH(closer_campaigns) as sorder FROM vicidial_max_inbound_cache where user='$user' and status='NEW' and closer_campaigns NOT IN('',' ',' -') and (max_inbound_count < $max_inbound_calls) order by sorder desc limit 1;\";"
+      },
+      {
+        "line": 18468,
+        "source": "\t\t\t\t\t\t$stmt = \"UPDATE vicidial_max_inbound_cache SET status='RESELECTED', notes=CONCAT(notes, '|RESELECTED at $SQLdate by $PHP_AUTH_USER') where user='$user' and campaign_id='$VMIC_campaign_id' and status='NEW' and closer_campaigns NOT IN('',' ',' -') and (max_inbound_count < $max_inbound_calls) and event_date='$VMIC_event_date';\";"
+      },
+      {
+        "line": 18475,
+        "source": "\t\t\t\t\t\t$stmt = \"UPDATE vicidial_max_inbound_cache SET status='OLD', notes=CONCAT(notes, '|OLD at $SQLdate by $PHP_AUTH_USER') where user='$user' and campaign_id='$VMIC_campaign_id' and status='NEW';\";"
+      },
+      {
+        "line": 19415,
+        "source": "\t\t\t\t\t\t$stmt = \"SELECT distinct user FROM vicidial_max_inbound_cache where campaign_id='$campaign_id' and status='NEW' and closer_campaigns NOT IN('',' ',' -') and (max_inbound_count < $max_inbound_calls) order by user limit 1000;\";"
+      },
+      {
+        "line": 19429,
+        "source": "\t\t\t\t\t\t\t$stmt = \"SELECT '$campaign_id',blended,closer_campaigns,max_inbound_count,call_count_today,notes,event_date,CHAR_LENGTH(closer_campaigns) as sorder FROM vicidial_max_inbound_cache where user='$max_in_users[$miu]' and status='NEW' and closer_campaigns NOT IN('',' ',' -') and (max_inbound_count < $max_inbound_calls) order by sorder desc limit 1;\";"
+      },
+      {
+        "line": 19509,
+        "source": "\t\t\t\t\t\t\t\t\t$stmt = \"UPDATE vicidial_max_inbound_cache SET status='RESELECTED', notes=CONCAT(notes, '|RESELECTED at $SQLdate by $PHP_AUTH_USER') where user='$max_in_users[$miu]' and campaign_id='$VMIC_campaign_id' and status='NEW' and closer_campaigns NOT IN('',' ',' -') and (max_inbound_count < $max_inbound_calls) and event_date='$VMIC_event_date';\";"
+      },
+      {
+        "line": 19516,
+        "source": "\t\t\t\t\t\t\t\t\t$stmt = \"UPDATE vicidial_max_inbound_cache SET status='OLD', notes=CONCAT(notes, '|OLD at $SQLdate by $PHP_AUTH_USER') where user='$max_in_users[$miu]' and campaign_id='$VMIC_campaign_id' and status='NEW';\";"
+      },
+      {
+        "line": 49318,
+        "source": "\t\t$ct_stmt=\"SELECT count(*) From vicidial_email_list where status='NEW' and group_id='$row[0]'\";"
+      }
+    ]
+  },
+  "/var/www/html/vicidial/functions.php": {
+    "sha256": "14d11c2b9229f1ce5acd397cbb0b16e6e27f9c5216a1e0ad4ad1ca86db506fac",
+    "hits": [
+      {
+        "line": 97,
+        "source": "\t$NOW_TIME = date(\"Y-m-d H:i:s\");"
+      }
+    ]
+  },
+  "rpms": {
+    "rc": 0,
+    "out": "perl-Spreadsheet-XLSX 0.20-1.el10_2 (none)\nperl-Test-Warnings 0.033-3.el10 RSA/SHA256, Sat 14 Dec 2024 03:20:33 PM EST, Key ID dee5c11cc2a1e572\nperl-Test-NoWarnings 1.06-10.el10 RSA/SHA256, Sat 14 Dec 2024 11:29:50 AM EST, Key ID dee5c11cc2a1e572\nperl-Text-CSV_XS 1.65-1.el10_2 (none)\n",
+    "err": ""
+  },
+  "packlists": {
+    "/usr/local/lib64/perl5/5.40/auto/Spreadsheet/Read/.packlist": "/usr/local/share/man/man3/Spreadsheet::Read.3pm\n/usr/local/share/perl5/5.40/Spreadsheet/Read.pm\n",
+    "/usr/local/lib64/perl5/5.40/auto/Data/Peek/.packlist": "/usr/local/lib64/perl5/5.40/Data/Peek.pm\n/usr/local/lib64/perl5/5.40/auto/Data/Peek/Peek.so\n/usr/local/share/man/man3/Data::Peek.3pm\n"
+  }
+}

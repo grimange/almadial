@@ -1,0 +1,115 @@
+	function ManualDialSkip(MDSclick)
+		{
+		if (MDSclick=='YES')
+			{button_click_log = button_click_log + "" + SQLdate + "-----ManualDialSkip---|";}
+		if ( (manual_dial_in_progress==1) && (APIskip < 1) )
+			{
+			alert_box("<?php echo _QXZ("YOU CANNOT SKIP A CALLBACK OR MANUAL DIAL, YOU MUST DIAL THE LEAD"); ?>");
+			button_click_log = button_click_log + "" + SQLdate + "-----DialSkipFailed---" + manual_dial_in_progress + " " + "|";
+			}
+		else
+			{
+			in_lead_preview_state=0;
+			if (dial_method == "INBOUND_MAN")
+				{
+				auto_dial_level=starting_dial_level;
+
+                document.getElementById("DiaLControl").innerHTML = "<img src=\"./images/<?php echo _QXZ("vdc_LB_blank_OFF.gif"); ?>\" border=\"0\" alt=\"pause button disabled\" /><br /><img src=\"./images/<?php echo _QXZ("vdc_LB_dialnextnumber_OFF.gif"); ?>\" border=\"0\" alt=\"Dial Next Number\" />";
+				}
+			else
+				{
+                document.getElementById("DiaLControl").innerHTML = "<img src=\"./images/<?php echo _QXZ("vdc_LB_dialnextnumber_OFF.gif"); ?>\" border=\"0\" alt=\"Dial Next Number\" />";
+				}
+
+			var xmlhttp=false;
+			/*@cc_on @*/
+			/*@if (@_jscript_version >= 5)
+			// JScript gives us Conditional compilation, we can cope with old IE versions.
+			// and security blocked creation of the objects.
+			 try {
+			  xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+			 } catch (e) {
+			  try {
+			   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			  } catch (E) {
+			   xmlhttp = false;
+			  }
+			 }
+			@end @*/
+			if (!xmlhttp && typeof XMLHttpRequest!='undefined')
+				{
+				xmlhttp = new XMLHttpRequest();
+				}
+			if (xmlhttp) 
+				{ 
+				manDiaLskip_query = "server_ip=" + server_ip + "&session_name=" + session_name + "&ACTION=manDiaLskip&conf_exten=" + session_id + "&user=" + user + "&pass=" + pass + "&lead_id=" + document.vicidial_form.lead_id.value + "&stage=" + previous_dispo + "&called_count=" + previous_called_count + "&campaign=" + campaign;
+				xmlhttp.open('POST', 'vdc_db_query.php'); 
+				xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
+				xmlhttp.send(manDiaLskip_query); 
+				xmlhttp.onreadystatechange = function() 
+					{ 
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+						{
+						var MDSnextResponse = null;
+					//	alert(manDiaLskip_query);
+					//	alert(xmlhttp.responseText);
+						MDSnextResponse = xmlhttp.responseText;
+
+						var MDSnextResponse_array=MDSnextResponse.split("\n");
+						MDSnextCID = MDSnextResponse_array[0];
+						if (MDSnextCID == "LEAD NOT REVERTED")
+							{
+							alert_box("<?php echo _QXZ("Lead was not reverted, there was an error:"); ?>\n" + MDSnextResponse);
+							button_click_log = button_click_log + "" + SQLdate + "-----DialSkipFailRevert---" + MDSnextResponse + " " + "|";
+							}
+						else
+							{
+							document.vicidial_form.lead_id.value		='';
+							document.vicidial_form.vendor_lead_code.value='';
+							document.vicidial_form.list_id.value		='';
+							document.vicidial_form.list_name.value		='';
+							document.vicidial_form.list_description.value='';
+							document.vicidial_form.entry_list_id.value	='';
+							document.vicidial_form.gmt_offset_now.value	='';
+							document.vicidial_form.phone_code.value		='';
+							if ( (disable_alter_custphone=='Y') || (disable_alter_custphone=='HIDE') )
+								{
+								var tmp_pn = document.getElementById("phone_numberDISP");
+								tmp_pn.innerHTML			= ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ';
+								}
+							document.vicidial_form.phone_number.value	='';
+							document.vicidial_form.title.value			='';
+							document.vicidial_form.first_name.value		='';
+							document.vicidial_form.middle_initial.value	='';
+							document.vicidial_form.last_name.value		='';
+							document.vicidial_form.address1.value		='';
+							document.vicidial_form.address2.value		='';
+							document.vicidial_form.address3.value		='';
+							document.vicidial_form.city.value			='';
+							document.vicidial_form.state.value			='';
+							document.vicidial_form.province.value		='';
+							document.vicidial_form.postal_code.value	='';
+							document.vicidial_form.country_code.value	='';
+							document.vicidial_form.gender.value			='';
+							document.vicidial_form.date_of_birth.value	='';
+					{$three_way_dial_prefix = $dial_prefix;}
+				if ( ($alt_number_dialing=='Y') or ($alt_number_dialing=='SELECTED') or ($alt_number_dialing=='SELECTED_TIMER_ALT') or ($alt_number_dialing=='SELECTED_TIMER_ADDR3') or ($alt_number_dialing=='UNSELECTED') or ($alt_number_dialing=='UNSELECTED_TIMER_ALT') or ($alt_number_dialing=='UNSELECTED_TIMER_ADDR3') )
+					{$alt_phone_dialing='1';}
+				else
+					{
+					$alt_phone_dialing='0';
+					$DefaulTAlTDiaL='0';
+					}
+				if ($display_queue_count=='N')
+					{$callholdstatus='0';}
+				if ( ($dial_method == 'INBOUND_MAN') or ($outbound_autodial_active < 1) )
+					{$VU_closer_default_blended=0;}
+
+				# Gather list of In-Groups for this user that have hit the daily limit, so we can exclude them
+				$stmt="SELECT group_id FROM vicidial_inbound_group_agents WHERE user='$VD_login' and ( (daily_limit > -1) and (daily_limit <= calls_today) ) limit 1000;";
+				$rslt=mysql_to_mysqli($stmt, $link);
+					if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01108',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+				if ($DB) {echo "$stmt\n";}
+				$VD_hit_limit_ingroups_ct = mysqli_num_rows($rslt);
+				$VD_hit_limit_ingroups="'',";
+				$jx=0;

@@ -1,0 +1,11 @@
+4037
+8045:	echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\n";
+766:	echo "$VDdisplayMESSAGE: |$PHP_AUTH_USER|$PHP_AUTH_PW|$auth_message|\n";
+perl-Spreadsheet-XLSX 0.20-1.el10_2 RSA/SHA256, Sat 31 Oct 2026 08:01:56 PM EDT, Key ID 33d98517e37ed158
+perl-Test-Warnings 0.033-3.el10 RSA/SHA256, Sat 14 Dec 2024 03:20:32 PM EST, Key ID dee5c11cc2a1e572
+perl-Test-NoWarnings 1.06-10.el10 RSA/SHA256, Sat 14 Dec 2024 11:29:49 AM EST, Key ID dee5c11cc2a1e572
+/usr/local/lib64/perl5/5.40/Data/Peek.pm
+/usr/local/lib64/perl5/5.40/auto/Data/Peek/Peek.so
+/usr/local/share/man/man3/Data::Peek.3pm
+/usr/local/share/man/man3/Spreadsheet::Read.3pm
+/usr/local/share/perl5/5.40/Spreadsheet/Read.pm

@@ -1,0 +1,8 @@
+12:		if ($SSagent_debug_logging > 0) {vicidial_ajax_log($NOW_TIME,$startMS,$link,$ACTION,$php_script,$user,$stage,$lead_id,$session_name,$stmt);}
+66:			$stmt="UPDATE $conf_table set extension='' where server_ip='$server_ip' and conf_exten='$conf_exten';";
+74:		$stmt="DELETE from web_client_sessions where server_ip='$server_ip' and session_name ='$session_name';";
+128:				$delete_stmt="DELETE from vicidial_manager_chat_log where manager_chat_id='$manager_chat_id';";
+133:					$archive_stmt="DELETE from vicidial_manager_chats where manager_chat_id='$manager_chat_id';";
+142:		$stmt="DELETE from vicidial_live_agents where server_ip='$server_ip' and user ='$user';";
+158:		$stmt="DELETE from vicidial_live_inbound_agents where user='$user';";
+178:				$stmt="UPDATE vicidial_agent_log set pause_sec='$pause_sec',wait_epoch='$StarTtime' where agent_log_id='$agent_log_id';";

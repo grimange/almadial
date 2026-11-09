@@ -1,0 +1,51 @@
+Checking if your kit is complete...
+Looks good
+Generating a Unix-style Makefile
+Writing Makefile for Data::Peek
+Writing MYMETA.yml and MYMETA.json
+cp Peek.pm blib/lib/Data/Peek.pm
+Running Mkbootstrap for Peek ()
+chmod 644 "Peek.bs"
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- Peek.bs blib/arch/auto/Data/Peek/Peek.bs 644
+"/usr/bin/perl" "/usr/share/perl5/vendor_perl/ExtUtils/xsubpp"  -typemap '/usr/share/perl5/ExtUtils/typemap' -typemap '/tmp/gap-perl-build/Data-Peek-0.54/typemap'  Peek.xs > Peek.xsc
+mv Peek.xsc Peek.c
+gcc -c   -D_REENTRANT -D_GNU_SOURCE -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Wno-complain-wrong-lang -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v3 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fwrapv -fno-strict-aliasing -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -g   -DVERSION=\"0.54\" -DXS_VERSION=\"0.54\" -fPIC "-I/usr/lib64/perl5/CORE"   Peek.c
+rm -f blib/arch/auto/Data/Peek/Peek.so
+gcc  -lpthread -shared -Wl,-z,relro -Wl,--as-needed -Wl,-z,pack-relative-relocs -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-hardened-ld-errors -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -Wl,--build-id=sha1  -L/usr/local/lib -fstack-protector-strong  Peek.o  -o blib/arch/auto/Data/Peek/Peek.so  \
+    -lperl   \
+  
+chmod 755 blib/arch/auto/Data/Peek/Peek.so
+Manifying 1 pod document
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- Peek.bs blib/arch/auto/Data/Peek/Peek.bs 644
+PERL_DL_NONLAZY=1 "/usr/bin/perl" "-MExtUtils::Command::MM" "-MTest::Harness" "-e" "undef *Test::Harness::Switches; test_harness(0, 'blib/lib', 'blib/arch')" t/*.t
+t/00_pod.t ........ skipped: Test::Pod 1.00 required for testing POD
+t/01_pod.t ........ skipped: Test::Pod::Covarage required for testing POD Coverage
+t/10_DDumper.t .... ok
+t/11_DDumper.t .... ok
+t/12_DDsort.t ..... ok
+t/20_DPeek.t ...... ok
+t/21_DDisplay.t ... ok
+t/22_DHexDump.t ... ok
+t/30_DDump-s.t .... ok
+t/31_DDump-s.t .... ok
+t/40_DDump-h.t .... ok
+t/41_DDump-h.t .... ok
+t/50_DDual.t ...... ok
+t/51_triplevar.t .. ok
+t/52_DGrow.t ...... ok
+All tests successful.
+
+Test Summary Report
+-------------------
+t/50_DDual.t    (Wstat: 0 Tests: 70 Failed: 0)
+  TODO passed:   8-9, 31, 40-41, 49-50, 58-61, 63-69
+Files=15, Tests=271,  1 wallclock secs ( 0.05 usr  0.03 sys +  0.62 cusr  0.17 csys =  0.87 CPU)
+Result: PASS
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- Peek.bs blib/arch/auto/Data/Peek/Peek.bs 644
+Manifying 1 pod document
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /usr/local/lib64/perl5/5.40/auto/Data/Peek/Peek.so
+Installing /usr/local/lib64/perl5/5.40/Data/Peek.pm
+Installing /usr/local/share/man/man3/Data::Peek.3pm
+Appending installation info to /usr/lib64/perl5/perllocal.pod
+# A usable Perl::Tidy is not available
