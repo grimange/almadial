@@ -1,0 +1,38 @@
+[
+  {
+    "name": "extension",
+    "value": "1014"
+  },
+  {
+    "name": "dialplan_number",
+    "value": "1014"
+  },
+  {
+    "name": "user_group",
+    "value": "QAPRD14"
+  },
+  {
+    "name": "login",
+    "value": "1014"
+  },
+  {
+    "name": "status",
+    "value": "SUSPENDED"
+  },
+  {
+    "name": "active",
+    "value": "N"
+  },
+  {
+    "name": "fullname",
+    "value": "QA PRD inactive only"
+  },
+  {
+    "name": "protocol",
+    "value": "SIP"
+  },
+  {
+    "name": "template_id",
+    "value": ""
+  }
+]

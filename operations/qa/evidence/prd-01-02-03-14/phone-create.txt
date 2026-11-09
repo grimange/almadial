@@ -1,0 +1,402 @@
+ ADMINISTRATION
+
+
+ Reports
+
+
+ Users
+
+
+ Campaigns
+
+
+ Lists
+
+
+ Scripts
+
+
+ Filters
+
+
+ Inbound
+
+
+ User Groups
+
+
+ Remote Agents
+
+
+ Admin
+     Call Times
+     Shifts
+     Phones
+     Templates
+     Carriers
+     Servers
+     Conferences
+     System Settings
+     Screen Labels
+     Screen Colors
+     System Statuses
+     Status Groups
+     CID Groups
+     Voicemail
+     Settings Containers
+     Queue Groups
+
+
+
+HOME | Timeclock | Chat | Logout (6666)	Monday November 9, 2026 23:06:57 PM
+
+  Show Phones  |  Add A New Phone  |  Copy an Existing Phone  |  Phone Alias List  |  Add A New Phone Alias  |  Group Alias List  |  Add A New Group Alias
+
+
+PHONE ADDED
+
+MODIFY A PHONE RECORD: 1014
+Phone Extension:
+Dial Plan Number:	 (digits only)
+Voicemail Box:	 (digits only)
+Outbound CallerID:	 (digits only)
+Outbound Alt CallerID:	 optional (digits only)
+Admin User Group:
+All Admin User Groups
+ADMIN - VICIDIAL ADMINISTRATORS
+QAPRD14 - QA PRD synthetic restricted
+QAPRD14
+
+Phone IP address:	 (optional)
+Computer IP address:	 (optional)
+Server IP:
+2.29.153.161 - Test install of Asterisk server - - Y - Y
+2.29.153.161
+
+Agent Screen Login:
+Login Password:
+Registration Password:	     Strength:    Length: 32
+Set As Webphone:
+Y
+N
+Y_API_LAUNCH
+N
+
+Webphone Dialpad:
+Y
+N
+TOGGLE
+TOGGLE_OFF
+Y
+
+Webphone Auto-Answer:
+Y
+N
+Y
+
+Webphone Dialbox:
+Y
+N
+Y
+
+Webphone Mute:
+Y
+N
+Y
+
+Webphone Volume:
+Y
+N
+Y
+
+Webphone Debug:
+Y
+N
+N
+
+Webphone Layout:
+Webphone Extra Settings:
+DISABLED
+VICIPHONE_SETTINGS - VICIphone WebRTC Extra Settings
+
+Use External Server IP:
+Y
+N
+N
+
+Status:
+ACTIVE
+SUSPENDED
+CLOSED
+PENDING
+ADMIN
+SUSPENDED
+
+Active Account:
+Y
+N
+N
+
+Phone Type:
+Full Name:
+Email:
+Delete Voicemail After Email:
+Y
+N
+N
+
+Voicemail Zone:
+newzealand - Pacific/Auckland
+australiaeast - Australia/Sydney
+australiacentral - Australia/Adelaide
+australiawest - Australia/Perth
+japan - Asia/Tokyo
+philippines - Asia/Manila
+china - Asia/Shanghai
+malaysia - Asia/Kuala_Lumpur
+thailand - Asia/Bangkok
+india - Asia/Calcutta
+pakistan - Asia/Karachi
+russiaeast - Europe/Moscow
+kenya - Africa/Nairobi
+europeaneast - Europe/Kiev
+southafrica - Africa/Johannesburg
+european - Europe/Copenhagen
+nigeria - Africa/Lagos
+uk - Europe/London
+brazil - America/Sao_Paulo
+newfoundland - Canada/Newfoundland
+carribeaneast - America/Santo_Domingo
+atlantic - Canada/Atlantic
+chile - America/Santiago
+eastern - America/New_York
+peru - America/Lima
+central - America/Chicago
+mexicocity - America/Mexico_City
+mountain - America/Denver
+arizona - America/Phoenix
+saskatchewan - America/Saskatchewan
+pacific - America/Los_Angeles
+alaska - America/Anchorage
+hawaii - Pacific/Honolulu
+eastern24 - America/New_York
+central24 - America/Chicago
+mountain24 - America/Denver
+pacific24 - America/Los_Angeles
+military - Zulu
+eastern
+
+Voicemail Options:
+Voicemail Instructions:
+Y
+N
+Y
+
+Show VM on Summary Screen:
+Y
+N
+N
+
+Unavailable Dialplan Forward:	 context:
+Music on Hold Suggest:	 moh chooser
+Company:
+Picture:
+New Messages:
+Old Messages:
+Client Protocol:
+SIP
+PJSIP
+Zap
+IAX2
+EXTERNAL
+DAHDI
+SIP
+
+Local GMT:
+12.75
+12.00
+11.00
+10.00
+9.50
+9.00
+8.00
+7.00
+6.50
+6.00
+5.75
+5.50
+5.00
+4.50
+4.00
+3.50
+3.00
+2.00
+1.00
+0.00
+-1.00
+-2.00
+-3.00
+-3.50
+-4.00
+-5.00
+-6.00
+-7.00
+-8.00
+-9.00
+-10.00
+-11.00
+-12.00
+-5.00
+ (Do NOT Adjust for DST)
+Phone Ring Timeout:
+On-Hook Agent:
+Y
+N
+N
+
+Manager Login:
+Manager Secret:
+Agent Default User:
+Agent Default Pass:
+Agent Default Campaign:
+Park Exten:
+Conf Exten:
+Agent Park Exten:
+Agent Park File:
+Monitor Prefix:
+Recording Exten:
+VMailMain Exten:
+VMailDump Exten:
+VMailDump Exten NI:
+Exten Context:
+Phone Context:
+Allowed Codecs:
+Allowed Codecs With Template:
+1
+0
+0
+
+Conf Qualify:
+Y
+N
+Y
+
+DTMFSend Channel:
+Outbound Call Group:
+CallerID URL:
+Agent Default URL:
+NVA Call URL:
+NVA Search Method:
+NVA Error Filename:	 audio chooser
+NVA New List ID:
+NVA New Phone Code:
+NVA New Status:
+Call Logging:
+1
+0
+1
+
+User Switching:
+1
+0
+1
+
+Conferencing:
+1
+0
+1
+
+Admin Hang Up:
+1
+0
+0
+
+Admin Hijack:
+1
+0
+0
+
+Admin Monitor:
+1
+0
+1
+
+Call Park:
+1
+0
+1
+
+Updater Check:
+1
+0
+1
+
+AF Logging:
+1
+0
+1
+
+Queue Enabled:
+1
+0
+1
+
+CallerID Popup:
+1
+0
+1
+
+VMail Button:
+1
+0
+1
+
+Fast Refresh:
+1
+0
+0
+
+Fast Refresh Rate:	(in ms)
+Persistant MySQL:
+1
+0
+0
+
+Auto Dial Next Number:
+1
+0
+1
+
+Stop Rec after each call:
+1
+0
+1
+
+Enable SIPSAK Messages:
+1
+0
+0
+
+
+Template ID:
+--NONE--
+IAX_generic - IAX phone generic
+SIP_generic - SIP phone generic
+
+Conf Override:
+
+
+
+Click here for phone stats
+
+Click here for phone call recordings
+
+DELETE THIS PHONE
+
+Click here to see Admin changes to this phone
+
+
+
+VERSION: 2.14-969a
+BUILD: 261102-0125
+© 2026 ViciDial Group

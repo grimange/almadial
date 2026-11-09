@@ -1,0 +1,28 @@
+{
+  "utc": "2026-11-09T15:21:13.746382+00:00",
+  "baseline": {
+    "code": 0,
+    "stdout": "Path: /usr/src/astguiclient/trunk\nWorking Copy Root Path: /usr/src/astguiclient/trunk\nURL: svn://svn.eflo.net/agc_2-X/trunk\nRelative URL: ^/agc_2-X/trunk\nRepository Root: svn://svn.eflo.net\nRepository UUID: 3d104415-ff17-0410-8863-d5cf3c621b8a\nRevision: 4037\nNode Kind: directory\nSchedule: normal\nLast Changed Author: mattf\nLast Changed Rev: 4037\nLast Changed Date: 2026-11-02 19:12:12 -0500 (Mon, 02 Nov 2026)\nAsterisk 20.21.0 built by root @ dialer01 on a x86_64 running Linux on 2026-11-04 21:37:40 UTC\nPHP 8.3.36 (cli) (built: Oct 19 2026 14:00:34) (NTS gcc x86_64)\nCopyright (c) The PHP Group\n",
+    "stderr": ""
+  },
+  "dependency_repository": {
+    "code": 1,
+    "stdout": "Last metadata expiration check: 0:34:40 ago on Mon 09 Nov 2026 09:46:34 AM EST.\nNo match for argument: perl-Spreadsheet-Read\n",
+    "stderr": "Error: Unable to find a match: perl-Spreadsheet-Read\n"
+  },
+  "csv_php_error": {
+    "code": 0,
+    "stdout": "[09-Nov-2026 22:57:55 Asia/Manila] PHP Warning:  fopen(/tmp/prd-outbound-leads.txt): Failed to open stream: No such file or directory in /var/www/html/vicidial/admin_listloader_fifth_gen.php on line 3034\n[09-Nov-2026 22:57:55 Asia/Manila] PHP Fatal error:  Uncaught TypeError: fgets(): Argument #1 ($stream) must be of type resource, false given in /var/www/html/vicidial/admin_listloader_fifth_gen.php:3038\n",
+    "stderr": ""
+  },
+  "asterisk_errors": {
+    "code": 0,
+    "stdout": "-- No entries --\n",
+    "stderr": ""
+  },
+  "fixture_sql": {
+    "code": 0,
+    "stdout": "campaign_id\tactive\tdial_method\tauto_dial_level\tdial_statuses\tmanual_preview_dial\nQAOUT01\tN\tMANUAL\t0\t NI NEW -\tPREVIEW_AND_SKIP\nlist_id\tactive\tcampaign_id\n910014\tN\tQAOUT01\nstatus\tCOUNT(*)\nDNC\t19\nNI\t1\nqa_calls\n0\nqa_recordings\n0\nqa_live_agents\n0\nextension\tactive\tstatus\tprotocol\n1014\tN\tSUSPENDED\tSIP\nuser\tuser_level\tuser_group\tview_reports\taccess_recordings\tmodify_users\tmodify_campaigns\tmodify_lists\tmodify_phones\tload_leads\n6666\t9\tADMIN\t1\t1\t1\t1\t1\t1\t1\nqaagent14\t1\tQAPRD14\t0\t0\t0\t0\t0\t0\t0\nqasup14\t7\tQAPRD14\t1\t0\t0\t0\t0\t0\t0\nuser_group\tallowed_campaigns\tallowed_reports\tadmin_viewable_groups\tagent_status_viewable_groups\nQAPRD14\t QAOUT01 -\t Real-Time Main Report\t QAPRD14 \t QAPRD14 \nserver_ip\trebuild_conf_files\tgenerate_vicidial_conf\n2.29.153.161\tN\tY\n",
+    "stderr": ""
+  }
+}

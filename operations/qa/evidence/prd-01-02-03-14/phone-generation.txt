@@ -1,0 +1,6 @@
+Peer 1014 not found.
+
+extension	active	protocol	template_id
+1014	N	SIP
+server_id	rebuild_conf_files	generate_vicidial_conf
+TESTast	N	Y

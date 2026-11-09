@@ -1,0 +1,926 @@
+{
+  "window": "2026-11-09 22:46:00 to 23:22:00 Asia/Manila",
+  "method": "Aggregate PHP severity and source location; values and query text excluded",
+  "counts": [
+    {
+      "severity": "Fatal error",
+      "file": "vicidial/admin_listloader_fifth_gen.php",
+      "line": "3038",
+      "count": 1
+    },
+    {
+      "severity": "Warning",
+      "file": "agc/vicidial.php",
+      "line": "6303",
+      "count": 1
+    },
+    {
+      "severity": "Warning",
+      "file": "agc/vicidial.php",
+      "line": "6445",
+      "count": 1
+    },
+    {
+      "severity": "Warning",
+      "file": "agc/vicidial.php",
+      "line": "6446",
+      "count": 1
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "1590",
+      "count": 12
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "1648",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "1649",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "1650",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "1725",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "2586",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "2599",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "2607",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "2611",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "2624",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "2632",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "2640",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "3212",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "3217",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "3226",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "3241",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "3265",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "3269",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "3619",
+      "count": 3
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "371",
+      "count": 12
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "3989",
+      "count": 3
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/AST_timeonVDADall.php",
+      "line": "970",
+      "count": 6
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin.php",
+      "line": "14679",
+      "count": 1
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin.php",
+      "line": "20431",
+      "count": 3
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin.php",
+      "line": "4276",
+      "count": 5
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin.php",
+      "line": "4836",
+      "count": 174
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin.php",
+      "line": "4858",
+      "count": 175
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin.php",
+      "line": "5079",
+      "count": 170
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin.php",
+      "line": "5080",
+      "count": 170
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin.php",
+      "line": "5540",
+      "count": 170
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_listloader_fifth_gen.php",
+      "line": "3034",
+      "count": 1
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "1474",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "1617",
+      "count": 21
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "1775",
+      "count": 109
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "1836",
+      "count": 168
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "260",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "263",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "264",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "329",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "331",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "332",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "333",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "334",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "335",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "336",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "338",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "340",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "341",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "342",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "343",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "344",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "346",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "347",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "348",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "349",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "350",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "351",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "352",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "353",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "354",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "355",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "356",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "357",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "358",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "359",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "360",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "361",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "362",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "363",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "364",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "365",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "366",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "367",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "369",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "370",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "371",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "372",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "373",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "382",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "383",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "384",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "385",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "386",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "387",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "388",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "389",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "390",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "391",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "392",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "393",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "394",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "395",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "396",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "397",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "398",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "399",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "400",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "401",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "402",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "403",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "404",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "405",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "406",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "407",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "408",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "409",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "410",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "411",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "412",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "413",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "414",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "415",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "416",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "417",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "418",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "419",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "420",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "421",
+      "count": 63
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "4362",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/admin_modify_lead.php",
+      "line": "4383",
+      "count": 42
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/dbconnect_mysqli.php",
+      "line": "83",
+      "count": 405
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "1048",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "1116",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "1183",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "1250",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "1319",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "1396",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "734",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "746",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "842",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "911",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/functions.php",
+      "line": "979",
+      "count": 20
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "122",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "169",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "207",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "208",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "211",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "212",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "213",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "214",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "215",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "216",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "222",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "224",
+      "count": 2
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "384",
+      "count": 3
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "89",
+      "count": 1
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/user_stats.php",
+      "line": "90",
+      "count": 1
+    },
+    {
+      "severity": "Warning",
+      "file": "vicidial/vicidial_stylesheet.php",
+      "line": "86",
+      "count": 131
+    }
+  ],
+  "fatals": [
+    {
+      "time": "22:57:55",
+      "severity": "Fatal error",
+      "file": "vicidial/admin_listloader_fifth_gen.php",
+      "line": "3038"
+    }
+  ]
+}

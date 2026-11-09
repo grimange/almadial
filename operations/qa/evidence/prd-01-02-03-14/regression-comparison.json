@@ -1,0 +1,67 @@
+{
+  "unchanged_protected_files": true,
+  "unchanged_recording_file": true,
+  "unchanged_recording_permissions_metadata": true,
+  "unchanged_firewalld_permanent": true,
+  "unchanged_firewalld_runtime": true,
+  "asterisk_hash_comparison": {
+    "/etc/asterisk/pjsip.conf": {
+      "before": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+      "after": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+      "same": true
+    },
+    "/etc/asterisk/sip.conf": {
+      "before": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+      "after": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+      "same": true
+    },
+    "/etc/asterisk/extensions-vicidial.conf": {
+      "before": "17f379cb4959a47d69903e4618f6f4bfaa09d5f71f6f34fd3916ae336e21058a",
+      "after": "17f379cb4959a47d69903e4618f6f4bfaa09d5f71f6f34fd3916ae336e21058a",
+      "same": true
+    },
+    "/etc/asterisk/pjsip-vicidial.conf": {
+      "before": "eb44c33bf37a17528a21654deb1d1adca9a18f4a46f99c3746658cdbd8c96f36",
+      "after": "eb44c33bf37a17528a21654deb1d1adca9a18f4a46f99c3746658cdbd8c96f36",
+      "same": true
+    },
+    "/etc/asterisk/sip-vicidial.conf": {
+      "before": "48871bb87e62d456edb0442ce2a89512b41baa26835035c3b603e6392eb98ef7",
+      "after": "48871bb87e62d456edb0442ce2a89512b41baa26835035c3b603e6392eb98ef7",
+      "same": true
+    },
+    "/etc/asterisk/extensions.conf": {
+      "before": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+      "after": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+      "same": true
+    }
+  },
+  "after_calls": {
+    "code": 0,
+    "stdout": "0 active channels\n0 active calls\n26 calls processed",
+    "stderr": ""
+  },
+  "backup": {
+    "code": 0,
+    "stdout": "{\n  \"outcome\": \"ok\",\n  \"attempt_at\": \"2026-11-09T08:40:02.958817+00:00\",\n  \"pid\": 910284,\n  \"finished_at\": \"2026-11-09T08:40:18.689298+00:00\",\n  \"last_failure\": {\n    \"at\": \"2026-11-06T21:02:22.754013+00:00\",\n    \"reason\": \"required_dataset_missing\"\n  },\n  \"last_success\": {\n    \"id\": \"20261109T084003-23e8842a\",\n    \"completed_at\": \"2026-11-09T08:40:17.780215+00:00\",\n    \"bytes\": 1364673208,\n    \"database\": {\n      \"method\": \"mariadb-dump --all-databases --lock-all-tables\",\n      \"timeout_seconds\": 30,\n      \"lock_hold_upper_bound_seconds\": 0.8664,\n      \"completed_at\": \"2026-11-09T08:40:04.716349+00:00\"\n    },\n    \"integrity\": {\n      \"verified_at\": \"2026-11-09T08:40:17.563587+00:00\",\n      \"payloads\": 5,\n      \"archive_members\": 21340,\n      \"database_tables\": 376,\n      \"recording_files\": 7\n    },\n    \"archive_sha256\": \"4e8fbd3aec41f1fc15150870892f445fb0ec14d054d220e42ef3d32d04c0ccb7\"\n  },\n  \"newest_complete_age_seconds\": 24030.112358,\n  \"remaining_bytes\": 142321446912,\n  \"free_inodes\": 9778419,\n  \"last_success_verification_present\": true,\n  \"job_lock_held\": false\n}",
+    "stderr": ""
+  },
+  "apache": {
+    "code": 0,
+    "stdout": "",
+    "stderr": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nSyntax OK"
+  },
+  "services": {
+    "httpd": "MainPID=26973\nExecMainStartTimestamp=Wed 2026-11-04 16:15:42 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "asterisk": "MainPID=143137\nExecMainStartTimestamp=Thu 2026-11-05 10:25:33 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "mariadb": "MainPID=61646\nExecMainStartTimestamp=Wed 2026-11-04 16:47:10 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "php-fpm": "MainPID=26963\nExecMainStartTimestamp=Wed 2026-11-04 16:15:41 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "alma-portal-443": "MainPID=443916\nExecMainStartTimestamp=Fri 2026-11-06 18:47:34 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+    "alma-portal-443-apply.timer": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+    "alma-portal-sip-guard": "MainPID=0\nExecMainStartTimestamp=Thu 2026-11-05 17:01:25 EST\nActiveState=active\nSubState=exited\nUnitFileState=enabled",
+    "alma-vicidial-recording.timer": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+    "alma-vicidial-backup.timer": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+    "alma-portal-renew.timer": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+    "fail2ban": "MainPID=178535\nExecMainStartTimestamp=Thu 2026-11-05 15:28:22 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled"
+  }
+}

@@ -1,0 +1,45 @@
+[
+  {
+    "name": "active",
+    "value": "N"
+  },
+  {
+    "name": "dial_method",
+    "value": "MANUAL"
+  },
+  {
+    "name": "auto_dial_level",
+    "value": "0"
+  },
+  {
+    "name": "dial_prefix",
+    "value": "2221",
+    "checked": false
+  },
+  {
+    "name": "manual_dial_prefix",
+    "value": "2221",
+    "checked": false
+  },
+  {
+    "name": "campaign_recording",
+    "value": "ONDEMAND"
+  },
+  {
+    "name": "manual_dial_list_id",
+    "value": "910014",
+    "checked": false
+  },
+  {
+    "name": "manual_dial_filter",
+    "value": "CAMPLISTS_ONLY"
+  },
+  {
+    "name": "manual_preview_dial",
+    "value": "PREVIEW_ONLY"
+  },
+  {
+    "name": "manual_dial_search_filter",
+    "value": "CAMPLISTS_ONLY"
+  }
+]

@@ -1,0 +1,31 @@
+  	   Reports  	   Users  	   Campaigns  	   Lists  	   Scripts  	   Filters  	   Inbound  	   User Groups  	   Remote Agents  	   Admin
+Lead file:	prd-outbound-leads.tsv
+List ID Override:
+Phone Code Override:
+USA-Canada Check:	NONE
+Lead Duplicate Check:	DUPLIST
+Lead Time Zone Lookup:	AREA
+State Abbreviation Lookup:
+Required Phone Number Length:
+Invalid Phone Number Replacement:	DISABLED
+
+Load Another Lead File         VERSION: 2.14-85     BUILD: 260912-0956
+
+
+
+
+
+Processing file... (s-1)
+LEAD DUPLICATE CHECK: DUPLIST
+
+
+
+Load Summary
+Good:	20
+Bad:	1
+Total:	21
+Invalid Numbers:	1
+
+
+Invalid Number Details
+INVALID PHONE NUMBER LENGTH (1)

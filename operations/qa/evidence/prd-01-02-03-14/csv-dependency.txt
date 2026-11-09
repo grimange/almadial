@@ -1,0 +1,16 @@
+Can't locate Spreadsheet/Read.pm in @INC (you may need to install the Spreadsheet::Read module) (@INC entries checked: /usr/local/lib64/perl5/5.40 /usr/local/share/perl5/5.40 /usr/lib64/perl5/vendor_perl /usr/share/perl5/vendor_perl /usr/lib64/perl5 /usr/share/perl5) at /var/www/html/vicidial/sheet2tab.pl line 44.
+BEGIN failed--compilation aborted at /var/www/html/vicidial/sheet2tab.pl line 44.
+package perl-Spreadsheet-Read is not installed
+package perl-Spreadsheet-XLSX is not installed
+[09-Nov-2026 23:01:12 Asia/Manila] PHP Warning:  Undefined variable $amd_agent_display in /var/www/html/vicidial/admin.php on line 5080
+[09-Nov-2026 23:01:12 Asia/Manila] PHP Warning:  Undefined variable $amd_status_map in /var/www/html/vicidial/admin.php on line 5540
+[09-Nov-2026 23:01:13 Asia/Manila] PHP Warning:  Undefined variable $use_slave_server in /var/www/html/vicidial/dbconnect_mysqli.php on line 83
+[09-Nov-2026 23:01:13 Asia/Manila] PHP Warning:  Undefined variable $SSbutton_background in /var/www/html/vicidial/vicidial_stylesheet.php on line 86
+[09-Nov-2026 23:01:16 Asia/Manila] PHP Warning:  Undefined variable $use_slave_server in /var/www/html/vicidial/dbconnect_mysqli.php on line 83
+[09-Nov-2026 23:01:16 Asia/Manila] PHP Warning:  Undefined variable $modify_settings_containers in /var/www/html/vicidial/admin.php on line 4836
+[09-Nov-2026 23:01:16 Asia/Manila] PHP Warning:  Undefined variable $max_inbound_auto_reenable in /var/www/html/vicidial/admin.php on line 4858
+[09-Nov-2026 23:01:16 Asia/Manila] PHP Warning:  Undefined variable $hangup_again_link in /var/www/html/vicidial/admin.php on line 5079
+[09-Nov-2026 23:01:16 Asia/Manila] PHP Warning:  Undefined variable $amd_agent_display in /var/www/html/vicidial/admin.php on line 5080
+[09-Nov-2026 23:01:16 Asia/Manila] PHP Warning:  Undefined variable $amd_status_map in /var/www/html/vicidial/admin.php on line 5540
+[09-Nov-2026 23:01:17 Asia/Manila] PHP Warning:  Undefined variable $use_slave_server in /var/www/html/vicidial/dbconnect_mysqli.php on line 83
+[09-Nov-2026 23:01:17 Asia/Manila] PHP Warning:  Undefined variable $SSbutton_background in /var/www/html/vicidial/vicidial_stylesheet.php on line 86

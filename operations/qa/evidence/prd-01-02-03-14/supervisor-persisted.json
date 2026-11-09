@@ -1,0 +1,35 @@
+[
+  {
+    "name": "user_level",
+    "value": "7"
+  },
+  {
+    "name": "user_group",
+    "value": "QAPRD14"
+  },
+  {
+    "name": "active",
+    "value": "Y"
+  },
+  {
+    "name": "view_reports",
+    "value": "1"
+  },
+  {
+    "name": "access_recordings",
+    "value": "0",
+    "checked": false
+  },
+  {
+    "name": "load_leads",
+    "value": "0"
+  },
+  {
+    "name": "modify_campaigns",
+    "value": "0"
+  },
+  {
+    "name": "modify_phones",
+    "value": "0"
+  }
+]

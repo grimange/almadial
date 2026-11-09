@@ -1,0 +1,15 @@
+{
+  "csv_rows": 20,
+  "csv_columns": 9,
+  "json_parse": "PASS",
+  "protected_comparisons": "PASS",
+  "final_inactive_manual_zero_and_counts": "PASS",
+  "known_secret_scan": "PASS",
+  "matrix_rows": 18,
+  "matrix_results": {
+    "PASS": 12,
+    "PARTIAL": 4,
+    "FAIL": 1,
+    "NOT_RUN": 1
+  }
+}

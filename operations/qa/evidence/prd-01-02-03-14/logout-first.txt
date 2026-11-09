@@ -1,0 +1,30 @@
+Logged in as User: qaagent14 on Phone: PJSIP/1000  to campaign: QAOUT01     	LOGOUT
+		  2026-11-09 23:12:59    session ID: 9600000
+   Calls in Queue: 0
+
+
+
+
+VERSION: 2.14-728c   BUILD: 261101-1945     Server: 2.29.153.161
+Show conference call channel information
+
+
+
+
+
+seconds:
+
+
+
+
+
+Agents View +
+commit
+
+
+
+LOGOUT PROCESS COMPLETE, YOU MAY NOW CLOSE YOUR BROWSER OR LOG BACK IN
+
+
+
+CLICK HERE TO LOG IN AGAIN

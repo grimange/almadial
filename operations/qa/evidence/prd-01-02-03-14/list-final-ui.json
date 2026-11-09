@@ -1,0 +1,26 @@
+[
+  {
+    "name": "list_id",
+    "value": "910014"
+  },
+  {
+    "name": "list_name",
+    "value": "QA PRD synthetic only"
+  },
+  {
+    "name": "campaign_id",
+    "value": "QAOUT01"
+  },
+  {
+    "name": "active",
+    "value": "N"
+  },
+  {
+    "name": "reset_list",
+    "value": "N"
+  },
+  {
+    "name": "expiration_date",
+    "value": "2099-12-31"
+  }
+]

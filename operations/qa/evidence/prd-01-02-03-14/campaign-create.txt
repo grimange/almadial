@@ -1,0 +1,2311 @@
+ ADMINISTRATION
+
+
+ Reports
+
+
+ Users
+
+
+ Campaigns
+  Campaigns Main
+  Statuses
+  HotKeys
+  Lead Recycle
+  Auto-Alt Dial
+  List Mix
+  Pause Codes
+  Presets
+  AC-CID
+
+
+ Lists
+
+
+ Scripts
+
+
+ Filters
+
+
+ Inbound
+
+
+ User Groups
+
+
+ Remote Agents
+
+
+ Admin
+
+
+
+HOME | Timeclock | Chat | Logout (6666)	Monday November 9, 2026 22:50:55 PM
+
+  Show Campaigns     |    Add A New Campaign     |     Copy Campaign     |     Real-Time Campaigns Summary
+
+
+CAMPAIGN ADDED: QAOUT01 QAOUT01:
+
+  Basic	Detail	Statuses	HotKeys	Lead Recycling	Auto Alt Dial	List Mix	Survey	Pause Codes	AC-CID	Real-Time
+Campaign ID:	QAOUT01
+Campaign Name:
+Campaign Description:
+Campaign Change Date:	2026-11-09 22:50:55
+Campaign Login Date:
+Campaign Call Date:
+
+Active:
+Y
+N
+N
+
+Admin User Group:
+All Admin User Groups
+ADMIN - VICIDIAL ADMINISTRATORS
+ADMIN
+
+Park Music-on-Hold:	 moh chooser
+Web Form:
+Web Form Two:
+Web Form Target:
+Allow Closers:
+Y
+N
+N
+
+
+
+Allow Inbound and Blended:
+Y
+N
+N
+
+Dial Status 1:	NEW - New Lead         REMOVE
+Add A Dial Status to Call:
+- NONE -
+A - Answering Machine
+AA - Answering Machine Auto
+AB - Busy Auto
+ADAIR - Dead Air Auto
+ADC - Disconnected Number Auto
+ADCT - Disconnected Number Temporary
+AFAX - Fax Machine Auto
+AFTHRS - Inbound After Hours Drop
+AL - Answering Machine Msg Played
+AM - Answering Machine SentToMesg
+B - Busy
+CALLBK - Call Back
+DAIR - Dead Air
+DC - Disconnected Number
+DEC - Declined Sale
+DNC - DO NOT CALL
+DNCC - DO NOT CALL Hopper Camp Match
+DNCL - DO NOT CALL Hopper Sys Match
+DROP - Agent Not Available
+ERI - Agent Error
+FASHU - False Answer Auto Hangup
+FAXHU - Fax Auto Hangup
+GVM - Generic Voicemail Message
+IQNANQ - InQueue No-Agent-No-Queue drop
+IVRXFR - Outbound drop to Call Menu
+LRERR - Outbound Local Channel Res Err
+LSMERG - Agent lead search old lead mrg
+MAXCAL - Inbound Max Calls Drop
+MLINAT - Multi-Lead auto-alt set inactv
+N - No Answer
+NA - No Answer AutoDial
+NANQUE - Inbound No Agent No Queue Drop
+NEW - New Lead
+NI - Not Interested
+NP - No Pitch No Price
+PDROP - Outbound Pre-Routing Drop
+PM - Played Message
+PU - Call Picked Up
+PVM - Personalized Voicemail Message
+QCFAIL - QC_FAIL_CALLBK
+QVMAIL - Queue Abandon Voicemail Left
+RAXFER - Remote Agent Call Transferred
+RQXFER - Re-Queue
+SALE - Sale Made
+SVYCLM - Survey sent to Call Menu
+SVYEXT - Survey sent to Extension
+SVYHU - Survey Hungup
+SVYREC - Survey sent to Record
+SVYVM - Survey sent to Voicemail
+TIMEOT - Inbound Queue Timeout Drop
+VAMCS - AMD CallScreeen
+VAMFAS - AMD False Answer Signal
+VAMFAX - AMD Fax Machine
+VAMFIS - AMD FAS Silence
+VAMMAC - AMD Answering Machine
+VAMNS - AMD Not Sure
+VAMRNG - AMD FAS Ringing
+VAMSIT - AMD SIT Tones
+XDROP - Agent Not Available IN
+XFER - Call Transferred
+
+List Order:
+DOWN
+DOWN
+UP
+DOWN PHONE
+UP PHONE
+DOWN LAST NAME
+UP LAST NAME
+DOWN COUNT
+UP COUNT
+RANDOM
+DOWN LAST CALL TIME
+UP LAST CALL TIME
+DOWN RANK
+UP RANK
+DOWN OWNER
+UP OWNER
+DOWN TIMEZONE
+UP TIMEZONE
+DOWN 2nd NEW
+DOWN 3rd NEW
+DOWN 4th NEW
+DOWN 5th NEW
+DOWN 6th NEW
+UP 2nd NEW
+UP 3rd NEW
+UP 4th NEW
+UP 5th NEW
+UP 6th NEW
+DOWN PHONE 2nd NEW
+DOWN PHONE 3rd NEW
+DOWN PHONE 4th NEW
+DOWN PHONE 5th NEW
+DOWN PHONE 6th NEW
+UP PHONE 2nd NEW
+UP PHONE 3rd NEW
+UP PHONE 4th NEW
+UP PHONE 5th NEW
+UP PHONE 6th NEW
+DOWN LAST NAME 2nd NEW
+DOWN LAST NAME 3rd NEW
+DOWN LAST NAME 4th NEW
+DOWN LAST NAME 5th NEW
+DOWN LAST NAME 6th NEW
+UP LAST NAME 2nd NEW
+UP LAST NAME 3rd NEW
+UP LAST NAME 4th NEW
+UP LAST NAME 5th NEW
+UP LAST NAME 6th NEW
+DOWN COUNT 2nd NEW
+DOWN COUNT 3rd NEW
+DOWN COUNT 4th NEW
+DOWN COUNT 5th NEW
+DOWN COUNT 6th NEW
+UP COUNT 2nd NEW
+UP COUNT 3rd NEW
+UP COUNT 4th NEW
+UP COUNT 5th NEW
+UP COUNT 6th NEW
+RANDOM 2nd NEW
+RANDOM 3rd NEW
+RANDOM 4th NEW
+RANDOM 5th NEW
+RANDOM 6th NEW
+DOWN LAST CALL TIME 2nd NEW
+DOWN LAST CALL TIME 3rd NEW
+DOWN LAST CALL TIME 4th NEW
+DOWN LAST CALL TIME 5th NEW
+DOWN LAST CALL TIME 6th NEW
+UP LAST CALL TIME 2nd NEW
+UP LAST CALL TIME 3rd NEW
+UP LAST CALL TIME 4th NEW
+UP LAST CALL TIME 5th NEW
+UP LAST CALL TIME 6th NEW
+DOWN RANK 2nd NEW
+DOWN RANK 3rd NEW
+DOWN RANK 4th NEW
+DOWN RANK 5th NEW
+DOWN RANK 6th NEW
+UP RANK 2nd NEW
+UP RANK 3rd NEW
+UP RANK 4th NEW
+UP RANK 5th NEW
+UP RANK 6th NEW
+DOWN OWNER 2nd NEW
+DOWN OWNER 3rd NEW
+DOWN OWNER 4th NEW
+DOWN OWNER 5th NEW
+DOWN OWNER 6th NEW
+UP OWNER 2nd NEW
+UP OWNER 3rd NEW
+UP OWNER 4th NEW
+UP OWNER 5th NEW
+UP OWNER 6th NEW
+DOWN TIMEZONE 2nd NEW
+DOWN TIMEZONE 3rd NEW
+DOWN TIMEZONE 4th NEW
+DOWN TIMEZONE 5th NEW
+DOWN TIMEZONE 6th NEW
+UP TIMEZONE 2nd NEW
+UP TIMEZONE 3rd NEW
+UP TIMEZONE 4th NEW
+UP TIMEZONE 5th NEW
+UP TIMEZONE 6th NEW
+
+List Order Randomize:
+Y
+N
+N
+
+List Order Secondary:
+LEAD_ASCEND
+LEAD_DESCEND
+CALLTIME_ASCEND
+CALLTIME_DESCEND
+VENDOR_ASCEND
+VENDOR_DESCEND
+LEAD_ASCEND
+
+List Mix:
+DISABLED
+DISABLED - DISABLED
+
+Lead Filter:
+NONE
+DROP72HOUR - UK 72 hour Drop No Call
+NONE
+
+
+
+Hopper Drop-Run Trigger:	   All Drops:
+Drop Lockout Time:
+
+Call Count Limit:
+Call Count Target:
+Call Count Limit Manual Restrict:
+DISABLED
+RESTRICT_ALL
+DISABLED
+
+
+
+Minimum Hopper Level:
+1
+5
+10
+20
+50
+100
+200
+500
+700
+1000
+2000
+3000
+4000
+5000
+1
+
+Automatic Hopper Level:
+Y
+N
+Y
+
+Automatic Hopper Multiplier:
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+1.8
+1.9
+2.0
+2.2
+2.4
+2.6
+2.8
+3.0
+3.5
+4.0
+1
+
+Auto Trim Hopper:
+Y
+N
+N
+
+Hopper VLC Dup Check:
+Y
+N
+N
+
+Manual Dial Hopper Check:
+Y
+N
+N
+
+Force Reset of Hopper:
+Y
+N
+
+
+Dial Method:
+MANUAL
+RATIO
+ADAPT_HARD_LIMIT
+ADAPT_TAPERED
+ADAPT_AVERAGE
+ADAPT_PERCENTMAX
+INBOUND_MAN
+MANUAL
+
+Auto Dial Level:
+0
+0
+1
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+1.8
+1.9
+2
+2.1
+2.2
+2.3
+2.4
+2.5
+2.6
+2.7
+2.8
+2.9
+3
+3.25
+3.5
+3.75
+4
+(0 = off)       ADAPT OVERRIDE
+Auto Dial Level Threshold:
+DISABLED
+LOGGED-IN_AGENTS
+NON-PAUSED_AGENTS
+WAITING_AGENTS
+DISABLED
+       agents:
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+25
+30
+35
+40
+50
+
+Available Only Tally:
+Y
+N
+N
+
+Available Only Tally Threshold:
+DISABLED
+LOGGED-IN_AGENTS
+NON-PAUSED_AGENTS
+WAITING_AGENTS
+DISABLED
+       agents:
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+25
+30
+35
+40
+50
+
+Agent In-Call Tally Seconds Threshold:	digits only
+Drop Percentage Limit:
+100
+99
+98
+97
+96
+95
+94
+93
+92
+91
+90
+89
+88
+87
+86
+85
+84
+83
+82
+81
+80
+79
+78
+77
+76
+75
+74
+73
+72
+71
+70
+69
+68
+67
+66
+65
+64
+63
+62
+61
+60
+59
+58
+57
+56
+55
+54
+53
+52
+51
+50
+49
+48
+47
+46
+45
+44
+43
+42
+41
+40
+39
+38
+37
+36
+35
+34
+33
+32
+31
+30
+29
+28
+27
+26
+25
+24
+23
+22
+21
+20
+19
+18
+17
+16
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2.9
+2.8
+2.7
+2.6
+2.5
+2.4
+2.3
+2.2
+2.1
+2
+1.9
+1.8
+1.7
+1.6
+1.5
+1.4
+1.3
+1.2
+1.1
+1
+0.9
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+3
+%
+Maximum Adapt Dial Level:	number only
+Latest Server Time:	4 digits only
+Adapt Percent-Max Percentage:
+95
+90
+85
+80
+75
+70
+65
+60
+55
+50
+45
+40
+35
+30
+25
+20
+15
+10
+5
+50
+%
+Adapt Intensity Modifier:
+40 - More Intense
+39 - More Intense
+38 - More Intense
+37 - More Intense
+36 - More Intense
+35 - More Intense
+34 - More Intense
+33 - More Intense
+32 - More Intense
+31 - More Intense
+30 - More Intense
+29 - More Intense
+28 - More Intense
+27 - More Intense
+26 - More Intense
+25 - More Intense
+24 - More Intense
+23 - More Intense
+22 - More Intense
+21 - More Intense
+20 - More Intense
+19 - More Intense
+18 - More Intense
+17 - More Intense
+16 - More Intense
+15 - More Intense
+14 - More Intense
+13 - More Intense
+12 - More Intense
+11 - More Intense
+10 - More Intense
+9 - More Intense
+8 - More Intense
+7 - More Intense
+6 - More Intense
+5 - More Intense
+4 - More Intense
+3 - More Intense
+2 - More Intense
+1 - More Intense
+0 - Balanced
+-1 - Less Intense
+-2 - Less Intense
+-3 - Less Intense
+-4 - Less Intense
+-5 - Less Intense
+-6 - Less Intense
+-7 - Less Intense
+-8 - Less Intense
+-9 - Less Intense
+-10 - Less Intense
+-11 - Less Intense
+-12 - Less Intense
+-13 - Less Intense
+-14 - Less Intense
+-15 - Less Intense
+-16 - Less Intense
+-17 - Less Intense
+-18 - Less Intense
+-19 - Less Intense
+-20 - Less Intense
+-21 - Less Intense
+-22 - Less Intense
+-23 - Less Intense
+-24 - Less Intense
+-25 - Less Intense
+-26 - Less Intense
+-27 - Less Intense
+-28 - Less Intense
+-29 - Less Intense
+-30 - Less Intense
+-31 - Less Intense
+-32 - Less Intense
+-33 - Less Intense
+-34 - Less Intense
+-35 - Less Intense
+-36 - Less Intense
+-37 - Less Intense
+-38 - Less Intense
+-39 - Less Intense
+-40 - Less Intense
+
+Dial Level Difference Target:
+40 --- 40 Calls Waiting for Agents
+39 --- 39 Calls Waiting for Agents
+38 --- 38 Calls Waiting for Agents
+37 --- 37 Calls Waiting for Agents
+36 --- 36 Calls Waiting for Agents
+35 --- 35 Calls Waiting for Agents
+34 --- 34 Calls Waiting for Agents
+33 --- 33 Calls Waiting for Agents
+32 --- 32 Calls Waiting for Agents
+31 --- 31 Calls Waiting for Agents
+30 --- 30 Calls Waiting for Agents
+29 --- 29 Calls Waiting for Agents
+28 --- 28 Calls Waiting for Agents
+27 --- 27 Calls Waiting for Agents
+26 --- 26 Calls Waiting for Agents
+25 --- 25 Calls Waiting for Agents
+24 --- 24 Calls Waiting for Agents
+23 --- 23 Calls Waiting for Agents
+22 --- 22 Calls Waiting for Agents
+21 --- 21 Calls Waiting for Agents
+20 --- 20 Calls Waiting for Agents
+19 --- 19 Calls Waiting for Agents
+18 --- 18 Calls Waiting for Agents
+17 --- 17 Calls Waiting for Agents
+16 --- 16 Calls Waiting for Agents
+15 --- 15 Calls Waiting for Agents
+14 --- 14 Calls Waiting for Agents
+13 --- 13 Calls Waiting for Agents
+12 --- 12 Calls Waiting for Agents
+11 --- 11 Calls Waiting for Agents
+10 --- 10 Calls Waiting for Agents
+9 --- 9 Calls Waiting for Agents
+8 --- 8 Calls Waiting for Agents
+7 --- 7 Calls Waiting for Agents
+6 --- 6 Calls Waiting for Agents
+5 --- 5 Calls Waiting for Agents
+4 --- 4 Calls Waiting for Agents
+3 --- 3 Calls Waiting for Agents
+2 --- 2 Calls Waiting for Agents
+1 --- 1 Calls Waiting for Agents
+0 --- 0 Balanced
+-1 --- 1 Agents Waiting for Calls
+-2 --- 2 Agents Waiting for Calls
+-3 --- 3 Agents Waiting for Calls
+-4 --- 4 Agents Waiting for Calls
+-5 --- 5 Agents Waiting for Calls
+-6 --- 6 Agents Waiting for Calls
+-7 --- 7 Agents Waiting for Calls
+-8 --- 8 Agents Waiting for Calls
+-9 --- 9 Agents Waiting for Calls
+-10 --- 10 Agents Waiting for Calls
+-11 --- 11 Agents Waiting for Calls
+-12 --- 12 Agents Waiting for Calls
+-13 --- 13 Agents Waiting for Calls
+-14 --- 14 Agents Waiting for Calls
+-15 --- 15 Agents Waiting for Calls
+-16 --- 16 Agents Waiting for Calls
+-17 --- 17 Agents Waiting for Calls
+-18 --- 18 Agents Waiting for Calls
+-19 --- 19 Agents Waiting for Calls
+-20 --- 20 Agents Waiting for Calls
+-21 --- 21 Agents Waiting for Calls
+-22 --- 22 Agents Waiting for Calls
+-23 --- 23 Agents Waiting for Calls
+-24 --- 24 Agents Waiting for Calls
+-25 --- 25 Agents Waiting for Calls
+-26 --- 26 Agents Waiting for Calls
+-27 --- 27 Agents Waiting for Calls
+-28 --- 28 Agents Waiting for Calls
+-29 --- 29 Agents Waiting for Calls
+-30 --- 30 Agents Waiting for Calls
+-31 --- 31 Agents Waiting for Calls
+-32 --- 32 Agents Waiting for Calls
+-33 --- 33 Agents Waiting for Calls
+-34 --- 34 Agents Waiting for Calls
+-35 --- 35 Agents Waiting for Calls
+-36 --- 36 Agents Waiting for Calls
+-37 --- 37 Agents Waiting for Calls
+-38 --- 38 Agents Waiting for Calls
+-39 --- 39 Agents Waiting for Calls
+-40 --- 40 Agents Waiting for Calls
+
+Dial Level Difference Target Method:
+ADAPT_CALC_ONLY
+CALLS_PLACED
+ADAPT_CALC_ONLY
+
+Concurrent Transfers:
+AUTO
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+15
+20
+25
+30
+40
+50
+60
+80
+100
+1000
+10000
+AUTO
+
+Queue Priority:
+99 - Higher
+98 - Higher
+97 - Higher
+96 - Higher
+95 - Higher
+94 - Higher
+93 - Higher
+92 - Higher
+91 - Higher
+90 - Higher
+89 - Higher
+88 - Higher
+87 - Higher
+86 - Higher
+85 - Higher
+84 - Higher
+83 - Higher
+82 - Higher
+81 - Higher
+80 - Higher
+79 - Higher
+78 - Higher
+77 - Higher
+76 - Higher
+75 - Higher
+74 - Higher
+73 - Higher
+72 - Higher
+71 - Higher
+70 - Higher
+69 - Higher
+68 - Higher
+67 - Higher
+66 - Higher
+65 - Higher
+64 - Higher
+63 - Higher
+62 - Higher
+61 - Higher
+60 - Higher
+59 - Higher
+58 - Higher
+57 - Higher
+56 - Higher
+55 - Higher
+54 - Higher
+53 - Higher
+52 - Higher
+51 - Higher
+50 - Higher
+49 - Higher
+48 - Higher
+47 - Higher
+46 - Higher
+45 - Higher
+44 - Higher
+43 - Higher
+42 - Higher
+41 - Higher
+40 - Higher
+39 - Higher
+38 - Higher
+37 - Higher
+36 - Higher
+35 - Higher
+34 - Higher
+33 - Higher
+32 - Higher
+31 - Higher
+30 - Higher
+29 - Higher
+28 - Higher
+27 - Higher
+26 - Higher
+25 - Higher
+24 - Higher
+23 - Higher
+22 - Higher
+21 - Higher
+20 - Higher
+19 - Higher
+18 - Higher
+17 - Higher
+16 - Higher
+15 - Higher
+14 - Higher
+13 - Higher
+12 - Higher
+11 - Higher
+10 - Higher
+9 - Higher
+8 - Higher
+7 - Higher
+6 - Higher
+5 - Higher
+4 - Higher
+3 - Higher
+2 - Higher
+1 - Higher
+0 - Even
+-1 - Lower
+-2 - Lower
+-3 - Lower
+-4 - Lower
+-5 - Lower
+-6 - Lower
+-7 - Lower
+-8 - Lower
+-9 - Lower
+-10 - Lower
+-11 - Lower
+-12 - Lower
+-13 - Lower
+-14 - Lower
+-15 - Lower
+-16 - Lower
+-17 - Lower
+-18 - Lower
+-19 - Lower
+-20 - Lower
+-21 - Lower
+-22 - Lower
+-23 - Lower
+-24 - Lower
+-25 - Lower
+-26 - Lower
+-27 - Lower
+-28 - Lower
+-29 - Lower
+-30 - Lower
+-31 - Lower
+-32 - Lower
+-33 - Lower
+-34 - Lower
+-35 - Lower
+-36 - Lower
+-37 - Lower
+-38 - Lower
+-39 - Lower
+-40 - Lower
+-41 - Lower
+-42 - Lower
+-43 - Lower
+-44 - Lower
+-45 - Lower
+-46 - Lower
+-47 - Lower
+-48 - Lower
+-49 - Lower
+-50 - Lower
+-51 - Lower
+-52 - Lower
+-53 - Lower
+-54 - Lower
+-55 - Lower
+-56 - Lower
+-57 - Lower
+-58 - Lower
+-59 - Lower
+-60 - Lower
+-61 - Lower
+-62 - Lower
+-63 - Lower
+-64 - Lower
+-65 - Lower
+-66 - Lower
+-67 - Lower
+-68 - Lower
+-69 - Lower
+-70 - Lower
+-71 - Lower
+-72 - Lower
+-73 - Lower
+-74 - Lower
+-75 - Lower
+-76 - Lower
+-77 - Lower
+-78 - Lower
+-79 - Lower
+-80 - Lower
+-81 - Lower
+-82 - Lower
+-83 - Lower
+-84 - Lower
+-85 - Lower
+-86 - Lower
+-87 - Lower
+-88 - Lower
+-89 - Lower
+-90 - Lower
+-91 - Lower
+-92 - Lower
+-93 - Lower
+-94 - Lower
+-95 - Lower
+-96 - Lower
+-97 - Lower
+-98 - Lower
+-99 - Lower
+
+
+Multiple Campaign Drop Rate Group:
+DISABLED
+101 ( -EMPTY- )
+102 ( -EMPTY- )
+103 ( -EMPTY- )
+104 ( -EMPTY- )
+105 ( -EMPTY- )
+106 ( -EMPTY- )
+107 ( -EMPTY- )
+108 ( -EMPTY- )
+109 ( -EMPTY- )
+110 ( -EMPTY- )
+DISABLED
+
+Inbound Queue No Dial:
+DISABLED
+ENABLED
+ALL_SERVERS
+ENABLED_WITH_CHAT
+ALL_SERVERS_WITH_CHAT
+DISABLED
+
+Inbound No-Agents No-Dial:
+---DISABLED---
+
+Inbound No-Agents No-Dial Threshold:	number only
+Auto Alt-Number Dialing:
+NONE
+ALT_ONLY
+ADDR3_ONLY
+ALT_AND_ADDR3
+ALT_AND_EXTENDED
+ALT_AND_ADDR3_AND_EXTENDED
+EXTENDED_ONLY
+MULTI_LEAD
+NONE
+
+Auto Alt-Number Dialing Threshold:	number only
+Next Agent Call:
+random
+oldest_call_start
+oldest_call_finish
+overall_user_level
+campaign_rank
+campaign_grade_random
+fewest_calls
+longest_wait_time
+overall_user_level_wait_time
+campaign_rank_wait_time
+fewest_calls_wait_time
+random
+
+Local Call Time:
+12pm-5pm - default 12pm to 5pm calling
+12pm-9pm - default 12pm to 9pm calling
+24hours - default 24 hours calling
+5pm-9pm - default 5pm to 9pm calling
+9am-5pm - default 9am to 5pm calling
+9am-9pm - default 9am to 9pm calling
+12pm-5pm - default 12pm to 5pm calling
+
+State rules defined for this call time: 0     Holidays defined for this call time: 0
+Dial Timeout:	 in seconds
+Dial Timeout Lead Container:
+DISABLED
+
+Dial Prefix:	 for 91NXXNXXXXXX value would be 9, for no dial prefix use X
+Manual Dial Prefix:
+Omit Phone Code:
+Y
+N
+N
+
+Campaign CallerID:
+Custom CallerID:
+Y
+N
+AREACODE
+USER_CUSTOM_1
+USER_CUSTOM_2
+USER_CUSTOM_3
+USER_CUSTOM_4
+USER_CUSTOM_5
+N
+
+CID Group:
+---DISABLED---
+
+CID Group Failover:
+---DISABLED---
+
+
+Routing Extension:
+
+Campaign Rec exten:
+Campaign Recording:
+NEVER
+ONDEMAND
+ALLCALLS
+ALLFORCE
+ONDEMAND
+
+Campaign Rec Filename:
+Recording Delay:	 in seconds
+Routing Initiated Recording:
+Y
+N
+Y
+
+
+
+
+
+Call Notes Per Call:
+ENABLED
+DISABLED
+DISABLED
+
+Per Call Notes Required:
+DISABLED
+ENABLED
+5_CHARACTERS
+15_CHARACTERS
+30_CHARACTERS
+100_CHARACTERS
+DISABLED
+
+Comments All Tabs:
+ENABLED
+DISABLED
+DISABLED
+
+Comments Dispo Screen:
+ENABLED
+DISABLED
+REPLACE_CALL_NOTES
+DISABLED
+
+Comments Callback Screen:
+ENABLED
+DISABLED
+REPLACE_CB_NOTES
+DISABLED
+
+QC Comments History:
+CLICK
+AUTO_OPEN
+CLICK_ALLOW_MINIMIZE
+AUTO_OPEN_ALLOW_MINIMIZE
+CLICK
+
+Hide Call Log Info:
+Y
+N
+SHOW_1
+SHOW_2
+SHOW_3
+SHOW_4
+SHOW_5
+SHOW_6
+SHOW_7
+SHOW_8
+SHOW_9
+SHOW_10
+N
+
+Call Log View Days:
+Agent Lead Search:
+ENABLED
+DISABLED
+LIVE_CALL_INBOUND
+LIVE_CALL_INBOUND_AND_MANUAL
+DISABLED
+
+Agent Lead Search Method:
+SYSTEM
+CAMPAIGNLISTS
+CAMPLISTS_ALL
+LIST
+USER_CAMPAIGNLISTS
+USER_CAMPLISTS_ALL
+USER_LIST
+GROUP_SYSTEM
+GROUP_CAMPAIGNLISTS
+GROUP_CAMPLISTS_ALL
+GROUP_LIST
+TERRITORY_SYSTEM
+TERRITORY_CAMPAIGNLISTS
+TERRITORY_CAMPLISTS_ALL
+TERRITORY_LIST
+CAMPLISTS_ALL
+
+Agent Search In-Group List Restrict:
+ENABLED
+ENABLED_OVERRIDE
+DISABLED
+DISABLED
+
+Script:
+NONE
+CALLNOTES - Call Notes and Appointment Setting
+
+
+Clear Script:
+DISABLED
+ENABLED
+DISABLED
+
+User Group Script Override:
+DISABLED
+ENABLED
+DISABLED
+
+Script Tab Frame Location:
+DEFAULT
+LEFT_EDGE
+DEFAULT
+
+Script Tab Height Override:
+Clear Form Tab:
+DISABLED
+ENABLED
+ACKNOWLEDGE
+ACKNOWLEDGE
+
+Get Call Launch:
+NONE
+SCRIPT
+PREVIEW_SCRIPT
+WEBFORM
+PREVIEW_WEBFORM
+WEBFORMTWO
+PREVIEW_WEBFORMTWO
+NONE
+
+
+Show Confetti:
+DISABLED
+DISABLED
+SALES
+CALLBACKS
+SALES_AND_CALLBACKS
+
+Answering Machine Message:	 audio chooser
+Voicemail Message Daily Limit:
+WaitForSilence Options:
+Manual VM Status Updates:
+ENABLED
+DISABLED
+ENABLED
+
+AM Message Wildcards:
+Y
+N
+N
+
+AMD Type:
+AMD built-in
+KHOMP Gateway
+Sangoma CPD
+AMD
+
+AMD send to Action:
+Y
+N
+N
+
+AMD Agent Route Options:
+ENABLED
+PENDING
+DISABLED
+DISABLED
+
+
+AMD Status Map:
+DISABLED
+Default_AMD_status_map - Default AMD status map
+--DISABLED--
+   no system AMD Status Map set
+CPD AMD Action:
+DISABLED
+DISPO
+MESSAGE
+INGROUP
+CALLMENU
+DISABLED
+
+CPD Unknown Action:
+DISABLED
+DISPO
+MESSAGE
+INGROUP
+CALLMENU
+DISABLED
+
+AMD Inbound Group:
+AGENTDIRECT - Single Agent Direct Queue
+AGENTDIRECT_CHAT - Agent Direct Queue for Chats
+---NONE---
+
+AMD Call Menu:
+2FA_say_auth_code
+default---agent
+defaultlog
+---NONE---
+
+
+VM Message Group:
+---NONE---
+
+Leave VM No Dispo:
+DISABLED
+ENABLED
+DISABLED
+
+Transfer-Conf DTMF 1:
+Transfer-Conf Number 1:
+Transfer-Conf DTMF 2:
+Transfer-Conf Number 2:
+Transfer-Conf Number 3:
+Transfer-Conf Number 4:
+Transfer-Conf Number 5:
+Enable Transfer Presets:
+DISABLED
+ENABLED
+STAGING
+CONTACTS
+DISABLED
+
+Hide Transfer Number to Dial:
+DISABLED
+ENABLED
+DISABLED
+
+PrePopulate Transfer Preset:
+N
+PRESET_1
+PRESET_2
+PRESET_3
+PRESET_4
+PRESET_5
+N
+
+Quick Transfer Button:
+N
+IN_GROUP
+PRESET_1
+PRESET_2
+PRESET_3
+PRESET_4
+PRESET_5
+N
+LOCKED_IN_GROUP
+LOCKED_PRESET_1
+LOCKED_PRESET_2
+LOCKED_PRESET_3
+LOCKED_PRESET_4
+LOCKED_PRESET_5
+
+Transfer-Conf Button Launch:
+NONE
+SCRIPT
+WEBFORM
+WEBFORMTWO
+NONE
+
+Transfer No Dispo:
+DISABLED
+EXTERNAL_ONLY
+LOCAL_ONLY
+LEAVE3WAY_ONLY
+LOCAL_AND_EXTERNAL
+LOCAL_AND_LEAVE3WAY
+LEAVE3WAY_AND_EXTERNAL
+LOCAL_AND_EXTERNAL_AND_LEAVE3WAY
+DISABLED
+
+Custom 3-Way Button Transfer:
+DISABLED
+PRESET_1
+PRESET_2
+PRESET_3
+PRESET_4
+PRESET_5
+FIELD_address3
+FIELD_province
+FIELD_security_phrase
+FIELD_vendor_lead_code
+FIELD_email
+FIELD_owner
+PARK_PRESET_1
+PARK_PRESET_2
+PARK_PRESET_3
+PARK_PRESET_4
+PARK_PRESET_5
+PARK_FIELD_address3
+PARK_FIELD_province
+PARK_FIELD_security_phrase
+PARK_FIELD_vendor_lead_code
+PARK_FIELD_email
+PARK_FIELD_owner
+VIEW_PRESET
+VIEW_CONTACTS
+DISABLED
+
+3-Way Call Outbound CallerID:
+CAMPAIGN
+CUSTOMER
+AGENT_PHONE
+AGENT_CHOOSE
+CUSTOM_CID
+CAMPAIGN
+
+3-Way Call Dial Prefix:
+3-Way Volume Buttons:
+ENABLED
+DISABLED
+ENABLED
+
+Customer 3-Way Hangup Logging:
+DISABLED
+ENABLED
+ENABLED
+
+Customer 3-Way Hangup Seconds:
+Customer 3-Way Hangup Action:
+NONE
+DISPO
+NONE
+
+3-Way Recording Stop:
+N
+Y
+N
+
+3-Way Recording Stop Exception:
+DISABLED
+
+Leave 3-Way Start Recording:
+DISABLED
+ALL_CALLS
+ALL_BUT_EXCEPTIONS
+ONLY_EXCEPTIONS
+DISABLED
+
+Leave 3-Way Start Recording Exception:
+DISABLED
+
+Leave 3-Way Stop Recording:
+DISABLED
+ALL_CALLS
+DISABLED
+
+Hangup Xfer Recording Start:
+N
+Y
+N
+
+Park Call IVR:
+DISABLED
+ENABLED
+ENABLED_PARK_ONLY
+ENABLED_BUTTON_HIDDEN
+DISABLED
+
+Park Call IVR AGI:
+Timer Action:
+NONE
+D1_DIAL
+D2_DIAL
+D3_DIAL
+D4_DIAL
+D5_DIAL
+D1_DIAL_QUIET
+D2_DIAL_QUIET
+D3_DIAL_QUIET
+D4_DIAL_QUIET
+D5_DIAL_QUIET
+MESSAGE_ONLY
+WEBFORM
+WEBFORMTWO
+HANGUP
+CALLMENU
+EXTENSION
+IN_GROUP
+NONE
+
+Timer Action Message:
+Timer Action Seconds:
+Timer Action Destination:
+Scheduled Callbacks:
+Y
+N
+N
+
+Scheduled Callbacks Alert:
+NONE
+BLINK
+RED
+BLINK_RED
+BLINK_DEFER
+RED_DEFER
+BLINK_RED_DEFER
+NONE
+
+Send Callbacks Email:
+Y
+N
+N
+
+Scheduled Callbacks Count:
+LIVE
+ALL_ACTIVE
+ALL_ACTIVE
+
+Scheduled Callbacks Days Limit:
+Scheduled Callbacks Hours Block:
+Scheduled Callbacks Calltime Block:
+ENABLED
+DISABLED
+DISABLED
+
+Scheduled Callbacks Active Limit:
+Scheduled Callbacks Active Limit Override:
+N
+Y
+N
+
+Scheduled Callbacks Display Days:
+Anyone Callbacks DNC Filter:
+ENABLED
+DISABLED
+DISABLED
+
+My Callbacks Checkbox Default:
+CHECKED
+UNCHECKED
+UNCHECKED
+
+Show Previous Callback:
+DISABLED
+ENABLED
+ENABLED
+
+Scheduled Callbacks Useronly Move Minutes:
+Next-Dial My Callbacks:
+DISABLED
+ENABLED
+DISABLED
+
+Scheduled Callbacks Force Dial:
+Y
+N
+N
+
+Scheduled Callbacks Local Timezones:	Feature Disabled,
+Administrator must update phone codes for this feature to work.
+Scheduled Callbacks Auto Reschedule:
+DISABLED
+DAY_1
+DAY_2
+DAY_3
+DAY_4
+DAY_5
+DAY_6
+WEEK_1
+WEEK_2
+WEEK_3
+MONTH_1
+MONTH_2
+MONTH_3
+MONTH_4
+MONTH_5
+MONTH_6
+DISABLED
+
+Drop Call Seconds:
+Drop Action:
+AUDIO
+HANGUP
+MESSAGE
+VOICEMAIL
+VMAIL_NO_INST
+IN_GROUP
+CALLMENU
+AUDIO
+
+Safe Harbor Exten:
+Safe Harbor Audio:	 audio chooser
+Safe Harbor Audio Field:
+DISABLED
+vendor_lead_code
+source_id
+list_id
+phone_code
+phone_number
+title
+first_name
+middle_initial
+last_name
+address1
+address2
+address3
+city
+state
+province
+postal_code
+country_code
+gender
+alt_phone
+email
+security_phrase
+comments
+rank
+owner
+entry_list_id
+DISABLED
+
+Safe Harbor Call Menu:
+2FA_say_auth_code - 2FA_say_auth_code
+default---agent - agent phones restricted to only internal extensions
+defaultlog - logging of all outbound calls from agent phones
+
+Voicemail:	 voicemail chooser
+Drop Transfer Group:
+AGENTDIRECT - Single Agent Direct Queue
+AGENTDIRECT_CHAT - Agent Direct Queue for Chats
+---NONE---
+
+Agent Call Hangup Route:
+HANGUP
+MESSAGE
+EXTENSION
+IN_GROUP
+CALLMENU
+HANGUP
+
+-no value required-:
+Agent Hangup In-Group Override:
+N
+Y
+N
+
+
+Show Hangup Again Link:
+ENABLED
+DISABLED
+ENABLED
+
+Disable Dispo Screen:
+DISPO_ENABLED
+DISPO_DISABLED
+DISPO_SELECT_DISABLED
+DISPO_ENABLED
+
+Disable Dispo Status:
+Script on top of Dispo:
+N
+Y
+N
+
+Wrap Up Seconds:
+Wrap Up Message:
+Wrap Up Bypass:
+ENABLED
+DISABLED
+ENABLED
+
+Wrap Up After Hotkey:
+ENABLED
+DISABLED
+DISABLED
+
+Dead Call Trigger Action:
+DISABLED
+AUDIO
+URL
+AUDIO_AND_URL
+DISABLED
+
+Dead Call Trigger Seconds:
+Dead Call Trigger Repeat:
+NO
+REPEAT_ALL
+REPEAT_AUDIO
+REPEAT_URL
+NO
+
+Dead Call Trigger Audio:	 audio chooser
+Dead Call Trigger URL:
+Dead Call Max Seconds:
+Dead Call Max Status:
+Dead Call to Dispo Only:
+ENABLED
+DISABLED
+DISABLED
+
+Dead Call Stop Recording:
+DISABLED
+ALL_CALLS
+OUTBOUND_ONLY
+INBOUND_ONLY
+AUTODIAL_ONLY
+MANUAL_ONLY
+DISABLED
+
+Dispo Call Max Seconds:
+Dispo Call Max Status:
+Agent Pause Max Seconds:
+Agent Pause Max Status:
+Agent Pause Max Exceptions:
+DISABLED
+No Pause Codes Lists Found
+
+Pause Max URL:
+Agent Ready Max Seconds Logout:
+Inbound Manual Dial Agent Forced Ready Seconds:
+InMan Agent Forced Ready Override Container:
+DISABLED
+
+
+Customer Gone Warning Seconds:
+
+Use Internal DNC List:
+Y
+N
+AREACODE
+Y
+
+Use Campaign DNC List:
+Y
+N
+AREACODE
+N
+
+Other Campaign DNC:
+Agent Pause Codes Active:
+FORCE
+Y
+N
+N
+
+Auto Pause Pre-Call Work:
+Y
+N
+N
+
+Auto Resume Pre-Call Work:
+Y
+N
+N
+
+Auto Pause Pre-Call Code:
+Campaign Stats Refresh:
+Y
+N
+Y
+
+Real-Time Agent Time Stats:
+DISABLED
+WAIT_CUST_ACW
+WAIT_CUST_ACW_PAUSE
+CALLS_WAIT_CUST_ACW_PAUSE
+CALLS_WAIT_CUST_ACW_PAUSE
+
+Disable Alter Customer Data:
+Y
+N
+N
+
+Disable Alter Customer Phone:
+Y
+N
+HIDE
+Y
+
+Allow No-Hopper-Leads Logins:
+Y
+N
+N
+
+No Hopper Dialing:
+Y
+N
+N
+
+Owner Only Dialing:
+NONE
+USER
+TERRITORY
+USER_GROUP
+USER_BLANK
+TERRITORY_BLANK
+USER_GROUP_BLANK
+NONE
+
+Owner Populate:
+ENABLED
+DISABLED
+DISABLED
+
+
+Agent Display Dialable Leads:
+Y
+N
+N
+
+Agent Screen Labels:
+--SYSTEM-SETTINGS-- - Default
+--SYSTEM-SETTINGS--
+
+Allow Required Fields:
+Y
+N
+N
+
+Status Display Fields:
+NAME
+CALLID
+LEADID
+LISTID
+CALLID_LEADID
+CALLID_LISTID
+CALLID_LEADID_LISTID
+NAME_CALLID
+NAME_CALLID_LEADID
+NAME_CALLID_LISTID
+NAME_CALLID_LEADID_LISTID
+---NONE---
+CALLID
+
+Status Display In-Group:
+ENABLED
+DISABLED
+ENABLED
+
+State Descriptions Banner:
+---DISABLED---
+
+Agent Display Fields:
+Agent Screen Time Display:
+DISABLED
+ENABLED_BASIC
+ENABLED_FULL
+ENABLED_BILL_BREAK_LUNCH_COACH
+ENABLED_BASIC_RANGE
+ENABLED_FULL_RANGE
+ENABLED_EXTENDED_RANGE
+ENABLED_BILL_BREAK_LUNCH_COACH_RANGE
+DISABLED
+
+Agent Display Queue Count:
+Y
+N
+Y
+
+Calls In Queue Count Display 1:
+DISABLED
+---DISABLED---
+
+Calls In Queue Count Display 2:
+DISABLED
+---DISABLED---
+
+Agent View Calls in Queue:
+NONE
+ALL
+1
+2
+3
+4
+5
+NONE
+
+View Calls in Queue Launch:
+AUTO
+MANUAL
+MANUAL
+
+Calls in Queue Extra Column 1:
+DISABLED
+lead_id
+entry_date
+status
+user
+vendor_lead_code
+source_id
+list_id
+gmt_offset_now
+called_since_last_reset
+phone_code
+phone_number
+title
+first_name
+middle_initial
+last_name
+address1
+address2
+address3
+city
+state
+province
+postal_code
+country_code
+gender
+date_of_birth
+alt_phone
+email
+security_phrase
+comments
+called_count
+last_local_call_time
+rank
+owner
+entry_list_id
+DISABLED
+
+Calls in Queue Extra Column 2:
+DISABLED
+lead_id
+entry_date
+status
+user
+vendor_lead_code
+source_id
+list_id
+gmt_offset_now
+called_since_last_reset
+phone_code
+phone_number
+title
+first_name
+middle_initial
+last_name
+address1
+address2
+address3
+city
+state
+province
+postal_code
+country_code
+gender
+date_of_birth
+alt_phone
+email
+security_phrase
+comments
+called_count
+last_local_call_time
+rank
+owner
+entry_list_id
+DISABLED
+
+Agent Grab Calls in Queue:
+Y
+N
+N
+
+Agent Call Re-Queue Button:
+Y
+N
+N
+
+Agent Pause After Each Call:
+Y
+N
+N
+
+Agent Pause After Next Call Link:
+ENABLED
+DISABLED
+DISABLED
+
+Manual Dial Override:
+NONE
+ALLOW_ALL
+DISABLE_ALL
+NONE
+
+Manual Dial Override Field:
+ENABLED
+DISABLED
+ENABLED
+
+Manual Dial List ID:
+Manual Dial Filter:
+NONE
+DNC_ONLY
+CAMPDNC_ONLY
+INTERNALDNC_ONLY
+DNC_AND_CAMPDNC
+CAMPLISTS_ONLY
+CAMPLISTS_ALL
+SYSTEM
+DNC_AND_CAMPLISTS
+CAMPDNC_ONLY_AND_CAMPLISTS
+INTERNALDNC_ONLY_AND_CAMPLISTS
+DNC_AND_CAMPDNC_AND_CAMPLISTS
+DNC_AND_CAMPLISTS_ALL
+CAMPDNC_ONLY_AND_CAMPLISTS_ALL
+INTERNALDNC_ONLY_AND_CAMPLISTS_ALL
+DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL
+DNC_AND_SYSTEM
+CAMPDNC_ONLY_AND_SYSTEM
+INTERNALDNC_ONLY_AND_SYSTEM
+DNC_AND_CAMPDNC_AND_SYSTEM
+NONE_WITH_ALT
+DNC_ONLY_WITH_ALT
+CAMPDNC_ONLY_WITH_ALT
+INTERNALDNC_ONLY_WITH_ALT
+DNC_AND_CAMPDNC_WITH_ALT
+CAMPLISTS_ONLY_WITH_ALT
+CAMPLISTS_ALL_WITH_ALT
+SYSTEM_WITH_ALT
+DNC_AND_CAMPLISTS_WITH_ALT
+CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT
+INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT
+DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT
+DNC_AND_CAMPLISTS_ALL_WITH_ALT
+CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT
+INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT
+DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT
+DNC_AND_SYSTEM_WITH_ALT
+CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT
+INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT
+DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT
+NONE_WITH_ALT_ADDR3
+DNC_ONLY_WITH_ALT_ADDR3
+CAMPDNC_ONLY_WITH_ALT_ADDR3
+INTERNALDNC_ONLY_WITH_ALT_ADDR3
+DNC_AND_CAMPDNC_WITH_ALT_ADDR3
+CAMPLISTS_ONLY_WITH_ALT_ADDR3
+CAMPLISTS_ALL_WITH_ALT_ADDR3
+SYSTEM_WITH_ALT_ADDR3
+DNC_AND_CAMPLISTS_WITH_ALT_ADDR3
+CAMPDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3
+INTERNALDNC_ONLY_AND_CAMPLISTS_WITH_ALT_ADDR3
+DNC_AND_CAMPDNC_AND_CAMPLISTS_WITH_ALT_ADDR3
+DNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3
+CAMPDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3
+INTERNALDNC_ONLY_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3
+DNC_AND_CAMPDNC_AND_CAMPLISTS_ALL_WITH_ALT_ADDR3
+DNC_AND_SYSTEM_WITH_ALT_ADDR3
+CAMPDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3
+INTERNALDNC_ONLY_AND_SYSTEM_WITH_ALT_ADDR3
+DNC_AND_CAMPDNC_AND_SYSTEM_WITH_ALT_ADDR3
+CALLBACK
+DNC_AND_CALLBACK
+CAMPDNC_ONLY_AND_CALLBACK
+INTERNALDNC_ONLY_AND_CALLBACK
+DNC_AND_CAMPDNC_AND_CALLBACK
+NONE_WITH_ALT_AND_CALLBACK
+DNC_ONLY_WITH_ALT_AND_CALLBACK
+CAMPDNC_ONLY_WITH_ALT_AND_CALLBACK
+INTERNALDNC_ONLY_WITH_ALT_AND_CALLBACK
+DNC_AND_CAMPDNC_WITH_ALT_AND_CALLBACK
+NONE_WITH_ALT_ADDR3_AND_CALLBACK
+DNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK
+CAMPDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK
+INTERNALDNC_ONLY_WITH_ALT_ADDR3_AND_CALLBACK
+DNC_AND_CAMPDNC_WITH_ALT_ADDR3_AND_CALLBACK
+NONE
+
+Manual Preview Dial:
+DISABLED
+PREVIEW_AND_SKIP
+PREVIEW_ONLY
+PREVIEW_AND_SKIP
+
+Manual Dial Search Checkbox:
+SELECTED
+SELECTED_RESET
+SELECTED_LOCK
+UNSELECTED
+UNSELECTED_RESET
+UNSELECTED_LOCK
+SELECTED
+
+Manual Dial Search Filter:
+NONE
+CAMPLISTS_ONLY
+CAMPLISTS_ALL
+NONE_WITH_ALT
+CAMPLISTS_ONLY_WITH_ALT
+CAMPLISTS_ALL_WITH_ALT
+NONE_WITH_ALT_ADDR3
+CAMPLISTS_ONLY_WITH_ALT_ADDR3
+CAMPLISTS_ALL_WITH_ALT_ADDR3
+NONE
+
+Manual Dial by Lead ID:
+Y
+N
+ONLY
+N
+
+Manual Call Time Check:
+DISABLED
+ENABLED
+DISABLED
+
+
+Manual Dial API:
+STANDARD
+QUEUE
+QUEUE_AND_AUTOCALL
+STANDARD
+
+Manual Dial CID:
+CAMPAIGN
+AGENT_PHONE
+AGENT_PHONE_OVERRIDE
+CAMPAIGN
+
+Manual Dial Timeout:	 in seconds
+
+Manual Minimum Attempt Seconds:	 in seconds
+Manual Minimum Answer Seconds:	 in seconds
+Phone Post Time Difference Alert:
+ENABLED
+OUTSIDE_CALLTIME_ONLY
+OUTSIDE_CALLTIME_PHONE
+OUTSIDE_CALLTIME_POSTAL
+OUTSIDE_CALLTIME_BOTH
+DISABLED
+DISABLED
+
+In-Group Manual Dial:
+DISABLED
+MANUAL_DIAL
+NO_DIAL
+BOTH
+DISABLED
+
+In-Group Manual Dial Select:
+CAMPAIGN_SELECTED
+ALL_USER_GROUP
+CAMPAIGN_SELECTED
+
+
+Manual Alt Num Dialing:
+Y
+N
+SELECTED
+SELECTED_TIMER_ALT
+SELECTED_TIMER_ADDR3
+UNSELECTED
+UNSELECTED_TIMER_ALT
+UNSELECTED_TIMER_ADDR3
+N
+
+Timer Alt Seconds:
+Agent Screen Clipboard Copy:
+NONE
+lead_id
+list_id
+title
+first_name
+middle_initial
+last_name
+phone_code
+phone_number
+address1
+address2
+address3
+city
+state
+province
+postal_code
+country_code
+alt_phone
+comments
+date_of_birth
+email
+gender
+gmt_offset_now
+security_phrase
+vendor_lead_code
+NONE
+
+Group Alias Allowed:
+Y
+N
+N
+
+CRM Popup Login:
+Y
+N
+N
+
+CRM Popup Address:
+Start Call URL:
+Dispo Call URL:
+No Agent Call URL:
+Talk Seconds URLs:	 Talk Seconds URLs Defined: 0
+Extension Append CID:
+Y
+N
+Y_USER
+Y_WITH_CAMPAIGN
+Y_USER_WITH_CAMPAIGN
+N
+
+Blind Monitor Warning:
+DISABLED
+ALERT
+NOTICE
+AUDIO
+ALERT_NOTICE
+ALERT_AUDIO
+NOTICE_AUDIO
+ALL
+DISABLED
+
+Blind Monitor Notice:
+Blind Monitor Filename:	 audio chooser
+Custom 1:
+Custom 2:
+Custom 3:
+Custom 4:
+Custom 5:
+Default Transfer Group:
+---NONE---
+
+Agent Transfer In-Group Validation:
+N
+Y
+N
+
+Transfer In-Group Sort Order:
+GROUP_ID_UP
+GROUP_ID_DOWN
+GROUP_NAME_UP
+GROUP_NAME_DOWN
+PRIORITY_UP
+PRIORITY_DOWN
+GROUP_ID_UP
+
+
+
+LISTS WITHIN THIS CAMPAIGN:
+LIST ID	LIST NAME	DESCRIPTION	LEADS COUNT	Call Time	ACTIVE	LAST CALL DATE	MODIFY
+
+
+
+This campaign has 0 active lists and 0 inactive lists
+
+SHOW LEAD STATUSES IN THIS CAMPAIGN
+
+
+no active lists selected for this campaign - HIDE
+
+This campaign has 0 leads in the dial hopper
+
+Click here to see what leads are in the hopper right now
+
+Click here to see a VDAD report for this campaign
+
+Click here to see all CallBack Holds in this campaign
+
+Test calling disabled
+
+
+
+Click here to see Admin changes to this campaign
+
+Click here to see the debug report for this campaign
+
+
+LOG ALL AGENTS OUT OF THIS CAMPAIGN
+
+
+
+DELETE THIS CAMPAIGN
+
+
+
+VERSION: 2.14-969a
+BUILD: 261102-0125
+© 2026 ViciDial Group

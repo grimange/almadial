@@ -1,0 +1,22 @@
+[
+  {
+    "name": "campaigns[]",
+    "value": "QAOUT01",
+    "checked": true
+  },
+  {
+    "name": "agent_status_viewable_groups[]",
+    "value": "QAPRD14",
+    "checked": true
+  },
+  {
+    "name": "queue_groups[]",
+    "value": "-ALL-GROUPS-",
+    "checked": true
+  },
+  {
+    "name": "admin_viewable_groups[]",
+    "value": "QAPRD14",
+    "checked": true
+  }
+]

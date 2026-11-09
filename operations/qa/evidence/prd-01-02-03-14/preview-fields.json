@@ -1,0 +1,26 @@
+[
+  {
+    "name": "lead_id",
+    "value": "9"
+  },
+  {
+    "name": "list_id",
+    "value": "910014"
+  },
+  {
+    "name": "first_name",
+    "value": "QA"
+  },
+  {
+    "name": "last_name",
+    "value": "SYNTHETIC_001"
+  },
+  {
+    "name": "vendor_lead_code",
+    "value": "PRD14_001"
+  },
+  {
+    "name": "phone_number",
+    "value": "7000000001"
+  }
+]

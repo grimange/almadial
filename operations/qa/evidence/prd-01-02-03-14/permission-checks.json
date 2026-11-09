@@ -1,0 +1,62 @@
+[
+  {
+    "user": "qaagent14",
+    "path": "admin.php?ADD=11",
+    "status": 401,
+    "text": "Login incorrect, please try again: |qaagent14|[REDACTED]|BAD|"
+  },
+  {
+    "user": "qaagent14",
+    "path": "admin.php?ADD=1",
+    "status": 401,
+    "text": "Login incorrect, please try again: |qaagent14|[REDACTED]|BAD|"
+  },
+  {
+    "user": "qaagent14",
+    "path": "admin.php?ADD=10000000000",
+    "status": 401,
+    "text": "Login incorrect, please try again: |qaagent14|[REDACTED]|BAD|"
+  },
+  {
+    "user": "qaagent14",
+    "path": "admin_listloader_fifth_gen.php",
+    "status": 401,
+    "text": "Login incorrect, please try again: |qaagent14|[REDACTED]|BAD|"
+  },
+  {
+    "user": "qaagent14",
+    "path": "AST_timeonVDADall.php",
+    "status": 401,
+    "text": "Login incorrect, please try again: |qaagent14|[REDACTED]|BAD|"
+  },
+  {
+    "user": "qasup14",
+    "path": "admin.php?ADD=11",
+    "status": 200,
+    "text": " ADMINISTRATION\n\n\n Reports\n\n\n \t\nHOME | Timeclock | Chat | Logout (qasup14)\tMonday November 9, 2026 22:59:17 PM  \n\n \n\n\nServer Stats and Reports\n            (System Summary)\n\n\n     \tReal-Time Reports\n\nReal-Time Main Report\n\nInbound and Outbound Calling Reports\n\n\t     \tAgent Reports\n\n\nTime Clock Reports\n\n\nOther Reports and Links\n\n\n\n\nVERSION: 2.14-969a\nBUILD: 261102-0125\n© 2026 ViciDial Group\n\t"
+  },
+  {
+    "user": "qasup14",
+    "path": "admin.php?ADD=1",
+    "status": 200,
+    "text": " ADMINISTRATION\n\n\n Reports\n\n\n \t\nHOME | Timeclock | Chat | Logout (qasup14)\tMonday November 9, 2026 22:59:19 PM  \n\n \n\n\nServer Stats and Reports\n            (System Summary)\n\n\n     \tReal-Time Reports\n\nReal-Time Main Report\n\nInbound and Outbound Calling Reports\n\n\t     \tAgent Reports\n\n\nTime Clock Reports\n\n\nOther Reports and Links\n\n\n\n\nVERSION: 2.14-969a\nBUILD: 261102-0125\n© 2026 ViciDial Group\n\t"
+  },
+  {
+    "user": "qasup14",
+    "path": "admin.php?ADD=10000000000",
+    "status": 200,
+    "text": " ADMINISTRATION\n\n\n Reports\n\n\n \t\nHOME | Timeclock | Chat | Logout (qasup14)\tMonday November 9, 2026 22:59:21 PM  \n\n \n\n\nServer Stats and Reports\n            (System Summary)\n\n\n     \tReal-Time Reports\n\nReal-Time Main Report\n\nInbound and Outbound Calling Reports\n\n\t     \tAgent Reports\n\n\nTime Clock Reports\n\n\nOther Reports and Links\n\n\n\n\nVERSION: 2.14-969a\nBUILD: 261102-0125\n© 2026 ViciDial Group\n\t"
+  },
+  {
+    "user": "qasup14",
+    "path": "admin_listloader_fifth_gen.php",
+    "status": 401,
+    "text": "Login incorrect, please try again: |qasup14|[REDACTED]|BAD|"
+  },
+  {
+    "user": "qasup14",
+    "path": "AST_timeonVDADall.php",
+    "status": 200,
+    "text": "\\n\";\n  \t   \t  Reports  \nReal-Time Main Report                                                                               \nChoose Report Display Options\n \nSTOP | SLOW | GO       MODIFY | SUMMARY\n\nDIAL LEVEL:\t  0.000   \tTRUNK SHORT/FILL:\t  0 /    \tFILTER:\t   \tTIME:  \t2026-11-09 22:59:24\nDIALABLE LEADS:\t     \tCALLS TODAY:\t     \tAVG AGENTS:\t  0.00    \tDIAL METHOD:\t     \nHOPPER ( min/auto ):\t  /    \tDROPPED / ANSWERED:\t  /  \tDL DIFF:\t  0.00    \tSTATUSES:\t     \nLEADS IN HOPPER:\t  0    \tDROPPED PERCENT:\t  0.00%    \tDIFF:\t  0.00%    \tORDER:\t     \n\n+ VIEW MORE       VIEW USER GROUP       SHOW SERVER INFO       HIDE WAITING CALLS       SHOW IN-GROUP STATS       SHOW PHONES       SHOW CUSTPHONES\nNO LIVE CALLS WAITING NO AGENTS ON CALLS"
+  }
+]

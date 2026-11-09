@@ -1,0 +1,59 @@
+{
+  "utc": "2026-11-09T15:03:54.864156+00:00",
+  "queries": {
+    "campaigns": {
+      "sql": "SELECT campaign_id,campaign_name,active,dial_method,auto_dial_level,dial_prefix,manual_dial_prefix,campaign_recording,user_group,dial_statuses FROM vicidial_campaigns LIMIT 30",
+      "rc": 0,
+      "stdout": "campaign_id\tcampaign_name\tactive\tdial_method\tauto_dial_level\tdial_prefix\tmanual_dial_prefix\tcampaign_recording\tuser_group\tdial_statuses\ntest01\tTesting Campaign\tY\tMANUAL\t0\t2221\t2221\tALLFORCE\tADMIN\t NEW -\nQAOUT01\tQA Outbound Synthetic Only\tY\tMANUAL\t0\t2221\t2221\tONDEMAND\tADMIN\t NEW -\n",
+      "stderr": ""
+    },
+    "lists": {
+      "sql": "SELECT list_id,campaign_id,active,list_name FROM vicidial_lists LIMIT 30",
+      "rc": 0,
+      "stdout": "list_id\tcampaign_id\tactive\tlist_name\n999\tTESTCAMP\tN\tDefault inbound list\n998\tTESTCAMP\tN\tDefault Manual list\n910014\tQAOUT01\tN\tQA PRD synthetic only\n",
+      "stderr": ""
+    },
+    "users": {
+      "sql": "SELECT user,active,user_level,user_group,view_reports,access_recordings,modify_users,modify_campaigns,modify_lists,modify_phones,load_leads FROM vicidial_users LIMIT 30",
+      "rc": 0,
+      "stdout": "user\tactive\tuser_level\tuser_group\tview_reports\taccess_recordings\tmodify_users\tmodify_campaigns\tmodify_lists\tmodify_phones\tload_leads\n6666\tY\t9\tADMIN\t1\t1\t1\t1\t1\t1\t1\nVDAD\tN\t1\tADMIN\t0\t0\t0\t0\t0\t0\t0\nVDCL\tN\t1\tADMIN\t0\t0\t0\t0\t0\t0\t0\n1000\tY\t1\tADMIN\t0\t0\t0\t0\t0\t0\t0\nqaagent14\tY\t1\tQAPRD14\t0\t0\t0\t0\t0\t0\t0\nqasup14\tY\t7\tQAPRD14\t1\t0\t0\t0\t0\t0\t0\n",
+      "stderr": ""
+    },
+    "groups": {
+      "sql": "SELECT user_group,allowed_campaigns,allowed_reports,admin_viewable_groups FROM vicidial_user_groups LIMIT 30",
+      "rc": 0,
+      "stdout": "user_group\tallowed_campaigns\tallowed_reports\tadmin_viewable_groups\nADMIN\t -ALL-CAMPAIGNS- - -\tALL REPORTS\t ---ALL--- \nQAPRD14\t QAOUT01 -\t Real-Time Main Report\t QAPRD14 \n",
+      "stderr": ""
+    },
+    "phones": {
+      "sql": "SELECT extension,protocol,active FROM phones LIMIT 20",
+      "rc": 0,
+      "stdout": "extension\tprotocol\tactive\ngs102\tSIP\tY\ncallin\tEXTERNAL\tY\n1000\tPJSIP\tY\n1001\tSIP\tY\n",
+      "stderr": ""
+    },
+    "recording": {
+      "sql": "SELECT recording_id,lead_id,vicidial_id,start_epoch,end_epoch,length_in_sec,location FROM recording_log WHERE recording_id=2",
+      "rc": 0,
+      "stdout": "recording_id\tlead_id\tvicidial_id\tstart_epoch\tend_epoch\tlength_in_sec\tlocation\n2\t8\t1793990617.45\t1793990617\t1793990673\t56\thttps://2.29.153.161/RECORDINGS/20261107-024337_7000000001-all.wav\n",
+      "stderr": ""
+    },
+    "leads": {
+      "sql": "SELECT list_id,status,COUNT(*) AS n FROM vicidial_list GROUP BY list_id,status LIMIT 30",
+      "rc": 0,
+      "stdout": "list_id\tstatus\tn\n101\tNEW\t7\n998\tSALE\t1\n910014\tNEW\t20\n",
+      "stderr": ""
+    },
+    "time": {
+      "sql": "SELECT NOW(),UTC_TIMESTAMP(),UNIX_TIMESTAMP(),@@system_time_zone,@@time_zone",
+      "rc": 0,
+      "stdout": "NOW()\tUTC_TIMESTAMP()\tUNIX_TIMESTAMP()\t@@system_time_zone\t@@time_zone\n2026-11-09 10:03:54\t2026-11-09 15:03:54\t1794236634\tEST\tSYSTEM\n",
+      "stderr": ""
+    },
+    "live": {
+      "sql": "SELECT user,campaign_id,status,conf_exten FROM vicidial_live_agents LIMIT 20",
+      "rc": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  }
+}

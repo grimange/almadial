@@ -1,0 +1,25 @@
+ M cmd/almadial/main.go
+ M internal/cli/cli.go
+ M internal/plan/plan.go
+?? .playwright-mcp/
+?? "docs/Known Issues and Compatibility Notes.md"
+?? docs/implementation/m1-07-accessible-wizard-and-operator-logging.md
+?? docs/reviews/m0-05-acceptance-readback-followup.md
+?? internal/cli/wizard_linux.go
+?? internal/cli/wizard_test.go
+?? internal/operatorlog/
+?? internal/operatorui/
+?? operations/qa/VICIDIAL_AUDIO_RECORDING_ACCEPTANCE.md
+?? operations/qa/VICIDIAL_PRODUCTION_READINESS_AUDIT.md
+?? operations/qa/VICIDIAL_PRODUCT_ACCEPTANCE_PLAN.md
+?? operations/qa/VICIDIAL_RECORDING_AUTH_DECISION.md
+?? operations/qa/VICIDIAL_RECORDING_PLAYBACK_AUTH_FEASIBILITY.md
+?? operations/qa/VICIDIAL_SYSTEM_PRODUCT_READINESS_AUDIT.md
+?? operations/qa/evidence/audio-recording/
+?? operations/qa/evidence/prd-01-02-03-14/
+?? operations/qa/evidence/product-readiness/
+?? operations/qa/evidence/production-readiness/
+?? operations/qa/evidence/recording-auth-decision/
+?? operations/qa/evidence/recording-auth-feasibility/
+?? scripts/test_terminal_wizard.py
+?? scripts/verify_agy_overlay.py

@@ -1,0 +1,11 @@
+There is no existence of 22210000000101@default extension
+Command 'dialplan show 22210000000101@default' failed.
+carrier_id	active
+OLD_SIPEXAMPLE	N
+OLD_IAXEXAMPLE	N
+SIPExample	N
+PJSIPExample	N
+PJSIPWIZExample	N
+campaign_id	active	dial_method	auto_dial_level
+test01	Y	MANUAL	0
+QAOUT01	N	MANUAL	0
