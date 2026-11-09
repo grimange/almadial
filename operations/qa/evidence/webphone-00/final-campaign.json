@@ -1,0 +1,10 @@
+{
+  "active": "N",
+  "dial_method": "MANUAL",
+  "auto_dial_level": "0",
+  "no_hopper_leads_logins": "N",
+  "campaign_recording": "ONDEMAND",
+  "omit_phone_code": "N",
+  "local_call_time": "12pm-5pm",
+  "manual_dial_list_id": "910016"
+}

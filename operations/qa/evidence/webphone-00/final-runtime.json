@@ -1,0 +1,123 @@
+{
+  "utc": "2026-11-09T17:37:47.499607+00:00",
+  "database": {
+    "code": 0,
+    "stdout": "campaign_id\tactive\tdial_method\tauto_dial_level\tno_hopper_leads_logins\tcampaign_recording\tomit_phone_code\tlocal_call_time\tmanual_dial_list_id\nQAOUT01\tN\tMANUAL\t0\tN\tONDEMAND\tN\t12pm-5pm\t910016\ntest01\tY\tMANUAL\t0\tY\tALLFORCE\tY\t12pm-5pm\t998\nlist_id\tlist_name\tcampaign_id\tactive\n910014\tQA PRD synthetic only\tQAOUT01\tN\n910015\tGAP01 CSV Synthetic Only\tQAOUT01\tN\n910016\tGAP01 UTF8 CSV Synthetic Only\tQAOUT01\tN\n910017\tWEB00 local simulator only\tQAOUT01\tN\nlead_id\tlist_id\tvendor_lead_code\tstatus\tcalled_count\n69\t910017\tWEB00_001\tNI\t2\nextension\tprotocol\tactive\tstatus\ttemplate_id\tis_webphone\twebphone_auto_answer\tuse_external_server_ip\twebphone_debug\twebphone_dialpad\twebphone_dialbox\tconf_qualify\twebphone_settings\n1000\tPJSIP\tY\tACTIVE\t\tN\tY\tN\tN\tY\tY\tY\tVICIPHONE_SETTINGS\n1001\tSIP\tY\tACTIVE\t\tN\tY\tN\tN\tY\tY\tY\tVICIPHONE_SETTINGS\n1002\tSIP\tY\tACTIVE\tWEB00_SIP\tY\tY\tY\tN\tN\tN\tN\tWEB00_SETTINGS\n1014\tSIP\tN\tSUSPENDED\t\tN\tY\tN\tN\tY\tY\tY\tVICIPHONE_SETTINGS\nlive_agents\n0\nuniqueid\tlead_id\tlist_id\tcampaign_id\tcall_date\tstart_epoch\tend_epoch\tlength_in_sec\tstatus\tuser\tterm_reason\n1794244664.000000069\t69\t910017\tQAOUT01\t2026-11-09 12:17:44\t1794244664\t1794244664\t0\tNI\tqaagent14\tAGENT\n1794244845.86\t69\t910017\tQAOUT01\t2026-11-09 12:20:52\t1794244852\t1794244889\t37\tNI\tqaagent14\tCALLER\nrecording_id\tlead_id\tfilename\tstart_epoch\tend_epoch\tlength_in_sec\tlocation\n2\t8\t20261107-024337_7000000001\t1793990617\t1793990673\t56\thttps://2.29.153.161/RECORDINGS/20261107-024337_7000000001-all.wav\n3\t69\t20261109-121653_7000000001\t1794244613\t1794244664\t51\thttps://2.29.153.161/RECORDINGS/20261109-121653_7000000001-all.wav\n4\t69\t20261109-122045_7000000001\t1794244845\t1794244889\t44\thttps://2.29.153.161/RECORDINGS/20261109-122045_7000000001-all.wav\nagent_log_id\tuser\tevent_time\tcampaign_id\tlead_id\tpause_sec\twait_sec\ttalk_sec\tdispo_sec\tstatus\tuniqueid\n17\tqaagent14\t2026-11-09 11:55:54\tQAOUT01\tNULL\t390\t0\t0\t0\tNULL\t\n18\tqaagent14\t2026-11-09 12:07:11\tQAOUT01\tNULL\t0\t0\t0\t0\tNULL\t\n19\tqaagent14\t2026-11-09 12:09:09\tQAOUT01\tNULL\t106\t0\t0\t0\tNULL\t\n20\tqaagent14\t2026-11-09 12:11:54\tQAOUT01\t69\t299\t0\t51\t74\tNI\t\n21\tqaagent14\t2026-11-09 12:18:58\tQAOUT01\tNULL\t1\t0\t0\t0\tNULL\t\n22\tqaagent14\t2026-11-09 12:19:06\tQAOUT01\t69\t99\t7\t37\t2\tNI\t1794244845.86\n23\tqaagent14\t2026-11-09 12:21:31\tQAOUT01\tNULL\t1\t0\t0\t0\tNULL\t\n24\tqaagent14\t2026-11-09 12:22:09\tQAOUT01\tNULL\t7\t0\t0\t0\tNULL\t\n25\tqaagent14\t2026-11-09 12:22:21\tQAOUT01\tNULL\t7\t0\t0\t0\tNULL\t\n26\tqaagent14\t2026-11-09 12:33:22\tQAOUT01\tNULL\t7\t0\t0\t0\tNULL\t\n27\tqaagent14\t2026-11-09 12:33:35\tQAOUT01\tNULL\t7\t0\t0\t0\tNULL\t\nuser\tevent\tevent_date\tevent_epoch\tepoch_difference\nqaagent14\tLOGIN\t2026-11-09 11:55:54\t1794243354\t0\nqaagent14\tLOGOUT\t2026-11-09 12:02:24\t1794243744\t0\nqaagent14\tLOGIN\t2026-11-09 12:07:11\t1794244031\t0\nqaagent14\tLOGIN\t2026-11-09 12:09:09\t1794244149\t0\nqaagent14\tLOGOUT\t2026-11-09 12:10:55\t1794244255\t0\nqaagent14\tLOGIN\t2026-11-09 12:11:54\t1794244314\t0\nqaagent14\tLOGOUT\t2026-11-09 12:18:59\t1794244739\t0\nqaagent14\tLOGIN\t2026-11-09 12:19:06\t1794244746\t0\nqaagent14\tLOGOUT\t2026-11-09 12:21:32\t1794244892\t0\nqaagent14\tLOGIN\t2026-11-09 12:22:09\t1794244929\t0\nqaagent14\tLOGOUT\t2026-11-09 12:22:16\t1794244936\t0\nqaagent14\tLOGIN\t2026-11-09 12:22:21\t1794244941\t0\nqaagent14\tLOGOUT\t2026-11-09 12:22:28\t1794244948\t0\nqaagent14\tLOGIN\t2026-11-09 12:33:22\t1794245602\t0\nqaagent14\tLOGOUT\t2026-11-09 12:33:29\t1794245609\t0\nqaagent14\tLOGIN\t2026-11-09 12:33:35\t1794245615\t0\nqaagent14\tLOGOUT\t2026-11-09 12:33:42\t1794245622\t0\ncarrier_id\tcarrier_name\tactive\nOLD_SIPEXAMPLE\tOLD TEST SIP carrier example\tN\nOLD_IAXEXAMPLE\tOLD TEST IAX carrier example\tN\nSIPExample\tSIP Example\tN\nPJSIPExample\tPJSIP Example\tN\nPJSIPWIZExample\tPJSIP_WIZ Example\tN\nserver_ip\texternal_server_ip\tweb_socket_url\texternal_web_socket_url\n2.29.153.161\t2.29.153.161\twss://2.29.153.161/ws\twss://2.29.153.161/ws\nwebphone_url\nhttps://2.29.153.161/viciphone-web00/viciphone.php",
+    "stderr": ""
+  },
+  "asterisk": {
+    "core show channels count": {
+      "code": 0,
+      "stdout": "0 active channels\n0 active calls\n51 calls processed",
+      "stderr": ""
+    },
+    "http show status": {
+      "code": 0,
+      "stdout": "HTTP Server Status:\nPrefix: \nServer: Asterisk\nServer Enabled and Bound to 127.0.0.1:8088\n\nEnabled URI's:\n/phoneprov/... => Asterisk HTTP Phone Provisioning Tool\n/metrics/... => Prometheus Metrics URI\n/media/... => Media over Websocket\n/ari/... => Asterisk RESTful API\n/ws => Asterisk HTTP WebSocket\n\nEnabled Redirects:\n  None.\n\nPath Restrictions:\n  None.",
+      "stderr": ""
+    },
+    "sip show peers": {
+      "code": 0,
+      "stdout": "Name/username             Host                                    Dyn Forcerport Comedia    ACL Port     Status      Description                      \n1001/1001                 158.62.74.253                            D  Yes        Yes            28589    OK (260 ms)                                  \n1002/1002                 (Unspecified)                            D  Yes        Yes            0        Unmonitored                                  \ngs102/gs102               (Unspecified)                            D  Yes        Yes            0        UNKNOWN                                      \n3 sip peers [Monitored: 1 online, 1 offline Unmonitored: 0 online, 1 offline]",
+      "stderr": ""
+    },
+    "pjsip show contacts": {
+      "code": 0,
+      "stdout": "Contact:  <Aor/ContactUri..............................> <Hash....> <Status> <RTT(ms)..>\n==========================================================================================\n\n  Contact:  1000/sip:1000@158.62.74.253:8236;rinstance=114 cb8f70a9fa Avail       350.403\n\nObjects found: 1",
+      "stderr": ""
+    },
+    "pjsip show transports": {
+      "code": 0,
+      "stdout": "Transport:  <TransportId........>  <Type>  <cos>  <tos>  <BindAddress....................>\n==========================================================================================\n\nTransport:  transport-udp             udp      0     96  0.0.0.0:5061\nTransport:  transport-wss             wss      0      0  0.0.0.0:5060\n\nObjects found: 2",
+      "stderr": ""
+    },
+    "dialplan show 22217000000001@default": {
+      "code": 0,
+      "stdout": "[ Included context 'vicidial-auto-server-custom' created by 'pbx_config' ]\n  '22217000000001' => 1. AGI(agi://127.0.0.1:4577/call_log)         [extensions-vicidial.conf:95]\n                    2. NoOp(LAB-TEST-01: Live SIP customer 1001)  [extensions-vicidial.conf:96]\n                    3. Dial(SIP/1001,45,To)                       [extensions-vicidial.conf:97]\n                    4. NoOp(LAB-TEST-01: DIALSTATUS=${DIALSTATUS} ANSWEREDTIME=${ANSWEREDTIME}) [extensions-vicidial.conf:98]\n                    5. Hangup()                                   [extensions-vicidial.conf:99]\n\n-= 1 extension (5 priorities) in 1 context. =-",
+      "stderr": ""
+    },
+    "confbridge list": {
+      "code": 0,
+      "stdout": "Conference Bridge Name           Users  Marked Locked Muted\n================================ ====== ====== ====== =====",
+      "stderr": ""
+    }
+  },
+  "unchanged_configs": {
+    "sip.conf": {
+      "same": true,
+      "sha256": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+    },
+    "pjsip.conf": {
+      "same": true,
+      "sha256": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6"
+    }
+  },
+  "endpoint_sections": {
+    "1001": {
+      "present": true,
+      "same": true,
+      "sha256": "c7edb2ac09006b70e213457e39825767cc68380ec6c1f42c77d9b94d5e598167"
+    }
+  },
+  "ungranted_ws": {
+    "code": 0,
+    "stdout": "403",
+    "stderr": ""
+  },
+  "private_ws": {
+    "code": 28,
+    "stdout": "HTTP/1.1 101 Switching Protocols\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\nSec-WebSocket-Protocol: sip",
+    "stderr": "curl: (28) Operation timed out after 2002 milliseconds with 0 bytes received"
+  },
+  "tls": {
+    "code": 0,
+    "verified": true,
+    "ip_san_verified": true
+  },
+  "assets": {
+    "viciphone.appcache": "b5bf66237bfea6e5ccfa8dace28ef6852a5d659f22694dc7e255d5243c9b7510",
+    "favicon.ico": "6c346129e05dffa404b509cc9fef1e511d5b88ed87e783f1ef36dcf80538d940",
+    "vp_template.php": "18839452f96db17d8cf1726e1fa7b1e83446cfd9286c0eecc0effac1211a3408",
+    "viciphone.php": "e37d92df58d3c4f1b55a24a4364f9e4c9653c45820628fb657c42bd443fb6a6c",
+    "LICENSE": "e7ae8b5da17709474ba25316441bc064148841cf101e7eef318c3c3ee5a0827b",
+    "index.html": "88b68d4a5d6a76f3deae6f2fc191c3e4014e75f20817e151dc2886eab31585a6",
+    "vp_int_example.php": "6adfa43ba0fa8f0f4b4a62ed881430ef4d12b81fe43d02dad1330b7541260f18",
+    "vp_interpreter.php": "b59437200493e21da0003b61bd34dab4fc53549599bd5a968b9e9a4b1f4b4012",
+    "css/default.css": "2328e95821d6d6464063140632910fae267cb97de46b39edc5ae19f33be69259",
+    "css/micro.css": "6075b350d9e46249cf61e7f3bc316c037eaf70871666ed0613d33b4cc5924a65",
+    "css/mini.css": "72efc0eb4b36460a0019b6181f012d6bf42af8023579dae82ef09531c7aa8504",
+    "css/micro2.css": "f5953d88201d69cc0ef6559d1562ae8a81dbc3ee7314bc52528873158ef3114f",
+    "css/thin.css": "aedd0b4b74e2161299dd3be312f55a5bf1d66d590d363ccbc6b8be9ea2c3e99d",
+    "js/sip.js": "9eb6524ac04ee19ee106e835a813c0c5cb333478df6a2c71b382ff6cbd50164b",
+    "js/vici_phone.js": "c7763fd3cc5a56d604c577291e6bbd25afe7f3b1cfa5fadbce914d30cf94779b",
+    "sounds/2.wav": "bfb4a94de9fa9496e276a0f74096be7e5c34186711b45c78c3510c4dc0547501",
+    "sounds/9.wav": "cd2e57b92970789bd2a7f3def036c5be5868a152ed66ff3f9d6ba5bf289d259e",
+    "sounds/5.wav": "bf45d38abe2421163885d37bdb43bf5fb4a7075e10086c02f641682c154b6a20",
+    "sounds/0.wav": "38c754b205ba0146ddee299b407ac58bc8e92fd4edf918f79677e22a04875440",
+    "sounds/progress-uk.mp3": "b3fee6bfbb3e06f32eb6eaa006f4504b74eaa613bb2fb7aebfd1032bf7860ed6",
+    "sounds/progress-na.mp3": "f2e2033218dc17c7c89321895b150d11ebc0bed67affc6a3e03b4518bdcb1f4a",
+    "sounds/8.wav": "244716fc31ef725af756fe95822755196218b04cb1e5c760e805f632e558fcf8",
+    "sounds/hash.wav": "bb5a0c4f788f94cc9eb7535519f0d9366606423ca1e8bebb3bac6d8de46cf408",
+    "sounds/progress-eu.mp3": "7478defe574c4a644b2631e1ae76a1a10f6a698fca120a2bf6b64e631cb856e4",
+    "sounds/1.wav": "4bf6ba8b0072ffc260a8802f3a18e8e9eb353ce8dd7ad11fa562a61247e1c4f7",
+    "sounds/4.wav": "8f23942c6cf2ef00552f62eb4e41f74db940944672d733c7cd6c61d14639370e",
+    "sounds/ringing.mp3": "fc9cd2ecc931f90627e61f7d2a6241eeabd342e9d3f646d036a4dcbc9ad9b914",
+    "sounds/6.wav": "3e7a723cdd5045d1aac355022fbab17fc6cb6015a71848babbcdd955c8db7966",
+    "sounds/star.wav": "9053d09877212e0035e9bc73b79e522a1244a8cfbde1b766761b4a8a936b21e7",
+    "sounds/7.wav": "a6c178b2c627e66b9d7784cb93796c90afe59e43fa83425d969d7f919e00b008",
+    "sounds/3.wav": "33e08dfbe56f1ddc01260ee4072da0041ffdac54295f95d98541ce4e0dc2e77a",
+    "images/wp_hangup.gif": "e4ad1735e90d5b5c8d2c9f0822294dcf0b4c3683e28ef423cf21831cb5a4f5a1",
+    "images/wp_speaker_down.gif": "f0ebb9b371321fe50381d226eb289073efd1cdecd5a057c4a2f744fbbdbb8c9e",
+    "images/wp_register_active.gif": "3d85cde79bc9e04195e0b616fe732f7dc3c87613a429cdeb4923307ed3951827",
+    "images/wp_unregister_inactive.gif": "d1b8f005ebffbe009e19eb51dbefa3ff8112e2a1527ed8ef79583670167dece7",
+    "images/wp_speaker_up.gif": "fbfb8edd0be74b2c187cff2b66e252cc59edb61d5a5824257bc3cc6af502037f",
+    "images/wp_mic_on.gif": "681f246f6394210aa7e56deb8a1b956cd8b182dfc6cf842e6bbf573a6f70b634",
+    "images/reg_status_blink.gif": "3b106fcdd6770e69a6ced7ecedd067f8ef1ee0e9cff4b5b4d510956e33186baa",
+    "images/wp_dial.gif": "b260d08304a40c8acb966c7e0cd7125d6654ae749cc8555d084487ccf549ce32",
+    "images/wp_mic_off.gif": "4862761e01b959c7739ba0311d53b6c3215a768b8fd9b8842e895fdade81e652",
+    "images/wp_logo.gif": "beb594208c0a0adb41aacad874aacfd7a8a35f7da697ddceadae4d896afba93b",
+    "images/wp_unregister_active.gif": "4749ecf1410e83df245ff683a52c261d965cb467eeab2df0af989c6a60705f2f",
+    "images/wp_logo.png": "01c7db20d5dc8d85499af2c4d61d637b5603dbc78af6227bd7bbe7b1e1ea4886",
+    "images/wp_register_inactive.gif": "f6f3dcac46ed0e9bc5979192ebe57660b0b060d3d9d13cb2a2a1188a4cd319bc"
+  }
+}

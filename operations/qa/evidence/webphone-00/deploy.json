@@ -1,0 +1,22 @@
+{
+  "httpd -t": {
+    "code": 0,
+    "out": "",
+    "err": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nSyntax OK\n"
+  },
+  "asterisk -rx module reload http": {
+    "code": 0,
+    "out": "Module 'http' reloaded successfully.\n",
+    "err": ""
+  },
+  "asterisk -rx http show status": {
+    "code": 0,
+    "out": "HTTP Server Status:\nPrefix: \nServer: Asterisk\nServer Enabled and Bound to 127.0.0.1:8088\n\nEnabled URI's:\n/phoneprov/... => Asterisk HTTP Phone Provisioning Tool\n/metrics/... => Prometheus Metrics URI\n/media/... => Media over Websocket\n/ari/... => Asterisk RESTful API\n/ws => Asterisk HTTP WebSocket\n\nEnabled Redirects:\n  None.\n\nPath Restrictions:\n  None.\n",
+    "err": ""
+  },
+  "apache_reload": {
+    "code": 0,
+    "out": "",
+    "err": ""
+  }
+}

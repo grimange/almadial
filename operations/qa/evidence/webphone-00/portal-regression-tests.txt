@@ -1,0 +1,97 @@
+....FORM_REJECT reason=csrf
+FORM_REJECT reason=origin
+.........REQUEST_REJECTED
+REQUEST_REJECTED
+REQUEST_REJECTED
+..REQUEST_REJECTED
+REQUEST_REJECTED
+FIREWALL_RECONCILE_FAILED
+....REQUEST_REJECTED
+.FIREWALL_RECONCILE_FAILED
+..FIREWALL_RECONCILE_FAILED
+SIP_GUARD_RECONCILE_FAILED
+SIP_GUARD_RECONCILE_FAILED
+SIP_GUARD_RECONCILE_FAILED
+....FORM_REJECT reason=csrf
+FORM_REJECT reason=origin
+......AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 200}
+AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 404}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 200}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 200}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 200}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 200}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 307}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 307}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 206}
+AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+AUTH_FAIL ip=8.8.8.8
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 401}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 429}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 200}
+.{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 503}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 416}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 416}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 416}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 416}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 416}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 416}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 405}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 404}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 403}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "synthetic", "recording_id": 2, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 404}
+{"event": "recording_access", "user": "", "recording_id": 0, "ip": "8.8.8.8", "status": 404}
+.{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 503}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 503}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 503}
+{"event": "recording_access", "user": "synthetic", "recording_id": 0, "ip": "8.8.8.8", "status": 503}
+.......
+----------------------------------------------------------------------
+Ran 51 tests in 2.146s
+
+OK

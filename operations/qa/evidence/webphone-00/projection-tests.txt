@@ -1,0 +1,9 @@
+test_confirmed_phone_freshness_and_permissions (test_phone_projection.Projection.test_confirmed_phone_freshness_and_permissions) ... ok
+test_failed_reconfirmation_removes_prior_projection (test_phone_projection.Projection.test_failed_reconfirmation_removes_prior_projection) ... ok
+test_short_lease_not_extended_and_revocation_removes_file (test_phone_projection.Projection.test_short_lease_not_extended_and_revocation_removes_file) ... ok
+test_web_only_or_unconfirmed_phone_has_no_projection (test_phone_projection.Projection.test_web_only_or_unconfirmed_phone_has_no_projection) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+OK

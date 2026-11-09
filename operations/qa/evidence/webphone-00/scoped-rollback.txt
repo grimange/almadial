@@ -1,0 +1,32 @@
+{
+  "action": "capture-deployed",
+  "hashes": {
+    "/etc/asterisk/http.conf": "32146ec6f50eebc57ec1554aaa061841db2a5196b3f9f8f87cc778b6e7c2c4eb",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "f73b43ed2271d869e3335fa04b0688408ef4590261013a7a44e57e8d4297e820",
+    "/opt/alma-portal-443/apply_requests.py": "4794916b5a0b0d7c4f5c05e073d97d62c13be663f045cb70f18b0c4dfd471c90"
+  },
+  "http": "HTTP Server Status:\nPrefix: \nServer: Asterisk\nServer Enabled and Bound to 127.0.0.1:8088\n\nEnabled URI's:\n/phoneprov/... => Asterisk HTTP Phone Provisioning Tool\n/metrics/... => Prometheus Metrics URI\n/media/... => Media over Websocket\n/ari/... => Asterisk RESTful API\n/ws => Asterisk HTTP WebSocket\n\nEnabled Redirects:\n  None.\n\nPath Restrictions:\n  None.",
+  "apache": "active"
+}
+
+{
+  "action": "rollback",
+  "hashes": {
+    "/etc/asterisk/http.conf": "40484c4ee6ecfeee85244a88416594906bb2e741697f9b6fa609a8540058c64f",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "86495765ac47d8a738f9b30bd8dba75f6c05703d07c89f2f9961a386ec6147ed",
+    "/opt/alma-portal-443/apply_requests.py": "e4280f71f3c31684cdae8a6db1808e2747c112932ccf0790e480af94d1a6c956"
+  },
+  "http": "HTTP Server Status:\nPrefix: \nServer: Asterisk\nServer Disabled\n\nEnabled URI's:\n/phoneprov/... => Asterisk HTTP Phone Provisioning Tool\n/metrics/... => Prometheus Metrics URI\n/media/... => Media over Websocket\n/ari/... => Asterisk RESTful API\n/ws => Asterisk HTTP WebSocket\n\nEnabled Redirects:\n  None.\n\nPath Restrictions:\n  None.",
+  "apache": "active"
+}
+
+{
+  "action": "restore-deployed",
+  "hashes": {
+    "/etc/asterisk/http.conf": "32146ec6f50eebc57ec1554aaa061841db2a5196b3f9f8f87cc778b6e7c2c4eb",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "f73b43ed2271d869e3335fa04b0688408ef4590261013a7a44e57e8d4297e820",
+    "/opt/alma-portal-443/apply_requests.py": "4794916b5a0b0d7c4f5c05e073d97d62c13be663f045cb70f18b0c4dfd471c90"
+  },
+  "http": "HTTP Server Status:\nPrefix: \nServer: Asterisk\nServer Enabled and Bound to 127.0.0.1:8088\n\nEnabled URI's:\n/phoneprov/... => Asterisk HTTP Phone Provisioning Tool\n/metrics/... => Prometheus Metrics URI\n/media/... => Media over Websocket\n/ari/... => Asterisk RESTful API\n/ws => Asterisk HTTP WebSocket\n\nEnabled Redirects:\n  None.\n\nPath Restrictions:\n  None.",
+  "apache": "active"
+}

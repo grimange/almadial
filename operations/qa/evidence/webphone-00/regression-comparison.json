@@ -1,0 +1,35 @@
+{
+  "fileComparisons": {
+    "/opt/alma-portal-443/portal.py": true,
+    "/opt/alma-portal-443/vicidial_auth.py": true,
+    "/opt/alma-portal-443/access.lua": true,
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": false,
+    "/usr/local/sbin/alma-vicidial-recording": true,
+    "/etc/alma-vicidial-recording.json": true,
+    "/etc/systemd/system/alma-vicidial-recording.timer": true,
+    "/etc/cron.d/vicidial": true,
+    "/usr/local/sbin/alma-portal-cert-deploy": true,
+    "/var/www/html/vicidial/admin.php": true,
+    "/var/www/html/vicidial/functions.php": true,
+    "/var/www/html/vicidial/user_stats.php": true,
+    "/var/www/html/vicidial/admin_modify_lead.php": true,
+    "/var/www/html/vicidial/recording_log_redirect.php": true
+  },
+  "originalRecordingUnchanged": true,
+  "databaseUnchanged": true,
+  "servicePIDComparisons": {
+    "httpd": true,
+    "asterisk": true,
+    "mariadb": true,
+    "php-fpm": true,
+    "alma-portal-443": true,
+    "alma-portal-sip-guard": true,
+    "fail2ban": true
+  },
+  "firewallPermanentUnchanged": true,
+  "backup": {
+    "code": 0,
+    "stdout": "{\n  \"outcome\": \"ok\",\n  \"attempt_at\": \"2026-11-09T08:40:02.958817+00:00\",\n  \"pid\": 910284,\n  \"finished_at\": \"2026-11-09T08:40:18.689298+00:00\",\n  \"last_failure\": {\n    \"at\": \"2026-11-06T21:02:22.754013+00:00\",\n    \"reason\": \"required_dataset_missing\"\n  },\n  \"last_success\": {\n    \"id\": \"20261109T084003-23e8842a\",\n    \"completed_at\": \"2026-11-09T08:40:17.780215+00:00\",\n    \"bytes\": 1364673208,\n    \"database\": {\n      \"method\": \"mariadb-dump --all-databases --lock-all-tables\",\n      \"timeout_seconds\": 30,\n      \"lock_hold_upper_bound_seconds\": 0.8664,\n      \"completed_at\": \"2026-11-09T08:40:04.716349+00:00\"\n    },\n    \"integrity\": {\n      \"verified_at\": \"2026-11-09T08:40:17.563587+00:00\",\n      \"payloads\": 5,\n      \"archive_members\": 21340,\n      \"database_tables\": 376,\n      \"recording_files\": 7\n    },\n    \"archive_sha256\": \"4e8fbd3aec41f1fc15150870892f445fb0ec14d054d220e42ef3d32d04c0ccb7\"\n  },\n  \"newest_complete_age_seconds\": 32553.16319,\n  \"remaining_bytes\": 142298640384,\n  \"free_inodes\": 9778014,\n  \"last_success_verification_present\": true,\n  \"job_lock_held\": false\n}",
+    "stderr": ""
+  }
+}

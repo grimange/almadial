@@ -1,0 +1,29 @@
+--- a/apply_requests.py
++++ b/apply_requests.py
+@@ -199,6 +199,26 @@
+     confirmed &= guarded
+     state['synced'] = synced
+     state['owned'] = list(synced)
++    # PRD-WEBPHONE-00: project only confirmed, current phone grants for /ws.
++    phone_dir = BASE / 'phone-websocket'
++    phone_dir.mkdir(mode=0o750, exist_ok=True)
++    os.chown(phone_dir, 0, 48)
++    os.chmod(phone_dir, 0o750)
++    phone_grants = {ip: expiry for ip, expiry in sip.items() if ip in confirmed}
++    for path in phone_dir.iterdir():
++        if path.name not in phone_grants:
++            path.unlink()
++    for ip, expiry in phone_grants.items():
++        path = phone_dir / ip
++        tmp = phone_dir / ('.' + ip)
++        fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_NOFOLLOW, 0o640)
++        with os.fdopen(fd, 'w') as stream:
++            os.fchmod(stream.fileno(), 0o640)
++            os.fchown(stream.fileno(), 0, 48)
++            stream.write(str(min(expiry, now + HEARTBEAT)))
++            stream.flush()
++            os.fsync(stream.fileno())
++        os.replace(tmp, path)
+     for ip in list(web):
+         # If agent rules fail, don't advertise that IP as active for web either.
+         if ip in sip and ip not in confirmed:

@@ -1,0 +1,21 @@
+{
+  "phone": {
+    "extension": "1002",
+    "protocol": "SIP",
+    "active": "Y",
+    "status": "ACTIVE",
+    "template_id": "WEB00_SIP",
+    "is_webphone": "Y",
+    "use_external_server_ip": "Y",
+    "webphone_auto_answer": "Y",
+    "webphone_settings": "WEB00_SETTINGS",
+    "webphone_debug": "N",
+    "conf_qualify": "N",
+    "user_group": "QAPRD14"
+  },
+  "settings": {
+    "container_id": "WEB00_SETTINGS",
+    "container_type": "WEBPHONE_SETTINGS",
+    "container_entry": "dialRegExten:1\nautoGain:0\nechoCan:0\nnoiseSup:0"
+  }
+}

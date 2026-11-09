@@ -1,0 +1,33 @@
+{
+  "text": "Logged in as User: qaagent14 on Phone: SIP/1002  to campaign: QAOUT01     \tLOGOUT\n\t\t  2026-11-10 01:21:03    session ID: 9600001\n   Calls in Queue: 0   \t\nSTATUS: Called: (700)000-0001 UID: M1091220450000000069  \n\n\n\n LEAD PREVIEW\nRECORDING FILE:\n\n20261109-122045_700000...\nRECORD ID: 4\n\n\n\n\n\n \n\n\n\n\n\n\n \n\n\n\t\n\t  Customer Time: NOV 10 06:21:04 AM     Channel: SIP/1001-00000006\nCustomer Information:        \n\nTitle:\t  First:   MI:   Last : \nAddress1:\t\nAddress2:\t\tAddress3:\t\nCity:\t\tState:\t\tPostCode:\t\nProvince:\t\tVendor ID:\t\tGender:\t\nU - Undefined\nM - Male\nF - Female\n\nPhone:\t7000000001\tDialCode:\t\tAlt. Phone",
+  "media": [
+    {
+      "type": "inbound-rtp",
+      "packetsReceived": 5559,
+      "audioLevel": 0,
+      "bytesReceived": 889440,
+      "totalAudioEnergy": 0.7120343343542003,
+      "totalSamplesDuration": 111.34000000002005
+    },
+    {
+      "type": "outbound-rtp",
+      "bytesSent": 892640,
+      "packetsSent": 5579
+    },
+    {
+      "type": "media-source",
+      "audioLevel": 0.26361888485366375,
+      "totalAudioEnergy": 8.004436767784554,
+      "totalSamplesDuration": 112.82000000002081
+    },
+    {
+      "type": "transport",
+      "bytesReceived": 1015691,
+      "bytesSent": 1018548,
+      "dtlsState": "connected",
+      "packetsReceived": 5584,
+      "packetsSent": 5624,
+      "srtpCipher": "AES_CM_128_HMAC_SHA1_80"
+    }
+  ]
+}

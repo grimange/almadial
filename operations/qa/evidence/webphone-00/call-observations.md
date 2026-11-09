@@ -1,0 +1,13 @@
+# Bounded call observations
+
+This is a sanitized transcription of live browser/Asterisk observations made during the executed test, not a second call or a packet capture. Persistent SQL, final recording metadata and browser statistics are stored alongside it.
+
+- Browser agent: qaagent14 / SIP/1002, QAOUT01, ConfBridge 9600001.
+- The first request included the country code twice (`222117000000001`), matched no local simulator route and created no SIP/1001 customer leg. It was stopped, NI dispositioned and logged; recording 3 contains the agent conference only. This was a native campaign setting mismatch, corrected by setting QAOUT01 omit-phone-code Y through Administration.
+- The corrected AMI request (man_id 53) used `22217000000001`, the existing exact local `Dial(SIP/1001,45,To)` route. No active carrier existed. One customer simulator call rang and was answered.
+- Live channels included SIP/1002-00000005, SIP/1001-00000006 and the expected Local conference leg. The agent UI displayed customer SIP/1001-00000006 and recording ID 4. Browser call identifier M1091220450000000069; final native uniqueid 1794244845.86.
+- During the answered interval Asterisk RTP showed roughly 5.9k received/sent browser-leg packets and 962 received / 1004 sent customer-leg packets, with zero reported customer-leg loss. Browser allowlisted statistics are in call-media.json; audio/PCMU at 8 kHz, ICE and DTLS connected, SRTP AES_CM_128_HMAC_SHA1_80.
+- Browser-generated tone-source energy was positive. Inbound browser totalAudioEnergy rose from the earlier conference welcome-tone value of approximately 0.255 to 0.712 during the customer interaction. This is signal-flow evidence, not a standalone speech intelligibility measurement.
+- Operator was asked: “The simulator call connected successfully. Did you hear the repeating tones in Linphone 1001, and did you speak or play a phrase back? Please confirm each direction separately; I am ending the bounded call now.” Operator replied **“YES”**. This is retained as a combined affirmative to the two actions; no separate detailed per-direction quality rating was received.
+- Native customer hangup, NI disposition and normal logout completed. Final call log has 37 seconds talk, matching agent log 22. Recording spans the wider 44-second conference/call interval; actual WAV length 43.84 seconds. Automatic finalization populated its protected HTTPS location. Native Lead Details playback by entitled user 6666 succeeded; both restricted accounts were denied.
+- No public PSTN/carrier call, predictive dialing or automatic dialing was executed. No call recording was copied to the repository.

@@ -1,0 +1,21 @@
+{
+  "duration": 43.84,
+  "currentTime": 0.011848,
+  "readyState": 4,
+  "paused": false,
+  "error": null,
+  "playResult": "started",
+  "canonicalPath": "/vicidial/recordings/20261109-122045_7000000001-all.wav",
+  "account": "6666",
+  "nativeLead": 69,
+  "denied": [
+    {
+      "user": "qaagent14",
+      "status": 403
+    },
+    {
+      "user": "qasup14",
+      "status": 403
+    }
+  ]
+}

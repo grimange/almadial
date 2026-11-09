@@ -1,0 +1,194 @@
+{
+  "at": "2026-11-09T17:42:50.895161+00:00",
+  "host": "dialer01",
+  "files": {
+    "/opt/alma-portal-443/portal.py": {
+      "sha256": "a8f8912d391775c7501fba9cde72f635b2ad9e5a749db19d689191a12237d225",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0
+    },
+    "/opt/alma-portal-443/vicidial_auth.py": {
+      "sha256": "11a1892872df79215020a58244edcbe6d6568bb59607f7400cca8cd8d20f094d",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0
+    },
+    "/opt/alma-portal-443/access.lua": {
+      "sha256": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0
+    },
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": {
+      "sha256": "f73b43ed2271d869e3335fa04b0688408ef4590261013a7a44e57e8d4297e820",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0
+    },
+    "/usr/local/sbin/alma-vicidial-recording": {
+      "sha256": "52755bd6f5033b03c5147744be22a4a977225a7e28d7dc3aed4211a575ad410f",
+      "mode": 448,
+      "uid": 0,
+      "gid": 0
+    },
+    "/etc/alma-vicidial-recording.json": {
+      "sha256": "56939a23986ef559367734542a4f204b9b40d8cee835603f6c067d03c878dc9d",
+      "mode": 384,
+      "uid": 0,
+      "gid": 0
+    },
+    "/etc/systemd/system/alma-vicidial-recording.timer": {
+      "sha256": "9470917000e2353a54dae16ea436428f3b5c7b974caee8664dd9ac51a0c77977",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0
+    },
+    "/etc/cron.d/vicidial": {
+      "sha256": "218590f37328cc45504b5d9fe05948880a797ac28c00bb61b962fa1873484d2d",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0
+    },
+    "/usr/local/sbin/alma-portal-cert-deploy": {
+      "sha256": "fad1df74eb9800038ec2e9b57b886df73692cd85445fbb9a358df95d51a21403",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0
+    },
+    "/var/www/html/vicidial/admin.php": {
+      "sha256": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0
+    },
+    "/var/www/html/vicidial/functions.php": {
+      "sha256": "14d11c2b9229f1ce5acd397cbb0b16e6e27f9c5216a1e0ad4ad1ca86db506fac",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0
+    },
+    "/var/www/html/vicidial/user_stats.php": {
+      "sha256": "ac25d88cf9a8febee004b1ee577136674541e089e72c3770ed0d1279b90cccc1",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0
+    },
+    "/var/www/html/vicidial/admin_modify_lead.php": {
+      "sha256": "78c30912209ae16cea8ae1044fc7175f0ca5f2ab30b897a548ef69585b2b2803",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0
+    },
+    "/var/www/html/vicidial/recording_log_redirect.php": {
+      "sha256": "6a002622b38424848c4e887c493a632844abf25f6f8be45556f4601df90c75fc",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0
+    }
+  },
+  "services": {
+    "httpd": {
+      "code": 0,
+      "stdout": "MainPID=26973\nExecMainStartTimestamp=Wed 2026-11-04 16:15:42 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "asterisk": {
+      "code": 0,
+      "stdout": "MainPID=143137\nExecMainStartTimestamp=Thu 2026-11-05 10:25:33 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "mariadb": {
+      "code": 0,
+      "stdout": "MainPID=61646\nExecMainStartTimestamp=Wed 2026-11-04 16:47:10 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "php-fpm": {
+      "code": 0,
+      "stdout": "MainPID=26963\nExecMainStartTimestamp=Wed 2026-11-04 16:15:41 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "alma-portal-443": {
+      "code": 0,
+      "stdout": "MainPID=443916\nExecMainStartTimestamp=Fri 2026-11-06 18:47:34 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "alma-portal-443-apply.timer": {
+      "code": 0,
+      "stdout": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "alma-portal-sip-guard": {
+      "code": 0,
+      "stdout": "MainPID=0\nExecMainStartTimestamp=Thu 2026-11-05 17:01:25 EST\nActiveState=active\nSubState=exited\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "alma-vicidial-recording.timer": {
+      "code": 0,
+      "stdout": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "alma-vicidial-backup.timer": {
+      "code": 0,
+      "stdout": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "alma-portal-renew.timer": {
+      "code": 0,
+      "stdout": "ActiveState=active\nSubState=waiting\nUnitFileState=enabled",
+      "stderr": ""
+    },
+    "fail2ban": {
+      "code": 0,
+      "stdout": "MainPID=178535\nExecMainStartTimestamp=Thu 2026-11-05 15:28:22 EST\nActiveState=active\nSubState=running\nUnitFileState=enabled",
+      "stderr": ""
+    }
+  },
+  "database": {
+    "code": 0,
+    "stdout": "user\tactive\tuser_level\taccess_recordings\tview_reports\tuser_group\n6666\tY\t9\t1\t1\tADMIN\nlog_recording_access\ttwo_factor_auth_hours\tallow_ip_lists\tLENGTH(system_ip_blacklist)\n0\t0\t0\t0\nrecording_id\tfilename\tend_epoch\tlength_in_sec\tlocation\n1\t20261106-024951_7000000001\t1793904670\t79\tNULL\n2\t20261107-024337_7000000001\t1793990673\t56\thttps://2.29.153.161/RECORDINGS/20261107-024337_7000000001-all.wav\nTABLE_NAME\tCOLUMN_NAME\tPRIVILEGE_TYPE\nrecording_log\tend_epoch\tSELECT\nrecording_log\tfilename\tSELECT\nrecording_log\tlength_in_sec\tSELECT\nrecording_log\tlocation\tSELECT\nrecording_log\trecording_id\tSELECT\nsystem_settings\tallow_ip_lists\tSELECT\nsystem_settings\tlog_recording_access\tSELECT\nsystem_settings\tpass_cost\tSELECT\nsystem_settings\tpass_hash_enabled\tSELECT\nsystem_settings\tpass_key\tSELECT\nsystem_settings\tsystem_ip_blacklist\tSELECT\nsystem_settings\ttwo_factor_auth_hours\tSELECT\nvicidial_users\taccess_recordings\tSELECT\nvicidial_users\tactive\tSELECT\nvicidial_users\tapi_allowed_functions\tSELECT\nvicidial_users\tapi_only_user\tSELECT\nvicidial_users\tfailed_login_count\tSELECT\nvicidial_users\tforce_change_password\tSELECT\nvicidial_users\tlast_login_date\tSELECT\nvicidial_users\tmodify_users\tSELECT\nvicidial_users\tpass\tSELECT\nvicidial_users\tpass_hash\tSELECT\nvicidial_users\tuser\tSELECT\nvicidial_users\tuser_group\tSELECT\nvicidial_users\tuser_level\tSELECT\nvicidial_users\tvdc_agent_api_access\tSELECT\nvicidial_users\tview_reports\tSELECT\nvicidial_user_groups\tadmin_viewable_groups\tSELECT\nvicidial_user_groups\tallowed_campaigns\tSELECT\nvicidial_user_groups\tallowed_reports\tSELECT\nvicidial_user_groups\tuser_group\tSELECT",
+    "stderr": ""
+  },
+  "backup": {
+    "code": 0,
+    "stdout": "{\n  \"outcome\": \"ok\",\n  \"attempt_at\": \"2026-11-09T08:40:02.958817+00:00\",\n  \"pid\": 910284,\n  \"finished_at\": \"2026-11-09T08:40:18.689298+00:00\",\n  \"last_failure\": {\n    \"at\": \"2026-11-06T21:02:22.754013+00:00\",\n    \"reason\": \"required_dataset_missing\"\n  },\n  \"last_success\": {\n    \"id\": \"20261109T084003-23e8842a\",\n    \"completed_at\": \"2026-11-09T08:40:17.780215+00:00\",\n    \"bytes\": 1364673208,\n    \"database\": {\n      \"method\": \"mariadb-dump --all-databases --lock-all-tables\",\n      \"timeout_seconds\": 30,\n      \"lock_hold_upper_bound_seconds\": 0.8664,\n      \"completed_at\": \"2026-11-09T08:40:04.716349+00:00\"\n    },\n    \"integrity\": {\n      \"verified_at\": \"2026-11-09T08:40:17.563587+00:00\",\n      \"payloads\": 5,\n      \"archive_members\": 21340,\n      \"database_tables\": 376,\n      \"recording_files\": 7\n    },\n    \"archive_sha256\": \"4e8fbd3aec41f1fc15150870892f445fb0ec14d054d220e42ef3d32d04c0ccb7\"\n  },\n  \"newest_complete_age_seconds\": 32553.16319,\n  \"remaining_bytes\": 142298640384,\n  \"free_inodes\": 9778014,\n  \"last_success_verification_present\": true,\n  \"job_lock_held\": false\n}",
+    "stderr": ""
+  },
+  "firewalld_permanent": {
+    "code": 0,
+    "stdout": "public (default)\n  target: default\n  ingress-priority: 0\n  egress-priority: 0\n  icmp-block-inversion: no\n  interfaces: \n  sources: \n  services: cockpit dhcpv6-client ssh\n  ports: 22/tcp 80/tcp 443/tcp 22222/tcp\n  protocols: \n  forward: yes\n  masquerade: no\n  forward-ports: \n  source-ports: \n  icmp-blocks: \n  rich rules:",
+    "stderr": ""
+  },
+  "firewalld_runtime": {
+    "code": 0,
+    "stdout": "public (default, active)\n  target: default\n  ingress-priority: 0\n  egress-priority: 0\n  icmp-block-inversion: no\n  interfaces: eth0\n  sources: \n  services: cockpit dhcpv6-client ssh\n  ports: 22/tcp 80/tcp 443/tcp 22222/tcp\n  protocols: \n  forward: yes\n  masquerade: no\n  forward-ports: \n  source-ports: \n  icmp-blocks: \n  rich rules: \n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"5061\" protocol=\"udp\" accept\n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"10000-20000\" protocol=\"udp\" accept\n\trule priority=\"10\" family=\"ipv4\" source address=\"158.62.74.253/32\" port port=\"5060\" protocol=\"udp\" accept",
+    "stderr": ""
+  },
+  "nft_rules": {
+    "code": 0,
+    "stdout": "table inet alma_portal_sip {\n\tset agents4 {\n\t\ttype ipv4_addr\n\t\tflags timeout\n\t\telements = { 158.62.74.253 timeout 35s expires 30s130ms }\n\t}\n\n\tset grace4 {\n\t\ttype ipv4_addr\n\t\tflags timeout\n\t\telements = { 158.62.74.253 timeout 2m35s expires 2m30s130ms }\n\t}\n\n\tchain input {\n\t\ttype filter hook input priority filter - 10; policy accept;\n\t\tiifname \"lo\" return\n\t\tudp dport 5060 ip saddr @agents4 return\n\t\tudp dport 5060 counter packets 11625 bytes 8656932 drop\n\t\tudp dport 5061 ip saddr @agents4 return\n\t\tudp dport 5061 counter packets 199 bytes 121356 drop\n\t\tudp dport 10000-20000 ip saddr @agents4 ct mark set ct mark | 0x40000000 return\n\t\tudp dport 10000-20000 ip saddr @grace4 ct state established ct mark & 0x40000000 != 0x00000000 return\n\t\tudp dport 10000-20000 counter packets 325 bytes 55165 drop comment \"alma-phone-sip-5060-5061-v1\"\n\t}\n\n\tchain output {\n\t\ttype filter hook output priority filter - 10; policy accept;\n\t\toifname \"lo\" return\n\t\tudp sport 5060 ip daddr @agents4 return\n\t\tudp sport 5060 counter packets 0 bytes 0 drop\n\t\tudp sport 5061 ip daddr @agents4 return\n\t\tudp sport 5061 counter packets 0 bytes 0 drop\n\t\tudp sport 10000-20000 ip daddr @agents4 ct mark set ct mark | 0x40000000 return\n\t\tudp sport 10000-20000 ip daddr @grace4 ct state established ct mark & 0x40000000 != 0x00000000 return\n\t\tudp sport 10000-20000 counter packets 77 bytes 8169 drop comment \"alma-phone-sip-5060-5061-v1\"\n\t}\n}",
+    "stderr": ""
+  },
+  "listeners": {
+    "code": 0,
+    "stdout": "Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                                                                                                                                                                                                  \nudp   UNCONN 0      0          127.0.0.1:323        0.0.0.0:*    users:((\"chronyd\",pid=879,fd=4))                                                                                                                                                                                        \nudp   UNCONN 0      0            0.0.0.0:4520       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=16))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:4569       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=14))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:5000       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=18))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:5060       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=15))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:5061       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=11))                                                                                                                                                                                   \nudp   UNCONN 0      0            0.0.0.0:42911      0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=9))                                                                                                                                                                                    \nudp   UNCONN 0      0              [::1]:323           [::]:*    users:((\"chronyd\",pid=879,fd=5))                                                                                                                                                                                        \nudp   UNCONN 0      0               [::]:34772         [::]:*    users:((\"asterisk\",pid=143137,fd=10))                                                                                                                                                                                   \ntcp   LISTEN 0      10         127.0.0.1:5038       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=7))                                                                                                                                                                                    \ntcp   LISTEN 0      4096         0.0.0.0:4577       0.0.0.0:*    users:((\"FastAGI_log.pl\",pid=997733,fd=3),(\"FastAGI_log.pl\",pid=994460,fd=3),(\"FastAGI_log.pl\",pid=993448,fd=3),(\"FastAGI_log.pl\",pid=388484,fd=3),(\"FastAGI_log.pl\",pid=388340,fd=3),(\"FastAGI_log.pl\",pid=63588,fd=3))\ntcp   LISTEN 0      128          0.0.0.0:22222      0.0.0.0:*    users:((\"sshd\",pid=993,fd=7))                                                                                                                                                                                           \ntcp   LISTEN 0      32         127.0.0.1:19091      0.0.0.0:*    users:((\"python\",pid=443916,fd=3))                                                                                                                                                                                      \ntcp   LISTEN 0      10         127.0.0.1:8088       0.0.0.0:*    users:((\"asterisk\",pid=143137,fd=30))                                                                                                                                                                                   \ntcp   LISTEN 0      80         127.0.0.1:3306       0.0.0.0:*    users:((\"mariadbd\",pid=61646,fd=20))                                                                                                                                                                                    \ntcp   LISTEN 0      511                *:443              *:*    users:((\"httpd\",pid=995873,fd=6),(\"httpd\",pid=995663,fd=6),(\"httpd\",pid=995643,fd=6),(\"httpd\",pid=995642,fd=6),(\"httpd\",pid=26973,fd=6))                                                                                \ntcp   LISTEN 0      511                *:80               *:*    users:((\"httpd\",pid=995873,fd=4),(\"httpd\",pid=995663,fd=4),(\"httpd\",pid=995643,fd=4),(\"httpd\",pid=995642,fd=4),(\"httpd\",pid=26973,fd=4))                                                                                \ntcp   LISTEN 0      128             [::]:22222         [::]:*    users:((\"sshd\",pid=993,fd=8))",
+    "stderr": ""
+  },
+  "apache": {
+    "code": 0,
+    "stdout": "",
+    "stderr": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::9000:aff:fe66:fd15%eth0. Set the 'ServerName' directive globally to suppress this message\nSyntax OK"
+  },
+  "calls": {
+    "code": 0,
+    "stdout": "0 active channels\n0 active calls\n51 calls processed",
+    "stderr": ""
+  },
+  "final_recording": {
+    "size": 892204,
+    "sha256": "f726a1d5615d50767c8a0f4794f68a544322ffa70037d1ef1a7bb3667aa4be59",
+    "mode": 416,
+    "uid": 0,
+    "gid": 991
+  }
+}
