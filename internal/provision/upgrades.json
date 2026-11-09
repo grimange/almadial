@@ -1,0 +1,107 @@
+[
+  {
+    "before": {
+      "name": "libblkid",
+      "evr": "0:2.40.2-18.el10",
+      "arch": "x86_64",
+      "repository": "@System"
+    },
+    "after": {
+      "name": "libblkid",
+      "evr": "0:2.40.2-18.el10_2.20",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "b472dada4c00867620c685a607ef83bede8be30d0d0bdee78146705ce3da1e3f"
+    }
+  },
+  {
+    "before": {
+      "name": "libfdisk",
+      "evr": "0:2.40.2-18.el10",
+      "arch": "x86_64",
+      "repository": "@System"
+    },
+    "after": {
+      "name": "libfdisk",
+      "evr": "0:2.40.2-18.el10_2.20",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "dd79991e6155039de9d923c0bc78998436e7c51719909a260b6af1a98a601f7b"
+    }
+  },
+  {
+    "before": {
+      "name": "libmount",
+      "evr": "0:2.40.2-18.el10",
+      "arch": "x86_64",
+      "repository": "@System"
+    },
+    "after": {
+      "name": "libmount",
+      "evr": "0:2.40.2-18.el10_2.20",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "6d687517d4f6dd724e3bedf51b6b81a37390f30a7fbdb4ce8bbc1dcc05116256"
+    }
+  },
+  {
+    "before": {
+      "name": "libsmartcols",
+      "evr": "0:2.40.2-18.el10",
+      "arch": "x86_64",
+      "repository": "@System"
+    },
+    "after": {
+      "name": "libsmartcols",
+      "evr": "0:2.40.2-18.el10_2.20",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "7323f3157a0b7cb5024b56b560abb6db3f502ee63c2f7b29171b9b567e7b7689"
+    }
+  },
+  {
+    "before": {
+      "name": "libuuid",
+      "evr": "0:2.40.2-18.el10",
+      "arch": "x86_64",
+      "repository": "@System"
+    },
+    "after": {
+      "name": "libuuid",
+      "evr": "0:2.40.2-18.el10_2.20",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "cbd3bce21a3f15a0dada094fe58ca1b23b5b7eb629273897a6f2d29c22f11b70"
+    }
+  },
+  {
+    "before": {
+      "name": "util-linux",
+      "evr": "0:2.40.2-18.el10",
+      "arch": "x86_64",
+      "repository": "@System"
+    },
+    "after": {
+      "name": "util-linux",
+      "evr": "0:2.40.2-18.el10_2.20",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "839bd1debbf135694acc8c0354c0a03f69ba527e8a21b88038a49943f75f36dc"
+    }
+  },
+  {
+    "before": {
+      "name": "util-linux-core",
+      "evr": "0:2.40.2-18.el10",
+      "arch": "x86_64",
+      "repository": "@System"
+    },
+    "after": {
+      "name": "util-linux-core",
+      "evr": "0:2.40.2-18.el10_2.20",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "eb516c7e01013603e908f17fac28c523e6daec751cad1e43c8b5f30caafae6e3"
+    }
+  }
+]
