@@ -1,0 +1,94 @@
+{
+  "customerCalls": 0,
+  "previewCase": "retry",
+  "requiresReadOnlyCorrelation": true,
+  "requiresNativeRecovery": false,
+  "results": [
+    {
+      "browser": "149.0.7827.55",
+      "errors": [
+        "TypeError"
+      ],
+      "phone": {
+        "registration": "Registered",
+        "session": "Established",
+        "conference": "9600001",
+        "ice": "connected",
+        "connection": "connected",
+        "signaling": "stable",
+        "stats": [
+          {
+            "type": "codec",
+            "clockRate": 8000,
+            "mimeType": "audio/PCMU"
+          },
+          {
+            "type": "candidate-pair",
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "nominated": true,
+            "packetsReceived": 0,
+            "packetsSent": 0,
+            "state": "succeeded"
+          },
+          {
+            "type": "candidate-pair",
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "nominated": false,
+            "packetsReceived": 0,
+            "packetsSent": 0,
+            "state": "in-progress"
+          },
+          {
+            "type": "candidate-pair",
+            "bytesReceived": 1445,
+            "bytesSent": 1260,
+            "nominated": true,
+            "packetsReceived": 3,
+            "packetsSent": 5,
+            "state": "succeeded"
+          },
+          {
+            "type": "candidate-pair",
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "nominated": true,
+            "packetsReceived": 0,
+            "packetsSent": 0,
+            "state": "succeeded"
+          },
+          {
+            "type": "outbound-rtp",
+            "bytesSent": 480,
+            "packetsSent": 3
+          },
+          {
+            "type": "transport",
+            "bytesReceived": 1445,
+            "bytesSent": 1260,
+            "dtlsCipher": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+            "dtlsState": "connected",
+            "iceState": "connected",
+            "packetsReceived": 3,
+            "packetsSent": 5,
+            "srtpCipher": "AES_CM_128_HMAC_SHA1_80"
+          }
+        ]
+      }
+    },
+    {
+      "preview": "GAP01B_013",
+      "leadId": "61",
+      "customerCall": false
+    },
+    {
+      "logout": true,
+      "browserClosed": true,
+      "releaseAcknowledged": true,
+      "duplicateClick": false,
+      "lostAcknowledgementRetry": true,
+      "requiresReadOnlyCorrelation": true
+    }
+  ]
+}

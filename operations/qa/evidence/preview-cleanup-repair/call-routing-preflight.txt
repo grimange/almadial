@@ -1,0 +1,10 @@
+[ Included context 'vicidial-auto-server-custom' created by 'pbx_config' ]
+  '22217000000001' => 1. AGI(agi://127.0.0.1:4577/call_log)         [extensions-vicidial.conf:95]
+                    2. NoOp(LAB-TEST-01: Live SIP customer 1001)  [extensions-vicidial.conf:96]
+                    3. Dial(SIP/1001,45,To)                       [extensions-vicidial.conf:97]
+                    4. NoOp(LAB-TEST-01: DIALSTATUS=${DIALSTATUS} ANSWEREDTIME=${ANSWEREDTIME}) [extensions-vicidial.conf:98]
+                    5. Hangup()                                   [extensions-vicidial.conf:99]
+
+-= 1 extension (5 priorities) in 1 context. =-
+lead_id	list_id	vendor_lead_code	status	called_count	called_since_last_reset
+70	910018	GAP03B_CALL_001	NEW	0	N

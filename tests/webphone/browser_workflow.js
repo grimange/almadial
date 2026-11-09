@@ -56,11 +56,13 @@ async (page) => {
   if (!w) throw new Error('No active workflow');
   if (phase === 'preview') {
     const expected = cfg.previewVendor || 'WEB00_001';
-    if (expected !== 'WEB00_001' && !/^GAP01B_\d{3}$/.test(expected)) throw new Error('Preview requires an identified synthetic lead');
+    if (expected !== 'WEB00_001' && expected !== 'GAP01B_NEXT' && expected !== 'GAP03B_CALL_001' && !/^GAP01B_\d{3}$/.test(expected)) throw new Error('Preview requires an identified synthetic lead');
     await w.p.locator('[name=LeadPreview]').check();
     await w.p.getByAltText('Dial Next Number',{exact:true}).click();
-    await w.p.waitForFunction(v=>document.querySelector('[name=vendor_lead_code]').value===v,expected);
-    return {preview:expected, leadId:await w.p.locator('[name=lead_id]').inputValue(), customerCall:false};
+    await w.p.waitForFunction(()=>document.querySelector('[name=lead_id]').value!=='',null,{timeout:30000});
+    const actual=await w.p.locator('[name=vendor_lead_code]').inputValue();
+    if(expected==='GAP01B_NEXT' ? !/^GAP01B_\d{3}$/.test(actual) : actual!==expected) throw Error('Unexpected native preview selection');
+    return {preview:actual, leadId:await w.p.locator('[name=lead_id]').inputValue(), customerCall:false};
   }
   if (phase === 'skip') {
     const vendor=await w.p.locator('[name=vendor_lead_code]').inputValue();
@@ -69,9 +71,22 @@ async (page) => {
     await w.p.waitForFunction(()=>document.querySelector('[name=lead_id]').value==='');
     return {skipped:vendor, customerCall:false};
   }
+  if (phase === 'probe-release') {
+    // Exercise the authenticated native endpoint. Never return credentials or HTML.
+    return w.p.evaluate(async override=>{
+      const fields={server_ip,session_name,ACTION:'manDiaLskip',preview_action:'logout',
+        conf_exten:session_id,user,pass,lead_id:document.vicidial_form.lead_id.value,
+        stage:previous_dispo,called_count:previous_called_count,campaign};
+      Object.assign(fields,override);
+      const response=await fetch('vdc_db_query.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(fields)});
+      const text=(await response.text()).trim();
+      return {status:response.status,releaseAcknowledged:text==='PREVIEW RELEASED',denied:text!=='PREVIEW RELEASED'};
+    },cfg.probeOverride || {});
+  }
   if (phase === 'call') {
     if (!cfg.authorizeSingleCall || w.callPlaced) throw new Error('Single simulator call requires explicit authorization');
-    if (await w.p.locator('[name=vendor_lead_code]').inputValue() !== 'WEB00_001') throw new Error('Wrong lead');
+    if (await w.p.locator('[name=vendor_lead_code]').inputValue() !== (cfg.previewVendor || 'WEB00_001')) throw new Error('Wrong lead');
+    if(!['WEB00_001','GAP03B_CALL_001'].includes(cfg.previewVendor || 'WEB00_001'))throw Error('Unrecognized local simulator fixture');
     const dial=await w.p.evaluate(()=>({omit:omit_phone_code,prefix:manual_dial_prefix}));
     if(dial.omit!=='Y'||dial.prefix!=='2221') throw new Error('Unexpected simulator dialing settings');
     w.callPlaced=true;
@@ -96,7 +111,7 @@ async (page) => {
       if(!response.url().endsWith('/vdc_db_query.php'))return;
       const form=new URLSearchParams(response.request().postData()||'');
       const action=form.get('ACTION');
-      if(action!=='userLOGout' && !(action==='manDiaLskip' && form.get('format')==='logout-preview'))return;
+      if(action!=='userLOGout' && !(action==='manDiaLskip' && form.get('preview_action')==='logout'))return;
       // Record only action/ACK, never credentials, request bodies or native HTML.
       const entry={action,ack:false};responses.push(entry);
       pending.push(response.text().then(body=>{
@@ -107,15 +122,30 @@ async (page) => {
     w.p.on('response',listener);
     try {
       const logout=w.p.getByRole('link',{name:'LOGOUT',exact:true});
-      if(cfg.repeatLogout) await logout.dblclick({delay:30}); else await logout.click();
+      if(cfg.dropFirstReleaseAck){
+        let dropped=false;
+        await w.p.route('**/vdc_db_query.php',async route=>{
+          const form=new URLSearchParams(route.request().postData()||'');
+          if(!dropped && form.get('ACTION')==='manDiaLskip' && form.get('preview_action')==='logout'){
+            dropped=true;const native=await route.fetch();
+            if((await native.text()).trim()!=='PREVIEW RELEASED')throw Error('Native release did not commit');
+            await route.fulfill({status:503,body:'Synthetic lost acknowledgement'});
+          }else await route.continue();
+        });
+        await logout.click();
+        await w.p.locator('#AlertBoxContent').filter({hasText:'Preview release was not confirmed'}).waitFor({state:'visible'});
+        if(!await w.p.evaluate(()=>in_lead_preview_state===1 && !preview_logout_pending))throw Error('Interrupted release lost frontend state');
+        await w.p.locator('#alert_button').click();await logout.click();
+      }else if(cfg.repeatLogout) await logout.dblclick({delay:30}); else await logout.click();
       await w.p.getByText('LOGOUT PROCESS COMPLETE, YOU MAY NOW CLOSE YOUR BROWSER OR LOG BACK IN',{exact:false}).waitFor({timeout:30000});
       await Promise.all(pending);
-      if(responses.length!==2 || responses[0].action!=='manDiaLskip' || responses[1].action!=='userLOGout' || responses.some(r=>!r.ack)) throw new Error('Release/logout acknowledgement sequence did not match');
+      const confirmed=cfg.dropFirstReleaseAck?responses.slice(1):responses;
+      if((cfg.dropFirstReleaseAck && (responses.length!==3 || responses[0].ack)) || confirmed.length!==2 || confirmed[0].action!=='manDiaLskip' || confirmed[1].action!=='userLOGout' || confirmed.some(r=>!r.ack)) throw new Error('Release/logout acknowledgement sequence did not match');
       await w.p.waitForFunction(()=>document.getElementById('webphone').getAttribute('src')==='./images/blank.gif');
     } finally {w.p.off('response',listener)}
     // Do not unregister first: this test exercises actual native logout teardown.
     await w.b.close();delete page.web00;
-    return {logout:true,browserClosed:true,releaseAcknowledged:true,duplicateClick:!!cfg.repeatLogout,requiresReadOnlyCorrelation:true};
+    return {logout:true,browserClosed:true,releaseAcknowledged:true,duplicateClick:!!cfg.repeatLogout,lostAcknowledgementRetry:!!cfg.dropFirstReleaseAck,requiresReadOnlyCorrelation:true};
   }
   if (phase === 'finish' || phase === 'direct-preview-logout') {
     const previewOpen=await w.p.getByText('SKIP LEAD',{exact:true}).isVisible();

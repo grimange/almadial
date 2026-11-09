@@ -1,0 +1,16 @@
+{
+  "host": "dialer01",
+  "backup": "/root/qa-backups/prd03b-20261109T220035Z",
+  "files": {
+    "vicidial.php": {
+      "before": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+      "after": "c7a0f4b887108b62486f47d882e766e2a1cd7e3537bdc7f5fbfbf144f851448c",
+      "lint": "No syntax errors detected in /var/www/html/agc/vicidial.php.prd03b-stage"
+    },
+    "vdc_db_query.php": {
+      "before": "5aaeabd1d9b247dc563b9e94bb86d0b3323346b226b52d47a00ca2506897108d",
+      "after": "ffc9eee4ff9a962271fce413a9a583a48ce2581ef697f3d874aca45e9e378c19",
+      "lint": "No syntax errors detected in /var/www/html/agc/vdc_db_query.php.prd03b-stage"
+    }
+  }
+}

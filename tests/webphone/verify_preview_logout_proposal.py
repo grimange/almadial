@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Verify an undeployed PRD-03C patch against private, pinned native source copies.
+"""Verify the bounded PRD-03B patch against private, pinned native source copies.
 
 No SSH, live DB, package installs, or host deployment. Source is not vendored.
-SQLite executes the exact proposed JOIN/WHERE, not MariaDB's multi-table UPDATE.
+SQLite executes the exact release JOIN/WHERE, not MariaDB's multi-table UPDATE.
 """
 import argparse
 import hashlib
@@ -17,7 +17,7 @@ PINS = {
     'vicidial.php': 'f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358',
     'vdc_db_query.php': '5aaeabd1d9b247dc563b9e94bb86d0b3323346b226b52d47a00ca2506897108d',
 }
-PATCH = BASE / 'operations/qa/proposals/prd-03c/preview-logout.patch'
+PATCH = BASE / 'operations/vicidial/patches/0001-preview-logout.patch'
 
 
 def run(argv, **kwargs):
@@ -87,12 +87,14 @@ def verify(source):
         results['javascript'] = json.loads(run(['node', str(BASE / 'tests/webphone/test_preview_logout_proposal.cjs'), str(root / 'agc/vicidial.php')]))
         # Run actual PHP release code, with extension-free stubs to capture its SQL.
         native = (root / 'agc/vdc_db_query.php').read_text()
-        begin = native.index("\tif ($format == 'logout-preview')")
+        assert "$preview_action = isset($_POST['preview_action'])" in native
+        assert '&preview_action=dial' in (root / 'agc' / 'vicidial.php').read_text()
+        begin = native.index("\tif ($preview_action === 'logout')")
         block = native[begin:native.index('\t// End PRD-03C bounded release.', begin)]
         harness = root / 'release.php'
         queries = root / 'queries.jsonl'
         harness.write_text('''<?php
-$format='logout-preview';$lead_id='100';$called_count='1';$stage='NEW';
+$preview_action='logout';$lead_id='100';$called_count='1';$stage='NEW';
 $user='synthetic_agent';$server_ip='192.0.2.1';$conf_exten='9600001';$campaign='SYNTHETIC';$link=null;
 function mysql_to_mysqli($sql,$link) {file_put_contents(getenv('QUERY_FILE'),json_encode($sql)."\\n",FILE_APPEND);return true;}
 function mysqli_affected_rows($link) {return 4;}

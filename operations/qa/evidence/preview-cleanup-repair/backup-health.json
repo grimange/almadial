@@ -1,0 +1,34 @@
+{
+  "outcome": "ok",
+  "attempt_at": "2026-11-09T08:40:02.958817+00:00",
+  "pid": 910284,
+  "finished_at": "2026-11-09T08:40:18.689298+00:00",
+  "last_failure": {
+    "at": "2026-11-06T21:02:22.754013+00:00",
+    "reason": "required_dataset_missing"
+  },
+  "last_success": {
+    "id": "20261109T084003-23e8842a",
+    "completed_at": "2026-11-09T08:40:17.780215+00:00",
+    "bytes": 1364673208,
+    "database": {
+      "method": "mariadb-dump --all-databases --lock-all-tables",
+      "timeout_seconds": 30,
+      "lock_hold_upper_bound_seconds": 0.8664,
+      "completed_at": "2026-11-09T08:40:04.716349+00:00"
+    },
+    "integrity": {
+      "verified_at": "2026-11-09T08:40:17.563587+00:00",
+      "payloads": 5,
+      "archive_members": 21340,
+      "database_tables": 376,
+      "recording_files": 7
+    },
+    "archive_sha256": "4e8fbd3aec41f1fc15150870892f445fb0ec14d054d220e42ef3d32d04c0ccb7"
+  },
+  "newest_complete_age_seconds": 51659.522718,
+  "remaining_bytes": 142282285056,
+  "free_inodes": 9777998,
+  "last_success_verification_present": true,
+  "job_lock_held": false
+}

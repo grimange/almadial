@@ -1,0 +1,100 @@
+[
+  {
+    "time": "09-Nov-2026 17:01:23 America/New_York",
+    "kind": "underflow",
+    "key": null,
+    "source_frames": [
+      [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ],
+      [
+        "/var/www/html/agc/vdc_db_query.php",
+        "6689"
+      ]
+    ],
+    "tables": [
+      "vicidial_lead_call_daily_counts"
+    ]
+  },
+  {
+    "time": "09-Nov-2026 17:03:25 America/New_York",
+    "kind": "duplicate",
+    "key": "visibleuser",
+    "source_frames": [
+      [
+        "/var/www/html/agc/conf_exten_check.php",
+        "1751"
+      ],
+      [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    ],
+    "tables": []
+  },
+  {
+    "time": "09-Nov-2026 17:15:54 America/New_York",
+    "kind": "duplicate",
+    "key": "visibleuser",
+    "source_frames": [
+      [
+        "/var/www/html/agc/conf_exten_check.php",
+        "1751"
+      ],
+      [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    ],
+    "tables": []
+  },
+  {
+    "time": "09-Nov-2026 17:17:20 America/New_York",
+    "kind": "duplicate",
+    "key": "PRIMARY",
+    "source_frames": [
+      [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ],
+      [
+        "/var/www/html/agc/vdc_db_query.php",
+        "9156"
+      ]
+    ],
+    "tables": []
+  },
+  {
+    "time": "09-Nov-2026 17:17:33 America/New_York",
+    "kind": "duplicate",
+    "key": "visibleuser",
+    "source_frames": [
+      [
+        "/var/www/html/agc/conf_exten_check.php",
+        "1751"
+      ],
+      [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    ],
+    "tables": []
+  },
+  {
+    "time": "09-Nov-2026 17:58:23 America/New_York",
+    "kind": "duplicate",
+    "key": "visibleuser",
+    "source_frames": [
+      [
+        "/var/www/html/agc/conf_exten_check.php",
+        "1751"
+      ],
+      [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    ],
+    "tables": []
+  }
+]

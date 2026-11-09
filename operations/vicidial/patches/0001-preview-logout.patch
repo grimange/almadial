@@ -1,0 +1,276 @@
+--- a/agc/vicidial.php
++++ b/agc/vicidial.php
+@@ -12711,6 +12711,7 @@
+ // Send the Manual Dial Next Number request
+ 	function ManualDialNext(mdnCBid,mdnBDleadid,mdnDiaLCodE,mdnPhonENumbeR,mdnStagE,mdVendorid,mdgroupalias,mdtype,MDNclick)
+ 		{
++		if (preview_logout_pending || native_logout_pending) {return;}
+ 		if (MDNclick=='YES')
+ 			{button_click_log = button_click_log + "" + SQLdate + "-----ManualDialNext---" + mdnCBid + " " + mdnBDleadid + " " + mdnDiaLCodE + " " + mdnPhonENumbeR + " " + mdnStagE + " " + mdVendorid + " " + mdgroupalias + " " + mdtype + " " + LIVE_campaign_recording + "|";}
+ 		UpdatESettingS();
+@@ -13601,6 +13602,7 @@
+ // Send the Manual Dial Skip
+ 	function ManualDialSkip(MDSclick)
+ 		{
++		if (preview_logout_pending || native_logout_pending) {return;}
+ 		if (MDSclick=='YES')
+ 			{button_click_log = button_click_log + "" + SQLdate + "-----ManualDialSkip---|";}
+ 		if ( (manual_dial_in_progress==1) && (APIskip < 1) )
+@@ -13853,6 +13855,8 @@
+ // Send the Manual Dial Only - dial the previewed lead
+ 	function ManualDialOnly(taskaltnum,MDOclick,MDvalidation)
+ 		{
++		if (preview_logout_pending || native_logout_pending) {return;}
++		var preview_call_guard = (in_lead_preview_state == 1);
+ 		if (MDOclick=='YES')
+ 			{button_click_log = button_click_log + "" + SQLdate + "-----ManualDialOnly---" + taskaltnum + " " + manual_dial_validation + " " + MDvalidation + "|";}
+ 
+@@ -13983,6 +13987,7 @@
+ 				manDiaLonly_query = "server_ip=" + server_ip + "&session_name=" + session_name + "&ACTION=manDiaLonly&conf_exten=" + session_id + "&user=" + user + "&pass=" + pass + "&lead_id=" + document.vicidial_form.lead_id.value + "&phone_number=" + manDiaLonly_num + "&phone_code=" + document.vicidial_form.phone_code.value + "&campaign=" + campaign + "&ext_context=" + ext_context + "&dial_timeout=" + manual_dial_timeout + "&dial_prefix=" + call_prefix + "&campaign_cid=" + call_cid + "&omit_phone_code=" + omit_phone_code + "&usegroupalias=" + usegroupalias + "&account=" + active_group_alias + "&agent_dialed_number=" + dialed_number + "&agent_dialed_type=" + dialed_label + "&dial_method=" + dial_method + "&agent_log_id=" + agent_log_id + "&security=" + document.vicidial_form.security_phrase.value + "&qm_extension=" + qm_extension + "&old_CID=" + LastCallCID + "&cid_lock=" + cid_lock + "&routing_initiated_recording=" + temp_rir + "&exten=" + recording_exten + "&recording_filename=" + LIVE_campaign_rec_filename + "&channel=" + channelrec + "&vendor_lead_code=" + document.vicidial_form.search_vendor_lead_code.value + "&phone_login=" + phone_login + "&state=" + encodeURIComponent(document.vicidial_form.state.value) + "&postal_code=" + encodeURIComponent(document.vicidial_form.search_postal_code.value);
+ 				xmlhttp.open('POST', 'vdc_db_query.php'); 
+ 				xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
++				if (preview_call_guard) {manDiaLonly_query += '&preview_action=dial';}
+ 				xmlhttp.send(manDiaLonly_query);
+ 				xmlhttp.onreadystatechange = function() 
+ 					{ 
+@@ -19544,6 +19549,63 @@
+ 		}
+ 
+ 
++
++// PRD-03C proposal: release only an unfinished list preview, then normal logout.
++// Keep the phone/session alive on failure. Retrying a lost acknowledgement is safe.
++var preview_logout_pending = false;
++var native_logout_pending = false;
++function NativeLogoutResponseOK(text)
++	{
++	var fields = text.trim().split('|');
++	return fields.length == 6 && /^[0-9]+$/.test(fields[0]) &&
++		/^[0-9]*$/.test(fields[1]) && /^[0-9]+$/.test(fields[2]) &&
++		/^[0-9]+$/.test(fields[3]) && /^[0-9]+$/.test(fields[5]);
++	}
++function ReleasePreviewForLogout(reason, pause, trigger)
++	{
++	if (preview_logout_pending) {return;}
++	if ((manual_dial_in_progress == 1) || (MD_channel_look == 1) ||
++		(VD_live_customer_call == 1) || (alt_dial_status_display == 1))
++		{alert_box("Finish the current dial or call before logging out."); return;}
++	preview_logout_pending = true;
++	var request = new XMLHttpRequest();
++	var completed = false;
++	function fail()
++		{
++		if (completed) {return;}
++		completed = true;
++		preview_logout_pending = false;
++		alert_box("Preview release was not confirmed. You are still logged in. Retry LOGOUT or contact your administrator; do not close the browser.");
++		}
++	request.open('POST', 'vdc_db_query.php');
++	request.timeout = 15000;
++	request.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
++	request.onerror = fail;
++	request.ontimeout = fail;
++	request.onabort = fail;
++	request.onreadystatechange = function()
++		{
++		if (request.readyState != 4 || completed) {return;}
++		if (request.status != 200 || request.responseText.trim() != 'PREVIEW RELEASED')
++			{fail(); return;}
++		completed = true;
++		preview_logout_pending = false;
++		in_lead_preview_state = 0;
++		document.vicidial_form.lead_id.value = '';
++		previous_dispo = '';
++		previous_called_count = '';
++		LogouT(reason, pause, trigger);
++		};
++	var fields = {server_ip:server_ip, session_name:session_name, ACTION:'manDiaLskip',
++		preview_action:'logout', conf_exten:session_id, user:user, pass:pass,
++		lead_id:document.vicidial_form.lead_id.value, stage:previous_dispo,
++		called_count:previous_called_count, campaign:campaign};
++	var body = Object.keys(fields).map(function(key)
++		{return encodeURIComponent(key) + '=' + encodeURIComponent(fields[key]);}).join('&');
++	try {request.send(body);} catch (error) {fail();}
++	}
++// End PRD-03C proposal helper.
++
+ // ################################################################################
+ // Normal logout with check for pause stage first
+ 	function NormalLogout()
+@@ -19566,6 +19628,12 @@
+ // Log the user out of the system, if active call or active dial is occuring, don't let them.
+ 	function LogouT(tempreason,temppause,temp_pause_max_url_trigger)
+ 		{
++		if (preview_logout_pending || native_logout_pending) {return;}
++		if (in_lead_preview_state == 1)
++			{
++			ReleasePreviewForLogout(tempreason,temppause,temp_pause_max_url_trigger);
++			return;
++			}
+ 		button_click_log = button_click_log + "" + SQLdate + "-----LogouT---" + tempreason + " " + temppause + " " + temp_pause_max_url_trigger + "|";
+ 		if (isVisible)
+ 			{
+@@ -19620,16 +19688,35 @@
+ 						}
+ 					if (xmlhttp) 
+ 						{
++						native_logout_pending = true;
+ 						VDlogout_query = "server_ip=" + server_ip + "&session_name=" + session_name + "&ACTION=userLOGout&format=text&user=" + user + "&pass=" + pass + "&campaign=" + campaign + "&conf_exten=" + session_id + "&extension=" + extension + "&protocol=" + protocol + "&agent_log_id=" + agent_log_id + "&no_delete_sessions=" + no_delete_sessions + "&phone_ip=" + phone_ip + "&enable_sipsak_messages=" + enable_sipsak_messages + "&LogouTKicKAlL=" + LogouTKicKAlL + "&ext_context=" + ext_context + "&qm_extension=" + qm_extension + "&stage=" + tempreason + "&pause_trigger=" + temppause + "&dial_method=" + dial_method + "&pause_max_url_trigger=" + temp_pause_max_url_trigger;
+ 						xmlhttp.open('POST', 'vdc_db_query.php'); 
+ 						xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
++						xmlhttp.timeout = 15000;
++						function logoutFailed()
++							{
++							native_logout_pending = false;
++							alert_box("Logout was not confirmed. Check the session before retrying; the browser phone has been kept open.");
++							}
++						xmlhttp.onerror = logoutFailed;
++						xmlhttp.ontimeout = logoutFailed;
++						xmlhttp.onabort = logoutFailed;
+ 						xmlhttp.send(VDlogout_query); 
+ 						xmlhttp.onreadystatechange = function()
+ 							{ 
+-							if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
++							if (xmlhttp.readyState == 4) 
+ 								{
+ 							//	alert(VDlogout_query);
+ 							//	alert(xmlhttp.responseText);
++								if (xmlhttp.status != 200 || !NativeLogoutResponseOK(xmlhttp.responseText))
++									{logoutFailed(); return;}
++								native_logout_pending = false;
++								hideDiv('MainPanel');
++								showDiv('LogouTBox');
++								refresh_interval = 7300000;
++								logout_stop_timeouts = 1;
++								if (is_webphone=='Y')
++									{document.getElementById('webphone').src = './images/blank.gif';}
+ 								needToConfirmExit = false;
+ 
+ 								document.getElementById("LogouTProcess").innerHTML = "<br /><br /><font class=\"loading_text\"><?php echo _QXZ("LOGOUT PROCESS COMPLETE, YOU MAY NOW CLOSE YOUR BROWSER OR LOG BACK IN"); ?></font><br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src=\"./images/<?php echo _QXZ("agent_loading_done.gif"); ?>\" height=\"206px\" width=\"206px\" alt=\"<?php echo _QXZ("LOGOUT PROCESS COMPLETE, YOU MAY NOW CLOSE YOUR BROWSER OR LOG BACK IN"); ?>\" />";
+@@ -19640,9 +19727,6 @@
+ 						delete xmlhttp;
+ 						}
+ 
+-					hideDiv('MainPanel');
+-					showDiv('LogouTBox');
+-					refresh_interval = 7300000;
+ 					var logout_content='';
+ 					if (tempreason=='SHIFT')
+                         {logout_content="<?php echo _QXZ("Your Shift is over or has changed, you have been logged out of your session"); ?><br /><br />";}
+@@ -19652,8 +19736,6 @@
+                         {logout_content="<?php echo _QXZ("You have been paused for too long, you have been logged out of your session"); ?><br /><br />";}
+ 					if (tempreason=='READY_TIMEOUT')
+                         {logout_content="<?php echo _QXZ("You have been ready for too long, you have been logged out of your session"); ?><br /><br />";}
+-					if (is_webphone=='Y')
+-						{document.getElementById('webphone').src = './images/blank.gif';}
+ 
+ 					if (agent_logout_link > 0)
+ 						{
+@@ -19675,7 +19757,6 @@
+ 						document.getElementById("LogouTBoxLink").innerHTML = logout_content + "<font class=\"loading_text\"><a href=\"" + agcPAGE + "\"><?php echo _QXZ("CLICK HERE TO LOG IN AGAIN"); ?></a></font>\n";
+ 						}
+ 
+-					logout_stop_timeouts = 1;
+ 
+ 					//	window.location= agcPAGE + "?relogin=YES&session_epoch=" + epoch_sec + "&session_id=" + session_id + "&session_name=" + session_name + "&VD_login=" + user + "&VD_campaign=" + campaign + "&phone_login=" + phone_login + "&phone_pass=" + phone_pass + "&VD_pass=" + pass;
+ 					}
+--- a/agc/vdc_db_query.php
++++ b/agc/vdc_db_query.php
+@@ -1891,6 +1891,38 @@
+ 
+ 
+ 
++
++$preview_action = isset($_POST['preview_action']) ? $_POST['preview_action'] : '';
++// PRD-03C proposal: serialize claim/dial/release/logout for one native user.
++// GET_LOCK is connection-scoped; MyISAM does not support rollback transactions.
++if (in_array($ACTION, array('manDiaLnextCaLL','manDiaLonly','manDiaLskip','userLOGout'), true))
++	{
++	$preview_lock_name = 'vici-preview-' . md5($user);
++	$preview_lock_result = mysql_to_mysqli("SELECT GET_LOCK('$preview_lock_name',3)", $link);
++	$preview_lock_row = $preview_lock_result ? mysqli_fetch_row($preview_lock_result) : false;
++	if (!$preview_lock_row || $preview_lock_row[0] != 1) {exit("PREVIEW BUSY\n");}
++	register_shutdown_function(function() use ($link, $preview_lock_name)
++		{mysqli_query($link,"DO RELEASE_LOCK('$preview_lock_name')");});
++	// Native authentication occurred before waiting: reject an expired queued request.
++	$preview_session = mysql_to_mysqli("SELECT 1 FROM web_client_sessions WHERE session_name='$session_name' AND server_ip='$server_ip' LIMIT 1",$link);
++	if (!$preview_session || mysqli_num_rows($preview_session) != 1) {exit("PREVIEW SESSION EXPIRED\n");}
++	// A DIAL queued before release must still own the preview after the lock.
++	if (($ACTION == 'manDiaLonly') && ($preview_action === 'dial'))
++		{
++		$preview_check = mysql_to_mysqli("SELECT 1 FROM vicidial_live_agents WHERE user='$user' AND server_ip='$server_ip' AND conf_exten='$conf_exten' AND campaign_id='$campaign' AND preview_lead_id='$lead_id' AND lead_id=0 AND status IN('PAUSED','READY')",$link);
++		if (!$preview_check || mysqli_num_rows($preview_check) != 1) {exit("CALL NOT PLACED\n");}
++		}
++	// Never discard an outstanding claim if the release request failed or was lost.
++	if ($ACTION == 'userLOGout')
++		{
++		$preview_check = mysql_to_mysqli("SELECT preview_lead_id FROM vicidial_live_agents WHERE user='$user' AND server_ip='$server_ip' AND conf_exten='$conf_exten' AND campaign_id='$campaign'",$link);
++		if (!$preview_check) {exit("PREVIEW NOT RELEASED\n");}
++		while ($preview_row = mysqli_fetch_row($preview_check))
++			{if ($preview_row[0] > 0) {exit("PREVIEW NOT RELEASED\n");}}
++		}
++	}
++// End PRD-03C serialization.
++
+ ################################################################################
+ ### regCLOSER - update the vicidial_live_agents table to reflect the closer
+ ###             inbound choices made upon login
+@@ -6567,6 +6599,58 @@
+ ################################################################################
+ if ($ACTION == 'manDiaLskip')
+ 	{
++	// PRD-03C proposal: bounded native release for a list-driven N -> Y preview.
++	// Callback/manual-entry previews and calls fail closed; legacy SKIP is unchanged.
++	if ($preview_action === 'logout')
++		{
++		if (!ctype_digit((string)$lead_id) || !ctype_digit((string)$called_count) ||
++			$lead_id < 1 || $called_count < 1 || !preg_match('/^[A-Za-z0-9_]{1,6}$/D',$stage) ||
++			in_array($stage,array('INCALL','QUEUE','ERI'),true)) {exit("PREVIEW NOT RELEASED\n");}
++		$preview_previous_count = ((int)$called_count - 1);
++		// One table-locked MyISAM statement: the claim, call guard and counters move together.
++		// Join the original MAIN phone number; modified/manual numbers are not supported here.
++		$preview_scope = " FROM vicidial_list l
++			JOIN vicidial_live_agents a ON a.preview_lead_id=l.lead_id
++			JOIN vicidial_lists li ON li.list_id=l.list_id AND li.campaign_id=a.campaign_id
++			JOIN vicidial_lead_call_daily_counts d ON d.lead_id=l.lead_id
++			JOIN vicidial_phone_number_call_daily_counts p ON p.phone_number=l.phone_number
++			LEFT JOIN vicidial_auto_calls c ON c.lead_id=l.lead_id
++			WHERE l.lead_id='$lead_id' AND l.status='INCALL' AND l.user='$user'
++			AND l.called_count='$called_count' AND l.called_since_last_reset='Y'
++			AND a.user='$user' AND a.server_ip='$server_ip' AND a.conf_exten='$conf_exten'
++			AND a.campaign_id='$campaign' AND a.lead_id=0 AND a.status IN('PAUSED','READY')
++			AND a.external_dial IN('','SKIP') AND c.lead_id IS NULL
++			AND d.called_count_total>0 AND d.called_count_manual>0 AND p.called_count>0";
++		$preview_update = "UPDATE" . substr($preview_scope,5,strpos($preview_scope,'WHERE')-5) .
++			" SET l.status='$stage',l.called_count='$preview_previous_count',l.called_since_last_reset='N',
++			a.preview_lead_id=0,a.external_dial='',
++			d.called_count_total=d.called_count_total-1,d.called_count_manual=d.called_count_manual-1,d.modify_date=NOW(),
++			p.called_count=p.called_count-1,p.modify_date=NOW() " . substr($preview_scope,strpos($preview_scope,'WHERE'));
++		$preview_result = mysql_to_mysqli($preview_update,$link);
++		if (!$preview_result) {exit("PREVIEW NOT RELEASED\n");}
++		if (mysqli_affected_rows($link) > 0)
++			{
++			// Native release audit, not a call or a fictional disposition.
++			$preview_audit = mysql_to_mysqli("INSERT INTO vicidial_agent_skip_log SET campaign_id='$campaign',previous_status='$stage',previous_called_count='$preview_previous_count',user='$user',lead_id='$lead_id',event_date=NOW()",$link);
++			// Audit failure is reported; a retry below can acknowledge the already committed release.
++			if (!$preview_audit) {exit("PREVIEW AUDIT FAILED\n");}
++			exit("PREVIEW RELEASED\n");
++			}
++		// Lost ACK / duplicate request: acknowledge only the same already released state.
++		$preview_retry = mysql_to_mysqli("SELECT 1 FROM vicidial_list l
++			JOIN vicidial_lists li ON li.list_id=l.list_id
++			JOIN vicidial_live_agents a ON a.campaign_id=li.campaign_id
++			LEFT JOIN vicidial_auto_calls c ON c.lead_id=l.lead_id
++			WHERE l.lead_id='$lead_id' AND l.user='$user' AND l.status='$stage'
++			AND l.called_count='$preview_previous_count' AND l.called_since_last_reset='N'
++			AND a.user='$user' AND a.server_ip='$server_ip' AND a.conf_exten='$conf_exten'
++			AND a.campaign_id='$campaign' AND a.preview_lead_id=0 AND a.lead_id=0
++			AND a.status IN('PAUSED','READY') AND a.external_dial='' AND c.lead_id IS NULL",$link);
++		if ($preview_retry && mysqli_num_rows($preview_retry) == 1) {exit("PREVIEW RELEASED\n");}
++		exit("PREVIEW NOT RELEASED\n");
++		}
++	// End PRD-03C bounded release.
++
+ 	$MT[0]='';
+ 	$row='';   $rowx='';
+ 	$channel_live=1;

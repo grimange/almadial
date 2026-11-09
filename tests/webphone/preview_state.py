@@ -8,17 +8,20 @@ import subprocess
 SQL = """
 SELECT UNIX_TIMESTAMP() epoch,NOW() server_time;
 SELECT campaign_id,active,dial_method,auto_dial_level,manual_preview_dial,manual_dial_list_id,no_hopper_leads_logins,local_call_time,campaign_recording,dial_statuses FROM vicidial_campaigns WHERE campaign_id IN('QAOUT01','test01');
-SELECT list_id,active,campaign_id FROM vicidial_lists WHERE list_id BETWEEN 910014 AND 910017;
-SELECT lead_id,list_id,vendor_lead_code,status,user,called_count,called_since_last_reset,modify_date FROM vicidial_list WHERE list_id=910016 OR lead_id IN(8,69);
+SELECT list_id,active,campaign_id FROM vicidial_lists WHERE list_id BETWEEN 910014 AND 910018;
+SELECT lead_id,list_id,vendor_lead_code,status,user,called_count,called_since_last_reset,modify_date FROM vicidial_list WHERE list_id IN(910016,910018) OR lead_id IN(8,69);
 SELECT user,campaign_id,status,lead_id,preview_lead_id,conf_exten,agent_log_id FROM vicidial_live_agents;
 SELECT lead_id,list_id,status,user FROM vicidial_hopper WHERE campaign_id='QAOUT01';
 SELECT lead_id,user,campaign_id,conf_exten,call_type,call_date FROM vicidial_sessions_recent WHERE lead_id BETWEEN 49 AND 68 ORDER BY call_date DESC LIMIT 20;
 SELECT user,event,event_date,event_epoch,campaign_id FROM vicidial_user_log WHERE user IN('qaagent14','qasup14') ORDER BY user_log_id DESC LIMIT 18;
 SELECT agent_log_id,user,event_time,campaign_id,lead_id,pause_sec,wait_sec,talk_sec,dispo_sec,status,comments FROM vicidial_agent_log WHERE user IN('qaagent14','qasup14') ORDER BY agent_log_id DESC LIMIT 20;
 SELECT lead_id,user,previous_status,previous_called_count,event_date FROM vicidial_agent_skip_log WHERE campaign_id='QAOUT01' ORDER BY event_date DESC LIMIT 15;
+SELECT lead_id,called_count_total,called_count_manual FROM vicidial_lead_call_daily_counts WHERE lead_id BETWEEN 49 AND 70 ORDER BY lead_id;
+SELECT p.phone_number,p.called_count FROM vicidial_phone_number_call_daily_counts p JOIN vicidial_list l ON l.phone_number=p.phone_number WHERE l.lead_id BETWEEN 49 AND 70 ORDER BY l.lead_id;
+SELECT lead_id,status,call_type FROM vicidial_auto_calls WHERE lead_id BETWEEN 49 AND 70;
 SELECT COUNT(*) call_records FROM vicidial_log WHERE campaign_id='QAOUT01';
 SELECT COUNT(*) recordings FROM recording_log;
-SELECT COUNT(*) incall_leads FROM vicidial_list WHERE list_id BETWEEN 910014 AND 910017 AND status='INCALL';
+SELECT COUNT(*) incall_leads FROM vicidial_list WHERE list_id BETWEEN 910014 AND 910018 AND status='INCALL';
 SELECT COUNT(*) live_agents FROM vicidial_live_agents;
 SELECT COUNT(*) diagnostic_outbound_calls FROM vicidial_log WHERE lead_id BETWEEN 51 AND 68;
 """

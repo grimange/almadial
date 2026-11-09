@@ -1,0 +1,63 @@
+{
+  "peer1002": [
+    "Addr->IP     : (null)",
+    "Status       : Unmonitored",
+    "Reg. Contact : sip:88joqgtb@192.0.2.35;transport=wss"
+  ],
+  "errors": [
+    {
+      "tables": [],
+      "time": "09-Nov-2026 17:01:23 America/New_York",
+      "category": "counter underflow",
+      "source": [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    },
+    {
+      "tables": [],
+      "time": "09-Nov-2026 17:03:25 America/New_York",
+      "category": "duplicate key",
+      "source": [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    },
+    {
+      "tables": [],
+      "time": "09-Nov-2026 17:15:54 America/New_York",
+      "category": "duplicate key",
+      "source": [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    },
+    {
+      "tables": [],
+      "time": "09-Nov-2026 17:17:20 America/New_York",
+      "category": "duplicate key",
+      "source": [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    },
+    {
+      "tables": [],
+      "time": "09-Nov-2026 17:17:33 America/New_York",
+      "category": "duplicate key",
+      "source": [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    },
+    {
+      "tables": [],
+      "time": "09-Nov-2026 17:58:23 America/New_York",
+      "category": "duplicate key",
+      "source": [
+        "/var/www/html/agc/functions.php",
+        "2787"
+      ]
+    }
+  ]
+}

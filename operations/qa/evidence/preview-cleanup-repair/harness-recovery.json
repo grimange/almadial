@@ -1,0 +1,6 @@
+{
+  "lead": 59,
+  "releaseAcknowledged": true,
+  "logoutAcknowledged": true,
+  "reason": "Test expected lead 60, but native selection correctly reacquired released lead 59. Recovery used native endpoint and original owning session; no SQL writes."
+}

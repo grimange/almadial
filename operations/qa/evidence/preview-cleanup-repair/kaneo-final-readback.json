@@ -1,0 +1,18 @@
+{
+  "id": "kw5j5afcslviwtt8pt35uw0x",
+  "title": "PRD-03B — Direct-preview logout and lead state recovery",
+  "number": 36,
+  "description": "Operator-authorized bounded defect repair on dialer01 (VICIdial r4037/schema1748). Reproduce native direct-preview logout; trace claim/skip/logout/relogin; implement minimal lifecycle repair; execute T01–T10 with actual application/DB correlation. Preserve calls, dispositions, unrelated sessions, portal and telephony. Reuse tests/webphone. Developer verification only; AGY independent QA follows. Do not mark Accepted. Previous PRD-03C proposal and evidence are inputs, not proof of current correction. Evidence: operations/qa/evidence/preview-cleanup-repair/; report to be committed under operations/qa/. No existing PRD-03 task found by workspace search or ALM task inventory.",
+  "status": "in-review",
+  "columnId": "in73pv6vxczf7usmb8c03msz",
+  "priority": "high",
+  "startDate": null,
+  "dueDate": null,
+  "position": 36,
+  "createdAt": "2026-11-09T21:53:13.692Z",
+  "userId": "aM3as9DCoQ7pMoO3V9XsDbL3q2j9pWjn",
+  "assigneeName": "Codex",
+  "assigneeId": "aM3as9DCoQ7pMoO3V9XsDbL3q2j9pWjn",
+  "projectId": "ghritpte6e40o5ayktgz0vh1",
+  "workspaceId": "30VyoMQZ4LROnW3UUeAYGg8bIF9mj1il"
+}

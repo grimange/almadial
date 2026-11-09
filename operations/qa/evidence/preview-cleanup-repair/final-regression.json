@@ -1,0 +1,95 @@
+{
+  "utc": "2026-11-09T23:00:58.647324+00:00",
+  "files": {
+    "/opt/alma-portal-443/portal.py": "a8f8912d391775c7501fba9cde72f635b2ad9e5a749db19d689191a12237d225",
+    "/opt/alma-portal-443/vicidial_auth.py": "11a1892872df79215020a58244edcbe6d6568bb59607f7400cca8cd8d20f094d",
+    "/opt/alma-portal-443/access.lua": "54a2d79851d02273cf36b59bf0cc1f8a106a1e080e7dfd129d21e1b1335db81c",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "f73b43ed2271d869e3335fa04b0688408ef4590261013a7a44e57e8d4297e820",
+    "/usr/local/sbin/alma-vicidial-recording": "52755bd6f5033b03c5147744be22a4a977225a7e28d7dc3aed4211a575ad410f",
+    "/etc/alma-vicidial-recording.json": "56939a23986ef559367734542a4f204b9b40d8cee835603f6c067d03c878dc9d",
+    "/etc/systemd/system/alma-vicidial-recording.timer": "9470917000e2353a54dae16ea436428f3b5c7b974caee8664dd9ac51a0c77977",
+    "/etc/cron.d/vicidial": "218590f37328cc45504b5d9fe05948880a797ac28c00bb61b962fa1873484d2d",
+    "/usr/local/sbin/alma-portal-cert-deploy": "fad1df74eb9800038ec2e9b57b886df73692cd85445fbb9a358df95d51a21403",
+    "/var/www/html/vicidial/admin.php": "fd29beb9d189927b9d5bfc4d0a99183ff4974b303f877d41455af13002dd99f8",
+    "/var/www/html/vicidial/functions.php": "14d11c2b9229f1ce5acd397cbb0b16e6e27f9c5216a1e0ad4ad1ca86db506fac",
+    "/var/www/html/vicidial/user_stats.php": "ac25d88cf9a8febee004b1ee577136674541e089e72c3770ed0d1279b90cccc1",
+    "/var/www/html/vicidial/admin_modify_lead.php": "78c30912209ae16cea8ae1044fc7175f0ca5f2ab30b897a548ef69585b2b2803",
+    "/var/www/html/vicidial/recording_log_redirect.php": "6a002622b38424848c4e887c493a632844abf25f6f8be45556f4601df90c75fc",
+    "/var/www/html/agc/vicidial.php": "aea2d4637be9c9ed48a9e74472a3569639cd39c0a711ae1b17e16343fafb4084",
+    "/var/www/html/agc/vdc_db_query.php": "5c34b104716ec9c69d93b833d2b63934b4475ae6af4682b7f80d3fc6a1ab7cb5",
+    "/usr/share/astguiclient/AST_flush_DBqueue.pl": "f3e4fe7762078cdc4578bddb759afa05e6ba1d0b4c6a554d4da88248860b678b",
+    "/etc/asterisk/http.conf": "32146ec6f50eebc57ec1554aaa061841db2a5196b3f9f8f87cc778b6e7c2c4eb",
+    "/etc/asterisk/pjsip.conf": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+    "/etc/asterisk/sip.conf": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae"
+  },
+  "services": {
+    "rc": 0,
+    "stdout": "active\nactive\nactive\nactive\nactive\n",
+    "stderr": ""
+  },
+  "timers": {
+    "rc": 0,
+    "stdout": "NEXT                            LEFT LAST                              PASSED UNIT                          ACTIVATES\nMon 2026-11-09 18:01:06 EST       7s Mon 2026-11-09 18:00:56 EST       2s ago alma-portal-443-apply.timer   alma-portal-443-apply.service\nMon 2026-11-09 18:03:47 EST 2min 49s Mon 2026-11-09 18:00:47 EST      11s ago alma-vicidial-recording.timer alma-vicidial-recording.service\nTue 2026-11-10 03:40:00 EST       9h Mon 2026-11-09 03:40:02 EST      14h ago alma-vicidial-backup.timer    alma-vicidial-backup.service\nTue 2026-11-10 04:24:22 EST      10h Mon 2026-11-09 16:23:33 EST 1h 37min ago alma-portal-renew.timer       alma-portal-renew.service\n\n4 timers listed.\n",
+    "stderr": ""
+  },
+  "svn": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "recordings": {
+    "rc": 0,
+    "stdout": "recording_id\tlead_id\tstart_epoch\tend_epoch\tlength_in_sec\tfinalized\n2\t8\t1793990617\t1793990673\t56\t1\n3\t69\t1794244613\t1794244664\t51\t1\n4\t69\t1794244845\t1794244889\t44\t1\n5\t70\t1794262609\t1794262647\t38\t1\nuniqueid\tlead_id\tstatus\tlength_in_sec\n1793904670.000000008\t8\tN\t0\n1793990617.45\t8\tSALE\t52\n1794244664.000000069\t69\tNI\t0\n1794244845.86\t69\tNI\t37\n1794262609.215\t70\tNI\t38\n",
+    "stderr": ""
+  },
+  "roles": {
+    "rc": 0,
+    "stdout": "user\tactive\tuser_level\tuser_group\taccess_recordings\tmodify_users\tmodify_campaigns\tmodify_lists\tmodify_phones\tload_leads\n6666\tY\t9\tADMIN\t1\t1\t1\t1\t1\t1\nqaagent14\tY\t1\tQAPRD14\t0\t0\t0\t0\t0\t0\nqasup14\tY\t7\tQAPRD14\t0\t0\t0\t0\t0\t0\nextension\tprotocol\tactive\tstatus\ttemplate_id\tis_webphone\n1000\tPJSIP\tY\tACTIVE\t\tN\n1001\tSIP\tY\tACTIVE\t\tN\n1002\tSIP\tY\tACTIVE\tWEB00_SIP\tY\n1014\tSIP\tN\tSUSPENDED\t\tN\n",
+    "stderr": ""
+  },
+  "php_errors": {
+    "/var/log/php-fpm/www-error.log": {
+      "window": "2026-11-09 17:00-17:59 EST; bounded tail",
+      "counts": {
+        "Fatal error": 6,
+        "Duplicate entry": 5,
+        "Warning": 640,
+        "Uncaught": 6,
+        "BIGINT UNSIGNED value is out of range": 1
+      }
+    },
+    "/var/log/httpd/error_log": {
+      "window": "2026-11-09 17:00-17:59 EST; bounded tail",
+      "counts": {
+        "Fatal error": 0,
+        "Duplicate entry": 0,
+        "Warning": 0,
+        "Uncaught": 0,
+        "BIGINT UNSIGNED value is out of range": 0
+      }
+    }
+  },
+  "comparison": {
+    "/opt/alma-portal-443/portal.py": "unchanged",
+    "/opt/alma-portal-443/vicidial_auth.py": "unchanged",
+    "/opt/alma-portal-443/access.lua": "unchanged",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf": "unchanged",
+    "/usr/local/sbin/alma-vicidial-recording": "unchanged",
+    "/etc/alma-vicidial-recording.json": "unchanged",
+    "/etc/systemd/system/alma-vicidial-recording.timer": "unchanged",
+    "/etc/cron.d/vicidial": "unchanged",
+    "/usr/local/sbin/alma-portal-cert-deploy": "unchanged",
+    "/var/www/html/vicidial/admin.php": "unchanged",
+    "/var/www/html/vicidial/functions.php": "unchanged",
+    "/var/www/html/vicidial/user_stats.php": "unchanged",
+    "/var/www/html/vicidial/admin_modify_lead.php": "unchanged",
+    "/var/www/html/vicidial/recording_log_redirect.php": "unchanged",
+    "/var/www/html/agc/vicidial.php": "changed",
+    "/var/www/html/agc/vdc_db_query.php": "changed",
+    "/usr/share/astguiclient/AST_flush_DBqueue.pl": "unchanged",
+    "/etc/asterisk/http.conf": "unchanged",
+    "/etc/asterisk/pjsip.conf": "unchanged",
+    "/etc/asterisk/sip.conf": "unchanged"
+  },
+  "phone1002_unregistered": true
+}

@@ -1,0 +1,7 @@
+{
+  "result": "FAIL",
+  "lead": 58,
+  "reason": "Native initialization reset format; request entered legacy SKIP, returned LEAD REVERTED instead of correction ACK. Runner cleanup tried SKIP again and hit unsigned counter underflow. No customer call.",
+  "after": "corrected-first-state.json",
+  "fix": "Dedicated preview_action parameter; disable automatic SKIP cleanup after corrected-path failure"
+}

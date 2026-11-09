@@ -1,0 +1,10 @@
+{
+  "result": "PASS",
+  "unrelatedLeadRowsPreserved": 17,
+  "nativeDirectLogoutCases": 3,
+  "activeCallFinalDisposition": "NI / count 1 / called Y",
+  "finalIncallClaims": 0,
+  "finalLiveAgents": 0,
+  "finalChannels": 0,
+  "scope": "Recorded native integration evidence; independent QA remains required"
+}

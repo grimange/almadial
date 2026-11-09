@@ -1,0 +1,35 @@
+{
+  "recovered": [],
+  "lists": [
+    {
+      "id": 910014,
+      "active": "N"
+    },
+    {
+      "id": 910015,
+      "active": "N"
+    },
+    {
+      "id": 910016,
+      "active": "N"
+    },
+    {
+      "id": 910017,
+      "active": "N"
+    },
+    {
+      "id": 910018,
+      "active": "N"
+    }
+  ],
+  "campaign": {
+    "active": "N",
+    "dial_method": "MANUAL",
+    "auto_dial_level": "0",
+    "manual_dial_list_id": "910016",
+    "no_hopper_leads_logins": "N",
+    "local_call_time": "12pm-5pm",
+    "campaign_recording": "ONDEMAND",
+    "manual_preview_dial": "PREVIEW_AND_SKIP"
+  }
+}

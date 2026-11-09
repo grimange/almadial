@@ -1,0 +1,29 @@
+{
+  "recovered": [
+    {
+      "lead": 57,
+      "before": "ERI",
+      "after": "NI",
+      "options": [
+        "A",
+        "B",
+        "CALLBK",
+        "DAIR",
+        "DC",
+        "DEC",
+        "DNC",
+        "GVM",
+        "N",
+        "NI",
+        "NP",
+        "PVM",
+        "SALE",
+        "XFER",
+        "ERI",
+        "CBHOLD"
+      ],
+      "nativeLeadDetails": true
+    }
+  ],
+  "lists": []
+}

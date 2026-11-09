@@ -1,0 +1,10 @@
+{
+  "vicidial.php": {
+    "sha256": "aea2d4637be9c9ed48a9e74472a3569639cd39c0a711ae1b17e16343fafb4084",
+    "lint": "No syntax errors detected in /var/www/html/agc/vicidial.php.prd03b-stage"
+  },
+  "vdc_db_query.php": {
+    "sha256": "5c34b104716ec9c69d93b833d2b63934b4475ae6af4682b7f80d3fc6a1ab7cb5",
+    "lint": "No syntax errors detected in /var/www/html/agc/vdc_db_query.php.prd03b-stage"
+  }
+}
