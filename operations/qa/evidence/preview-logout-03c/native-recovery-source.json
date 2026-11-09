@@ -1,0 +1,575 @@
+{
+  "sourcePath": "/usr/share/astguiclient/AST_flush_DBqueue.pl",
+  "sha256": "f3e4fe7762078cdc4578bddb759afa05e6ba1d0b4c6a554d4da88248860b678b",
+  "recoveryBranch": [
+    {
+      "line": 783,
+      "text": "if ($reset_stuck_leads > 0) "
+    },
+    {
+      "line": 784,
+      "text": "\t{"
+    },
+    {
+      "line": 785,
+      "text": "\t$found_stuck_ct=0;"
+    },
+    {
+      "line": 786,
+      "text": "\t# Gather possible stuck leads"
+    },
+    {
+      "line": 787,
+      "text": "\t$stmtA = \"SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \\\"$SQLdate_NEG_sixhour\\\" and modify_date <= \\\"$SQLdate_NEG_2min\\\" $stuck_listsSQL order by modify_date limit 10000;\";"
+    },
+    {
+      "line": 788,
+      "text": "\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;"
+    },
+    {
+      "line": 789,
+      "text": "\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;"
+    },
+    {
+      "line": 790,
+      "text": "\t$sthArowsSTUCK=$sthA->rows;"
+    },
+    {
+      "line": 791,
+      "text": "\tif ($DBX) {print \"DEBUG: $sthArowsSTUCK|$stmtA|\\n\";}"
+    },
+    {
+      "line": 792,
+      "text": "\t$a=0;"
+    },
+    {
+      "line": 793,
+      "text": "\twhile ($sthArowsSTUCK > $a)"
+    },
+    {
+      "line": 794,
+      "text": "\t\t{"
+    },
+    {
+      "line": 795,
+      "text": "\t\t@aryA = $sthA->fetchrow_array;"
+    },
+    {
+      "line": 796,
+      "text": "\t\t$ST_lead_id[$a] =\t\t\t\t$aryA[0];"
+    },
+    {
+      "line": 797,
+      "text": "\t\t$ST_list_id[$a] =\t\t\t\t$aryA[1];"
+    },
+    {
+      "line": 798,
+      "text": "\t\t$ST_status[$a] =\t\t\t\t$aryA[2];"
+    },
+    {
+      "line": 799,
+      "text": "\t\t$ST_user[$a] =\t\t\t\t\t$aryA[3];"
+    },
+    {
+      "line": 800,
+      "text": "\t\t$ST_last_local_call_time[$a] =\t$aryA[4];"
+    },
+    {
+      "line": 801,
+      "text": "\t\t$ST_called_count[$a] =\t\t\t$aryA[5];"
+    },
+    {
+      "line": 802,
+      "text": "\t\t$ST_modify_date[$a] =\t\t\t$aryA[6];"
+    },
+    {
+      "line": 803,
+      "text": "\t\t$a++;"
+    },
+    {
+      "line": 804,
+      "text": "\t\t}"
+    },
+    {
+      "line": 805,
+      "text": "\t$sthA->finish();"
+    },
+    {
+      "line": 806,
+      "text": ""
+    },
+    {
+      "line": 807,
+      "text": "\t$a=0;"
+    },
+    {
+      "line": 808,
+      "text": "\twhile ($sthArowsSTUCK > $a)"
+    },
+    {
+      "line": 809,
+      "text": "\t\t{"
+    },
+    {
+      "line": 810,
+      "text": "\t\t$active_count=0;"
+    },
+    {
+      "line": 811,
+      "text": "\t\t$log_count=0;"
+    },
+    {
+      "line": 812,
+      "text": "\t\t$inbound_count=0;"
+    },
+    {
+      "line": 813,
+      "text": "\t\t$dial_count=0;"
+    },
+    {
+      "line": 814,
+      "text": "\t\t$preview_count=0;"
+    },
+    {
+      "line": 815,
+      "text": ""
+    },
+    {
+      "line": 816,
+      "text": "\t\t$stmtA = \"SELECT count(*) FROM vicidial_auto_calls where lead_id='$ST_lead_id[$a]';\";"
+    },
+    {
+      "line": 817,
+      "text": "\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;"
+    },
+    {
+      "line": 818,
+      "text": "\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;"
+    },
+    {
+      "line": 819,
+      "text": "\t\t$sthArowsACTIVE=$sthA->rows;"
+    },
+    {
+      "line": 820,
+      "text": "\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}"
+    },
+    {
+      "line": 821,
+      "text": "\t\tif ($sthArowsACTIVE > 0)"
+    },
+    {
+      "line": 822,
+      "text": "\t\t\t{"
+    },
+    {
+      "line": 823,
+      "text": "\t\t\t@aryA = $sthA->fetchrow_array;"
+    },
+    {
+      "line": 824,
+      "text": "\t\t\t$active_count =\t\t$aryA[0];"
+    },
+    {
+      "line": 825,
+      "text": "\t\t\t}"
+    },
+    {
+      "line": 826,
+      "text": "\t\t$sthA->finish();"
+    },
+    {
+      "line": 827,
+      "text": ""
+    },
+    {
+      "line": 828,
+      "text": "\t\tif ($active_count > 0) "
+    },
+    {
+      "line": 829,
+      "text": "\t\t\t{if($DB){print STDERR \"Call active: $active_count|$ST_lead_id[$a]|\\n\";}}"
+    },
+    {
+      "line": 830,
+      "text": "\t\telse"
+    },
+    {
+      "line": 831,
+      "text": "\t\t\t{"
+    },
+    {
+      "line": 832,
+      "text": "\t\t\t$stmtA = \"SELECT count(*) FROM vicidial_log where lead_id='$ST_lead_id[$a]' and call_date >= \\\"$SQLdate_MIDNIGHT\\\";\";"
+    },
+    {
+      "line": 833,
+      "text": "\t\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;"
+    },
+    {
+      "line": 834,
+      "text": "\t\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;"
+    },
+    {
+      "line": 835,
+      "text": "\t\t\t$sthArowsACTIVE=$sthA->rows;"
+    },
+    {
+      "line": 836,
+      "text": "\t\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}"
+    },
+    {
+      "line": 837,
+      "text": "\t\t\tif ($sthArowsACTIVE > 0)"
+    },
+    {
+      "line": 838,
+      "text": "\t\t\t\t{"
+    },
+    {
+      "line": 839,
+      "text": "\t\t\t\t@aryA = $sthA->fetchrow_array;"
+    },
+    {
+      "line": 840,
+      "text": "\t\t\t\t$log_count =\t$aryA[0];"
+    },
+    {
+      "line": 841,
+      "text": "\t\t\t\t}"
+    },
+    {
+      "line": 842,
+      "text": "\t\t\t$sthA->finish();"
+    },
+    {
+      "line": 843,
+      "text": ""
+    },
+    {
+      "line": 844,
+      "text": "\t\t\tif ($log_count > 0) "
+    },
+    {
+      "line": 845,
+      "text": "\t\t\t\t{if($DB){print STDERR \"Lead has outbound log today: $log_count|$ST_lead_id[$a]|\\n\";}}"
+    },
+    {
+      "line": 846,
+      "text": "\t\t\telse"
+    },
+    {
+      "line": 847,
+      "text": "\t\t\t\t{"
+    },
+    {
+      "line": 848,
+      "text": "\t\t\t\t$stmtA = \"SELECT count(*) FROM vicidial_closer_log where lead_id='$ST_lead_id[$a]' and call_date >= \\\"$SQLdate_MIDNIGHT\\\";\";"
+    },
+    {
+      "line": 849,
+      "text": "\t\t\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;"
+    },
+    {
+      "line": 850,
+      "text": "\t\t\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;"
+    },
+    {
+      "line": 851,
+      "text": "\t\t\t\t$sthArowsACTIVE=$sthA->rows;"
+    },
+    {
+      "line": 852,
+      "text": "\t\t\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}"
+    },
+    {
+      "line": 853,
+      "text": "\t\t\t\tif ($sthArowsACTIVE > 0)"
+    },
+    {
+      "line": 854,
+      "text": "\t\t\t\t\t{"
+    },
+    {
+      "line": 855,
+      "text": "\t\t\t\t\t@aryA = $sthA->fetchrow_array;"
+    },
+    {
+      "line": 856,
+      "text": "\t\t\t\t\t$inbound_count = \t$aryA[0];"
+    },
+    {
+      "line": 857,
+      "text": "\t\t\t\t\t}"
+    },
+    {
+      "line": 858,
+      "text": "\t\t\t\t$sthA->finish();"
+    },
+    {
+      "line": 859,
+      "text": ""
+    },
+    {
+      "line": 860,
+      "text": "\t\t\t\tif ($inbound_count > 0) "
+    },
+    {
+      "line": 861,
+      "text": "\t\t\t\t\t{if($DB){print STDERR \"Lead has inbound log today: $inbound_count|$ST_lead_id[$a]|\\n\";}}"
+    },
+    {
+      "line": 862,
+      "text": "\t\t\t\telse"
+    },
+    {
+      "line": 863,
+      "text": "\t\t\t\t\t{"
+    },
+    {
+      "line": 864,
+      "text": "\t\t\t\t\t$stmtA = \"SELECT count(*) FROM vicidial_dial_log where lead_id='$ST_lead_id[$a]' and call_date >= \\\"$SQLdate_MIDNIGHT\\\";\";"
+    },
+    {
+      "line": 865,
+      "text": "\t\t\t\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;"
+    },
+    {
+      "line": 866,
+      "text": "\t\t\t\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;"
+    },
+    {
+      "line": 867,
+      "text": "\t\t\t\t\t$sthArowsACTIVE=$sthA->rows;"
+    },
+    {
+      "line": 868,
+      "text": "\t\t\t\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}"
+    },
+    {
+      "line": 869,
+      "text": "\t\t\t\t\tif ($sthArowsACTIVE > 0)"
+    },
+    {
+      "line": 870,
+      "text": "\t\t\t\t\t\t{"
+    },
+    {
+      "line": 871,
+      "text": "\t\t\t\t\t\t@aryA = $sthA->fetchrow_array;"
+    },
+    {
+      "line": 872,
+      "text": "\t\t\t\t\t\t$dial_count = \t$aryA[0];"
+    },
+    {
+      "line": 873,
+      "text": "\t\t\t\t\t\t}"
+    },
+    {
+      "line": 874,
+      "text": "\t\t\t\t\t$sthA->finish();"
+    },
+    {
+      "line": 875,
+      "text": ""
+    },
+    {
+      "line": 876,
+      "text": "\t\t\t\t\tif ($dial_count > 0) "
+    },
+    {
+      "line": 877,
+      "text": "\t\t\t\t\t\t{if($DB){print STDERR \"Lead has dial log today: $dial_count|$ST_lead_id[$a]|\\n\";}}"
+    },
+    {
+      "line": 878,
+      "text": "\t\t\t\t\telse"
+    },
+    {
+      "line": 879,
+      "text": "\t\t\t\t\t\t{"
+    },
+    {
+      "line": 880,
+      "text": "\t\t\t\t\t\t$stmtA = \"SELECT count(*) FROM vicidial_live_agents where preview_lead_id='$ST_lead_id[$a]' and last_state_change >= \\\"$SQLdate_MIDNIGHT\\\";\";"
+    },
+    {
+      "line": 881,
+      "text": "\t\t\t\t\t\t$sthA = $dbhA->prepare($stmtA) or die \"preparing: \",$dbhA->errstr;"
+    },
+    {
+      "line": 882,
+      "text": "\t\t\t\t\t\t$sthA->execute or die \"executing: $stmtA \", $dbhA->errstr;"
+    },
+    {
+      "line": 883,
+      "text": "\t\t\t\t\t\t$sthArowsACTIVE=$sthA->rows;"
+    },
+    {
+      "line": 884,
+      "text": "\t\t\t\t\t\tif ($DBX) {print \"DEBUG: $sthArowsACTIVE|$stmtA|\\n\";}"
+    },
+    {
+      "line": 885,
+      "text": "\t\t\t\t\t\tif ($sthArowsACTIVE > 0)"
+    },
+    {
+      "line": 886,
+      "text": "\t\t\t\t\t\t\t{"
+    },
+    {
+      "line": 887,
+      "text": "\t\t\t\t\t\t\t@aryA = $sthA->fetchrow_array;"
+    },
+    {
+      "line": 888,
+      "text": "\t\t\t\t\t\t\t$preview_count = \t$aryA[0];"
+    },
+    {
+      "line": 889,
+      "text": "\t\t\t\t\t\t\t}"
+    },
+    {
+      "line": 890,
+      "text": "\t\t\t\t\t\t$sthA->finish();"
+    },
+    {
+      "line": 891,
+      "text": ""
+    },
+    {
+      "line": 892,
+      "text": "\t\t\t\t\t\tif ($preview_count > 0) "
+    },
+    {
+      "line": 893,
+      "text": "\t\t\t\t\t\t\t{if($DB){print STDERR \"Lead is being previewed right now: $preview_count|$ST_lead_id[$a]|\\n\";}}"
+    },
+    {
+      "line": 894,
+      "text": "\t\t\t\t\t\telse"
+    },
+    {
+      "line": 895,
+      "text": "\t\t\t\t\t\t\t{"
+    },
+    {
+      "line": 896,
+      "text": "\t\t\t\t\t\t\tif (!$Q) {print \" - stuck lead found: |$ST_modify_date[$a]|$ST_lead_id[$a]|$ST_list_id[$a]|$ST_status[$a]|$ST_user[$a]|$ST_last_local_call_time[$a]|$ST_called_count[$a]|\\n\";}"
+    },
+    {
+      "line": 897,
+      "text": ""
+    },
+    {
+      "line": 898,
+      "text": "\t\t\t\t\t\t\t$new_status='NEW';"
+    },
+    {
+      "line": 899,
+      "text": "\t\t\t\t\t\t\t$affected_rows=0;"
+    },
+    {
+      "line": 900,
+      "text": "\t\t"
+    },
+    {
+      "line": 901,
+      "text": "\t\t\t\t\t\t\t# lead should be reset to allowed to be called again"
+    },
+    {
+      "line": 902,
+      "text": "\t\t\t\t\t\t\t$stmtA = \"UPDATE vicidial_list SET status='$new_status',called_since_last_reset='N' where lead_id='$ST_lead_id[$a]';\";"
+    },
+    {
+      "line": 903,
+      "text": "\t\t\t\t\t\t\tif($DB){print STDERR \"\\n|$stmtA|\\n\";}"
+    },
+    {
+      "line": 904,
+      "text": "\t\t\t\t\t\t\tif (!$T) {$affected_rows = $dbhA->do($stmtA);}"
+    },
+    {
+      "line": 905,
+      "text": "\t\t\t\t\t\t\tif ($DBX) {print \"DEBUG: $affected_rows|$stmtA|\\n\";}"
+    },
+    {
+      "line": 906,
+      "text": "\t\t\t\t\t\t\t$found_stuck_ct++;"
+    },
+    {
+      "line": 907,
+      "text": "\t\t\t\t\t\t\tif (!$Q) {print \" - stuck call has been reset: $ST_lead_id[$a]|$found_stuck_ct|\\n\";}"
+    },
+    {
+      "line": 908,
+      "text": ""
+    },
+    {
+      "line": 909,
+      "text": "\t\t\t\t\t\t\tif (!$STUCKLOGfile)\t{$STUCKLOGfile = \"$PATHlogs/stuck_leads.$year-$mon-$mday\";}"
+    },
+    {
+      "line": 910,
+      "text": "\t\t\t\t\t\t\topen(Lout, \">>$STUCKLOGfile\")"
+    },
+    {
+      "line": 911,
+      "text": "\t\t\t\t\t\t\t\t\t|| die \"Can't open $STUCKLOGfile: $!\\n\";"
+    },
+    {
+      "line": 912,
+      "text": "\t\t\t\t\t\t\tprint Lout \"$SQLdate_NOW|$affected_rows|$ST_modify_date[$a]|$ST_lead_id[$a]|$ST_list_id[$a]|$ST_user[$a]|$ST_last_local_call_time[$a]|$ST_called_count[$a]|$ST_status[$a]|\\n\";"
+    },
+    {
+      "line": 913,
+      "text": "\t\t\t\t\t\t\tclose(Lout);"
+    },
+    {
+      "line": 914,
+      "text": "\t\t\t\t\t\t\t}"
+    },
+    {
+      "line": 915,
+      "text": "\t\t\t\t\t\t}"
+    },
+    {
+      "line": 916,
+      "text": "\t\t\t\t\t}"
+    },
+    {
+      "line": 917,
+      "text": "\t\t\t\t}"
+    },
+    {
+      "line": 918,
+      "text": "\t\t\t}"
+    },
+    {
+      "line": 919,
+      "text": "\t\t$a++;"
+    },
+    {
+      "line": 920,
+      "text": "\t\t}"
+    },
+    {
+      "line": 921,
+      "text": ""
+    },
+    {
+      "line": 922,
+      "text": "\tif (!$Q) {print \" - STUCK leads check finished, stuck calls checked: $a  reset: $found_stuck_ct, exiting...\\n\";}"
+    },
+    {
+      "line": 923,
+      "text": "\t}"
+    },
+    {
+      "line": 924,
+      "text": ""
+    }
+  ],
+  "method": "read-only installed-source copy; no live recovery command was executed"
+}

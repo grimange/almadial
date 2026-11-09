@@ -1,0 +1,24 @@
+{
+  "before": {
+    "active": "N",
+    "dial_method": "MANUAL",
+    "auto_dial_level": "0",
+    "manual_dial_list_id": "910016",
+    "no_hopper_leads_logins": "N",
+    "local_call_time": "12pm-5pm",
+    "campaign_recording": "ONDEMAND",
+    "manual_preview_dial": "PREVIEW_AND_SKIP"
+  },
+  "after": {
+    "active": "Y",
+    "dial_method": "MANUAL",
+    "auto_dial_level": "0",
+    "manual_dial_list_id": "910016",
+    "no_hopper_leads_logins": "Y",
+    "local_call_time": "24hours",
+    "campaign_recording": "ONDEMAND",
+    "manual_preview_dial": "PREVIEW_AND_SKIP"
+  },
+  "list": 910016,
+  "listActive": "Y"
+}

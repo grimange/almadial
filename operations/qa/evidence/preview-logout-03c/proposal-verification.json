@@ -1,0 +1,169 @@
+{
+  "patchSha256": "7b6f04b44d560c953106467ab9b2a52d5768ffead81a459775f6c531f4f16a0e",
+  "sourcePins": {
+    "vicidial.php": "f701a0dbc2e11fb7e4c85e7bee3f08f2967b43b3f3e6497daa84a8abfb55d358",
+    "vdc_db_query.php": "5aaeabd1d9b247dc563b9e94bb86d0b3323346b226b52d47a00ca2506897108d"
+  },
+  "notProven": [
+    "MariaDB multi-table UPDATE and locking",
+    "PHP 8.3 execution",
+    "corrected native Chromium workflow",
+    "live next-lead eligibility after correction"
+  ],
+  "phpVersion": "PHP 8.4.27 (cli) (built: Oct 21 2026 08:20:27) (NTS)",
+  "lint": [
+    "No syntax errors detected",
+    "No syntax errors detected"
+  ],
+  "javascript": {
+    "execution": "actual proposed helper and native LogouT in Node VM with fake XHR; no host/browser runtime",
+    "cases": [
+      {
+        "case": "release acknowledgement precedes native logout and phone teardown",
+        "result": "PASS"
+      },
+      {
+        "case": "dial in progress cannot release",
+        "result": "PASS"
+      },
+      {
+        "case": "active customer call cannot release",
+        "result": "PASS"
+      },
+      {
+        "case": "manual entry or callback cannot release",
+        "result": "PASS"
+      },
+      {
+        "case": "alternate dial cannot release",
+        "result": "PASS"
+      },
+      {
+        "case": "HTTP denial retains session and claim UI",
+        "result": "PASS"
+      },
+      {
+        "case": "wrong 200 response retains session and claim UI",
+        "result": "PASS"
+      },
+      {
+        "case": "native denial retains session and claim UI",
+        "result": "PASS"
+      },
+      {
+        "case": "malformed success retains session and claim UI",
+        "result": "PASS"
+      },
+      {
+        "case": "onerror permits retry without accepting a late acknowledgement",
+        "result": "PASS"
+      },
+      {
+        "case": "ontimeout permits retry without accepting a late acknowledgement",
+        "result": "PASS"
+      },
+      {
+        "case": "onabort permits retry without accepting a late acknowledgement",
+        "result": "PASS"
+      },
+      {
+        "case": "synchronous send failure retains preview",
+        "result": "PASS"
+      },
+      {
+        "case": "ordinary logout without preview sends no release",
+        "result": "PASS"
+      },
+      {
+        "case": "failed native logout does not blank phone or claim completion",
+        "result": "PASS"
+      },
+      {
+        "case": "native logout parser rejects a generic HTTP 200 body",
+        "result": "PASS"
+      }
+    ]
+  },
+  "phpReleaseCode": "actual proposed block constructs one guarded UPDATE and native skip audit; DB calls stubbed",
+  "admissionPredicates": [
+    {
+      "case": "eligible list preview",
+      "admitted": true,
+      "assertion": "PASS"
+    },
+    {
+      "case": "active call",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "agent INCALL",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "agent current lead",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "other user",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "other session conference",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "other campaign",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "changed status",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "changed count",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "previously called flag",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "preview already cleared",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "pending external dial",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "missing lead counter",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "missing phone counter",
+      "admitted": false,
+      "assertion": "PASS"
+    },
+    {
+      "case": "zero counter",
+      "admitted": false,
+      "assertion": "PASS"
+    }
+  ],
+  "retryControlFlow": "PASS: zero affected rows plus matching released state ACKs without a second skip audit",
+  "retryMismatch": "PASS: zero affected rows plus mismatched retry state refuses logout release",
+  "generatedUpdate": "UPDATE vicidial_list l\n\t\t\tJOIN vicidial_live_agents a ON a.preview_lead_id=l.lead_id\n\t\t\tJOIN vicidial_lists li ON li.list_id=l.list_id AND li.campaign_id=a.campaign_id\n\t\t\tJOIN vicidial_lead_call_daily_counts d ON d.lead_id=l.lead_id\n\t\t\tJOIN vicidial_phone_number_call_daily_counts p ON p.phone_number=l.phone_number\n\t\t\tLEFT JOIN vicidial_auto_calls c ON c.lead_id=l.lead_id\n\t\t\t SET l.status='NEW',l.called_count='0',l.called_since_last_reset='N',\n\t\t\ta.preview_lead_id=0,a.external_dial='',\n\t\t\td.called_count_total=d.called_count_total-1,d.called_count_manual=d.called_count_manual-1,d.modify_date=NOW(),\n\t\t\tp.called_count=p.called_count-1,p.modify_date=NOW() WHERE l.lead_id='100' AND l.status='INCALL' AND l.user='synthetic_agent'\n\t\t\tAND l.called_count='1' AND l.called_since_last_reset='Y'\n\t\t\tAND a.user='synthetic_agent' AND a.server_ip='192.0.2.1' AND a.conf_exten='9600001'\n\t\t\tAND a.campaign_id='SYNTHETIC' AND a.lead_id=0 AND a.status IN('PAUSED','READY')\n\t\t\tAND a.external_dial IN('','SKIP') AND c.lead_id IS NULL\n\t\t\tAND d.called_count_total>0 AND d.called_count_manual>0 AND p.called_count>0",
+  "applyReverse": "PASS: zero-fuzz apply; reverse restores both exact source digests"
+}

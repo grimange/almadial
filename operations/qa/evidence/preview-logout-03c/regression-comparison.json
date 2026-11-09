@@ -1,0 +1,97 @@
+{
+  "kind": "offline consistency checks of saved runtime evidence, not independent acceptance",
+  "checks": [
+    {
+      "check": "20 shared protected source/config fingerprints unchanged from PRD-03B",
+      "result": "PASS"
+    },
+    {
+      "check": "campaign relevant settings including test01 restored/preserved",
+      "result": "PASS"
+    },
+    {
+      "check": "four lists inactive",
+      "result": "PASS"
+    },
+    {
+      "check": "only selected lead56 changed among observed lead snapshots",
+      "result": "PASS"
+    },
+    {
+      "check": "control56 NEW/count0/calledY",
+      "result": "PASS"
+    },
+    {
+      "check": "unused57-68 retain original NEW/count0/calledN",
+      "result": "PASS"
+    },
+    {
+      "check": "no INCALL/live agents/diagnostic outbound records",
+      "result": "PASS"
+    },
+    {
+      "check": "QA call count2 and recording count4 unchanged",
+      "result": "PASS"
+    },
+    {
+      "check": "no active calls/channels",
+      "result": "PASS"
+    },
+    {
+      "check": "phone1002 unregistered",
+      "result": "PASS"
+    },
+    {
+      "check": "backup successful and verified",
+      "result": "PASS"
+    },
+    {
+      "check": "six affected service/timer checks active",
+      "result": "PASS"
+    },
+    {
+      "check": "actual CLI preview56 skip/logout completed without customer call",
+      "result": "PASS"
+    },
+    {
+      "check": "actual Chromium registered conference9600001 ICE/DTLS connected",
+      "result": "PASS"
+    }
+  ],
+  "changedObservedLeadIds": [
+    "56"
+  ],
+  "unchangedSharedFiles": [
+    "/etc/alma-vicidial-recording.json",
+    "/etc/asterisk/http.conf",
+    "/etc/asterisk/pjsip.conf",
+    "/etc/asterisk/sip.conf",
+    "/etc/cron.d/vicidial",
+    "/etc/httpd/conf.d/02-alma-vicidial-ssl.conf",
+    "/etc/systemd/system/alma-vicidial-recording.timer",
+    "/opt/alma-portal-443/access.lua",
+    "/opt/alma-portal-443/portal.py",
+    "/opt/alma-portal-443/vicidial_auth.py",
+    "/usr/local/sbin/alma-portal-cert-deploy",
+    "/usr/local/sbin/alma-vicidial-recording",
+    "/usr/share/astguiclient/AST_flush_DBqueue.pl",
+    "/var/www/html/agc/vdc_db_query.php",
+    "/var/www/html/agc/vicidial.php",
+    "/var/www/html/vicidial/admin.php",
+    "/var/www/html/vicidial/admin_modify_lead.php",
+    "/var/www/html/vicidial/functions.php",
+    "/var/www/html/vicidial/recording_log_redirect.php",
+    "/var/www/html/vicidial/user_stats.php"
+  ],
+  "evidenceSha256": {
+    "after-control.json": "b97af6970b654b7417a37a7af636558a1fc4509791340c7053b87029895e0eee",
+    "before.json": "bbb16301ea19831a2cf2d1184673f45cb2a33580877174470991102964d0c238",
+    "final-state.json": "6f1928ac150d519dffcdd6b41a1ccc57ce1badbdec7c4f94957c98f5b38848e6",
+    "native-activation.json": "5a0f48d787e68ed0d85f5df4c5265da60da818f644e2ebfeb652f4fb03d50cc6",
+    "native-cleanup.json": "11573d85cc3a5723473d62af9b29190e396fc42f6f708c94bd8f59a65a99c0c4",
+    "native-recovery-isolated.json": "a8707994bff9b7d6ec31263b3a3ef6c18587555b6ac36d280b5526ac1b5c20dd",
+    "proposal-verification.json": "77421a2b401345204d3468a56c615a11fa2e97594b9e23d59c90a022042f36a0",
+    "regression.json": "e9358dac47da62d708e030ac744c3718004758441a06b7b82ecb49de1ca78897",
+    "skip-control.json": "03104cf741ae11826d805d87bbef1f66630c20fc3236c002ace74814054b4104"
+  }
+}

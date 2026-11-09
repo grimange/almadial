@@ -1,0 +1,6 @@
+{
+  "purpose": "read-only table engine qualification",
+  "rc": 0,
+  "stdout": "TABLE_NAME\tENGINE\nvicidial_phone_number_call_daily_counts\tMyISAM\nweb_client_sessions\tMEMORY\nvicidial_live_agents\tMyISAM\nvicidial_lead_call_daily_counts\tMyISAM\nvicidial_list\tMyISAM\n",
+  "stderr": ""
+}

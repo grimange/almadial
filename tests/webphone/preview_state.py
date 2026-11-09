@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only dialer01 correlation for PRD-03B; never performs recovery writes."""
+"""Read-only dialer01 correlation for PRD-03B/C; never performs recovery writes."""
 import argparse
 import json
 from pathlib import Path
@@ -20,7 +20,7 @@ SELECT COUNT(*) call_records FROM vicidial_log WHERE campaign_id='QAOUT01';
 SELECT COUNT(*) recordings FROM recording_log;
 SELECT COUNT(*) incall_leads FROM vicidial_list WHERE list_id BETWEEN 910014 AND 910017 AND status='INCALL';
 SELECT COUNT(*) live_agents FROM vicidial_live_agents;
-SELECT COUNT(*) diagnostic_outbound_calls FROM vicidial_log WHERE lead_id BETWEEN 51 AND 55;
+SELECT COUNT(*) diagnostic_outbound_calls FROM vicidial_log WHERE lead_id BETWEEN 51 AND 68;
 """
 
 def capture():

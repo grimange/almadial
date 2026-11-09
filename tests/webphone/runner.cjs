@@ -12,14 +12,18 @@ const workflow=eval('('+fs.readFileSync(path.join(__dirname,'browser_workflow.js
     const previewCase=process.env.WEBPHONE_PREVIEW_CASE;
     if(previewCase){
       const vendor=process.env.WEBPHONE_PREVIEW_VENDOR;
-      if(!['skip','direct'].includes(previewCase)||!/^GAP01B_\d{3}$/.test(vendor||''))throw Error('Choose skip/direct and an unused GAP01B vendor');
+      const corrected=['corrected','repeated'].includes(previewCase);
+      if(!['skip','direct','corrected','repeated'].includes(previewCase)||!/^GAP01B_\d{3}$/.test(vendor||''))throw Error('Choose a supported preview case and an unused GAP01B vendor');
       if(previewCase==='direct'&&process.env.WEBPHONE_PREVIEW_DIAGNOSTIC!=='YES')throw Error('Direct logout requires explicit diagnostic opt-in and native recovery');
+      if(corrected&&process.env.WEBPHONE_PREVIEW_CORRECTION_TEST!=='YES')throw Error('Corrected logout requires an explicitly approved patch test');
       page.webphoneConfig={...cfg,phase:'start',agent:process.env.WEBPHONE_AGENT||'qaagent14'};results.push(await workflow(page));
+      // Fail before claiming a lead when the proposed correction is absent.
+      if(corrected&&!await page.web00.p.evaluate(()=>typeof ReleasePreviewForLogout==='function'))throw Error('Proposed correction is not installed');
       page.webphoneConfig={...cfg,phase:'preview',previewVendor:vendor};results.push(await workflow(page));
       if(previewCase==='skip'){
         page.webphoneConfig={...cfg,phase:'skip'};results.push(await workflow(page));
       }
-      page.webphoneConfig={...cfg,phase:previewCase==='direct'?'direct-preview-logout':'finish',previewVendor:vendor,authorizePreviewLogoutDiagnostic:previewCase==='direct'};results.push(await workflow(page));
+      page.webphoneConfig={...cfg,phase:corrected?'corrected-preview-logout':previewCase==='direct'?'direct-preview-logout':'finish',previewVendor:vendor,authorizePreviewLogoutDiagnostic:previewCase==='direct',authorizeProposedLogoutTest:corrected,repeatLogout:previewCase==='repeated'};results.push(await workflow(page));
       console.log(JSON.stringify({customerCalls:0,previewCase,requiresReadOnlyCorrelation:true,requiresNativeRecovery:previewCase==='direct',results},null,2));
       return;
     }

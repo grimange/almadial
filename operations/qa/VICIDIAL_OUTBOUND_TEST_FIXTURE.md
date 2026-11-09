@@ -1,6 +1,6 @@
 # VICIdial outbound synthetic acceptance fixture
 
-Created by `VICIDIAL_PRD_01_02_03_14_ACCEPTANCE`; updated through `PRD-WEBPHONE-00` and `PRD-03B`, 2026-11-09 UTC / 2026-11-10 Asia/Manila. All configuration and lead changes used native Administration; database verification was read-only.
+Created by `VICIDIAL_PRD_01_02_03_14_ACCEPTANCE`; updated through `PRD-WEBPHONE-00`, `PRD-03B` and `PRD-03C`, 2026-11-09 UTC / 2026-11-10 Asia/Manila. All configuration and lead changes used native interfaces; live database verification was read-only.
 
 The fixture is **inactive at handoff**. No customer call, automatic dialing, predictive dialing or carrier provisioning is authorized by retaining it. See [original acceptance](VICIDIAL_PRD_01_02_03_14_ACCEPTANCE.md), [functional remediation acceptance](VICIDIAL_PRD_FUNCTIONAL_GAPS_01_ACCEPTANCE.md), [accepted browser phone](VICIDIAL_WEBPHONE_PLAYWRIGHT_ACCEPTANCE.md) and [PRD-03B lifecycle investigation](VICIDIAL_PRD_03B_PREVIEW_LOGOUT_ACCEPTANCE.md). CSV import and agent controls work; direct logout from an open preview remains a documented limitation.
 
@@ -20,7 +20,7 @@ The fixture is **inactive at handoff**. No customer call, automatic dialing, pre
 | Browser phone | `1002` | SIP / chan_sip WebRTC, active `Y`, template `WEB00_SIP`, embedded VICIphone 3.0.0; unregistered at handoff; conference `9600001` |
 | Original leads | `9`–`28` | List 910014; vendor IDs `PRD14_001`–`PRD14_020`; lead 9 NI, 10–28 DNC; preserved |
 | Diagnostic leads | `29`–`48` | List 910015; `GAP01_001`–`GAP01_020`; 20 NEW; some non-ASCII values contain mojibake; do not reuse as canonical data |
-| Clean leads | `49`–`68` | List 910016; `GAP01B_001`–`GAP01B_020`; 17 NEW, three NI (`50`, `52`, `54`); unused `56`–`68` retain NEW / called N / count 0 |
+| Clean leads | `49`–`68` | List 910016; `GAP01B_001`–`GAP01B_020`; 17 NEW, three NI (`50`, `52`, `54`); unused `57`–`68` retain NEW / called N / count 0; 56 is a consumed SKIP control |
 | Browser call lead | `69` | List 910017; `WEB00_001`; NI / count 2; accepted recordings 3 and 4; preserve this history |
 
 Campaign: both dial prefixes `2221`; manual list **910016**; manual dial/search filters `CAMPLISTS_ONLY`; recording `ONDEMAND`; local call time `12pm-5pm`; no-hopper-leads logins `N`; hopper minimum `1`; dialable statuses ` NI NEW -`; preview `PREVIEW_AND_SKIP`; inbound `N`; max-inbound outcome `DEFAULT`. No new route or carrier exists. A retained hopper READY row is not a live agent or INCALL claim; inactive campaign/list and MANUAL level zero prevent operation.
@@ -70,6 +70,8 @@ PRD-03B repeated the native comparison using VICIphone 1002. SKIP released leads
 
 The installed `AST_flush_DBqueue.pl --reset-stuck-leads` can reset eligible orphaned ERI/INCALL previews to NEW / called N, but the current hourly `-q` cron invocation does not enable that option. It was neither executed nor scheduled under PRD-03B. Do not assume the minutely hopper releases orphaned previews, and do not reset a whole list or all INCALL leads as routine cleanup.
 
+[PRD-03C qualification](VICIDIAL_PRD_03C_PREVIEW_LOGOUT_CORRECTION.md) established that this recovery forces NEW without restoring original status/counts and has date-limited live-preview guards and a check/update race. Isolated execution reproduced unsafe resets; it remains disabled and was not run live. It is not an approved logout correction. The [two-file proposed correction](proposals/prd-03c/README.md) is undeployed and requires separate upstream-source approval. The new native control used lead **56 / GAP01B_008**: SKIP restored NEW / count 0 / called Y, then normal logout/unregister completed. No new call, recording or administrative lead recovery was performed. QAOUT01/list settings were restored; no INCALL claim, live agent or channel remains.
+
 Final state has no synthetic INCALL claim, live agent or channel. Open-preview logout remains a product limitation; the accepted operational sequence is **SKIP LEAD → wait for the lead to clear → unregister VICIphone → LOGOUT → wait for completion**. The automation's ordinary finish phase rejects an open preview. Its direct-logout phase is an explicit diagnostic requiring read-only correlation and native recovery.
 
 ## Time and routing limits
@@ -83,7 +85,7 @@ Original lead 9 and browser-call lead 69 have the established simulator `7000000
 1. Verify current campaign/list settings, counts, statuses, route absence and inactive carriers. Prefer clean list 910016; leave diagnostic 910015 and original 910014 inactive.
 2. Keep campaign/list inactive for CSV import. Confirm dependencies and Use Non-Latin = 1. Use DUPLIST and review both summary and field values; never repair via SQL.
 3. For authorized non-calling preview, activate only QAOUT01 and clean list, keep MANUAL / zero, and ensure a NEW eligible hopper lead. Use native list reset only when intended; Skip sets the called flag Y. Empty-hopper login can instead be allowed by the native no-hopper-leads logins option within the synthetic campaign.
-4. Prefer the accepted VICIphone 1002 and existing [browser runner](../../tests/webphone/runner.cjs); it answers only the agent conference automatically. Extension 1000 remains available for separately authorized manual interaction. Authenticate qaagent14, select QAOUT01 and check Lead Preview. Do not click DIAL LEAD. Select an unused lead, currently `56`–`68`, instead of resetting consumed leads merely to rerun a test.
+4. Prefer the accepted VICIphone 1002 and existing [browser runner](../../tests/webphone/runner.cjs); it answers only the agent conference automatically. Extension 1000 remains available for separately authorized manual interaction. Authenticate qaagent14, select QAOUT01 and check Lead Preview. Do not click DIAL LEAD. Select an unused lead, currently `57`–`68`, instead of resetting consumed leads merely to rerun a test.
 5. Use visible SKIP LEAD to release preview, then LOGOUT. Verify lead status, no QA live agent and no Asterisk channels. Direct logout with an open preview requires the administrative recovery described above.
 6. If Ready/Pause testing is authorized, use the bounded INBOUND_MAN configuration above; restore MANUAL/zero afterward. Do not use RATIO, ADAPT or predictive modes.
 7. Deactivate campaign and all four lists; leave 1014 suspended and 1002 unregistered. Confirm no INCALL claims or live sessions. Do not grant recording permissions to test accounts merely to make playback succeed.

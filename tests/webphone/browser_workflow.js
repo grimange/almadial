@@ -86,6 +86,37 @@ async (page) => {
     await w.p.waitForFunction(()=>document.querySelector('#DispoSelectBox').style.visibility==='hidden');
     return {hangup:true,disposition:'NI'};
   }
+  if (phase === 'corrected-preview-logout') {
+    const vendor=await w.p.locator('[name=vendor_lead_code]').inputValue();
+    if (!cfg.authorizeProposedLogoutTest || w.callPlaced || !/^GAP01B_\d{3}$/.test(vendor) || vendor!==cfg.previewVendor || !await w.p.getByText('SKIP LEAD',{exact:true}).isVisible()) throw new Error('Proposed logout test requires an identified non-calling preview');
+    if (!await w.p.evaluate(()=>typeof ReleasePreviewForLogout==='function')) throw new Error('Correction absent; release preview through SKIP');
+    const responses=[];
+    const pending=[];
+    const listener=response=>{
+      if(!response.url().endsWith('/vdc_db_query.php'))return;
+      const form=new URLSearchParams(response.request().postData()||'');
+      const action=form.get('ACTION');
+      if(action!=='userLOGout' && !(action==='manDiaLskip' && form.get('format')==='logout-preview'))return;
+      // Record only action/ACK, never credentials, request bodies or native HTML.
+      const entry={action,ack:false};responses.push(entry);
+      pending.push(response.text().then(body=>{
+        const text=body.trim();
+        entry.ack=response.status()===200 && (action==='manDiaLskip'?text==='PREVIEW RELEASED':/^\d+\|\d*\|\d+\|\d+\|[^|]*\|\d+$/.test(text));
+      }));
+    };
+    w.p.on('response',listener);
+    try {
+      const logout=w.p.getByRole('link',{name:'LOGOUT',exact:true});
+      if(cfg.repeatLogout) await logout.dblclick({delay:30}); else await logout.click();
+      await w.p.getByText('LOGOUT PROCESS COMPLETE, YOU MAY NOW CLOSE YOUR BROWSER OR LOG BACK IN',{exact:false}).waitFor({timeout:30000});
+      await Promise.all(pending);
+      if(responses.length!==2 || responses[0].action!=='manDiaLskip' || responses[1].action!=='userLOGout' || responses.some(r=>!r.ack)) throw new Error('Release/logout acknowledgement sequence did not match');
+      await w.p.waitForFunction(()=>document.getElementById('webphone').getAttribute('src')==='./images/blank.gif');
+    } finally {w.p.off('response',listener)}
+    // Do not unregister first: this test exercises actual native logout teardown.
+    await w.b.close();delete page.web00;
+    return {logout:true,browserClosed:true,releaseAcknowledged:true,duplicateClick:!!cfg.repeatLogout,requiresReadOnlyCorrelation:true};
+  }
   if (phase === 'finish' || phase === 'direct-preview-logout') {
     const previewOpen=await w.p.getByText('SKIP LEAD',{exact:true}).isVisible();
     if (phase === 'direct-preview-logout') {

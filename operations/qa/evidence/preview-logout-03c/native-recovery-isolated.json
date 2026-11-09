@@ -1,0 +1,274 @@
+{
+  "sourceSha256": "f3e4fe7762078cdc4578bddb759afa05e6ba1d0b4c6a554d4da88248860b678b",
+  "execution": "unaltered native Perl recovery branch; isolated SQLite SQL bridge",
+  "notProven": [
+    "full maintenance script",
+    "MariaDB/MyISAM locking",
+    "live host recovery"
+  ],
+  "cases": [
+    {
+      "case": "orphan",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "NEW",
+          "called": "N",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';",
+        "SELECT count(*) FROM vicidial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_closer_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_dial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_live_agents where preview_lead_id='1' and last_state_change >= \"2026-11-09 00:00:00\";",
+        "UPDATE vicidial_list SET status='NEW',called_since_last_reset='N' where lead_id='1';"
+      ]
+    },
+    {
+      "case": "active_call",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "INCALL",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';"
+      ]
+    },
+    {
+      "case": "outbound_today",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "INCALL",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';",
+        "SELECT count(*) FROM vicidial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";"
+      ]
+    },
+    {
+      "case": "inbound_today",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "INCALL",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';",
+        "SELECT count(*) FROM vicidial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_closer_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";"
+      ]
+    },
+    {
+      "case": "dial_today",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "INCALL",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';",
+        "SELECT count(*) FROM vicidial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_closer_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_dial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";"
+      ]
+    },
+    {
+      "case": "active_preview_today",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "INCALL",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';",
+        "SELECT count(*) FROM vicidial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_closer_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_dial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_live_agents where preview_lead_id='1' and last_state_change >= \"2026-11-09 00:00:00\";"
+      ]
+    },
+    {
+      "case": "active_preview_before_midnight",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "NEW",
+          "called": "N",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';",
+        "SELECT count(*) FROM vicidial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_closer_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_dial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_live_agents where preview_lead_id='1' and last_state_change >= \"2026-11-09 00:00:00\";",
+        "UPDATE vicidial_list SET status='NEW',called_since_last_reset='N' where lead_id='1';"
+      ]
+    },
+    {
+      "case": "active_lead_without_preview_pointer",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "NEW",
+          "called": "N",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';",
+        "SELECT count(*) FROM vicidial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_closer_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_dial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_live_agents where preview_lead_id='1' and last_state_change >= \"2026-11-09 00:00:00\";",
+        "UPDATE vicidial_list SET status='NEW',called_since_last_reset='N' where lead_id='1';"
+      ]
+    },
+    {
+      "case": "younger_than_121_seconds",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "INCALL",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ]
+    },
+    {
+      "case": "older_than_six_hours",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "INCALL",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ]
+    },
+    {
+      "case": "other_list",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "INCALL",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ]
+    },
+    {
+      "case": "ERI_candidate",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "NEW",
+          "called": "N",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ]
+    },
+    {
+      "case": "other_status",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "NI",
+          "called": "Y",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ]
+    },
+    {
+      "case": "sequential_repeat",
+      "assertion": "PASS",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "NEW",
+          "called": "N",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ]
+    },
+    {
+      "case": "call_after_guard_race",
+      "assertion": "PASS",
+      "meaning": "SAFETY FAILURE reproduced: native update overwrites a newly active lead",
+      "observed": [
+        {
+          "lead": 1,
+          "status": "NEW",
+          "called": "N",
+          "count": 1,
+          "owner": "synthetic"
+        }
+      ],
+      "queries": [
+        "SELECT lead_id,list_id,status,user,last_local_call_time,called_count,modify_date FROM vicidial_list where status IN('ERI','INCALL') and modify_date >= \"2026-11-09 06:00:00\" and modify_date <= \"2026-11-09 11:57:59\" and list_id IN('910016') order by modify_date limit 10000;",
+        "SELECT count(*) FROM vicidial_auto_calls where lead_id='1';",
+        "SELECT count(*) FROM vicidial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_closer_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_dial_log where lead_id='1' and call_date >= \"2026-11-09 00:00:00\";",
+        "SELECT count(*) FROM vicidial_live_agents where preview_lead_id='1' and last_state_change >= \"2026-11-09 00:00:00\";",
+        "UPDATE vicidial_list SET status='NEW',called_since_last_reset='N' where lead_id='1';"
+      ]
+    }
+  ],
+  "caseCount": 15
+}

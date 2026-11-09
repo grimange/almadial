@@ -1,0 +1,17 @@
+{
+  "kind": "SHA-256 manifest of sanitized PRD-03C evidence",
+  "files": {
+    "after-control.json": "b97af6970b654b7417a37a7af636558a1fc4509791340c7053b87029895e0eee",
+    "before.json": "bbb16301ea19831a2cf2d1184673f45cb2a33580877174470991102964d0c238",
+    "final-state.json": "6f1928ac150d519dffcdd6b41a1ccc57ce1badbdec7c4f94957c98f5b38848e6",
+    "native-activation.json": "5a0f48d787e68ed0d85f5df4c5265da60da818f644e2ebfeb652f4fb03d50cc6",
+    "native-cleanup.json": "11573d85cc3a5723473d62af9b29190e396fc42f6f708c94bd8f59a65a99c0c4",
+    "native-recovery-isolated.json": "a8707994bff9b7d6ec31263b3a3ef6c18587555b6ac36d280b5526ac1b5c20dd",
+    "native-recovery-source.json": "d57770dc769f78eb4a92a462903dca33b6418ed86b0a6feabb89a04137fa7159",
+    "proposal-verification.json": "77421a2b401345204d3468a56c615a11fa2e97594b9e23d59c90a022042f36a0",
+    "regression-comparison.json": "aec9b732bc0111cc0dff2e6dc208b398f2c9f3756db0c95db2b102bc50228140",
+    "regression.json": "e9358dac47da62d708e030ac744c3718004758441a06b7b82ecb49de1ca78897",
+    "skip-control.json": "03104cf741ae11826d805d87bbef1f66630c20fc3236c002ace74814054b4104",
+    "table-engines.json": "3f49afbe9d661bad08a009c9ddcca0c3f9ca33e5bac559721cad95010ac23e48"
+  }
+}
