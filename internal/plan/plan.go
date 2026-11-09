@@ -157,3 +157,7 @@ func certificateIdentity(c config.Config) string {
 	}
 	return c.Network.AdvertiseAddress.String()
 }
+
+// ConfigSHA256 and ManifestSHA256 expose immutable approval bindings.
+func (p Plan) ConfigSHA256() string   { d, _ := p.doc(); return d.ConfigSHA256 }
+func (p Plan) ManifestSHA256() string { d, _ := p.doc(); return d.ManifestSHA256 }

@@ -1,10 +1,12 @@
-// Package cli implements side-effect-free command routing.
+// Package cli routes commands; preparation performs read-only local inspection.
 package cli
 
 import (
+	"context"
 	"fmt"
 	"github.com/grimange/almadial/internal/buildinfo"
 	"io"
+	"os"
 )
 
 const (
@@ -15,17 +17,24 @@ const (
 
 const help = `AlmaDial — single-server VICIdial installer for AlmaLinux 10
 
-Usage: almadial [help | version]
+Usage: almadial [help | version | wizard]
   help, --help, -h       Show this help
   version, --version    Show version and build provenance
 
-This foundation provides help and version only.
-Installation and host diagnostics are not implemented yet.
+  wizard                Prepare configuration, inspect local host and review a plan
+                        Use wizard --help for required inputs and approval options
+
+Installation and resume execution are not implemented.
 `
 
 // Run writes successful output to stdout and errors to stderr; it never exits.
-// No filesystem, network, database or installation operation is performed.
+// Help/version perform no inspection. Wizard reads local host/configuration and
+// creates a bounded diagnostic file only when explicitly requested.
 func Run(args []string, stdout, stderr io.Writer) int {
+	return RunContext(context.Background(), args, os.Stdin, stdout, stderr)
+}
+
+func runBasic(args []string, stdout, stderr io.Writer) int {
 	output := help
 	if len(args) > 1 {
 		fmt.Fprintln(stderr, "almadial: expected one command; use --help")
