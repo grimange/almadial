@@ -102,6 +102,21 @@ def config_files():
     for name, data in p['files'].items():
         out['/etc/asterisk/'+name+'.conf'] = ('#include almadial-s04-'+name+'.conf\n').encode()
         out['/etc/asterisk/almadial-s04-'+name+'.conf'] = data.encode()
+    if p.get('s05_handoff', False):
+        # The S05 reader may recognize only these closed include transitions.
+        # S04's ordinary inspector and all S04 mutations keep the original
+        # configuration contract. S04 fragments remain byte-for-byte intact.
+        if sys.argv[1] != 'inspect':
+            raise ValueError('S05 handoff is read-only')
+        for name, include in (
+                ('manager', 'almadial-s05-manager.conf'),
+                ('extensions', 'extensions-vicidial.conf'),
+                ('pjsip', 'pjsip-vicidial.conf'),
+                ('confbridge', 'confbridge-vicidial.conf')):
+            if name == 'extensions':
+                out['/etc/asterisk/'+name+'.conf'] += b'[globals]\n'
+            out['/etc/asterisk/'+name+'.conf'] += ('#include "'+include+'"\n').encode()
+        out['/etc/asterisk/pjsip_wizard.conf'] = b'#include "pjsip_wizard-vicidial.conf"\n'
     return out, gid
 
 def configuration():

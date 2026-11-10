@@ -139,6 +139,12 @@ func (n AsteriskNative) InspectAsterisk(ctx context.Context) (AsteriskSnapshot, 
 	return s, nil
 }
 func (n AsteriskNative) runtime(ctx context.Context, svc map[string]string, s *AsteriskSnapshot) error {
+	return n.runtimeWithManagement(ctx, svc, s, nil)
+}
+
+// S05 supplies a separate local AMI-account check after its owned include
+// transition. A nil check preserves S04's original zero-account contract.
+func (n AsteriskNative) runtimeWithManagement(ctx context.Context, svc map[string]string, s *AsteriskSnapshot, management func(context.Context) error) error {
 	if svc["User"] != "asterisk" || svc["Group"] != "asterisk" || svc["FragmentPath"] != "/etc/systemd/system/asterisk.service" || svc["DropInPaths"] != "" || !shaInvocation(svc["InvocationID"]) {
 		return errAsterisk
 	}
@@ -257,8 +263,12 @@ func (n AsteriskNative) runtime(ctx context.Context, svc map[string]string, s *A
 	if e != nil || !strings.Contains(ami, "127.0.0.1:5038") {
 		return errAsterisk
 	}
-	users, e := n.cli(ctx, "manager show users")
-	if e != nil || strings.TrimSpace(users) != "There are no manager users." {
+	if management == nil {
+		users, e := n.cli(ctx, "manager show users")
+		if e != nil || strings.TrimSpace(users) != "There are no manager users." {
+			return errAsterisk
+		}
+	} else if management(ctx) != nil {
 		return errAsterisk
 	}
 	http, e := n.cli(ctx, "http show status")

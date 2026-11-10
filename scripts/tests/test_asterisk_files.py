@@ -78,6 +78,29 @@ class AsteriskFiles(unittest.TestCase):
         self.m.read=lambda p,perm=None,gid=0:original(p,perm,os.getgid())
         with self.assertRaisesRegex(ValueError,'stale build'): self.m.build()
 
+    def test_s05_handoff_is_closed_and_read_only(self):
+        self.m.p['files'] = {name: 'original ' + name for name in
+                             ('manager', 'extensions', 'pjsip', 'confbridge', 'http', 'modules')}
+        with patch.object(self.m.grp, 'getgrnam') as group:
+            group.return_value.gr_gid = os.getgid()
+            baseline, _ = self.m.config_files()
+            self.m.p['s05_handoff'] = True
+            with patch.object(self.m.sys, 'argv', ['adapter', 'inspect']):
+                handed, _ = self.m.config_files()
+            changes = {path for path in handed if handed[path] != baseline.get(path)}
+            self.assertEqual(changes, {'/etc/asterisk/' + name + '.conf' for name in
+                                      ('manager', 'extensions', 'pjsip', 'confbridge', 'pjsip_wizard')})
+            for name, data in self.m.p['files'].items():
+                self.assertEqual(handed['/etc/asterisk/almadial-s04-' + name + '.conf'], data.encode())
+            self.assertEqual(handed['/etc/asterisk/manager.conf'],
+                             baseline['/etc/asterisk/manager.conf'] + b'#include "almadial-s05-manager.conf"\n')
+            self.assertEqual(handed['/etc/asterisk/pjsip_wizard.conf'],
+                             b'#include "pjsip_wizard-vicidial.conf"\n')
+            for operation in ('configure', 'install', 'restart-proof'):
+                with self.subTest(operation=operation), patch.object(self.m.sys, 'argv', ['adapter', operation]):
+                    with self.assertRaisesRegex(ValueError, 'read-only'):
+                        self.m.config_files()
+
     def test_runtime_libraries_and_xml_required_for_complete_inventory(self):
         original=self.m.read
         self.m.read=lambda p,perm=None,gid=0:original(p,perm,os.getgid())
