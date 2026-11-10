@@ -27,6 +27,9 @@ type vicidialInputTable struct {
 }
 
 func inspectVICIdialGeneratorInputs(ctx context.Context, runner vicidialInputRunner) (string, []byte, error) {
+	return inspectVICIdialGeneratorInputsWeb(ctx, runner, false)
+}
+func inspectVICIdialGeneratorInputsWeb(ctx context.Context, runner vicidialInputRunner, handoff bool) (string, []byte, error) {
 	tables := []vicidialInputTable{}
 	for _, name := range vicidialGeneratorTables {
 		columnsText, e := vicidialSQL(ctx, runner, "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='asterisk' AND TABLE_NAME='"+name+"' ORDER BY ORDINAL_POSITION;")
@@ -57,6 +60,16 @@ func inspectVICIdialGeneratorInputs(ctx context.Context, runner vicidialInputRun
 		text, e := vicidialSQL(ctx, runner, query+" LIMIT 10001;")
 		if e != nil {
 			return "", nil, errVICIdial
+		}
+		// S07 completes the already-secured bootstrap without invoking the
+		// upstream blanket phone rewrite. Normalize only this nongenerator flag
+		// to its accepted preimage for the immutable S05 receipt.
+		if handoff && name == "system_settings" {
+			var err error
+			text, err = webNormalizeSetup(columns, text)
+			if err != nil {
+				return "", nil, err
+			}
 		}
 		rows, e := normalizeVICIdialGeneratorRows(name, columns, text)
 		if e != nil {

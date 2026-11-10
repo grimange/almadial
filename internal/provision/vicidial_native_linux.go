@@ -17,6 +17,7 @@ type VICIdialNative struct {
 	DatabaseAccepted DatabaseSnapshot
 	Source           VICIdialSource
 	Dependency       VICIdialPerlSource
+	WebHandoff       bool // S07 owns first_login_trigger; all other S05 inputs remain exact.
 }
 
 func (n VICIdialNative) input() (vicidialInputRunner, error) {
@@ -62,7 +63,7 @@ func (n VICIdialNative) inspectVICIdial(ctx context.Context, runtimeHandoff bool
 	}
 	s.Source, s.Dependency = n.Source.Digest(), n.Dependency.Digest()
 	gate = "generator inputs"
-	s.GeneratorInputs, _, e = inspectVICIdialGeneratorInputs(ctx, runner)
+	s.GeneratorInputs, _, e = inspectVICIdialGeneratorInputsWeb(ctx, runner, n.WebHandoff)
 	if e != nil {
 		return s, e
 	}
