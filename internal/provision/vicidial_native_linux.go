@@ -35,6 +35,12 @@ type VICIdialCheckError struct{ Gate string }
 func (e *VICIdialCheckError) Error() string { return "S05 native verification failed: " + e.Gate }
 
 func (n VICIdialNative) InspectVICIdial(ctx context.Context) (s VICIdialSnapshot, err error) {
+	return n.inspectVICIdial(ctx, false)
+}
+
+// S06 validates its closed process/schedule inventory before using this
+// internal handoff. The public S05 inspector retains its inactive-job gate.
+func (n VICIdialNative) inspectVICIdial(ctx context.Context, runtimeHandoff bool) (s VICIdialSnapshot, err error) {
 	gate := "verified inputs"
 	defer func() {
 		if err != nil {
@@ -91,7 +97,7 @@ func (n VICIdialNative) InspectVICIdial(ctx context.Context) (s VICIdialSnapshot
 		return s, errVICIdial
 	}
 	gate = "deferred jobs"
-	if verifyVICIdialDeferred(ctx, runner) != nil {
+	if !runtimeHandoff && verifyVICIdialDeferred(ctx, runner) != nil {
 		return s, errVICIdial
 	}
 	gate = "protected configuration"
