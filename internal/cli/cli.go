@@ -17,14 +17,17 @@ const (
 
 const help = `AlmaDial — single-server VICIdial installer for AlmaLinux 10
 
-Usage: almadial [help | version | wizard]
+Usage: almadial [help | version | wizard | status | doctor | evidence export]
   help, --help, -h       Show this help
   version, --version    Show version and build provenance
 
   wizard                Prepare configuration, inspect local host and review a plan
                         Use wizard --help for required inputs and approval options
 
-Installation and resume execution are not implemented.
+  status, doctor        Read-only operational checks; use status --help
+  evidence export       Explicit bounded sanitized support bundle
+
+Unified installation and resume execution are not implemented.
 `
 
 // Run writes successful output to stdout and errors to stderr; it never exits.

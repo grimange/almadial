@@ -221,6 +221,9 @@ func runWizard(ctx context.Context, args []string, in io.Reader, out, errout io.
 
 // RunContext adds preparation to the accepted help/version router.
 func RunContext(ctx context.Context, args []string, in io.Reader, out, err io.Writer) int {
+	if len(args) > 0 && (args[0] == "status" || args[0] == "doctor" || args[0] == "evidence" || args[0] == "support-bundle") {
+		return runDiagnostics(ctx, args, out, err)
+	}
 	if len(args) > 0 && args[0] == "wizard" {
 		return runWizard(ctx, args[1:], in, out, err)
 	}
