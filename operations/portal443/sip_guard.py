@@ -3,14 +3,23 @@
 import ipaddress
 import json
 import subprocess
-import time
+from pathlib import Path
 
 from common import HEARTBEAT, SIP_PORTS, public_ip
 
 TABLE = 'alma_portal_sip'
 GRACE = 120
 MARK = '0x40000000'
-POLICY = 'alma-phone-sip-' + '-'.join(SIP_PORTS) + '-v1'
+POLICY = 'alma-phone-sip-' + '-'.join(SIP_PORTS) + '-v2-carriers'
+CARRIER_CONFIG = Path(__file__).with_name('carriers.json')
+
+
+def carriers():
+    # Static operator configuration, independent of lease/grace state.
+    values = json.loads(CARRIER_CONFIG.read_text())
+    if not isinstance(values, list) or any(not isinstance(ip, str) for ip in values):
+        raise ValueError('Carrier configuration must be a list of public IPv4 addresses')
+    return sorted({public_ip(ip) for ip in values})
 
 
 def nft(*args, script=None):
@@ -21,6 +30,8 @@ def nft(*args, script=None):
 def chain_rules(chain):
     direction, address, interface = ('dport', 'saddr', 'iifname') if chain == 'input' else ('sport', 'daddr', 'oifname')
     rules = [f'{interface} "lo" return']
+    rules.append('ip saddr @carriers4 udp dport 5060 counter return' if chain == 'input' else
+                 'ip daddr @carriers4 udp sport 5060 udp dport 5060 counter return')
     for port in SIP_PORTS:
         rules.extend((f'udp {direction} {port} ip {address} @agents4 return',
                       f'udp {direction} {port} counter drop'))
@@ -36,7 +47,9 @@ def template():
     # its unconditional established/related accept. Return still runs firewalld.
     lines = [f'table inet {TABLE} {{',
              'set agents4 { type ipv4_addr; flags timeout; }',
-             'set grace4 { type ipv4_addr; flags timeout; }']
+             'set grace4 { type ipv4_addr; flags timeout; }',
+             'set carriers4 { type ipv4_addr; ' +
+             ('elements = { ' + ', '.join(carriers()) + ' }; ' if carriers() else '') + '}']
     for chain in ('input', 'output'):
         lines.extend((f'chain {chain} {{', f'type filter hook {chain} priority -10; policy accept;'))
         lines.extend(chain_rules(chain))
@@ -45,15 +58,29 @@ def template():
 
 
 def bootstrap(command=nft):
+    trusted = carriers()  # Validate configuration before any runtime mutation.
     result = command('-j', 'list', 'table', 'inet', TABLE)
     if result.returncode == 0:
-        installed = {item['rule']['chain'] for item in json.loads(result.stdout)['nftables']
+        objects = json.loads(result.stdout)['nftables']
+        sets = {item['set']['name']: item['set'] for item in objects if 'set' in item}
+        installed = {item['rule']['chain'] for item in objects
                      if item.get('rule', {}).get('comment') == POLICY}
-        if installed == {'input', 'output'}:
+        current = sets.get('carriers4')
+        if installed == {'input', 'output'} and current is not None:
+            if sorted(current.get('elem', [])) == trusted:
+                return
+            lines = [f'flush set inet {TABLE} carriers4']
+            if trusted:
+                lines.append(f'add element inet {TABLE} carriers4 {{ ' + ', '.join(trusted) + ' }')
+            if command('-f', '-', script='\n'.join(lines)).returncode:
+                raise RuntimeError('Carrier membership update failed')
             return
         # Upgrade only this table's chains in one transaction. Preserve live
         # allowlist/grace members and their original native timeout deadlines.
-        lines = []
+        lines = ([f'add set inet {TABLE} carriers4 {{ type ipv4_addr; }}']
+                 if current is None else [f'flush set inet {TABLE} carriers4'])
+        if trusted:
+            lines.append(f'add element inet {TABLE} carriers4 {{ ' + ', '.join(trusted) + ' }')
         for chain in ('input', 'output'):
             lines.append(f'flush chain inet {TABLE} {chain}')
             lines.extend(f'add rule inet {TABLE} {chain} {rule}' for rule in chain_rules(chain))

@@ -23,7 +23,8 @@ class SipGuard(unittest.TestCase):
             calls.append((args, script))
             if args[:3] == ('-j', 'list', 'table'):
                 return types.SimpleNamespace(returncode=0, stdout=json.dumps({'nftables': [
-                    {'rule': {'chain': chain, 'comment': guard.POLICY}} for chain in ('input', 'output')]}))
+                    {'rule': {'chain': chain, 'comment': guard.POLICY}} for chain in ('input', 'output')] +
+                    [{'set': {'name': 'carriers4', 'elem': ['38.147.130.74']}}]}))
             if args[0] == '-j':
                 members = ['8.8.8.8', '9.9.9.9'] if args[-1] == 'agents4' else ['8.8.8.8', '9.9.9.9', '1.1.1.1']
                 data = {'nftables': [{'set': {'elem': [{'elem': {'val': ip}} for ip in members]}}]}
@@ -43,7 +44,7 @@ class SipGuard(unittest.TestCase):
             guard.refresh({'8.8.8.8': 200}, {}, 100,
                           lambda *a, **k: types.SimpleNamespace(returncode=1))
         def mismatch(*a, **k):
-            return types.SimpleNamespace(returncode=0, stdout='{"nftables":[{"set":{}}]}')
+            return types.SimpleNamespace(returncode=0, stdout='{"nftables":[{"set":{"name":"agents4"}}]}')
         with self.assertRaises(RuntimeError):
             guard.refresh({'8.8.8.8': 200}, {}, 100, mismatch)
 
@@ -68,7 +69,9 @@ class SipGuard(unittest.TestCase):
         script = calls[1][1]
         for chain in ('input', 'output'):
             self.assertIn(f'flush chain inet {guard.TABLE} {chain}', script)
-        self.assertNotIn('flush set', script)
+        self.assertNotIn('flush set inet alma_portal_sip agents4', script)
+        self.assertNotIn('flush set inet alma_portal_sip grace4', script)
+        self.assertIn('add set inet alma_portal_sip carriers4', script)
         self.assertNotIn('delete table', script)
         self.assertIn('udp dport 5060 counter drop', script)
         self.assertIn('udp sport 5061 counter drop', script)
@@ -77,12 +80,39 @@ class SipGuard(unittest.TestCase):
             guard.bootstrap(lambda *a, **k: types.SimpleNamespace(
                 returncode=1 if a[0] == '-f' else 0, stdout='{"nftables":[]}'))
 
+    def test_carriers_are_port_scoped_and_precede_drops(self):
+        script = guard.template()
+        self.assertIn('set carriers4 { type ipv4_addr; elements = { 38.147.130.74 }; }', script)
+        for chain in ('input', 'output'):
+            rules = guard.chain_rules(chain)
+            self.assertIn('@carriers4', rules[1])
+            self.assertIn('5060', rules[1])
+            self.assertNotIn('5061', rules[1])
+            if chain == 'output':
+                self.assertIn('sport 5060 udp dport 5060', rules[1])
+        self.assertEqual(script.count('@carriers4'), 2)
+
+    def test_config_change_updates_only_static_set(self):
+        calls = []
+        def command(*args, script=None):
+            calls.append((args, script))
+            data = {'nftables': [
+                {'rule': {'chain': c, 'comment': guard.POLICY}} for c in ('input', 'output')] +
+                [{'set': {'name': 'carriers4', 'elem': []}}]}
+            return types.SimpleNamespace(returncode=0, stdout=json.dumps(data))
+        guard.bootstrap(command)
+        self.assertEqual(len(calls), 2)
+        self.assertIn('flush set inet alma_portal_sip carriers4', calls[1][1])
+        self.assertNotIn('flush chain', calls[1][1])
+        self.assertNotIn('agents4', calls[1][1])
+
     def test_current_policy_bootstrap_does_not_duplicate_rules(self):
         calls = []
         def command(*args, **kwargs):
             calls.append(args)
             return types.SimpleNamespace(returncode=0, stdout=json.dumps({'nftables': [
-                {'rule': {'chain': chain, 'comment': guard.POLICY}} for chain in ('input', 'output')]}))
+                {'rule': {'chain': chain, 'comment': guard.POLICY}} for chain in ('input', 'output')] +
+                    [{'set': {'name': 'carriers4', 'elem': ['38.147.130.74']}}]}))
         guard.bootstrap(command)
         self.assertEqual(len(calls), 1)
 

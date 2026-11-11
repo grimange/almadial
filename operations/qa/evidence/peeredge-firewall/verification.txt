@@ -1,0 +1,607 @@
+Qualification observation started; reconcile and repeated bootstrap passed.
+{
+  "start_utc": "2026-11-11T16:44:14.256675+00:00",
+  "end_utc": "2026-11-11T16:45:21.768382+00:00",
+  "before": {
+    "carrier_rules": [
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "input",
+        "handle": 86,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "ip",
+                  "field": "saddr"
+                }
+              },
+              "right": "@carriers4"
+            }
+          },
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "counter": {
+              "packets": 1,
+              "bytes": 365
+            }
+          },
+          {
+            "return": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "output",
+        "handle": 95,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "ip",
+                  "field": "daddr"
+                }
+              },
+              "right": "@carriers4"
+            }
+          },
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "sport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "counter": {
+              "packets": 1,
+              "bytes": 567
+            }
+          },
+          {
+            "return": null
+          }
+        ]
+      }
+    ],
+    "drop_rules": [
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "input",
+        "handle": 88,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "input",
+        "handle": 90,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": 5061
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "input",
+        "handle": 93,
+        "comment": "alma-phone-sip-5060-5061-v2-carriers",
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": {
+                "range": [
+                  10000,
+                  20000
+                ]
+              }
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "output",
+        "handle": 97,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "sport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "output",
+        "handle": 99,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "sport"
+                }
+              },
+              "right": 5061
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "output",
+        "handle": 102,
+        "comment": "alma-phone-sip-5060-5061-v2-carriers",
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "sport"
+                }
+              },
+              "right": {
+                "range": [
+                  10000,
+                  20000
+                ]
+              }
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      }
+    ],
+    "agent_members": 1,
+    "grace_members": 1,
+    "carrier_members": [
+      "38.147.130.74"
+    ],
+    "rules": 18
+  },
+  "after": {
+    "carrier_rules": [
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "input",
+        "handle": 86,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "ip",
+                  "field": "saddr"
+                }
+              },
+              "right": "@carriers4"
+            }
+          },
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "counter": {
+              "packets": 3,
+              "bytes": 1095
+            }
+          },
+          {
+            "return": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "output",
+        "handle": 95,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "ip",
+                  "field": "daddr"
+                }
+              },
+              "right": "@carriers4"
+            }
+          },
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "sport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "counter": {
+              "packets": 3,
+              "bytes": 1701
+            }
+          },
+          {
+            "return": null
+          }
+        ]
+      }
+    ],
+    "drop_rules": [
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "input",
+        "handle": 88,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "input",
+        "handle": 90,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": 5061
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "input",
+        "handle": 93,
+        "comment": "alma-phone-sip-5060-5061-v2-carriers",
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "dport"
+                }
+              },
+              "right": {
+                "range": [
+                  10000,
+                  20000
+                ]
+              }
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "output",
+        "handle": 97,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "sport"
+                }
+              },
+              "right": 5060
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "output",
+        "handle": 99,
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "sport"
+                }
+              },
+              "right": 5061
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      },
+      {
+        "family": "inet",
+        "table": "alma_portal_sip",
+        "chain": "output",
+        "handle": 102,
+        "comment": "alma-phone-sip-5060-5061-v2-carriers",
+        "expr": [
+          {
+            "match": {
+              "op": "==",
+              "left": {
+                "payload": {
+                  "protocol": "udp",
+                  "field": "sport"
+                }
+              },
+              "right": {
+                "range": [
+                  10000,
+                  20000
+                ]
+              }
+            }
+          },
+          {
+            "counter": {
+              "packets": 0,
+              "bytes": 0
+            }
+          },
+          {
+            "drop": null
+          }
+        ]
+      }
+    ],
+    "agent_members": 1,
+    "grace_members": 1,
+    "carrier_members": [
+      "38.147.130.74"
+    ],
+    "rules": 18
+  },
+  "peer": [
+    "Addr->IP     : 38.147.130.74:5060",
+    "Status       : OK (139 ms)"
+  ],
+  "peers": [
+    "Jaintel3                  38.147.130.74                               Yes        Yes            5060     OK (139 ms)                                  "
+  ],
+  "qualification_command": "",
+  "new_sip_permission_errors": [],
+  "observed_log_files": [
+    "/var/log/asterisk/messages"
+  ],
+  "channels": "0 active channels\n0 active calls\n142 calls processed",
+  "reconciliation": "PASS",
+  "static_bootstrap_repeat": "PASS",
+  "firewalld_runtime_and_permanent": "PASS",
+  "temporary_rules_absent": "PASS",
+  "services": "PASS"
+}

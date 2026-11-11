@@ -1,0 +1,15 @@
+{
+  "backup": "/root/qa-backups/peeredge-20261111T164330Z",
+  "migration_check": "PASS",
+  "dynamic_sets_preserved": "PASS",
+  "rollback_syntax_check": "PASS",
+  "bootstrap_idempotent": "PASS",
+  "deployed_sha256": {
+    "sip_guard.py": "90ca6836a7876fa300d98b04a5220d5ba869db08bc84ef6ab8e078a5845f5991",
+    "carriers.json": "0fcc9b5ba559f72068de55ab0a2d96f2785d366cac0cea1269b130cb0f017eff"
+  },
+  "peer": [
+    "Addr->IP     : 38.147.130.74:5060",
+    "Status       : OK (139 ms)"
+  ]
+}
