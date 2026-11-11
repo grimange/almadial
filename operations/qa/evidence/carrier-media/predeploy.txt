@@ -1,0 +1,67 @@
+UTC 2026-11-11T18:42:09.357433+00:00
+COMMAND hostname RC 0
+dialer01
+
+COMMAND /usr/sbin/asterisk -rx core show version RC 0
+Asterisk 20.21.0 built by root @ dialer01 on a x86_64 running Linux on 2026-11-04 21:37:40 UTC
+
+COMMAND /usr/sbin/asterisk -rx rtp show settings RC 0
+General Settings:
+----------------
+  Port start:      10000
+  Port end:        20000
+  Checksums:       Yes
+  DTMF Timeout:    1200
+  Strict RTP:      Yes
+  Probation:       4 frames
+  Replay Protect:  Yes
+  ICE support:     Yes
+  STUN:            disabled
+   Address:        0.0.0.0:0
+
+COMMAND /usr/sbin/asterisk -rx sip show peer Jaintel3 RC 0
+Peer Jaintel3 not found.
+
+COMMAND /usr/sbin/asterisk -rx core show channels count RC 0
+0 active channels
+0 active calls
+163 calls processed
+
+COMMAND /usr/local/sbin/alma-portal-carriers validate RC 0
+Validation: OK
+
+COMMAND /usr/bin/firewall-cmd --check-config RC 0
+success
+
+COMMAND /usr/bin/firewall-cmd --get-zone-of-interface=eth0 RC 0
+public
+
+COMMAND systemctl is-active asterisk firewalld httpd alma-portal-443-apply.timer alma-portal-sip-guard.service RC 0
+active
+active
+active
+active
+active
+
+COMMAND /usr/bin/unshare -n /usr/sbin/nft list tables RC 0
+
+
+SHA256 sip_guard.py e58e3afe58305f6a5a685147c5f51b8cd6fa0612948d691a65fbf16379a1eb60
+SHA256 carrier_cli.py cf11cd729da2f99ba6b7b1090b7d21c0807201dc1024475e6ea4a56ea83eb4cb
+SHA256 common.py 61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74
+SHA256 apply_requests.py 4794916b5a0b0d7c4f5c05e073d97d62c13be663f045cb70f18b0c4dfd471c90
+SHA256 carriers.json 0fcc9b5ba559f72068de55ab0a2d96f2785d366cac0cea1269b130cb0f017eff
+CONFIG ["38.147.130.74"]
+  UDP Bindaddress:        0.0.0.0:5060
+  Direct RTP setup:       No
+  SIP address remapping:  Disabled
+  Externhost:             <none>
+  Externaddr:             (null)
+  Localnet:               192.168.0.0/255.255.0.0
+  Symmetric RTP:          Yes
+  RTCP Multiplexing:      No
+FIREWALLD_CHAINS [{"family": "inet", "table": "firewalld", "name": "nat_OUTPUT", "handle": 112, "type": "nat", "hook": "output", "prio": -90, "policy": "accept"}, {"family": "inet", "table": "firewalld", "name": "filter_INPUT", "handle": 116, "type": "filter", "hook": "input", "prio": 10, "policy": "accept"}, {"family": "inet", "table": "firewalld", "name": "filter_OUTPUT", "handle": 118, "type": "filter", "hook": "output", "prio": 10, "policy": "accept"}]
+RTP_CONF [general]
+rtpstart=10000
+rtpend=20000
+[ice_host_candidates]

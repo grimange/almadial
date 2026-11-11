@@ -1,0 +1,9 @@
+2026-11-11T18:49:19.365287+00:00
+COMMAND ["asterisk", "-rx", "core show channels concise"]
+
+COMMAND ["asterisk", "-rx", "confbridge list"]
+Conference Bridge Name           Users  Marked Locked Muted
+================================ ====== ====== ====== =====
+
+COMMAND ["asterisk", "-rx", "sip show peer Jaintel3"]
+Peer Jaintel3 not found.

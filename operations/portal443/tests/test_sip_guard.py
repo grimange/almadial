@@ -24,7 +24,7 @@ class SipGuard(unittest.TestCase):
             if args[:3] == ('-j', 'list', 'table'):
                 return types.SimpleNamespace(returncode=0, stdout=json.dumps({'nftables': [
                     {'rule': {'chain': chain, 'comment': guard.POLICY}} for chain in ('input', 'output')] +
-                    [{'set': {'name': 'carriers4', 'elem': ['38.147.130.74']}}]}))
+                    [{'set': {'name': 'carriers4', 'elem': ['38.147.130.74']}}, {'set': {'name': 'carrier_media4', 'elem': []}}]}))
             if args[0] == '-j':
                 members = ['8.8.8.8', '9.9.9.9'] if args[-1] == 'agents4' else ['8.8.8.8', '9.9.9.9', '1.1.1.1']
                 data = {'nftables': [{'set': {'elem': [{'elem': {'val': ip}} for ip in members]}}]}
@@ -98,7 +98,7 @@ class SipGuard(unittest.TestCase):
             calls.append((args, script))
             data = {'nftables': [
                 {'rule': {'chain': c, 'comment': guard.POLICY}} for c in ('input', 'output')] +
-                [{'set': {'name': 'carriers4', 'elem': []}}]}
+                [{'set': {'name': 'carriers4', 'elem': []}}, {'set': {'name': 'carrier_media4', 'elem': []}}]}
             return types.SimpleNamespace(returncode=0, stdout=json.dumps(data))
         guard.bootstrap(command)
         self.assertEqual(len(calls), 2)
@@ -112,7 +112,7 @@ class SipGuard(unittest.TestCase):
             calls.append(args)
             return types.SimpleNamespace(returncode=0, stdout=json.dumps({'nftables': [
                 {'rule': {'chain': chain, 'comment': guard.POLICY}} for chain in ('input', 'output')] +
-                    [{'set': {'name': 'carriers4', 'elem': ['38.147.130.74']}}]}))
+                    [{'set': {'name': 'carriers4', 'elem': ['38.147.130.74']}}, {'set': {'name': 'carrier_media4', 'elem': []}}]}))
         guard.bootstrap(command)
         self.assertEqual(len(calls), 1)
 

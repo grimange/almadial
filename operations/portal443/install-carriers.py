@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import stat
 import subprocess
 import sys
@@ -30,6 +31,25 @@ def contexts():
     subprocess.run(['/usr/sbin/restorecon', *[str(p) for p in FILES.values() if p.exists()]], check=True)
 
 
+def check_media_range():
+    result = subprocess.run(['/usr/sbin/asterisk', '-rx', 'rtp show settings'],
+                            capture_output=True, text=True, timeout=8, check=True)
+    start = re.search(r'^\s*Port start:\s*(\d+)\s*$', result.stdout, re.M)
+    end = re.search(r'^\s*Port end:\s*(\d+)\s*$', result.stdout, re.M)
+    if not start or not end or f'{start[1]}-{end[1]}' != cli.guard.RTP_PORTS:
+        raise RuntimeError('Effective Asterisk RTP range does not match the supported guard media range; no installation performed')
+
+
+def policy_content(value):
+    # Handles and traffic counters change naturally; compare rule semantics.
+    if isinstance(value, list):
+        return [policy_content(x) for x in value]
+    if isinstance(value, dict):
+        return {k: None if k == 'counter' else policy_content(v)
+                for k, v in value.items() if k not in ('handle', 'index')}
+    return value
+
+
 def legacy_set(fw, wanted, permanent):
     present = LEGACY in fw.rich(permanent)
     if present != wanted:
@@ -50,6 +70,11 @@ def rollback(backup, fw):
     actions += [('permanent rules', lambda: fw.set_rich(set(manifest['permanent']), True)),
                 ('runtime rules', lambda: fw.set_rich(set(manifest['runtime']))),
                 ('carrier set', lambda: fw.restore_nft(set(manifest['members'])))]
+    if 'policy' in manifest:
+        media_fw = cli.Firewall(media=True)
+        actions += [('media permanent', lambda: media_fw.set_rich(set(manifest['media_permanent']), True)),
+                    ('media runtime', lambda: media_fw.set_rich(set(manifest['media_runtime']))),
+                    ('guard policy', lambda: fw.restore_policy(manifest['policy']))]
     def restore_files():
         for name, path in FILES.items():
             metadata = manifest['files'][name]
@@ -72,6 +97,12 @@ def rollback(backup, fw):
     expected = (set(manifest['members']), True, set(manifest['runtime']), set(manifest['permanent']))
     if cli.snapshot(fw) != expected:
         failures.append('firewall read-back mismatch')
+    if 'policy' in manifest:
+        if policy_content(fw.policy_snapshot()) != policy_content(manifest['policy']):
+            failures.append('guard policy read-back mismatch')
+        if (media_fw.managed() != set(manifest['media_runtime']) or
+                media_fw.managed(True) != set(manifest['media_permanent'])):
+            failures.append('media rich-rule read-back mismatch')
     if manifest['adopt_peeredge'] and [LEGACY in fw.rich(p) for p in (False, True)] != manifest['legacy']:
         failures.append('legacy rule read-back mismatch')
     if failures:
@@ -94,6 +125,7 @@ def main():
         if args.rollback:
             rollback(args.rollback, fw)
             return
+        check_media_range()
         configured, raw, _ = cli.load(CONFIG)
         if args.expect_guard_sha256 and digest(FILES['sip_guard.py']) != args.expect_guard_sha256:
             raise RuntimeError('Deployed guard differs from the inspected baseline')
@@ -108,6 +140,10 @@ def main():
                     'runtime': sorted(before[2]), 'permanent': sorted(before[3]),
                     'legacy': [LEGACY in fw.rich(p) for p in (False, True)],
                     'adopt_peeredge': args.adopt_peeredge, 'files': {}}
+        manifest['policy'] = fw.policy_snapshot()
+        media_fw = cli.Firewall(media=True)
+        manifest['media_runtime'] = sorted(media_fw.managed())
+        manifest['media_permanent'] = sorted(media_fw.managed(True))
         for name, path in FILES.items():
             if path.is_symlink():
                 raise RuntimeError(f'Refusing symlink target: {path}')
@@ -128,7 +164,9 @@ def main():
                 cli.atomic_write(path, Path(__file__).with_name(name).read_bytes(),
                                  0o755 if name == 'alma-portal-carriers' else 0o644)
             contexts()
+            cli.guard.bootstrap()  # Atomically upgrade chains; retain dynamic deadlines.
             cli.execute('sync', path=CONFIG, firewall=fw)
+            cli.execute('sync', path=CONFIG, firewall=media_fw, media=True)
             if args.adopt_peeredge:
                 legacy_set(fw, False, False)
                 legacy_set(fw, False, True)
@@ -136,6 +174,8 @@ def main():
                 raise RuntimeError('Installer unexpectedly changed carrier configuration')
             if cli.execute('validate', path=CONFIG, firewall=fw):
                 raise RuntimeError('Post-install verification failed')
+            if cli.execute('validate', path=CONFIG, firewall=media_fw, media=True):
+                raise RuntimeError('Post-install media verification failed')
             for name, path in FILES.items():
                 if digest(path) != digest(Path(__file__).with_name(name)):
                     raise RuntimeError(f'Installed content mismatch: {path}')

@@ -1,0 +1,69 @@
+VERIFY UTC 2026-11-11T18:46:53.475876+00:00
+COMMAND /usr/local/sbin/alma-portal-carriers add 38.147.130.74
+Carrier 38.147.130.74: already configured; synchronized (no address change).
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+COMMAND /usr/local/sbin/alma-portal-carriers sync
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+COMMAND /usr/local/sbin/alma-portal-carriers media sync
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+COMMAND /usr/local/sbin/alma-portal-carriers media sync
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+COMMAND python3 /opt/alma-portal-443/sip_guard.py
+
+COMMAND systemctl start alma-portal-443-apply.service
+
+COMMAND systemctl show alma-portal-443-apply.service -p Result -p ExecMainStatus -p ExecMainStartTimestamp -p ExecMainExitTimestamp
+Result=success
+ExecMainStartTimestamp=Wed 2026-11-11 13:46:59 EST
+ExecMainExitTimestamp=Wed 2026-11-11 13:47:01 EST
+ExecMainStatus=0
+RECONCILIATION READBACK {"rule_count": 20, "sip": ["38.147.130.74"], "media": [], "agent_members_preserved": true, "static_no_timeout": true}
+OWNED_MEDIA_RULES [{"family": "inet", "table": "alma_portal_sip", "chain": "input", "handle": 147, "expr": [{"match": {"op": "==", "left": {"payload": {"protocol": "ip", "field": "saddr"}}, "right": "@carrier_media4"}}, {"match": {"op": "==", "left": {"payload": {"protocol": "udp", "field": "dport"}}, "right": {"range": [10000, 20001]}}}, {"counter": {"packets": 0, "bytes": 0}}, {"return": null}]}, {"family": "inet", "table": "alma_portal_sip", "chain": "output", "handle": 157, "expr": [{"match": {"op": "==", "left": {"payload": {"protocol": "ip", "field": "daddr"}}, "right": "@carrier_media4"}}, {"match": {"op": "==", "left": {"payload": {"protocol": "udp", "field": "sport"}}, "right": {"range": [10000, 20001]}}}, {"counter": {"packets": 0, "bytes": 0}}, {"return": null}]}]
+SIP_RULES_RUNTIME ["rule priority=\"-73\" family=\"ipv4\" source address=\"38.147.130.74/32\" port port=\"5060\" protocol=\"udp\" accept"]
+SIP_RULES_PERMANENT ["rule priority=\"-73\" family=\"ipv4\" source address=\"38.147.130.74/32\" port port=\"5060\" protocol=\"udp\" accept"]
+MEDIA_RULES_RUNTIME []
+MEDIA_RULES_PERMANENT []
+DROPS_PER_DIRECTION {"input": 3, "output": 3}
+COMMAND /usr/local/sbin/alma-portal-carriers list
+Trusted SIP Carriers (UDP/5060 only)
+38.147.130.74  Configured  nftables=OK  runtime=OK  permanent=OK
+Validation: OK
+COMMAND /usr/local/sbin/alma-portal-carriers validate
+Validation: OK
+COMMAND /usr/local/sbin/alma-portal-carriers media list
+Trusted Carrier Media (UDP/10000-20001)
+(none configured)
+Validation: OK
+COMMAND /usr/local/sbin/alma-portal-carriers media validate
+Validation: OK
+COMMAND /usr/bin/firewall-cmd --check-config
+success
+COMMAND /usr/sbin/asterisk -rx core show channels count
+2 active channels
+1 active call
+164 calls processed
+COMMAND /usr/sbin/asterisk -rx sip show peer Jaintel3
+Peer Jaintel3 not found.
+COMMAND systemctl is-active asterisk firewalld httpd alma-portal-443-apply.timer alma-portal-sip-guard.service
+active
+active
+active
+active
+active
+CONFIG_BYTES_SHA256 0fcc9b5ba559f72068de55ab0a2d96f2785d366cac0cea1269b130cb0f017eff
+FINAL PASS; actual worker and standalone bootstrap preserved SIP/media state. Live RTP NOT_RUN.

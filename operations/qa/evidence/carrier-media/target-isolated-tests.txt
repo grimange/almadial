@@ -1,0 +1,62 @@
+PASS real kernel: old-policy migration, nft -c, dynamic set handles/deadlines preserved
+Carrier 8.8.8.8: added.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+Carrier 8.8.8.8: already configured; synchronized (no address change).
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+Carrier 8.8.8.8: removed.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+Validation: OK
+PASS real kernel: media add/duplicate/sync/remove; simulated firewalld; SIP preserved
+PASS real kernel: scoped old-policy rollback; media set removed; agents preserved
+PASS real kernel: fresh template with media; repeated bootstrap unchanged
+All isolated kernel checks passed. Namespace destroyed on exit; host firewall never used.
+
+test_add_remove_preserves_config_and_agents (test_carrier_cli.CarrierCLI.test_add_remove_preserves_config_and_agents) ... ok
+test_atomic_replace_preserves_mode (test_carrier_cli.CarrierCLI.test_atomic_replace_preserves_mode) ... ok
+test_concurrent_add_add_and_add_remove (test_carrier_cli.CarrierCLI.test_concurrent_add_add_and_add_remove) ... ok
+test_installer_preserves_live_config_and_rollback_restores_files (test_carrier_cli.CarrierCLI.test_installer_preserves_live_config_and_rollback_restores_files) ... ok
+test_invalid_json_schema_permissions_owner_and_symlink (test_carrier_cli.CarrierCLI.test_invalid_json_schema_permissions_owner_and_symlink) ... ok
+test_invalid_unsuitable_and_duplicate_addresses (test_carrier_cli.CarrierCLI.test_invalid_unsuitable_and_duplicate_addresses) ... ok
+test_nft_readback_and_restore_are_carrier_only (test_carrier_cli.CarrierCLI.test_nft_readback_and_restore_are_carrier_only) ... ok
+test_nonroot_mutation_denied (test_carrier_cli.CarrierCLI.test_nonroot_mutation_denied) ... Error: root privileges required for changes.
+ok
+test_noop_and_sync_idempotence (test_carrier_cli.CarrierCLI.test_noop_and_sync_idempotence) ... ok
+test_partial_failure_restores_exact_previous_drift (test_carrier_cli.CarrierCLI.test_partial_failure_restores_exact_previous_drift) ... ok
+test_readonly_reports_all_drift_without_mutation (test_carrier_cli.CarrierCLI.test_readonly_reports_all_drift_without_mutation) ... ok
+test_rollback_failure_is_explicit (test_carrier_cli.CarrierCLI.test_rollback_failure_is_explicit) ... ok
+test_rule_namespace_and_port_scope (test_carrier_cli.CarrierCLI.test_rule_namespace_and_port_scope) ... ok
+test_sync_repairs_only_managed_drift (test_carrier_cli.CarrierCLI.test_sync_repairs_only_managed_drift) ... ok
+test_worker_lock_overlap_and_timeout (test_carrier_cli.CarrierCLI.test_worker_lock_overlap_and_timeout) ... ok
+test_cli_media_dispatch_and_root_boundary (test_carrier_media.CarrierMedia.test_cli_media_dispatch_and_root_boundary) ... Error: root privileges required for changes.
+ok
+test_concurrent_media_add_add_and_sip_add_media_remove (test_carrier_media.CarrierMedia.test_concurrent_media_add_add_and_sip_add_media_remove) ... ok
+test_generated_rules_media_order_local_ports_and_no_sip_authorization (test_carrier_media.CarrierMedia.test_generated_rules_media_order_local_ports_and_no_sip_authorization) ... ok
+test_guard_media_reload_and_bootstrap_keep_dynamic_sets (test_carrier_media.CarrierMedia.test_guard_media_reload_and_bootstrap_keep_dynamic_sets) ... ok
+test_installer_media_rollback_and_live_inventory_preservation (test_carrier_media.CarrierMedia.test_installer_media_rollback_and_live_inventory_preservation) ... ok
+test_installer_rejects_mismatched_effective_rtp_range (test_carrier_media.CarrierMedia.test_installer_rejects_mismatched_effective_rtp_range) ... ok
+test_invalid_config_and_input_no_mutations (test_carrier_media.CarrierMedia.test_invalid_config_and_input_no_mutations) ... ok
+test_media_lifecycle_legacy_migration_and_sip_backward_compatibility (test_carrier_media.CarrierMedia.test_media_lifecycle_legacy_migration_and_sip_backward_compatibility) ... ok
+test_media_set_readback_restore_scoped_and_guard_bootstrap (test_carrier_media.CarrierMedia.test_media_set_readback_restore_scoped_and_guard_bootstrap) ... ok
+test_metadata_and_other_collection_preserved (test_carrier_media.CarrierMedia.test_metadata_and_other_collection_preserved) ... ok
+test_noop_idempotence_and_drift (test_carrier_media.CarrierMedia.test_noop_idempotence_and_drift) ... ok
+test_partial_failure_exact_rollback_both_namespaces (test_carrier_media.CarrierMedia.test_partial_failure_exact_rollback_both_namespaces) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 1.319s
+
+OK
+Warning: removing carrier 8.8.8.8 may disconnect active carrier traffic.

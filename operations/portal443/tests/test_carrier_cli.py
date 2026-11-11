@@ -33,6 +33,12 @@ class FakeFirewall:
         self.failure = None
         self.policy = True
 
+    def policy_snapshot(self):
+        return {'rules': [], 'media_set': None}
+
+    def restore_policy(self, saved):
+        self.policy = True
+
     def nft(self):
         return set(self.members), self.policy
 
@@ -264,14 +270,21 @@ class CarrierCLI(unittest.TestCase):
         real_lock = cli.locked
         with patch.object(installer, 'FILES', files), patch.object(installer, 'CONFIG', self.path), \
              patch.object(installer, 'BACKUP_ROOT', backup_root), patch.object(installer, 'contexts'), \
+             patch.object(installer, 'check_media_range'), \
              patch.object(installer.cli.guard, 'CARRIER_CONFIG', self.path), \
              patch.object(installer.cli, 'locked', lambda: real_lock(self.lock)), \
              patch.object(installer.cli.os, 'geteuid', return_value=0), \
              patch.object(installer.cli, 'Firewall', return_value=self.fw), \
+             patch.object(installer.cli.guard, 'bootstrap'), \
+             patch.object(installer.cli, 'execute', wraps=cli.execute) as execute, \
              patch.object(self.fw, 'rich', side_effect=rich, create=True), \
              patch.object(self.fw, 'command', side_effect=command, create=True), \
              patch.object(sys, 'argv', ['install-carriers.py', '--adopt-peeredge']), \
              contextlib.redirect_stdout(io.StringIO()):
+            # SIP fake covers the original installer migration; the separate
+            # media integration backend is exercised in test_carrier_media.
+            real_execute = execute._mock_wraps
+            execute.side_effect = lambda *a, **k: 0 if k.get('media') else real_execute(*a, **k)
             installer.main()
             backup = next(backup_root.iterdir())
             self.assertEqual(self.path.read_bytes(), original)

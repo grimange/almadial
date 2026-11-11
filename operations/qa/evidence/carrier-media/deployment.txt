@@ -1,0 +1,44 @@
+DEPLOY UTC 2026-11-11T18:45:52.826543+00:00
+Backup: /root/qa-backups/carrier-cli-20261111T184553704474Z
+Agent/grace handles, members and deadlines preserved; nft syntax checked.
+Agent/grace handles, members and deadlines preserved; nft syntax checked.
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+Agent/grace handles, members and deadlines preserved; nft syntax checked.
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+Validation: OK
+Validation: OK
+Installed: /opt/alma-portal-443/sip_guard.py sha256=2eb256d4b731ffc6e58d5dff8d36cf4ba9dbe85b9f01e4a1d884d64626d23ff5
+Installed: /opt/alma-portal-443/carrier_cli.py sha256=8452d8dc907ecdc64cdb9583da4801f018c7782cd5e123df2d1fd8a9521ad26b
+Installed: /usr/local/sbin/alma-portal-carriers sha256=c5c2b28f532dc173f6180b74c69e8cb6daa7f1b4be041b3142e4fc976d2f17d3
+Installation verified. Live carriers.json preserved; no services restarted.
+PROTECTED_HASHES {"/etc/asterisk/extensions.conf": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde", "/etc/asterisk/pjsip.conf": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6", "/etc/asterisk/rtp.conf": "9f9a8a0d492915a1f7d2cd47afd0b7a4f1914589d3f7a193fc0f7c443afa9aa7", "/etc/asterisk/sip-vicidial.conf": "af7a467912d2aff6f6adacd791f6d87c6181abb49b01bc25cb6341b9c21e18c1", "/etc/asterisk/sip.conf": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae", "/etc/firewalld/zones/public.xml": "1133845ba8a60d44c80d90be1164d59e1aa0e72d70de07df07abb76c1ab61094", "/opt/alma-portal-443/apply_requests.py": "4794916b5a0b0d7c4f5c05e073d97d62c13be663f045cb70f18b0c4dfd471c90", "/opt/alma-portal-443/common.py": "61cd441e2d34dfa65e21b58b8c687b30e62425bde0fd022ff0f3a0f88415cc74"}
+Service PIDs, all preexisting rich rules, and live JSON unchanged.
+COMMAND /usr/local/sbin/alma-portal-carriers list
+Trusted SIP Carriers (UDP/5060 only)
+38.147.130.74  Configured  nftables=OK  runtime=OK  permanent=OK
+Validation: OK
+COMMAND /usr/local/sbin/alma-portal-carriers validate
+Validation: OK
+COMMAND /usr/local/sbin/alma-portal-carriers media list
+Trusted Carrier Media (UDP/10000-20001)
+(none configured)
+Validation: OK
+COMMAND /usr/local/sbin/alma-portal-carriers media validate
+Validation: OK
+COMMAND /usr/bin/firewall-cmd --check-config
+success
+COMMAND /usr/sbin/asterisk -rx core show channels count
+0 active channels
+0 active calls
+163 calls processed
+COMMAND /usr/sbin/asterisk -rx sip show peer Jaintel3
+Peer Jaintel3 not found.
+DEPLOYMENT PASS; no address was added, no service restarted.
