@@ -1,0 +1,14 @@
+{"observer": "started", "scope": "SIP1001 host inbound/outbound RTP metadata and PCMU energy only", "utc": "2026-11-11T18:17:39.697354+00:00"}
+{"utc": "2026-11-11T18:17:41.702796+00:00", "direction": "incoming", "source_port": 25201, "dest_port": 19582, "payload_type": 0, "packets": 101, "rms": 0.0, "peak": 0}
+{"utc": "2026-11-11T18:17:41.702880+00:00", "direction": "outgoing", "source_port": 19582, "dest_port": 25201, "payload_type": 0, "packets": 101, "rms": 5854.832, "peak": 8828}
+{"utc": "2026-11-11T18:17:43.720661+00:00", "direction": "incoming", "source_port": 25201, "dest_port": 19582, "payload_type": 0, "packets": 101, "rms": 0.0, "peak": 0}
+{"utc": "2026-11-11T18:17:43.720769+00:00", "direction": "outgoing", "source_port": 19582, "dest_port": 25201, "payload_type": 0, "packets": 100, "rms": 5859.737, "peak": 8828}
+{"utc": "2026-11-11T18:17:45.722912+00:00", "direction": "outgoing", "source_port": 19582, "dest_port": 25201, "payload_type": 0, "packets": 101, "rms": 5930.247, "peak": 8828}
+{"utc": "2026-11-11T18:17:45.723015+00:00", "direction": "incoming", "source_port": 25201, "dest_port": 19582, "payload_type": 0, "packets": 100, "rms": 0.0, "peak": 0}
+{"utc": "2026-11-11T18:17:47.740707+00:00", "direction": "incoming", "source_port": 25201, "dest_port": 19582, "payload_type": 0, "packets": 101, "rms": 0.0, "peak": 0}
+{"utc": "2026-11-11T18:17:47.740818+00:00", "direction": "outgoing", "source_port": 19582, "dest_port": 25201, "payload_type": 0, "packets": 100, "rms": 5846.917, "peak": 8828}
+{"utc": "2026-11-11T18:17:49.742857+00:00", "direction": "outgoing", "source_port": 19582, "dest_port": 25201, "payload_type": 0, "packets": 101, "rms": 5840.643, "peak": 8828}
+{"utc": "2026-11-11T18:17:49.742934+00:00", "direction": "incoming", "source_port": 25201, "dest_port": 19582, "payload_type": 0, "packets": 100, "rms": 0.0, "peak": 0}
+{"utc": "2026-11-11T18:17:51.760692+00:00", "direction": "incoming", "source_port": 25201, "dest_port": 19582, "payload_type": 0, "packets": 101, "rms": 0.0, "peak": 0}
+{"utc": "2026-11-11T18:17:51.760784+00:00", "direction": "outgoing", "source_port": 19582, "dest_port": 25201, "payload_type": 0, "packets": 100, "rms": 5908.724, "peak": 8828}
+{"observer": "ended"}

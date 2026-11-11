@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "checks": [
+    "existing root-created daily action log is appendable",
+    "future root-created 0666-open file inherits access",
+    "both creators remain compatible",
+    "unrelated unprivileged user cannot append or create",
+    "archive access and permissions unchanged",
+    "repeated tmpfiles reconciliation is idempotent",
+    "scoped metadata rollback restores original access"
+  ]
+}

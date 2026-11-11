@@ -1,0 +1,399 @@
+{
+  "utc": "2026-11-11T18:14:40.751602+00:00",
+  "sip show channelstats": "Peer             Call ID      Duration Recv: Pack  Lost       (     %) Jitter Send: Pack  Lost       (     %) Jitter\n158.62.74.253    4ae6fb58668  00:00:37 0000001640  0000000000 ( 0.00%) 0.0000 0000001665  0000000000 ( 0.00%) 0.0027\n127.0.0.1        vaue8hp9j0b  00:01:39 0000004953  0000000000 ( 0.00%) 0.0001 0000004946  0000000000 ( 0.00%) 0.0003\n2 active SIP channels\n",
+  "sip show channels": "Peer             User/ANR         Call ID          Format           Hold     Last Message    Expiry     Peer      \n38.147.130.74    (None)           6561142f49f5e82  (nothing)        No       Init: OPTIONS              Jaintel3  \n38.147.130.74    (None)           4c8d41c11df2339  (nothing)        No       Init: OPTIONS              Jaintel3  \n38.147.130.74    (None)           179ccdb902c5d2b  (nothing)        No       Init: OPTIONS              Jaintel3  \n158.62.74.253    1001             4ae6fb586681751  (ulaw)           No       Tx: ACK                    1001      \n127.0.0.1        1002             vaue8hp9j0bj3p3  (ulaw)           No       Rx: ACK                    1002      \n38.147.130.74    (None)           6b3981e2686e65a  (nothing)        No       Init: OPTIONS              Jaintel3  \n6 active SIP dialogs\n",
+  "confbridge list 9600000": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-0000003b              M      vici_customer_user vici_agent_bridge default_menu     1002\nSIP/1001-0000003c              M      vici_customer_user vici_agent_bridge default_menu     7000000001\nLocal/59600000@default-0000008f;2 m      vici_recording_user vici_agent_bridge default_menu     <unknown>\n",
+  "nft_input": {
+    "nftables": [
+      {
+        "metainfo": {
+          "version": "1.1.5",
+          "release_name": "Commodore Bullmoose #6",
+          "json_schema_version": 1
+        }
+      },
+      {
+        "chain": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "name": "input",
+          "handle": 1,
+          "type": "filter",
+          "hook": "input",
+          "prio": -10,
+          "policy": "accept"
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 85,
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "meta": {
+                    "key": "iifname"
+                  }
+                },
+                "right": "lo"
+              }
+            },
+            {
+              "return": null
+            }
+          ]
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 86,
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "ip",
+                    "field": "saddr"
+                  }
+                },
+                "right": "@carriers4"
+              }
+            },
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "udp",
+                    "field": "dport"
+                  }
+                },
+                "right": 5060
+              }
+            },
+            {
+              "counter": {
+                "packets": 20,
+                "bytes": 7300
+              }
+            },
+            {
+              "return": null
+            }
+          ]
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 87,
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "udp",
+                    "field": "dport"
+                  }
+                },
+                "right": 5060
+              }
+            },
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "ip",
+                    "field": "saddr"
+                  }
+                },
+                "right": "@agents4"
+              }
+            },
+            {
+              "return": null
+            }
+          ]
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 88,
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "udp",
+                    "field": "dport"
+                  }
+                },
+                "right": 5060
+              }
+            },
+            {
+              "counter": {
+                "packets": 2,
+                "bytes": 893
+              }
+            },
+            {
+              "drop": null
+            }
+          ]
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 89,
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "udp",
+                    "field": "dport"
+                  }
+                },
+                "right": 5061
+              }
+            },
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "ip",
+                    "field": "saddr"
+                  }
+                },
+                "right": "@agents4"
+              }
+            },
+            {
+              "return": null
+            }
+          ]
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 90,
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "udp",
+                    "field": "dport"
+                  }
+                },
+                "right": 5061
+              }
+            },
+            {
+              "counter": {
+                "packets": 0,
+                "bytes": 0
+              }
+            },
+            {
+              "drop": null
+            }
+          ]
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 91,
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "udp",
+                    "field": "dport"
+                  }
+                },
+                "right": {
+                  "range": [
+                    10000,
+                    20000
+                  ]
+                }
+              }
+            },
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "ip",
+                    "field": "saddr"
+                  }
+                },
+                "right": "@agents4"
+              }
+            },
+            {
+              "mangle": {
+                "key": {
+                  "ct": {
+                    "key": "mark"
+                  }
+                },
+                "value": {
+                  "|": [
+                    {
+                      "ct": {
+                        "key": "mark"
+                      }
+                    },
+                    1073741824
+                  ]
+                }
+              }
+            },
+            {
+              "return": null
+            }
+          ]
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 92,
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "udp",
+                    "field": "dport"
+                  }
+                },
+                "right": {
+                  "range": [
+                    10000,
+                    20000
+                  ]
+                }
+              }
+            },
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "ip",
+                    "field": "saddr"
+                  }
+                },
+                "right": "@grace4"
+              }
+            },
+            {
+              "match": {
+                "op": "in",
+                "left": {
+                  "ct": {
+                    "key": "state"
+                  }
+                },
+                "right": "established"
+              }
+            },
+            {
+              "match": {
+                "op": "!=",
+                "left": {
+                  "&": [
+                    {
+                      "ct": {
+                        "key": "mark"
+                      }
+                    },
+                    1073741824
+                  ]
+                },
+                "right": 0
+              }
+            },
+            {
+              "return": null
+            }
+          ]
+        }
+      },
+      {
+        "rule": {
+          "family": "inet",
+          "table": "alma_portal_sip",
+          "chain": "input",
+          "handle": 93,
+          "comment": "alma-phone-sip-5060-5061-v2-carriers",
+          "expr": [
+            {
+              "match": {
+                "op": "==",
+                "left": {
+                  "payload": {
+                    "protocol": "udp",
+                    "field": "dport"
+                  }
+                },
+                "right": {
+                  "range": [
+                    10000,
+                    20000
+                  ]
+                }
+              }
+            },
+            {
+              "counter": {
+                "packets": 4,
+                "bytes": 599
+              }
+            },
+            {
+              "drop": null
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

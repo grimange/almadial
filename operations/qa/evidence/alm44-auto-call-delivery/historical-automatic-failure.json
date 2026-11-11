@@ -1,0 +1,775 @@
+{
+  "utc": "2026-11-10T14:47:24.060057+00:00",
+  "lead_id": 76,
+  "list_id": 910022,
+  "campaign": "QAOUT01",
+  "initial": "76\tNEW\t0\tN\n76\tREADY",
+  "samples": [
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NEW\t0\tN",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!282!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!282!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!282!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 0.1
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!283!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!283!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!283!!1794321761.324\nLocal/22217000000001@default-00000083;1!default!22217000000001!1!Ringing!AppDial2!(Outgoing Line)!1001!!!3!0!!1794322044.328\nLocal/22217000000001@default-00000083;2!default!22217000000001!3!Ring!Dial!SIP/1001,45,To!0000000000!!!3!0!!1794322044.329\nSIP/1001-00000036!default!22217000000001!1!Ringing!AppDial!(Outgoing Line)!0000000000!1001!!3!0!!1794322044.330",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 1.1
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!284!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!284!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!284!!1794321761.324\nLocal/22217000000001@default-00000083;1!default!22217000000001!1!Ringing!AppDial2!(Outgoing Line)!1001!!!3!1!!1794322044.328\nLocal/22217000000001@default-00000083;2!default!22217000000001!3!Ring!Dial!SIP/1001,45,To!0000000000!!!3!1!!1794322044.329\nSIP/1001-00000036!default!22217000000001!1!Ringing!AppDial!(Outgoing Line)!0000000000!1001!!3!1!!1794322044.330",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 2.2
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!285!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!285!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!285!!1794321761.324\nLocal/22217000000001@default-00000083;1!default!22217000000001!1!Ringing!AppDial2!(Outgoing Line)!1001!!!3!2!!1794322044.328\nLocal/22217000000001@default-00000083;2!default!22217000000001!3!Ring!Dial!SIP/1001,45,To!0000000000!!!3!2!!1794322044.329\nSIP/1001-00000036!default!22217000000001!1!Ringing!AppDial!(Outgoing Line)!0000000000!1001!!3!2!!1794322044.330",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 3.2
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!286!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!286!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!286!!1794321761.324\nLocal/22217000000001@default-00000083;1!default!22217000000001!1!Ringing!AppDial2!(Outgoing Line)!1001!!!3!3!!1794322044.328\nLocal/22217000000001@default-00000083;2!default!22217000000001!3!Ring!Dial!SIP/1001,45,To!0000000000!!!3!3!!1794322044.329\nSIP/1001-00000036!default!22217000000001!1!Ringing!AppDial!(Outgoing Line)!0000000000!1001!!3!3!!1794322044.330",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 4.3
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!288!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!287!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!287!!1794321761.324\nLocal/22217000000001@default-00000083;1!default!22217000000001!1!Ringing!AppDial2!(Outgoing Line)!1001!!!3!4!!1794322044.328\nLocal/22217000000001@default-00000083;2!default!22217000000001!3!Ring!Dial!SIP/1001,45,To!0000000000!!!3!4!!1794322044.329\nSIP/1001-00000036!default!22217000000001!1!Ringing!AppDial!(Outgoing Line)!0000000000!1001!!3!4!!1794322044.330",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 5.3
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!289!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!288!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!288!!1794321761.324\nLocal/22217000000001@default-00000083;1!default!22217000000001!1!Ringing!AppDial2!(Outgoing Line)!1001!!!3!5!!1794322044.328\nLocal/22217000000001@default-00000083;2!default!22217000000001!3!Ring!Dial!SIP/1001,45,To!0000000000!!!3!5!!1794322044.329\nSIP/1001-00000036!default!22217000000001!1!Ringing!AppDial!(Outgoing Line)!0000000000!1001!!3!5!!1794322044.330",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 6.4
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!290!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!289!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!289!!1794321761.324\nLocal/22217000000001@default-00000083;1!default!138368!2!Up!Wait!2!1001!!!3!6!!1794322044.328\nLocal/22217000000001@default-00000083;2!default!22217000000001!3!Up!Dial!SIP/1001,45,To!0000000000!!1001!3!6!07628dc7-ed31-4e5d-9cd9-9aa94940cac0!1794322044.329\nSIP/1001-00000036!default!!1!Up!AppDial!(Outgoing Line)!0000000000!1001!!3!6!07628dc7-ed31-4e5d-9cd9-9aa94940cac0!1794322044.330",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 7.5
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!291!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!290!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!290!!1794321761.324\nLocal/22217000000001@default-00000083;1!default!138368!2!Up!Wait!2!1001!!!3!8!!1794322044.328\nLocal/22217000000001@default-00000083;2!default!22217000000001!3!Up!Dial!SIP/1001,45,To!0000000000!!1001!3!8!07628dc7-ed31-4e5d-9cd9-9aa94940cac0!1794322044.329\nSIP/1001-00000036!default!!1!Up!AppDial!(Outgoing Line)!0000000000!1001!!3!8!07628dc7-ed31-4e5d-9cd9-9aa94940cac0!1794322044.330",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 8.5
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!292!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!291!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!291!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 9.6
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!293!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!292!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!292!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 10.6
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!294!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!293!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!293!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 11.7
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!295!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!294!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!294!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 12.8
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!296!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!296!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!296!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 13.8
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!297!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!297!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!297!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 14.9
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!298!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!298!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!298!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 16.0
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!299!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!299!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!299!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 17.0
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!300!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!300!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!300!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 18.1
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!301!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!301!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!301!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 19.1
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!302!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!302!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!302!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 20.2
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!303!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!303!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!303!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 21.3
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!305!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!304!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!304!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 22.3
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!306!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!305!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!305!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 23.4
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!307!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!306!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!306!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 24.4
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!308!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!307!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!307!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 25.5
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!309!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!308!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!308!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 26.6
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!310!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!309!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!309!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 27.6
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!311!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!310!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!310!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 28.7
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!312!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!311!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!311!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 29.7
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!313!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!312!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!312!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 30.8
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!314!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!314!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!314!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 31.8
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!315!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!315!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!315!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 32.9
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!316!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!316!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!316!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 33.9
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!317!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!317!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!317!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 35.0
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!318!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!318!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!318!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 36.0
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!319!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!319!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!319!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 37.1
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!320!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!320!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!320!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 38.2
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!321!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!321!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!321!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 39.2
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!322!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!322!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!322!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 40.3
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!324!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!323!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!323!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 41.3
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!325!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!324!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!324!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 42.4
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!326!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!325!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!325!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 43.4
+    },
+    {
+      "live": "qaagent14\tREADY\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!327!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!326!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!326!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 44.5
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!328!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!327!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!327!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 45.5
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!329!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!328!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!328!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 46.6
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!330!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!329!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!329!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 47.7
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!331!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!330!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!330!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 48.7
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!332!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!331!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!331!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 49.7
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!333!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!332!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!332!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 50.8
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!334!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!333!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!333!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 51.8
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!335!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!335!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!335!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 52.8
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!336!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!336!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!336!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 53.9
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!337!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!337!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!337!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 55.0
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!338!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!338!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!338!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 56.0
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!339!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!339!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!339!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 57.1
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!340!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!340!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!340!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 58.2
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!341!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!341!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!341!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 59.2
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!342!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!342!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!342!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 60.3
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!344!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!343!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!343!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 61.3
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!345!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!344!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!344!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 62.4
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!346!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!345!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!345!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 63.4
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!347!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!346!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!346!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 64.5
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!348!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!347!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!347!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 65.5
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!349!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!348!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!348!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 66.6
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!350!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!349!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!349!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 67.6
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!351!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!350!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!350!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 68.7
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!352!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!351!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!351!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 69.8
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!353!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!352!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!352!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 70.8
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!354!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!354!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!354!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 71.9
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "76\tSENT\tNULL\tV1100947240000000076\tNULL",
+      "lead": "NEW\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!355!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!355!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!355!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 72.9
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!356!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!356!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!356!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 74.0
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!357!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!357!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!357!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 75.0
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!358!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!358!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!358!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 76.1
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!359!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!359!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!359!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 77.2
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!360!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!360!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!360!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 78.3
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!362!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!361!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!361!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 79.3
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!363!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!362!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!362!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 80.4
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!364!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!363!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!363!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 81.4
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!365!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!364!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!364!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 82.5
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!366!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!365!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!365!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 83.6
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!367!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!366!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!366!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 84.6
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!368!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!367!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!367!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 85.7
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!369!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!368!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!368!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 86.7
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!370!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!369!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!369!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 87.8
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!371!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!371!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!371!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 88.8
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!372!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!372!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!372!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 89.9
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!373!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!373!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!373!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 91.0
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!374!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!374!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!374!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 92.0
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!375!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!375!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!375!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 93.1
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!376!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!376!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!376!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 94.1
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!377!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!377!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!377!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 95.2
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!378!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!378!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!378!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 96.3
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!380!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!379!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!379!!1794321761.324",
+      "conference": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000035              M      vici_customer_user vici_agent_bridge default_menu     1002",
+      "seconds": 97.3
+    },
+    {
+      "live": "qaagent14\tPAUSED\t0\t9600000\t0",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "SIP/1002-00000035!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!381!!1794321761.323\nCBAnn/9600000-00000081;2!default!s!1!Up!(None)!!!!!3!380!1257841f-9473-4947-a3d4-7bf67922f070!1794321761.325\nCBAnn/9600000-00000081;1!default!s!1!Up!(None)!!!!!3!380!!1794321761.324",
+      "conference": "No conference bridge named '9600000' found!",
+      "seconds": 98.3
+    },
+    {
+      "live": "",
+      "auto": "",
+      "lead": "NA\t1\tY",
+      "channels": "",
+      "conference": "No conference bridge named '9600000' found!",
+      "seconds": 99.4
+    }
+  ],
+  "final_log": "1794322044.329\t76\tNA\tVDAD\t0\tNONE",
+  "final_agentlog": "84\tqaagent14\tNULL\tNULL\t53\t0\t0\t0\n83\tqaagent14\tNULL\tNULL\t95\t47\t0\t0\n82\tqaagent14\tNULL\tNULL\t115\t78\t0\t0\n81\tqaagent14\tNULL\tNULL\t48\t0\t0\t0\n80\tqaagent14\tNULL\tNULL\t73\t0\t0\t0",
+  "recordings": "",
+  "manager": "154\tUPDATED\tOriginate\tV1100944300000000075\tLocal/222117000000001@default-00000082;2\tExten: 138368\tContext: default\tChannel: Local/222117000000001@default\tPriority: 1\n155\tDEAD\tOriginate\tV1100947240000000076\tSIP/1001-00000036\tExten: 138368\tContext: default\tChannel: Local/22217000000001@default\tPriority: 1\n156\tSENT\tRedirect\t1001\t\tChannel: SIP/1001-00000036\tContext: default\tExten: 8368\tPriority: 1\n157\tSENT\tHangup\tULVD34521794322142\t\tChannel: SIP/1002-00000035\t\t\t\n158\tUPDATED\tOriginate\tULVC34531794322142\tLocal/55559600000@default-00000084;2\tChannel: Local/55559600000@default\tContext: default\tExten: 8300\tPriority: 1",
+  "result": "FAIL",
+  "classification": "ALM-44 application routing remains defective; runtime originates internal endpoint but no agent assignment"
+}

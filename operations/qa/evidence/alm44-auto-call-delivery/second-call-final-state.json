@@ -1,0 +1,59 @@
+{
+  "utc": "2026-11-11T18:06:00.752023+00:00",
+  "calls": {
+    "rc": 0,
+    "stdout": "uniqueid\tlead_id\tlist_id\tcampaign_id\tcall_date\tstart_epoch\tend_epoch\tlength_in_sec\tstatus\tuser\tterm_reason\n1794419522.338\t77\t910023\tQAOUT01\t2026-11-11 12:52:06\t1794419526\t1794419595\t69\tNI\tqaagent14\tCALLER\n1794420002.348\t78\t910023\tQAOUT01\t2026-11-11 13:00:06\t1794420006\t1794420081\t75\tNI\tqaagent14\tCALLER\n",
+    "stderr": ""
+  },
+  "leads": {
+    "rc": 0,
+    "stdout": "lead_id\tvendor_lead_code\tlist_id\tstatus\tcalled_count\tcalled_since_last_reset\tuser\n77\tALM44AUTO01\t910023\tNI\t1\tY\tqaagent14\n78\tALM44AUTO02\t910023\tNI\t1\tY\tqaagent14\n",
+    "stderr": ""
+  },
+  "agents": {
+    "rc": 0,
+    "stdout": "agent_log_id\tuser\tevent_time\tlead_id\tcampaign_id\tpause_sec\twait_sec\ttalk_sec\tdispo_sec\tstatus\tuniqueid\n85\tqaagent14\t2026-11-11 12:49:51\t77\tQAOUT01\t81\t54\t69\t1\tNI\t1794419522.338\n88\tqaagent14\t2026-11-11 12:58:49\t78\tQAOUT01\t25\t53\t74\t2\tNI\t1794420002.348\n",
+    "stderr": ""
+  },
+  "recordings": {
+    "rc": 0,
+    "stdout": "recording_id\tlead_id\tfilename\tlocation\tstart_epoch\tend_epoch\tlength_in_sec\n6\t77\t20261111-125206_7000000001\thttps://2.29.153.161/RECORDINGS/20261111-125206_7000000001-all.wav\t1794419526\t1794419595\t69\n7\t78\t20261111-130006_7000000001\thttps://2.29.153.161/RECORDINGS/20261111-130006_7000000001-all.wav\t1794420006\t1794420081\t75\n",
+    "stderr": ""
+  },
+  "cleanup": {
+    "rc": 0,
+    "stdout": "live_agents\n0\nauto_calls\n0\nqa_hopper\n0\nqa_incall\n0\ncampaign_id\tactive\tdial_method\tauto_dial_level\tlocal_call_time\tomit_phone_code\tcampaign_recording\tno_hopper_leads_logins\nQAOUT01\tN\tMANUAL\t0\t12pm-5pm\tN\tONDEMAND\tN\nlist_id\tactive\n910014\tN\n910015\tN\n910016\tN\n910017\tN\n910018\tN\n910019\tN\n910020\tN\n910021\tN\n910022\tN\n910023\tN\n",
+    "stderr": ""
+  },
+  "core show channels": {
+    "rc": 0,
+    "stdout": "Channel                                                          Location                         State   Application(Data)             \n0 active channels\n0 active calls\n156 calls processed\n",
+    "stderr": ""
+  },
+  "confbridge list": {
+    "rc": 0,
+    "stdout": "Conference Bridge Name           Users  Marked Locked Muted\n================================ ====== ====== ====== =====\n",
+    "stderr": ""
+  },
+  "phone1002": {
+    "rc": 0,
+    "selected": [
+      "Expire       : 184",
+      "Addr->IP     : 127.0.0.1:33706",
+      "Status       : Unmonitored",
+      "Reg. Contact : sip:ru4jm8sh@192.0.2.87;transport=wss",
+      "Sess-Expires : 1800 secs"
+    ]
+  },
+  "services": {
+    "rc": 0,
+    "stdout": "Result=success\nExecMainStatus=0\nId=asterisk.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nId=httpd.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nId=php-fpm.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nId=mariadb.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nId=alma-backup.service\nActiveState=inactive\nSubState=dead\n\nResult=success\nId=alma-backup.timer\nActiveState=inactive\nSubState=dead\n\nResult=success\nId=alma-vicidial-recording.timer\nActiveState=active\nSubState=waiting\n",
+    "stderr": ""
+  },
+  "config_sha256": "6c839cd7468d9413f1b5066110289fe99483de86532eec35cc44d78f599d9ac2",
+  "fresh_asterisk_errors": {
+    "rc": 0,
+    "stdout": "[2026-11-11 12:49:56.828] \u001b[1;31mERROR\u001b[0m[1502387]: \u001b[1;37mchan_sip.c\u001b[0m:\u001b[1;37m4374\u001b[0m \u001b[1;37m__sip_reliable_xmit\u001b[0m: Serious Network Trouble; __sip_xmit returns error for pkt data\n[2026-11-11 12:49:57.515] \u001b[1;31mERROR\u001b[0m[1502398][C-0000008f]: \u001b[1;37mpjproject\u001b[0m:\u001b[1;37m\u001b[0m \u001b[1;37m<?>\u001b[0m: \t   icess0x7fe028070b78 ..Error sending STUN request: Operation not permitted\n[2026-11-11 12:49:57.538] \u001b[1;31mERROR\u001b[0m[143181]: \u001b[1;37mpjproject\u001b[0m:\u001b[1;37m\u001b[0m \u001b[1;37m<?>\u001b[0m: \t   icess0x7fe028070b78 ..Error sending STUN request: Operation not permitted\n[2026-11-11 12:49:57.558] \u001b[1;31mERROR\u001b[0m[143181]: \u001b[1;37mpjproject\u001b[0m:\u001b[1;37m\u001b[0m \u001b[1;37m<?>\u001b[0m: \t   icess0x7fe028070b78 ..Error sending STUN request: Operation not permitted\n[2026-11-11 12:49:57.578] \u001b[1;31mERROR\u001b[0m[143181]: \u001b[1;37mpjproject\u001b[0m:\u001b[1;37m\u001b[0m \u001b[1;37m<?>\u001b[0m: \t   icess0x7fe028070b78 ..Error sending STUN request: Operation not permitted\n[2026-11-11 12:51:57.880] \u001b[1;31mWARNING\u001b[0m[1502387]: \u001b[1;37mres_http_websocket.c\u001b[0m:\u001b[1;37m758\u001b[0m \u001b[1;37mws_safe_read\u001b[0m: Web socket closed abruptly\n[2026-11-11 12:52:05.834] \u001b[1;31mWARNING\u001b[0m[1502912][C-00000091]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 12:53:16.015] \u001b[1;31mWARNING\u001b[0m[1502931][C-00000092]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 12:53:16.020] \u001b[1;31mWARNING\u001b[0m[1502930][C-00000093]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 12:53:50.862] \u001b[1;31mWARNING\u001b[0m[1503294][C-00000094]: \u001b[1;37mapp_confbridge.c\u001b[0m:\u001b[1;37m4507\u001b[0m \u001b[1;37mconfkick_exec\u001b[0m: No conference bridge named '9600000' found!\n[2026-11-11 12:53:50.862] \u001b[1;31mWARNING\u001b[0m[1503294][C-00000094]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 12:53:51.057] \u001b[1;31mWARNING\u001b[0m[1502398][C-0000008f]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 12:53:51.064] \u001b[1;31mERROR\u001b[0m[1502398][C-0000008f]: \u001b[1;37mchan_sip.c\u001b[0m:\u001b[1;37m4374\u001b[0m \u001b[1;37m__sip_reliable_xmit\u001b[0m: Serious Network Trouble; __sip_xmit returns error for pkt data\n[2026-11-11 12:58:54.259] \u001b[1;31mERROR\u001b[0m[1504482]: \u001b[1;37mchan_sip.c\u001b[0m:\u001b[1;37m4374\u001b[0m \u001b[1;37m__sip_reliable_xmit\u001b[0m: Serious Network Trouble; __sip_xmit returns error for pkt data\n[2026-11-11 12:58:54.952] \u001b[1;31mERROR\u001b[0m[1504485][C-00000095]: \u001b[1;37mpjproject\u001b[0m:\u001b[1;37m\u001b[0m \u001b[1;37m<?>\u001b[0m: \t   icess0x7fdf9c065af8 ..Error sending STUN request: Operation not permitted\n[2026-11-11 12:58:54.973] \u001b[1;31mERROR\u001b[0m[143181]: \u001b[1;37mpjproject\u001b[0m:\u001b[1;37m\u001b[0m \u001b[1;37m<?>\u001b[0m: \t   icess0x7fdf9c065af8 ..Error sending STUN request: Operation not permitted\n[2026-11-11 12:58:54.994] \u001b[1;31mERROR\u001b[0m[143181]: \u001b[1;37mpjproject\u001b[0m:\u001b[1;37m\u001b[0m \u001b[1;37m<?>\u001b[0m: \t   icess0x7fdf9c065af8 ..Error sending STUN request: Operation not permitted\n[2026-11-11 12:58:55.014] \u001b[1;31mERROR\u001b[0m[143181]: \u001b[1;37mpjproject\u001b[0m:\u001b[1;37m\u001b[0m \u001b[1;37m<?>\u001b[0m: \t   icess0x7fdf9c065af8 ..Error sending STUN request: Operation not permitted\n[2026-11-11 13:00:06.754] \u001b[1;31mWARNING\u001b[0m[1504745][C-00000097]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 13:00:55.337] \u001b[1;31mWARNING\u001b[0m[1504482]: \u001b[1;37mres_http_websocket.c\u001b[0m:\u001b[1;37m758\u001b[0m \u001b[1;37mws_safe_read\u001b[0m: Web socket closed abruptly\n[2026-11-11 13:01:22.068] \u001b[1;31mWARNING\u001b[0m[1504765][C-00000098]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 13:01:22.074] \u001b[1;31mWARNING\u001b[0m[1504764][C-00000099]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 13:02:29.253] \u001b[1;31mWARNING\u001b[0m[1505285][C-0000009a]: \u001b[1;37mapp_confbridge.c\u001b[0m:\u001b[1;37m4507\u001b[0m \u001b[1;37mconfkick_exec\u001b[0m: No conference bridge named '9600000' found!\n[2026-11-11 13:02:29.253] \u001b[1;31mWARNING\u001b[0m[1505285][C-0000009a]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 13:02:29.455] \u001b[1;31mWARNING\u001b[0m[1504485][C-00000095]: \u001b[1;37mfunc_hangupcause.c\u001b[0m:\u001b[1;37m147\u001b[0m \u001b[1;37mhangupcause_read\u001b[0m: Unable to find information for channel\n[2026-11-11 13:02:29.461] \u001b[1;31mERROR\u001b[0m[1504485][C-00000095]: \u001b[1;37mchan_sip.c\u001b[0m:\u001b[1;37m4374\u001b[0m \u001b[1;37m__sip_reliable_xmit\u001b[0m: Serious Network Trouble; __sip_xmit returns error for pkt data",
+    "stderr": ""
+  }
+}

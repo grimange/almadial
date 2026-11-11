@@ -1,0 +1,6 @@
+### Result
+{"utc":"2026-11-11T17:53:10.912Z","lead":"77","stats":[{"type":"inbound-rtp","bytesReceived":1537440,"packetsReceived":9609,"totalAudioEnergy":0.34313840615138963,"totalSamplesDuration":192.40999999996998},{"type":"outbound-rtp","bytesSent":1541440}]}
+### Ran Playwright code
+```js
+await (async page => {const w=page.web00;const stats=await w.phone.evaluate(async()=>{const p=mySession.sessionDescriptionHandler.peerConnection;return Array.from((await p.getStats()).values()).filter(s=>['inbound-rtp','outbound-rtp'].includes(s.type)).map(s=>({type:s.type,bytesReceived:s.bytesReceived,bytesSent:s.bytesSent,packetsReceived:s.packetsReceived,totalAudioEnergy:s.totalAudioEnergy,totalSamplesDuration:s.totalSamplesDuration}))});return {utc:new Date().toISOString(),lead:await w.p.locator('[name=lead_id]').inputValue(),stats};})(page);
+```

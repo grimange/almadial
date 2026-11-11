@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-11T17:55:48.727785+00:00",
+  "recording": "recording_id\tfilename\tlocation\tlength_in_sec\tstart_epoch\tend_epoch\n6\t20261111-125206_7000000001\tNULL\t69\t1794419526\t1794419595\n",
+  "asterisk_selected": [
+    "SELECT dest_channel FROM cid_channels_recent_002029153161 where (caller_id_name = '1001' or connected_line_name = 'V1111252020000000077' or caller_id_name = 'V1111252020000000077' or connected_line_name = '1001') and ( linkedid = '1794419522.336' or dest_uniqueid = '1794419522.336' or uniqueid = '1794419522.336') and call_date > '2026-11-11 12:50:05'",
+    "8|SIP/1001-00000038",
+    "INSERT INTO vicidial_manager values('','','2026-11-11 12:52:05','SENT','N','2.29.153.161','','Redirect','1001','Channel: SIP/1001-00000038','Context: default','Exten: 8368','Priority: 1','','','','','','')"
+  ],
+  "/var/log/php-fpm/www-error.log_bounded_counts": {
+    "Duplicate entry": 1,
+    "visibleuser": 1,
+    "Uncaught": 1
+  },
+  "/var/log/httpd/error_log_bounded_counts": {}
+}

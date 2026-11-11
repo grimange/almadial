@@ -1,0 +1,9 @@
+{
+  "call79": {
+    "native_hangup_and_disposition": "Hangup Customer; NI; SUBMIT",
+    "unregister": "VICIphone Unregistered state reached",
+    "logout_ui": "Logout was not confirmed. Check the session before retrying; the browser phone has been kept open.",
+    "authoritative_followup": "Zero live agents, auto calls and Asterisk channels before browser closure. Registration allowed to expire; no forced peer removal."
+  },
+  "scope": "No source correction to the separate acknowledgement failure."
+}

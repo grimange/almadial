@@ -1,0 +1,2 @@
+### Result
+{"deliveredLead":78,"baseline":[{"packets":3563,"energy":0.35207646999644154,"samples":71.48999999999967}],"utc":"2026-11-11T18:00:07.446Z"}

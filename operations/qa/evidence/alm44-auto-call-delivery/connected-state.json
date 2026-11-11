@@ -1,0 +1,30 @@
+{
+  "utc": "2026-11-11T17:52:39.638487+00:00",
+  "agent": {
+    "rc": 0,
+    "result": "user\tstatus\tlead_id\tconf_exten\tchannel\tcallerid\tuniqueid\tcampaign_id\tagent_log_id\nqaagent14\tINCALL\t77\t9600000\tSIP/1001-00000038\tV1111252020000000077\t1794419522.338\tQAOUT01\t85\n",
+    "error": ""
+  },
+  "lead": {
+    "rc": 0,
+    "result": "lead_id\tstatus\tcalled_count\tcalled_since_last_reset\tlist_id\tuser\tvendor_lead_code\n77\tINCALL\t1\tY\t910023\tqaagent14\tALM44AUTO01\n",
+    "error": ""
+  },
+  "auto_call": {
+    "rc": 0,
+    "result": "auto_call_id\tserver_ip\tcampaign_id\tstatus\tlead_id\tuniqueid\tcallerid\tchannel\tstage\n10\t2.29.153.161\tQAOUT01\tXFER\t77\t1794419522.338\tV1111252020000000077\tSIP/1001-00000038\tXFER-0\n",
+    "error": ""
+  },
+  "manager": {
+    "rc": 0,
+    "result": "man_id\tentry_date\tstatus\taction\tcallerid\tcmd_line_b\tcmd_line_c\tcmd_line_d\tcmd_line_e\n161\t2026-11-11 12:52:06\tSENT\tOriginate\t20261111-125206_7...\tChannel: Local/59600000@default\tContext: default\tExten: 8309\tPriority: 1\n160\t2026-11-11 12:52:05\tSENT\tRedirect\t1001\tChannel: SIP/1001-00000038\tContext: default\tExten: 8368\tPriority: 1\n159\t2026-11-11 12:52:02\tUPDATED\tOriginate\tV1111252020000000077\tExten: 138368\tContext: default\tChannel: Local/22217000000001@default\tPriority: 1\n",
+    "error": ""
+  },
+  "hopper": {
+    "rc": 0,
+    "result": "",
+    "error": ""
+  },
+  "core show channels concise": "SIP/1002-00000037!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!1002!1002!!3!162!be5acb1a-edd1-402f-9263-2770160eff19!1794419397.333\nCBAnn/9600000-00000085;2!default!s!1!Up!(None)!!!!!3!161!be5acb1a-edd1-402f-9263-2770160eff19!1794419398.335\nCBAnn/9600000-00000085;1!default!s!1!Up!(None)!!!!!3!161!!1794419398.334\nLocal/59600000@default-00000087;2!default!59600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_recording_user!!!!3!33!be5acb1a-edd1-402f-9263-2770160eff19!1794419526.340\nLocal/59600000@default-00000087;1!default!8309!3!Up!Wait!3600!!!!3!33!!1794419526.339\nSIP/1001-00000038!default!9600000!3!Up!ConfBridge!9600000,vici_agent_bridge,vici_customer_user!7000000001!1001!!3!37!be5acb1a-edd1-402f-9263-2770160eff19!1794419522.338\n",
+  "confbridge list 9600000": "Channel                        Flags  User Profile     Bridge Profile   Menu             CallerID\n============================== ====== ================ ================ ================ ================\nSIP/1002-00000037              M      vici_customer_user vici_agent_bridge default_menu     1002\nSIP/1001-00000038              M      vici_customer_user vici_agent_bridge default_menu     7000000001\nLocal/59600000@default-00000087;2 m      vici_recording_user vici_agent_bridge default_menu     <unknown>\n"
+}

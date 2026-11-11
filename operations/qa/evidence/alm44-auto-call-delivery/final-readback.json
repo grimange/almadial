@@ -1,0 +1,102 @@
+{
+  "utc": "2026-11-11T18:22:09.294102+00:00",
+  "recordings": {
+    "rc": 0,
+    "stdout": "recording_id\tlead_id\tfilename\tlocation\tstart_epoch\tend_epoch\tlength_in_sec\n6\t77\t20261111-125206_7000000001\thttps://2.29.153.161/RECORDINGS/20261111-125206_7000000001-all.wav\t1794419526\t1794419595\t69\n7\t78\t20261111-130006_7000000001\thttps://2.29.153.161/RECORDINGS/20261111-130006_7000000001-all.wav\t1794420006\t1794420081\t75\n8\t79\t20261111-131407_7000000001\thttps://2.29.153.161/RECORDINGS/20261111-131407_7000000001-all.wav\t1794420847\t1794421072\t225\n",
+    "stderr": ""
+  },
+  "cleanup": {
+    "rc": 0,
+    "stdout": "live_agents\n0\nauto_calls\n0\nqa_hopper\n0\nqa_incall\n0\ncampaign_id\tactive\tdial_method\tauto_dial_level\tlocal_call_time\tomit_phone_code\tcampaign_recording\tno_hopper_leads_logins\nQAOUT01\tN\tMANUAL\t0\t12pm-5pm\tN\tONDEMAND\tN\nlist_id\tactive\n910014\tN\n910015\tN\n910016\tN\n910017\tN\n910018\tN\n910019\tN\n910020\tN\n910021\tN\n910022\tN\n910023\tN\ncampaign_id\tactive\tdial_method\tauto_dial_level\ntest01\tY\tMANUAL\t0\n",
+    "stderr": ""
+  },
+  "core show channels": {
+    "rc": 0,
+    "stdout": "Channel                                                          Location                         State   Application(Data)             \n0 active channels\n0 active calls\n163 calls processed\n",
+    "stderr": ""
+  },
+  "confbridge list": {
+    "rc": 0,
+    "stdout": "Conference Bridge Name           Users  Marked Locked Muted\n================================ ====== ====== ====== =====\n",
+    "stderr": ""
+  },
+  "phone1002": {
+    "rc": 0,
+    "selected": [
+      "Expire       : 61",
+      "Addr->IP     : 127.0.0.1:33610",
+      "Reg. Contact : sip:sjq2mgo5@192.0.2.254;transport=wss"
+    ]
+  },
+  "phone1001": {
+    "rc": 0,
+    "selected": [
+      "Expire       : 1163",
+      "Addr->IP     : 158.62.74.253:2367",
+      "Status       : OK (258 ms)"
+    ]
+  },
+  "optimizer_static_source": [
+    "119: if ( $dest_channel ne \"\" ) ",
+    "120: \t{",
+    "121: \tprint STDERR \"$sthArows|$dest_channel\\n\";",
+    "122: ",
+    "123: \t### insert a NEW record to the vicidial_manager table to be processed",
+    "124: \t$stmtA = \"INSERT INTO vicidial_manager values('','','$SQLdate','SENT','N','$conf{VARserver_ip}','','Redirect','$cid_name','Channel: $dest_channel','Context: $context','Exten: $new_extension','Priority: 1','','','','','','')\";",
+    "125: ",
+    "126: \tprint STDERR \"$stmtA\\n\";",
+    "127: ",
+    "128: \tmy $affected_rows = $dbhA->do($stmtA); ",
+    "129: \tmy $man_id = $dbhA->{'mysql_insertid'};",
+    "130: ",
+    "131: \t### Grab Server values from the database",
+    "132: \t$servConf = getServerConfig($dbhA, $conf{VARserver_ip});",
+    "133: \t$SYSLOG = 1 if ($servConf->{vd_server_logs} =~ /Y/);",
+    "134: \tmy $event_string='LOGGED INTO MYSQL SERVER ON 1 CONNECTION|';",
+    "135: \teventLogger($conf{PATHlogs}, 'process', $event_string);",
+    "136: ",
+    "137: \tmy $cPATHlogs = $conf{PATHlogs};",
+    "138: ",
+    "139: \tmy $launch = $conf{PATHhome} . \"/AST_send_action_child.pl\";",
+    "140: \t$launch .= \" --SYSLOG\";",
+    "141: \t$launch .= \" --PATHlogs=\" . $cPATHlogs;",
+    "142: \t$launch .= \" --telnet_host=\" . $servConf->{telnet_host};",
+    "143: \t$launch .= \" --telnet_port=\" . $servConf->{telnet_port};",
+    "147: \t$launch .= \" --man_id=\" . $man_id;",
+    "148: \t$launch .= \" --action=Redirect\";",
+    "149: \t$launch .= \" --cmd_line_b='Channel: $dest_channel'\";",
+    "150: \t$launch .= \" --cmd_line_c='Context: $context'\";",
+    "151: \t$launch .= \" --cmd_line_d='Exten: $new_extension'\";",
+    "152: \t$launch .= \" --cmd_line_e='Priority: 1'\";",
+    "153: ",
+    "154: \teventLogger($conf{'PATHlogs'}, 'launch', $launch . \"  \" .",
+    "155: \t\t$cid_name . \" \" . $uniqueid . \" \" . $dest_channel);",
+    "156: ",
+    "157: \t$launch .= \" >> \" . $conf{PATHlogs} . \"/action_send.\" . logDate() if ($SYSLOG);",
+    "158: \tsystem($launch . ' &');",
+    "159: ",
+    "198: #    $LogFilePath : Directory where log files are.",
+    "199: #    $LogType     : Type of log, ie process, send, launch, full",
+    "200: #    $EventString : String to record in log.",
+    "201: sub eventLogger",
+    "202:         {",
+    "203:         my ($path,$type,$string) = @_;",
+    "204:         open(LOG, \">>\" . $path . \"/action_\" . $type . \".\" . logDate())",
+    "205:                 || die \"Can't open \" . $path . \"/action_\" . $type . \".\" .",
+    "206:                         logDate() . \": \" . $! . \"\\n\";",
+    "207:         print LOG nowDate() . \"|\" . $string . \"|\\n\";",
+    "208:         close(LOG);",
+    "209:         }",
+    "210: ",
+    "211: # logDate usage:"
+  ],
+  "action_process.2026-11-11_metadata": {
+    "uid": 0,
+    "mode": "0o664"
+  },
+  "action_send.2026-11-11_metadata": {
+    "uid": 0,
+    "mode": "0o664"
+  },
+  "sanitization": "Credential argument construction lines144-146 omitted; no runtime credential values captured."
+}

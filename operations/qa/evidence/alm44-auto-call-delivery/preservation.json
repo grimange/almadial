@@ -1,0 +1,41 @@
+{
+  "utc": "2026-11-11T18:09:04.874977+00:00",
+  "hashes": {
+    "/var/www/html/agc/vicidial.php": "aea2d4637be9c9ed48a9e74472a3569639cd39c0a711ae1b17e16343fafb4084",
+    "/var/www/html/agc/vdc_db_query.php": "5c34b104716ec9c69d93b833d2b63934b4475ae6af4682b7f80d3fc6a1ab7cb5",
+    "/etc/asterisk/extensions.conf": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+    "/etc/asterisk/pjsip.conf": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+    "/etc/asterisk/sip.conf": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+    "/etc/asterisk/http.conf": "32146ec6f50eebc57ec1554aaa061841db2a5196b3f9f8f87cc778b6e7c2c4eb",
+    "/etc/asterisk/confbridge.conf": "85b1caf5a5fd141193f59e8ba0dacbf56b2087fd43749022e3910c89f2e26da7",
+    "/var/lib/asterisk/agi-bin/agi-VDAD_local_optimize.agi": "18e93f195785481e3e190fed9682c8e0bf645623066958699458160d7068829a",
+    "/var/lib/asterisk/agi-bin/agi-VDAD_ALL_outbound.agi": "e1ac82b6ae1d24ba99af61a45b58db10f7cb130ccf80eff8ff861c3981b3b148"
+  },
+  "backup": {
+    "rc": 0,
+    "stdout": "Result=success\nExecMainStatus=0\nId=alma-vicidial-backup.service\nActiveState=inactive\nSubState=dead\n\nResult=success\nId=alma-vicidial-backup.timer\nActiveState=active\nSubState=waiting\n\nResult=success\nId=alma-portal-renew.timer\nActiveState=active\nSubState=waiting\n",
+    "stderr": ""
+  },
+  "phone1002": {
+    "rc": 0,
+    "selected": [
+      "Expire       : -1",
+      "Addr->IP     : (null)",
+      "Reg. Contact : sip:ru4jm8sh@192.0.2.87;transport=wss"
+    ]
+  },
+  "relevant_php_errors": {
+    "/var/log/php-fpm/www-error.log": {
+      "line_count": 196,
+      "duplicate_entries": 1,
+      "visibility_mentions": 1,
+      "fatal_exceptions": 1
+    },
+    "/var/log/httpd/error_log": {
+      "line_count": 0,
+      "duplicate_entries": 0,
+      "visibility_mentions": 0,
+      "fatal_exceptions": 0
+    }
+  }
+}

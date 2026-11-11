@@ -1,0 +1,71 @@
+{
+  "utc": "2026-11-11T18:20:15.723493+00:00",
+  "calls": {
+    "rc": 0,
+    "stdout": "uniqueid\tlead_id\tlist_id\tcampaign_id\tcall_date\tstart_epoch\tend_epoch\tlength_in_sec\tstatus\tuser\tterm_reason\n1794419522.338\t77\t910023\tQAOUT01\t2026-11-11 12:52:06\t1794419526\t1794419595\t69\tNI\tqaagent14\tCALLER\n1794420002.348\t78\t910023\tQAOUT01\t2026-11-11 13:00:06\t1794420006\t1794420081\t75\tNI\tqaagent14\tCALLER\n1794420843.358\t79\t910023\tQAOUT01\t2026-11-11 13:14:07\t1794420847\t1794421072\t225\tNI\tqaagent14\tCALLER\n",
+    "stderr": ""
+  },
+  "leads": {
+    "rc": 0,
+    "stdout": "lead_id\tvendor_lead_code\tlist_id\tstatus\tcalled_count\tcalled_since_last_reset\tuser\n77\tALM44AUTO01\t910023\tNI\t1\tY\tqaagent14\n78\tALM44AUTO02\t910023\tNI\t1\tY\tqaagent14\n79\tALM44AUTO03\t910023\tNI\t1\tY\tqaagent14\n",
+    "stderr": ""
+  },
+  "agents": {
+    "rc": 0,
+    "stdout": "agent_log_id\tuser\tevent_time\tlead_id\tcampaign_id\tpause_sec\twait_sec\ttalk_sec\tdispo_sec\tstatus\tuniqueid\n85\tqaagent14\t2026-11-11 12:49:51\t77\tQAOUT01\t81\t54\t69\t1\tNI\t1794419522.338\n88\tqaagent14\t2026-11-11 12:58:49\t78\tQAOUT01\t25\t53\t74\t2\tNI\t1794420002.348\n91\tqaagent14\t2026-11-11 13:12:55\t79\tQAOUT01\t28\t45\t224\t1\tNI\t1794420843.358\n",
+    "stderr": ""
+  },
+  "recordings": {
+    "rc": 0,
+    "stdout": "recording_id\tlead_id\tfilename\tlocation\tstart_epoch\tend_epoch\tlength_in_sec\n6\t77\t20261111-125206_7000000001\thttps://2.29.153.161/RECORDINGS/20261111-125206_7000000001-all.wav\t1794419526\t1794419595\t69\n7\t78\t20261111-130006_7000000001\thttps://2.29.153.161/RECORDINGS/20261111-130006_7000000001-all.wav\t1794420006\t1794420081\t75\n8\t79\t20261111-131407_7000000001\thttps://2.29.153.161/RECORDINGS/20261111-131407_7000000001-all.wav\t1794420847\t1794421072\t225\n",
+    "stderr": ""
+  },
+  "cleanup": {
+    "rc": 0,
+    "stdout": "live_agents\n0\nauto_calls\n0\nqa_hopper\n0\nqa_incall\n0\ncampaign_id\tactive\tdial_method\tauto_dial_level\tlocal_call_time\tomit_phone_code\tcampaign_recording\tno_hopper_leads_logins\nQAOUT01\tN\tMANUAL\t0\t12pm-5pm\tN\tONDEMAND\tN\nlist_id\tactive\n910014\tN\n910015\tN\n910016\tN\n910017\tN\n910018\tN\n910019\tN\n910020\tN\n910021\tN\n910022\tN\n910023\tN\ncampaign_id\tactive\tdial_method\tauto_dial_level\ntest01\tY\tMANUAL\t0\n",
+    "stderr": ""
+  },
+  "core show channels": {
+    "rc": 0,
+    "stdout": "Channel                                                          Location                         State   Application(Data)             \n0 active channels\n0 active calls\n163 calls processed\n",
+    "stderr": ""
+  },
+  "confbridge list": {
+    "rc": 0,
+    "stdout": "Conference Bridge Name           Users  Marked Locked Muted\n================================ ====== ====== ====== =====\n",
+    "stderr": ""
+  },
+  "phone1002": {
+    "rc": 0,
+    "selected": [
+      "Expire       : -1",
+      "Addr->IP     : (null)",
+      "Reg. Contact : sip:sjq2mgo5@192.0.2.254;transport=wss"
+    ]
+  },
+  "services": {
+    "rc": 0,
+    "stdout": "Result=success\nExecMainStatus=0\nId=asterisk.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nId=httpd.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nId=php-fpm.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nId=mariadb.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nId=alma-vicidial-backup.service\nActiveState=inactive\nSubState=dead\n\nResult=success\nId=alma-vicidial-backup.timer\nActiveState=active\nSubState=waiting\n\nResult=success\nId=alma-vicidial-recording.timer\nActiveState=active\nSubState=waiting\n\nResult=success\nId=alma-portal-renew.timer\nActiveState=active\nSubState=waiting\n",
+    "stderr": ""
+  },
+  "protected_hashes": {
+    "/var/www/html/agc/vicidial.php": "aea2d4637be9c9ed48a9e74472a3569639cd39c0a711ae1b17e16343fafb4084",
+    "/var/www/html/agc/vdc_db_query.php": "5c34b104716ec9c69d93b833d2b63934b4475ae6af4682b7f80d3fc6a1ab7cb5",
+    "/etc/asterisk/extensions.conf": "e4ad3d44270001de9e998132ae5bf7f980a0bc3a1574d7f7d854dbdecfe59cde",
+    "/etc/asterisk/pjsip.conf": "f2835c33ec937386fa41495c8ac9947acb15c01ed02c25bcd8d1b03f6d7c12a6",
+    "/etc/asterisk/sip.conf": "ba7819255b02957786e63c603e857a83d3b64aed95e34c840376c2fe2c0564ae",
+    "/etc/asterisk/http.conf": "32146ec6f50eebc57ec1554aaa061841db2a5196b3f9f8f87cc778b6e7c2c4eb",
+    "/etc/asterisk/confbridge.conf": "85b1caf5a5fd141193f59e8ba0dacbf56b2087fd43749022e3910c89f2e26da7",
+    "/var/lib/asterisk/agi-bin/agi-VDAD_local_optimize.agi": "18e93f195785481e3e190fed9682c8e0bf645623066958699458160d7068829a",
+    "/var/lib/asterisk/agi-bin/agi-VDAD_ALL_outbound.agi": "e1ac82b6ae1d24ba99af61a45b58db10f7cb130ccf80eff8ff861c3981b3b148"
+  },
+  "fresh_log_review": {
+    "journal_rc": 0,
+    "action_log_permission_denied": [],
+    "customer_handoff_lines": [
+      "INSERT INTO vicidial_manager values('','','2026-11-11 13:14:07','SENT','N','2.29.153.161','','Redirect','1001','Channel: SIP/1001-0000003c','Context: default','Exten: 8368','Priority: 1','','','','','','')"
+    ]
+  },
+  "final_readback_utc": "2026-11-11T18:22:09.294102+00:00",
+  "registration_cleanup_utc": "2026-11-11T18:24:50.839048+00:00"
+}

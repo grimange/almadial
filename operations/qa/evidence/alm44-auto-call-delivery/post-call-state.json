@@ -1,0 +1,31 @@
+{
+  "utc": "2026-11-11T17:54:32.555287+00:00",
+  "call": {
+    "rc": 0,
+    "result": "uniqueid\tlead_id\tlist_id\tcampaign_id\tcall_date\tstart_epoch\tend_epoch\tlength_in_sec\tstatus\tuser\tphone_number\tterm_reason\n1794419522.338\t77\t910023\tQAOUT01\t2026-11-11 12:52:06\t1794419526\t1794419595\t69\tNI\tqaagent14\t7000000001\tCALLER\n",
+    "error": ""
+  },
+  "agent_log": {
+    "rc": 0,
+    "result": "agent_log_id\tuser\tserver_ip\tevent_time\tlead_id\tcampaign_id\tpause_sec\twait_sec\ttalk_sec\tdispo_sec\tstatus\tuniqueid\n85\tqaagent14\t2.29.153.161\t2026-11-11 12:49:51\t77\tQAOUT01\t81\t54\t69\t1\tNI\t1794419522.338\n",
+    "error": ""
+  },
+  "recording": {
+    "rc": 0,
+    "result": "recording_id\tchannel\tserver_ip\textension\tstart_time\tstart_epoch\tend_time\tend_epoch\tlength_in_sec\tfilename\tlocation\tlead_id\tuser\n6\tLocal/59600000@default\t2.29.153.161\t8309\t2026-11-11 12:52:06\t1794419526\t2026-11-11 12:53:15\t1794419595\t69\t20261111-125206_7000000001\tNULL\t77\tqaagent14\n",
+    "error": ""
+  },
+  "lead": {
+    "rc": 0,
+    "result": "lead_id\tstatus\tcalled_count\tcalled_since_last_reset\tuser\tlast_local_call_time\n77\tNI\t1\tY\tqaagent14\t2026-11-11 12:52:02\n",
+    "error": ""
+  },
+  "cleanup": {
+    "rc": 0,
+    "result": "live_agents\n0\nauto_calls\n0\nhopper\n0\nincall\n0\nactive\tdial_method\tauto_dial_level\tlocal_call_time\tomit_phone_code\tcampaign_recording\tno_hopper_leads_logins\nN\tMANUAL\t0\t12pm-5pm\tN\tONDEMAND\tN\nlist_id\tactive\n910014\tN\n910015\tN\n910016\tN\n910017\tN\n910018\tN\n910019\tN\n910020\tN\n910021\tN\n910022\tN\n910023\tN\n",
+    "error": ""
+  },
+  "core show channels": "Channel                                                          Location                         State   Application(Data)             \n0 active channels\n0 active calls\n149 calls processed\n",
+  "confbridge list": "Conference Bridge Name           Users  Marked Locked Muted\n================================ ====== ====== ====== =====\n",
+  "sip show peer 1002": "  Addr->IP     : 127.0.0.1:43844\n  Status       : Unmonitored"
+}

@@ -1,0 +1,13 @@
+{
+  "utc": "2026-11-11T18:24:50.839048+00:00",
+  "phone1002": {
+    "rc": 0,
+    "selected": [
+      "Expire       : -1",
+      "Addr->IP     : (null)",
+      "Reg. Contact : sip:sjq2mgo5@192.0.2.254;transport=wss"
+    ]
+  },
+  "cleanup_counts": "live_agents\n0\nauto_calls\n0\nqa_hopper\n0\nqa_incall\n0\n",
+  "isolated_acl_fixture_removed": true
+}

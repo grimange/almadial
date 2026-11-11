@@ -1,0 +1,169 @@
+{
+  "utc": "2026-11-11T18:06:53.736523+00:00",
+  "metadata_backup": [
+    {
+      "path": "/var/log/astguiclient",
+      "mode": 493,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_launch.2026-11-09",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_full.2026-11-10",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_full.2026-11-09",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_full.2026-11-06",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_process.2026-11-04",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_process.2026-11-10",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_process.2026-11-06",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_send.2026-11-10",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_launch.2026-11-06",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_process.2026-11-05",
+      "mode": 384,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_launch.2026-11-10",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_send.2026-11-09",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_full.2026-11-05",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_send.2026-11-06",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_launch.2026-11-05",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_send.2026-11-05",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    },
+    {
+      "path": "/var/log/astguiclient/action_process.2026-11-09",
+      "mode": 420,
+      "uid": 0,
+      "gid": 0,
+      "acl": {}
+    }
+  ],
+  "historical_failure": [
+    "INSERT INTO vicidial_manager values('','','2026-11-10 09:47:31','SENT','N','2.29.153.161','','Redirect','1001','Channel: SIP/1001-00000036','Context: default','Exten: 8368','Priority: 1','','','','','','')",
+    "Can't open /var/log/astguiclient/action_process.2026-11-10: Permission denied"
+  ],
+  "deployed_config": {
+    "path": "/etc/tmpfiles.d/almadial-vicidial-agi-logs.conf",
+    "sha256": "8e093ffd38469185f62234e9564b2edfcdf2863ee1fc65ff525dcc2760045205",
+    "uid": 0,
+    "mode": "0o644"
+  },
+  "asterisk_writable": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "tmpfiles_reconcile": {
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "timers": {
+    "rc": 0,
+    "stdout": "Wed 2026-11-11 13:06:57 EST       3s Wed 2026-11-11 13:06:47 EST       6s ago alma-portal-443-apply.timer   alma-portal-443-apply.service\nWed 2026-11-11 13:08:33 EST 1min 39s Wed 2026-11-11 13:05:17 EST 1min 36s ago alma-vicidial-recording.timer alma-vicidial-recording.service\nWed 2026-11-11 14:09:25 EST  1h 2min Wed 2026-11-11 13:03:10 EST 3min 43s ago fwupd-refresh.timer           fwupd-refresh.service\nWed 2026-11-11 14:27:36 EST 1h 20min Wed 2026-11-11 12:36:17 EST    30min ago dnf-makecache.timer           dnf-makecache.service\nWed 2026-11-11 16:16:53 EST 3h 10min Wed 2026-11-11 04:24:56 EST       8h ago alma-portal-renew.timer       alma-portal-renew.service\nWed 2026-11-11 16:18:39 EST 3h 11min Tue 2026-11-10 16:18:39 EST      20h ago systemd-tmpfiles-clean.timer  systemd-tmpfiles-clean.service\nThu 2026-11-12 00:43:50 EST      11h Wed 2026-11-11 00:28:30 EST      12h ago logrotate.timer               logrotate.service\nThu 2026-11-12 03:40:00 EST      14h Wed 2026-11-11 03:40:01 EST       9h ago alma-vicidial-backup.timer    alma-vicidial-backup.service\nSun 2026-11-15 01:00:00 EST   3 days Sun 2026-11-08 01:00:02 EST   3 days ago raid-check.timer              raid-check.service\nMon 2026-11-16 00:42:35 EST   4 days Mon 2026-11-09 00:11:00 EST   2 days ago fstrim.timer                  fstrim.service\n",
+    "stderr": ""
+  },
+  "core show version": {
+    "rc": 0,
+    "stdout": "Asterisk 20.21.0 built by root @ dialer01 on a x86_64 running Linux on 2026-11-04 21:37:40 UTC\n",
+    "stderr": ""
+  },
+  "sip show peer 1002": {
+    "rc": 0,
+    "selected": [
+      "Expire       : 131",
+      "Addr->IP     : 127.0.0.1:33706",
+      "Reg. Contact : sip:ru4jm8sh@192.0.2.87;transport=wss"
+    ]
+  }
+}

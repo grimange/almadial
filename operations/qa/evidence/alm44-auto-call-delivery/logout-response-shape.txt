@@ -1,0 +1,2 @@
+### Result
+{"utc":"2026-11-11T18:02:30.268Z","status":200,"responseLength":27,"hasPhpWarning":false,"hasHtml":false,"numericAck":true,"fieldCount":6,"logoutComplete":true}

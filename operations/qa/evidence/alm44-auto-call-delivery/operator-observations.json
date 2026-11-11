@@ -1,0 +1,24 @@
+{
+  "call_77": {
+    "browser_to_linphone": "Operator heard beeping sounds",
+    "recording_6": "Tones only; my voice is missing"
+  },
+  "call_78": {
+    "microphone_preflight": "Microphone unmuted and input meter responds; ready",
+    "during_call": "heard tones and spoke",
+    "recording_7": "Tones only; my voice is missing",
+    "browser_energy_delta": 0.0003759418310110285
+  },
+  "call_79": {
+    "authorization": "let\u2019s try again",
+    "during_call": "spoke",
+    "in_call_capture_change_reply": "done",
+    "browser_inbound_final": {
+      "packetsReceived": 14511,
+      "totalAudioEnergy": 0.34211843139622417,
+      "audioLevel": 0
+    },
+    "outcome": "Customer RTP decoded to digital silence before and after capture-change confirmation. Bidirectional speech NOT verified."
+  },
+  "no_additional_call_planned": true
+}
