@@ -101,6 +101,24 @@ class AsteriskFiles(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, 'read-only'):
                         self.m.config_files()
 
+    def test_s10_handoff_accepts_only_exact_include_read_only(self):
+        self.m.p['files'] = {name: 'original ' + name for name in
+                             ('manager', 'extensions', 'pjsip', 'confbridge', 'http', 'modules')}
+        self.m.p['s05_handoff'] = True
+        with patch.object(self.m.grp, 'getgrnam') as group, patch.object(self.m.sys, 'argv', ['adapter', 'inspect']):
+            group.return_value.gr_gid = os.getgid()
+            baseline, _ = self.m.config_files()
+            self.m.p['s10_handoff'] = True
+            path = '/etc/asterisk/pjsip.conf'
+            exact = baseline[path] + b'#include "almadial-s10-phone.conf"\n'
+            for observed in (exact, exact + b'#include "foreign.conf"\n'):
+                with patch.object(self.m, 'read', return_value=observed):
+                    handed, _ = self.m.config_files()
+                    self.assertEqual(handed[path], exact if observed == exact else baseline[path])
+            with patch.object(self.m.sys, 'argv', ['adapter', 'configure']):
+                with self.assertRaisesRegex(ValueError, 'read-only'):
+                    self.m.config_files()
+
     def test_runtime_libraries_and_xml_required_for_complete_inventory(self):
         original=self.m.read
         self.m.read=lambda p,perm=None,gid=0:original(p,perm,os.getgid())

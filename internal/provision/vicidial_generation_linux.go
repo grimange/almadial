@@ -31,12 +31,40 @@ func preserveVICIdialRegistration(ctx context.Context, runner vicidialInputRunne
 	return nil
 }
 func inspectVICIdialGeneration(ctx context.Context, runner vicidialInputRunner, binding, inputs string) (string, bool, error) {
+	return inspectVICIdialGenerationPhone(ctx, runner, binding, inputs, false)
+}
+func inspectVICIdialGenerationPhone(ctx context.Context, runner vicidialInputRunner, binding, inputs string, phone bool) (string, bool, error) {
 	var result struct {
 		State   string
 		Wrapped bool
 	}
-	if !shaPattern.MatchString(binding) || !shaPattern.MatchString(inputs) || vicidialAdapter(ctx, runner, "generation-inspect", struct{ Binding, Inputs string }{binding, inputs}, &result) != nil {
+	if !shaPattern.MatchString(binding) || !shaPattern.MatchString(inputs) {
 		return "", false, errVICIdial
+	}
+	if !phone {
+		if vicidialAdapter(ctx, runner, "generation-inspect", struct{ Binding, Inputs string }{binding, inputs}, &result) != nil {
+			return "", false, errVICIdial
+		}
+	} else {
+		// Preserve S05's sealed policy identity. This read-only variant admits
+		// only the exact S10 include; S10 independently verifies its contents.
+		command := vicidialFilesCommand("generation-inspect")
+		command.Args[2] = strings.Replace(command.Args[2], "        published = {name:", `        if p.get('PhoneHandoff', False):
+            if mutate: raise ValueError('S10 generation handoff is read-only')
+            extra = b'#include "almadial-s10-phone.conf"\n'
+            name = 'pjsip.conf'
+            before, added = WRAPPERS[name]
+            if wrapper_bytes[name] == before + added + extra:
+                wrapper_bytes[name] = before + added
+        published = {name:`, 1)
+		input, _ := json.Marshal(struct {
+			Binding, Inputs string
+			PhoneHandoff    bool
+		}{binding, inputs, true})
+		r, e := runner.RunInput(ctx, command, input)
+		if e != nil || !r.Started || r.ExitCode != 0 || r.StdoutTruncated || r.StderrTruncated || decode(r.Stdout, &result) != nil {
+			return "", false, errVICIdial
+		}
 	}
 	if result.State == "absent" && !result.Wrapped || shaPattern.MatchString(result.State) && result.Wrapped {
 		return result.State, result.Wrapped, nil

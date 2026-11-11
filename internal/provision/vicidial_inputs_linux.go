@@ -30,6 +30,9 @@ func inspectVICIdialGeneratorInputs(ctx context.Context, runner vicidialInputRun
 	return inspectVICIdialGeneratorInputsWeb(ctx, runner, false)
 }
 func inspectVICIdialGeneratorInputsWeb(ctx context.Context, runner vicidialInputRunner, handoff bool) (string, []byte, error) {
+	return inspectVICIdialGeneratorInputsPhone(ctx, runner, handoff, false)
+}
+func inspectVICIdialGeneratorInputsPhone(ctx context.Context, runner vicidialInputRunner, handoff, phone bool) (string, []byte, error) {
 	tables := []vicidialInputTable{}
 	for _, name := range vicidialGeneratorTables {
 		columnsText, e := vicidialSQL(ctx, runner, "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='asterisk' AND TABLE_NAME='"+name+"' ORDER BY ORDINAL_POSITION;")
@@ -56,6 +59,9 @@ func inspectVICIdialGeneratorInputsWeb(ctx context.Context, runner vicidialInput
 		// That narrowly owned set is validated separately before and after execution.
 		if name == "vicidial_confbridges" {
 			query += " WHERE server_ip IS NULL OR server_ip<>'127.0.0.1'"
+		}
+		if phone && name == "phones" {
+			query += " WHERE extension<>'alm_s10_9061' OR extension IS NULL"
 		}
 		text, e := vicidialSQL(ctx, runner, query+" LIMIT 10001;")
 		if e != nil {

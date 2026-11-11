@@ -21,9 +21,10 @@ import (
 var asteriskAdapter string
 
 type AsteriskNative struct {
-	TLSHandoff bool // S08 inspector alone accepts the closed local HTTPS wrapper.
-	Database   DatabaseNative
-	Source     AsteriskSource
+	PhoneHandoff bool // Closed S10 PJSIP include, read-only inspection.
+	TLSHandoff   bool // S08 inspector alone accepts the closed local HTTPS wrapper.
+	Database     DatabaseNative
+	Source       AsteriskSource
 }
 
 func asteriskCommand(exe string, args ...string) execution.Command {
@@ -62,6 +63,9 @@ func (n AsteriskNative) fileCommand(mode, tc, service string) execution.Command 
 	p := map[string]any{"modules": AsteriskModules(), "files": asteriskFiles(), "unit": asteriskUnit, "binding": n.binding(tc), "archive": asteriskArchiveSHA, "pj": pjArchiveSHA, "service": service}
 	if n.TLSHandoff && mode == "inspect" {
 		p["s08_handoff"] = true
+	}
+	if n.PhoneHandoff && mode == "inspect" {
+		p["s10_handoff"] = true
 	}
 	return asteriskCommand("/usr/bin/python3", "-B", "-c", asteriskAdapter, mode, jsonString(p))
 }
@@ -256,7 +260,7 @@ func (n AsteriskNative) runtimeWithManagement(ctx context.Context, svc map[strin
 			if e != nil || strings.Contains(v, "not registered") || strings.Contains(v, "not available") || strings.TrimSpace(v) == "" {
 				return errAsterisk
 			}
-			if m.Name == "chan_pjsip" && !strings.Contains(v, "No objects found.") {
+			if m.Name == "chan_pjsip" && !n.PhoneHandoff && !strings.Contains(v, "No objects found.") {
 				return errAsterisk
 			}
 			s.Modules[j].Capability = cmd

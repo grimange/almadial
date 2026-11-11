@@ -17,6 +17,7 @@ type VICIdialNative struct {
 	DatabaseAccepted DatabaseSnapshot
 	Source           VICIdialSource
 	Dependency       VICIdialPerlSource
+	PhoneHandoff     bool // S10 alone verifies its separately owned synthetic row.
 	WebHandoff       bool // S07 owns first_login_trigger; all other S05 inputs remain exact.
 }
 
@@ -63,7 +64,7 @@ func (n VICIdialNative) inspectVICIdial(ctx context.Context, runtimeHandoff bool
 	}
 	s.Source, s.Dependency = n.Source.Digest(), n.Dependency.Digest()
 	gate = "generator inputs"
-	s.GeneratorInputs, _, e = inspectVICIdialGeneratorInputsWeb(ctx, runner, n.WebHandoff)
+	s.GeneratorInputs, _, e = inspectVICIdialGeneratorInputsPhone(ctx, runner, n.WebHandoff, n.PhoneHandoff)
 	if e != nil {
 		return s, e
 	}
@@ -131,7 +132,7 @@ func (n VICIdialNative) inspectVICIdial(ctx context.Context, runtimeHandoff bool
 	}
 	gate = "generated configuration"
 	var wrapped bool
-	s.Generated, wrapped, e = inspectVICIdialGeneration(ctx, runner, n.binding(), s.GeneratorInputs)
+	s.Generated, wrapped, e = inspectVICIdialGenerationPhone(ctx, runner, n.binding(), s.GeneratorInputs, n.PhoneHandoff)
 	if e != nil {
 		return s, e
 	}

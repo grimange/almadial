@@ -122,6 +122,11 @@ def config_files():
         path='/etc/asterisk/http.conf'
         variant=out[path]+b'[general](+)\ntlsenable=yes\ntlsbindaddr=127.0.0.1:8089\ntlscertfile=/etc/pki/tls/almadial-s08/current/fullchain.pem\ntlsprivatekey=/etc/pki/tls/almadial-s08/current/key.pem\n'
         if read(path,0o640,gid)==variant: out[path]=variant
+    if p.get('s10_handoff', False):
+        if sys.argv[1] != 'inspect': raise ValueError('S10 handoff is read-only')
+        path='/etc/asterisk/pjsip.conf'
+        variant=out[path]+b'#include "almadial-s10-phone.conf"\n'
+        if read(path,0o640,gid)==variant: out[path]=variant
     return out, gid
 
 def configuration():

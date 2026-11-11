@@ -110,3 +110,22 @@ func TestVICIdialGeneratorInputInspection(t *testing.T) {
 		})
 	}
 }
+
+func TestVICIdialPhoneHandoffPreservesOtherGeneratorInputs(t *testing.T) {
+	r := &vicidialInputsRunner{t: t, columns: "id"}
+	if _, _, err := inspectVICIdialGeneratorInputsPhone(context.Background(), r, false, true); err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	for _, q := range r.queries {
+		if strings.Contains(q, "extension<>") {
+			if !strings.Contains(q, "FROM asterisk.`phones`") || !strings.Contains(q, "extension<>'alm_s10_9061' OR extension IS NULL") {
+				t.Fatal("handoff excluded foreign inputs")
+			}
+			found = true
+		}
+	}
+	if !found {
+		t.Fatal("synthetic phone not handed off")
+	}
+}
