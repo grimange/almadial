@@ -117,6 +117,11 @@ def config_files():
                 out['/etc/asterisk/'+name+'.conf'] += b'[globals]\n'
             out['/etc/asterisk/'+name+'.conf'] += ('#include "'+include+'"\n').encode()
         out['/etc/asterisk/pjsip_wizard.conf'] = b'#include "pjsip_wizard-vicidial.conf"\n'
+    if p.get('s08_handoff', False):
+        if sys.argv[1] != 'inspect': raise ValueError('S08 handoff is read-only')
+        path='/etc/asterisk/http.conf'
+        variant=out[path]+b'[general](+)\ntlsenable=yes\ntlsbindaddr=127.0.0.1:8089\ntlscertfile=/etc/pki/tls/almadial-s08/current/fullchain.pem\ntlsprivatekey=/etc/pki/tls/almadial-s08/current/key.pem\n'
+        if read(path,0o640,gid)==variant: out[path]=variant
     return out, gid
 
 def configuration():

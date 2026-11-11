@@ -21,8 +21,9 @@ import (
 var asteriskAdapter string
 
 type AsteriskNative struct {
-	Database DatabaseNative
-	Source   AsteriskSource
+	TLSHandoff bool // S08 inspector alone accepts the closed local HTTPS wrapper.
+	Database   DatabaseNative
+	Source     AsteriskSource
 }
 
 func asteriskCommand(exe string, args ...string) execution.Command {
@@ -59,6 +60,9 @@ func (n AsteriskNative) binding(toolchain string) string {
 }
 func (n AsteriskNative) fileCommand(mode, tc, service string) execution.Command {
 	p := map[string]any{"modules": AsteriskModules(), "files": asteriskFiles(), "unit": asteriskUnit, "binding": n.binding(tc), "archive": asteriskArchiveSHA, "pj": pjArchiveSHA, "service": service}
+	if n.TLSHandoff && mode == "inspect" {
+		p["s08_handoff"] = true
+	}
 	return asteriskCommand("/usr/bin/python3", "-B", "-c", asteriskAdapter, mode, jsonString(p))
 }
 func (n AsteriskNative) service(ctx context.Context) (map[string]string, error) {
@@ -276,7 +280,7 @@ func (n AsteriskNative) runtimeWithManagement(ctx context.Context, svc map[strin
 		return errAsterisk
 	}
 	sock, e := n.run(ctx, asteriskCommand("/usr/sbin/ss", "-H", "-lntup"))
-	if e != nil || verifyAsteriskListeners(sock.Stdout, pid) != nil {
+	if e != nil || verifyAsteriskListenersTLS(sock.Stdout, pid, n.TLSHandoff) != nil {
 		return errAsterisk
 	}
 	return nil
@@ -293,6 +297,9 @@ func shaInvocation(s string) bool {
 	return true
 }
 func verifyAsteriskListeners(raw string, pid int) error {
+	return verifyAsteriskListenersTLS(raw, pid, false)
+}
+func verifyAsteriskListenersTLS(raw string, pid int, tlsHandoff bool) error {
 	seen := map[string]bool{}
 	resolver := map[string]bool{}
 	for _, l := range strings.Split(raw, "\n") {
@@ -302,7 +309,7 @@ func verifyAsteriskListeners(raw string, pid int) error {
 		}
 		addr := f[4]
 		owned := strings.Contains(l, fmt.Sprintf("pid=%d,", pid))
-		management := strings.HasSuffix(addr, ":5038") || strings.HasSuffix(addr, ":8088")
+		management := strings.HasSuffix(addr, ":5038") || strings.HasSuffix(addr, ":8088") || (tlsHandoff && strings.HasSuffix(addr, ":8089"))
 		if !owned && !management {
 			continue
 		}
@@ -323,7 +330,7 @@ func verifyAsteriskListeners(raw string, pid int) error {
 			resolver[host] = true
 			continue
 		}
-		if !owned || f[0] != "tcp" || (addr != "127.0.0.1:5038" && addr != "127.0.0.1:8088") {
+		if !owned || f[0] != "tcp" || (addr != "127.0.0.1:5038" && addr != "127.0.0.1:8088" && !(tlsHandoff && addr == "127.0.0.1:8089")) {
 			return errAsterisk
 		}
 		seen[addr] = true

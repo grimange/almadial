@@ -62,11 +62,11 @@ def web_request(path, key=None):
             raise ValueError('S07 application response failed')
         return response.status, response.headers.get('X-AlmaDial-Web'),text
 
-def web_foreign():
+def web_foreign(tls_handoff=False):
     entries=[]
     for directory in ('/etc/httpd/conf','/etc/httpd/conf.d','/etc/httpd/conf.modules.d','/etc/php.d','/etc/php-fpm.d'):
         for p in sorted(Path(directory).rglob('*')):
-            if str(p) in S07_PATHS: continue
+            if str(p) in S07_PATHS or (tls_handoff and str(p)=="/etc/httpd/conf.modules.d/99-almadial-s08.conf"): continue
             s=p.lstat()
             if stat.S_ISLNK(s.st_mode): raise ValueError('S07 foreign configuration symlink')
             if stat.S_ISREG(s.st_mode):
@@ -84,7 +84,7 @@ def web_files(files, mutate):
         for f,raw in staged: create(f,raw)
     return {'Missing':[f['Target'] for f,raw in staged], 'Verified':len(files)-len(staged)}
 
-def web_inspect(files):
+def web_inspect(files,tls_handoff=False):
     result=web_files(files,False)
     files_state='absent' if result['Verified']==0 else 'partial' if result['Missing'] else sha(json.dumps([(f['Target'],f['SHA256']) for f in files]).encode())
     setting,key=web_setup(False)
@@ -102,7 +102,7 @@ def web_inspect(files):
         if not web_admin_ready(status,text):
             raise ValueError('S07 authenticated administration unavailable')
         health=sha(b'S07 secured administrator and agent form')
-    return dict(Foreign=web_foreign(),Files=files_state,Services=services,Health=health)
+    return dict(Foreign=web_foreign(tls_handoff),Files=files_state,Services=services,Health=health)
 
 def web_main():
     try:
@@ -125,7 +125,7 @@ def web_main():
                 web_run(['/usr/bin/systemctl','reload','httpd'])
         elif mode=='web-verify': web_setup(True)
         elif mode!='web-inspect': raise ValueError('S07 operation')
-        if mode=='web-inspect': print(json.dumps(web_inspect(files)))
+        if mode=='web-inspect': print(json.dumps(web_inspect(files,payload.get("TLSHandoff",False))))
         else: print('{}')
         return 0
     except Exception:

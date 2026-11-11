@@ -6,6 +6,7 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
+	"fmt"
 	"strings"
 
 	"github.com/grimange/almadial/internal/execution"
@@ -18,7 +19,10 @@ func webAdapter() string {
 	return strings.TrimSuffix(vicidialFilesAdapter, "if __name__ == '__main__':\n    sys.exit(main())\n") + webAdapterSource
 }
 
-type WebNative struct{ Runtime RuntimeNative }
+type WebNative struct {
+	Runtime    RuntimeNative
+	TLSHandoff bool
+}
 
 func webFiles() []vicidialOwnedFile {
 	return []vicidialOwnedFile{
@@ -33,7 +37,10 @@ func (n WebNative) adapter(ctx context.Context, mode string) (WebSnapshot, error
 		Mode                                uint32
 		Content                             []byte
 	}
-	payload := struct{ Files []file }{Files: []file{}}
+	payload := struct {
+		Files      []file
+		TLSHandoff bool
+	}{Files: []file{}, TLSHandoff: n.TLSHandoff}
 	for _, f := range webFiles() {
 		payload.Files = append(payload.Files, file{f.path, f.owner, f.group, f.label, rawSHA(f.content), f.mode, f.content})
 	}
@@ -57,12 +64,15 @@ func (n WebNative) adapter(ctx context.Context, mode string) (WebSnapshot, error
 func (n WebNative) InspectWeb(ctx context.Context) (WebSnapshot, error) {
 	s, e := n.adapter(ctx, "web-inspect")
 	if e != nil {
-		return s, e
+		return s, fmt.Errorf("S07 web inspection: %w", e)
 	}
 	// Only this downstream inspector accepts the closed first-login transition.
 	n.Runtime.Application.WebHandoff = true
 	parent, e := n.Runtime.InspectRuntime(ctx)
-	if e != nil || !runtimeSatisfied(parent) {
+	if e != nil {
+		return s, fmt.Errorf("S07 S06 prerequisite: %w", e)
+	}
+	if !runtimeSatisfied(parent) {
 		return s, errWeb
 	}
 	s.Host, s.Foundation = parent.Host, parent.Digest()

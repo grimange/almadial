@@ -202,7 +202,7 @@ func (n VICIdialNative) inspectWeb(ctx context.Context, runner vicidialInputRunn
 		}
 		return state, nil
 	}
-	service, e := inspectVICIdialWebService(ctx, n.Asterisk.Database.Native.Runner)
+	service, e := inspectVICIdialWebServiceTLS(ctx, n.Asterisk.Database.Native.Runner, n.Asterisk.TLSHandoff)
 	if e != nil {
 		return "partial", nil
 	}

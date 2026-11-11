@@ -75,6 +75,16 @@ class RuntimeState(unittest.TestCase):
                 self.sockets = sockets
                 with self.assertRaises(ValueError): self.state()
 
+    def test_s08_readonly_listener_handoff_is_closed(self):
+        original = self.sockets
+        for addr, owner, allowed in [('127.0.0.1:443','httpd',True), ('127.0.0.1:8089','asterisk',True), ('0.0.0.0:443','httpd',False), ('127.0.0.1:8089','foreign',False), ('127.0.0.1:5060','asterisk',False)]:
+            with self.subTest(addr=addr,owner=owner):
+                self.sockets = original+'\n'+'tcp LISTEN 0 10 '+addr+' 0.0.0.0:* users:(("'+owner+'",pid=700,fd=3))'
+                with self.assertRaises(ValueError): self.state()
+                if allowed: self.assertEqual(len(self.ns['runtime_state']([{'Target':'fixture','Content':'excluded'}],True)['Health']),64)
+                else:
+                    with self.assertRaises(ValueError): self.ns['runtime_state']([{'Target':'fixture','Content':'excluded'}],True)
+
     def test_selinux_permissive_blocks(self):
         self.selinux = 'Permissive'
         with self.assertRaises(ValueError): self.state()

@@ -68,6 +68,9 @@ func verifyVICIdialHTTPResponse(path string, status int, header http.Header, bod
 // ss is independent of Apache configuration text. Reject public HTTP/HTTPS,
 // duplicate local listeners and unexpected processes on the qualification port.
 func verifyVICIdialWebListeners(raw string, pid int) error {
+	return verifyVICIdialWebListenersTLS(raw, pid, false)
+}
+func verifyVICIdialWebListenersTLS(raw string, pid int, tlsHandoff bool) error {
 	count := 0
 	if pid < 2 {
 		return errVICIdial
@@ -89,18 +92,21 @@ func verifyVICIdialWebListeners(raw string, pid int) error {
 		if !relevant {
 			continue
 		}
-		if fields[0] != "tcp" || host != "127.0.0.1" || port != "80" || !strings.Contains(line, "\"httpd\"") || !strings.Contains(line, "pid="+strconv.Itoa(pid)+",") {
+		if fields[0] != "tcp" || host != "127.0.0.1" || (port != "80" && !(tlsHandoff && port == "443")) || !strings.Contains(line, "\"httpd\"") || !strings.Contains(line, "pid="+strconv.Itoa(pid)+",") {
 			return errVICIdial
 		}
 		count++
 	}
-	if count != 1 {
+	if count != 1 && !(tlsHandoff && count == 2) {
 		return errVICIdial
 	}
 	return nil
 }
 
 func inspectVICIdialWebService(ctx context.Context, runner execution.CommandRunner) (string, error) {
+	return inspectVICIdialWebServiceTLS(ctx, runner, false)
+}
+func inspectVICIdialWebServiceTLS(ctx context.Context, runner execution.CommandRunner, tlsHandoff bool) (string, error) {
 	run := func(c execution.Command) (string, error) {
 		r, e := runner.Run(ctx, c)
 		if e != nil || !r.Started || r.ExitCode != 0 || r.StdoutTruncated || r.StderrTruncated {
@@ -121,7 +127,7 @@ func inspectVICIdialWebService(ctx context.Context, runner execution.CommandRunn
 	}
 	pid, _ := strconv.Atoi(fields["MainPID"])
 	sockets, e := run(dbCommand("/usr/sbin/ss", "-H", "-lntup"))
-	if e != nil || verifyVICIdialWebListeners(sockets, pid) != nil {
+	if e != nil || verifyVICIdialWebListenersTLS(sockets, pid, tlsHandoff) != nil {
 		return "", errVICIdial
 	}
 	// Require the distribution FPM service to be active. The separate application
