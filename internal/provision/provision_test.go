@@ -500,3 +500,28 @@ func TestProvisioningFailures(t *testing.T) {
 		t.Fatal("invalid metadata accepted", out, e)
 	}
 }
+
+func TestReviewedAdditionalPackageRequestsRemainBoundToTransaction(t *testing.T) {
+	before := fixture()
+	tx := Transaction{BeforeSHA256: before.Digest(), Install: []Candidate{{Package: Package{Name: "firewalld", EVR: "0:2.3.1-1.el10", Arch: "noarch", Repository: "baseos"}, SHA256: hash("rpm")}}, Remove: []Package{}}
+	if e := tx.Validate(before); e != nil {
+		t.Fatal(e)
+	}
+	c := nativeCommand("apply", before, &tx)
+	var r request
+	if e := json.Unmarshal([]byte(c.Args[4]), &r); e != nil {
+		t.Fatal(e)
+	}
+	found := false
+	for _, p := range r.Packages {
+		if p == tx.Install[0].Package {
+			found = true
+		}
+	}
+	if !found || r.Transaction.Digest() != tx.Digest() {
+		t.Fatal("reviewed addition omitted from native re-solve")
+	}
+	if e := Verify(before, applied(before, tx), tx); e != nil {
+		t.Fatal(e)
+	}
+}

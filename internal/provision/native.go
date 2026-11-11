@@ -71,7 +71,25 @@ type request struct {
 }
 
 func nativeCommand(mode string, s Snapshot, t *Transaction) execution.Command {
-	r := request{Mode: mode, Packages: Packages(), Before: canonical(s), BeforeSHA256: s.Digest(), Transaction: t}
+	packages := Packages()
+	// A reviewed official-repository addition (for example S09 firewalld) is
+	// already permitted by Transaction.Validate. Re-solve its exact direct
+	// requests as well; otherwise apply silently resolves only the M0 set and
+	// rejects the separately reviewed transaction as stale.
+	if mode == "apply" && t != nil {
+		for _, candidate := range t.Install {
+			found := false
+			for _, p := range packages {
+				if p == candidate.Package {
+					found = true
+				}
+			}
+			if !found {
+				packages = append(packages, candidate.Package)
+			}
+		}
+	}
+	r := request{Mode: mode, Packages: packages, Before: canonical(s), BeforeSHA256: s.Digest(), Transaction: t}
 	if mode == "trust" {
 		r.PublicKey = epelPublicKey
 	}
