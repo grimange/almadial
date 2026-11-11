@@ -1,0 +1,56 @@
+TARGET PYTHON MOCKED TESTS (no real firewall add/remove):
+test_add_remove_preserves_config_and_agents (test_carrier_cli.CarrierCLI.test_add_remove_preserves_config_and_agents) ... ok
+test_atomic_replace_preserves_mode (test_carrier_cli.CarrierCLI.test_atomic_replace_preserves_mode) ... ok
+test_concurrent_add_add_and_add_remove (test_carrier_cli.CarrierCLI.test_concurrent_add_add_and_add_remove) ... ok
+test_installer_preserves_live_config_and_rollback_restores_files (test_carrier_cli.CarrierCLI.test_installer_preserves_live_config_and_rollback_restores_files) ... ok
+test_invalid_json_schema_permissions_owner_and_symlink (test_carrier_cli.CarrierCLI.test_invalid_json_schema_permissions_owner_and_symlink) ... ok
+test_invalid_unsuitable_and_duplicate_addresses (test_carrier_cli.CarrierCLI.test_invalid_unsuitable_and_duplicate_addresses) ... ok
+test_nft_readback_and_restore_are_carrier_only (test_carrier_cli.CarrierCLI.test_nft_readback_and_restore_are_carrier_only) ... ok
+test_nonroot_mutation_denied (test_carrier_cli.CarrierCLI.test_nonroot_mutation_denied) ... Error: root privileges required for changes.
+ok
+test_noop_and_sync_idempotence (test_carrier_cli.CarrierCLI.test_noop_and_sync_idempotence) ... ok
+test_partial_failure_restores_exact_previous_drift (test_carrier_cli.CarrierCLI.test_partial_failure_restores_exact_previous_drift) ... ok
+test_readonly_reports_all_drift_without_mutation (test_carrier_cli.CarrierCLI.test_readonly_reports_all_drift_without_mutation) ... ok
+test_rollback_failure_is_explicit (test_carrier_cli.CarrierCLI.test_rollback_failure_is_explicit) ... ok
+test_rule_namespace_and_port_scope (test_carrier_cli.CarrierCLI.test_rule_namespace_and_port_scope) ... ok
+test_sync_repairs_only_managed_drift (test_carrier_cli.CarrierCLI.test_sync_repairs_only_managed_drift) ... ok
+test_worker_lock_overlap_and_timeout (test_carrier_cli.CarrierCLI.test_worker_lock_overlap_and_timeout) ... FAIL
+
+======================================================================
+FAIL: test_worker_lock_overlap_and_timeout (test_carrier_cli.CarrierCLI.test_worker_lock_overlap_and_timeout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/root/qa-backups/carrier-cli-source-20261111T171620Z/tests/test_carrier_cli.py", line 312, in test_worker_lock_overlap_and_timeout
+    self.assertEqual(child.exitcode, 0)
+AssertionError: None != 0
+
+----------------------------------------------------------------------
+Ran 15 tests in 5.811s
+
+FAILED (failures=1)
+Process Process-5:
+Traceback (most recent call last):
+  File "/root/qa-backups/carrier-cli-source-20261111T171620Z/carrier_cli.py", line 38, in locked
+    fcntl.flock(fd, (fcntl.LOCK_SH if readonly else fcntl.LOCK_EX) | fcntl.LOCK_NB)
+BlockingIOError: [Errno 11] Resource temporarily unavailable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib64/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib64/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/root/qa-backups/carrier-cli-source-20261111T171620Z/tests/test_carrier_cli.py", line 65, in concurrent_change
+    with cli.locked(Path(lock)):
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/root/qa-backups/carrier-cli-source-20261111T171620Z/carrier_cli.py", line 42, in locked
+    raise RuntimeError('Portal worker lock busy; retry when the current operation completes')
+RuntimeError: Portal worker lock busy; retry when the current operation completes
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+  File "<stdin>", line 9, in run
+RuntimeError: /usr/bin/python3 returned 1

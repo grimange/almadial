@@ -1,0 +1,70 @@
+UTC: 2026-11-11T17:16:20.253824+00:00
+Python: 3.12.15
+Pre-deployment: 0 active channels
+0 active calls
+142 calls processed
+Carrier config SHA256: 0fcc9b5ba559f72068de55ab0a2d96f2785d366cac0cea1269b130cb0f017eff
+Pinned installer source: /root/qa-backups/carrier-cli-source-20261111T171620Z
+Backup: /root/qa-backups/carrier-cli-20261111T171621186352Z
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+Validation: OK
+Installed: /opt/alma-portal-443/sip_guard.py sha256=e58e3afe58305f6a5a685147c5f51b8cd6fa0612948d691a65fbf16379a1eb60
+Installed: /opt/alma-portal-443/carrier_cli.py sha256=cf11cd729da2f99ba6b7b1090b7d21c0807201dc1024475e6ea4a56ea83eb4cb
+Installed: /usr/local/sbin/alma-portal-carriers sha256=c5c2b28f532dc173f6180b74c69e8cb6daa7f1b4be041b3142e4fc976d2f17d3
+Installation verified. Live carriers.json preserved; no services restarted.
+CHECK: list
+Trusted SIP Carriers (UDP/5060 only)
+38.147.130.74  Configured  nftables=OK  runtime=OK  permanent=OK
+Validation: OK
+CHECK: validate
+Validation: OK
+CHECK: add 38.147.130.74
+Carrier 38.147.130.74: already configured; synchronized (no address change).
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+CHECK: sync
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+CHECK: sync
+Carrier configuration: synchronized.
+Configuration: OK
+nftables: OK
+firewalld runtime: OK
+firewalld permanent: OK
+CHECK: standalone guard bootstrap
+
+CHECK: normal portal reconciliation
+
+Result=success
+ExecMainStatus=0
+ActiveEnterTimestamp=
+Validation: OK
+runtime carrier rule: rule priority="-73" family="ipv4" source address="38.147.130.74/32" port port="5060" protocol="udp" accept
+Unrelated rich rules preserved: 3
+permanent carrier rule: rule priority="-73" family="ipv4" source address="38.147.130.74/32" port port="5060" protocol="udp" accept
+Unrelated rich rules preserved: 0
+Carrier set: {"elem": ["38.147.130.74"], "family": "inet", "handle": 84, "name": "carriers4", "table": "alma_portal_sip", "type": "ipv4_addr"}
+agents4 members unchanged: True count: 1
+grace4 members unchanged: True count: 1
+Rules unchanged: True
+firewalld config: success
+Services: active
+active
+active
+active
+active
+active
+Post-deployment: 0 active channels
+0 active calls
+142 calls processed
+Jaintel3 (operator deactivated): Peer Jaintel3 not found.
+LIVE CLI VERIFICATION: PASS; SIP peer qualification NOT_RUN (operator deactivated carrier).

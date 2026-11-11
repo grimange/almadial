@@ -14,12 +14,21 @@ POLICY = 'alma-phone-sip-' + '-'.join(SIP_PORTS) + '-v2-carriers'
 CARRIER_CONFIG = Path(__file__).with_name('carriers.json')
 
 
-def carriers():
-    # Static operator configuration, independent of lease/grace state.
-    values = json.loads(CARRIER_CONFIG.read_text())
+def validate_carriers(values):
     if not isinstance(values, list) or any(not isinstance(ip, str) for ip in values):
         raise ValueError('Carrier configuration must be a list of public IPv4 addresses')
-    return sorted({public_ip(ip) for ip in values})
+    for value in values:
+        ip = ipaddress.ip_address(value)
+        if ip.version != 4 or not ip.is_global or ip.is_multicast or ip.is_reserved:
+            raise ValueError('Carrier addresses must be unicast public IPv4 addresses')
+    if len(set(values)) != len(values):
+        raise ValueError('Duplicate carrier address')
+    return list(values)
+
+
+def carriers():
+    # Static operator configuration, independent of lease/grace state.
+    return sorted(validate_carriers(json.loads(CARRIER_CONFIG.read_text())))
 
 
 def nft(*args, script=None):
@@ -136,4 +145,9 @@ def refresh(sip, grace, now, command=nft):
 
 
 if __name__ == '__main__':
-    bootstrap()
+    # The imported worker already holds this lock; standalone bootstrap must
+    # coordinate with CLI address changes as well. No nested lock in refresh().
+    import fcntl
+    with open('/var/lib/alma-portal-443/worker.lock', 'r') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        bootstrap()

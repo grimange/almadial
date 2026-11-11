@@ -11,17 +11,17 @@ ip saddr @carriers4 udp dport 5060 counter return
 ip daddr @carriers4 udp sport 5060 udp dport 5060 counter return
 ```
 
-Return permits later firewalld filtering; it does not bypass it. Public/eth0 also has this exact runtime **and permanent** rich rule:
+Return permits later firewalld filtering; it does not bypass it. Public/eth0 now has this exact runtime **and permanent** CLI-managed rich rule (the original deployment used the same rule without priority):
 
 ```text
-rule family="ipv4" source address="38.147.130.74/32" port port="5060" protocol="udp" accept
+rule priority="-73" family="ipv4" source address="38.147.130.74/32" port port="5060" protocol="udp" accept
 ```
 
 There is no global SIP allowance, carrier 5061 permission, carrier RTP permission, permanent direct OUTPUT rule or dependency on agents4/grace4. Existing agent SIP/RTP rules and grace semantics are unchanged. New policy marker `alma-phone-sip-5060-5061-v2-carriers` triggers an atomic migration of only input/output chains in `inet alma_portal_sip`. It preserves dynamic sets and their native expiration deadlines. Repeated bootstrap does not duplicate rules; changed carrier membership updates only carriers4.
 
-Missing or malformed configuration fails before guard mutation. Future carrier changes require coordinated source-controlled `carriers.json` and explicit matching source-scoped firewalld rules. Grant reconciliation never edits permanent firewalld configuration. Install **both files**, not only sip_guard.py. The historical `revoke-deploy.sh` is a different task's deployment artifact and must not be reused as the carrier deployment procedure.
+Missing or malformed configuration fails before guard mutation. Use the carrier CLI described below for future carrier changes; it updates JSON, nftables and both firewalld layers together. Grant reconciliation never edits permanent firewalld configuration. Use the scoped CLI installer rather than copying a guard or a stale JSON file alone. The historical `revoke-deploy.sh` is a different task's deployment artifact and must not be reused as the carrier deployment procedure.
 
-## Deployment performed
+## Original permanent-firewall deployment (historical)
 
 2026-11-11UTC (2026-11-12Asia/Manila). Noninteractive root SSH22222. Original deployed guard matched repository SHA256 `c5b5b5d3de2d3832605f122cc9fba1dd1db6a2d7be88e8ccd89c87022e11a2bf`. No active calls/channels. Both TEMP_PEEREDGE rules and one runtime direct OUTPUT exception were present; no temporary carrier rich rule existed.
 
@@ -33,7 +33,7 @@ Scoped private backup: `/root/qa-backups/peeredge-20261111T164330Z/` contains or
 4. Chain migration replaces the two TEMP rules atomically with permanent policy. Remove only the exact runtime direct rule `ipv4 filter OUTPUT 0 -d 38.147.130.74 -p udp --dport 5060 -j ACCEPT`. Assert no remaining carrier direct or TEMP rules.
 5. Run the actual portal reconciliation service and repeated bootstrap, then observe forced and natural SIP qualifications. Do not restart Asterisk, SSH, networking, portal or firewalld.
 
-Installed guard SHA256: `90ca6836a7876fa300d98b04a5220d5ba869db08bc84ef6ab8e078a5845f5991`.
+Original installed guard SHA256: `90ca6836a7876fa300d98b04a5220d5ba869db08bc84ef6ab8e078a5845f5991`.
 Installed carriers.json SHA256: `0fcc9b5ba559f72068de55ab0a2d96f2785d366cac0cea1269b130cb0f017eff`.
 
 ## Verification
@@ -74,3 +74,53 @@ It holds the existing worker lock, restores only the original guard, invokes its
 RTP10000–20000 is still limited to authorized agents and marked established grace flows. A carrier media IP outside those sets will encounter the same default drop. No verified PeerEdge media ranges were supplied or inferred from its signaling IP. Obtain authoritative carrier media addresses and authorize a separately scoped RTP exception/test; do not add the signaling IP to agent grants or open RTP globally.
 
 Final verdict: `PEEREDGE_CARRIER_FIREWALL_PASS` — persistent SIP signaling only.
+
+
+## Carrier management CLI
+
+The CLI is installed at `/usr/local/sbin/alma-portal-carriers`, with modules `carrier_cli.py` and `sip_guard.py` under `/opt/alma-portal-443`. It uses system Python 3 without additional packages or a new virtual environment. Run as root; read-only commands also require access to the existing worker lock and firewall diagnostics.
+
+```bash
+sudo alma-portal-carriers list
+sudo alma-portal-carriers add <CARRIER_PUBLIC_IP>
+sudo alma-portal-carriers validate
+sudo alma-portal-carriers remove <CARRIER_PUBLIC_IP>
+sudo alma-portal-carriers sync
+```
+
+`list` and `validate` never change configuration or firewall state. Both report carrier-set membership, guard-policy markers and runtime/permanent firewalld drift, including obsolete managed rules; drift returns status 1. `add` preserves every existing address; adding an existing address repairs drift without rewriting JSON. `remove` warns that carrier traffic may disconnect, requires no confirmation and removes only the selected carrier's managed permissions. Removing an absent valid address is an explicit no-op. `sync` repairs drift against the current JSON and removes obsolete **managed** rules. Success returns 0, operational/validation errors 1, and invalid command syntax 2. Use `--help` for command syntax.
+
+The existing schema is a JSON array of unique public unicast IPv4 strings. There are no metadata fields to preserve or extend. Unsupported object schemas, malformed JSON, duplicate entries, IPv6, private/documentation/reserved, multicast, loopback, unspecified and broadcast addresses are rejected before changes. The documentation address `203.0.113.10` is rejected and was never authorized live. The config must be a regular root-owned file without group/other write permission; symlinks are rejected. Atomic replacements preserve its permission mode.
+
+Only exact source-/32, UDP destination 5060, accept rich rules with reserved **priority -73** belong to this CLI. Do not use that exact namespace for unrelated rules. Other priorities, unmarked rules, other ports and dynamic agent grants remain untouched, even when their source IP matches a carrier. Consequently, removing a carrier does not revoke separately authorized agent access for the same IP. The nftables policy still permits only inbound UDP/5060 and outbound UDP source 5060/destination 5060 for carriers. It adds no carrier RTP or 5061 access; carrier addresses never enter agents4/grace4 and never expire with agent leases.
+
+All CLI operations use the existing `/var/lib/alma-portal-443/worker.lock`; reads take a shared lock, mutations an exclusive lock with a ten-second acquisition deadline. Standalone guard bootstrap now takes that same lock; the imported worker already holds it and does not acquire it twice. The installed portal and persistent worker-lock file are prerequisites. No additional timer or daemon is introduced.
+
+Mutations validate input and configuration, snapshot carrier membership and owned rules, atomically replace JSON if needed, reconcile permanent/runtime rich rules, run native guard bootstrap and verify all layers. Detected failures attempt exact restoration of the previous JSON bytes, carrier set and owned rich rules, preserving unrelated rules. A nonzero result states whether restoration succeeded or identifies remaining inconsistencies. A failed firewall query causes no speculative reset. An abrupt process/host crash cannot provide an all-layer transaction: after interruption, run `validate`, review the authoritative JSON, then `sync`. If a reported rollback is incomplete, repair the named layer and run `sync`/`validate`; do not restore the whole firewalld zone or flush nftables.
+
+### Installation and configuration ownership
+
+From a reviewed checkout on the target, with the existing portal installed:
+
+```bash
+sudo python3 operations/portal443/install-carriers.py
+```
+
+For the one-time migration from the original accepted PeerEdge rich rule, use `--adopt-peeredge`. This explicitly migrates **only** that exact historical rule in runtime/permanent configuration, after the marked replacement is verified. It does not infer ownership of other rules from matching IPs. Future installs normally omit this flag. Optional `--expect-guard-sha256 <INSPECTED_SHA256>` refuses a changed deployed guard. The installer atomically installs the two modules and executable, restores SELinux contexts, synchronizes permissions and saves a private scoped backup. It preserves the live JSON and performs no firewall reload or service restart. Keep its reviewed source directory for rollback; it must contain the CLI, guard, entry point and the existing compatible `common.py`.
+
+**Operational authority is `/opt/alma-portal-443/carriers.json`.** `operations/portal443/carriers.json` is the source-controlled deployment inventory. After an operational add/remove, read the live JSON through authorized SSH, review the exact address-only diff, update that repository file and commit it under the normal change process. Never deploy an older repository JSON over live operational changes. This installer deliberately never copies its checkout's JSON. A separate reviewed configuration rollout must also use the same worker lock and run CLI `sync`/`validate` while accounting for rollback. There is no hidden second address inventory or automatic repository write from the server.
+
+### This deployment and rollback
+
+2026-11-11 17:16 UTC (2026-11-12 Asia/Manila). Source baseline `b8b165c8b7eb7e933a3450fb7f33e6c607651578`; 68 portal tests and 15 isolated CLI tests on target Python passed. Sanitized evidence: `operations/qa/evidence/carrier-cli/{tests.txt,deployment.txt,target-tests.txt}`. Private installer source is `/root/qa-backups/carrier-cli-source-20261111T171620Z`; scoped backup is `/root/qa-backups/carrier-cli-20261111T171621186352Z`.
+
+Live `list`, `validate`, duplicate PeerEdge `add`, two `sync` calls, standalone bootstrap, normal portal reconciliation and final validation passed. One carrier remains in each layer; JSON bytes are unchanged. The 18 nft rules and agent/grace membership were unchanged; three unrelated runtime rich rules were preserved. Permanent configuration check and all six inspected services passed; calls/channels stayed zero with 142 processed calls. The SIP peer is intentionally deactivated by the operator: `Peer Jaintel3 not found.` New qualification is NOT_RUN; no peer configuration was changed or reachability claimed. Full add/remove and rollback were tested only against isolated file/mocked-firewall fixtures, never by removing PeerEdge or adding arbitrary live addresses.
+
+Rollback of this CLI installation (not the earlier permanent carrier integration):
+
+```bash
+ssh -T -p 22222 root@2.29.153.161 \
+  'python3 /root/qa-backups/carrier-cli-source-20261111T171620Z/install-carriers.py --rollback /root/qa-backups/carrier-cli-20261111T171621186352Z'
+```
+
+The script holds the worker lock, restores the exact old PeerEdge rules before removing newly owned rules, restores only the snapshotted carrier membership and affected source/entry files, then verifies read-back. It preserves other nftables sets, rich rules, SSH and services. The backup includes original JSON for evidence, but rollback refuses to run if live carrier configuration changed after installation; review and adapt the carrier-specific reversal in that case rather than discarding later changes. The source directory must be retained until rollback is no longer needed. Rollback passed an isolated execute-and-read-back test; it was not executed against the live firewall. Live code was compiled with target Python 3.12.15 before installation. A guard-service restart and firewalld reload remain unnecessary and deferred for the dependency reasons described above.
