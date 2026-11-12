@@ -1,0 +1,28 @@
+{
+  "cli_smoke": "Existing TestCommands included in successful full Go suite; standalone historical harness not rerun",
+  "commands": {
+    "diff-check": 0,
+    "gofmt": 0,
+    "mod-tidy": 0,
+    "mod-verify": 0,
+    "python": 0,
+    "race": 1,
+    "race-authorized": 0,
+    "sbom": 0,
+    "scaffold": 0,
+    "test": 1,
+    "test-authorized": 0,
+    "vet": 0
+  },
+  "focused_sbom_tests": 6,
+  "go_binary_rebuilds": "NOT_RUN: no Go or command-build inputs changed",
+  "go_packages_passed": 24,
+  "go_skipped_events": 5,
+  "go_test_pass_events": 1461,
+  "go_version": "go1.27.3",
+  "hosted_ci": "NOT_RUN",
+  "initial_sandbox_failure": "httptest listener socket operation not permitted; authorized test and race reruns both exit 0",
+  "python_tests": 228,
+  "reproducibility": "Two independent in-memory generations and checked file byte equality PASS",
+  "schema": "SPDX 2.3 official schema, jsonschema 4.19.2 PASS"
+}

@@ -23,7 +23,7 @@ Repo-scoped Codex skills live in `.agents/skills/`. Invoke by name (`$almadial-c
 - M0 source/VM compatibility: not run.
 - Stack lock: candidate only; no pinned accepted versions.
 - Go installer: not implemented.
-- Licensing: MIT proposed for original code, ownership not yet confirmed. Upstream notices must be independently reviewed.
+- Licensing: MIT for AlmaDial-original code under the recorded rights-holder authority; upstream code retains separate licenses. See [third-party notices and unresolved release conditions](docs/THIRD_PARTY_NOTICES.md).
 
 ## Developer workflow
 

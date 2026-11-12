@@ -1,0 +1,223 @@
+[
+  {
+    "path": "licenses/Net-Telnet-3.05.tar.gz/Net-Telnet-3.05/README",
+    "sha256": "22d0a3343b46c7857cd7d06cb37fe437d467df71aa5854af515374e1e8bf6c53",
+    "source_archive": "Net-Telnet-3.05.tar.gz",
+    "source_path": "Net-Telnet-3.05/README"
+  },
+  {
+    "path": "licenses/asterisk-22.12.0.tar.gz/asterisk-22.12.0/COPYING",
+    "sha256": "82af40ed7f49c08685360811993d9396320842f021df828801d733e8fdc0312f",
+    "source_archive": "asterisk-22.12.0.tar.gz",
+    "source_path": "asterisk-22.12.0/COPYING"
+  },
+  {
+    "path": "licenses/asterisk-22.12.0.tar.gz/asterisk-22.12.0/LICENSE",
+    "sha256": "cb2192ac6c46b57220ff67ff8f836007d9f38f1e9f37cf1ae9169256dbd5ac8c",
+    "source_archive": "asterisk-22.12.0.tar.gz",
+    "source_path": "asterisk-22.12.0/LICENSE"
+  },
+  {
+    "path": "licenses/asterisk-22.12.0.tar.gz/asterisk-22.12.0/addons/ooh323c/COPYING",
+    "sha256": "95c19cdb42f59f3e7be8fbb5d74b53c6721b334cac922df7205245df49aa9bef",
+    "source_archive": "asterisk-22.12.0.tar.gz",
+    "source_path": "asterisk-22.12.0/addons/ooh323c/COPYING"
+  },
+  {
+    "path": "licenses/asterisk-22.12.0.tar.gz/asterisk-22.12.0/codecs/gsm/COPYRIGHT",
+    "sha256": "1bbe7119b1bcd1489e0f36cb95b8902f7f0ceec9a2f3a67394bc9f4709a4e0a7",
+    "source_archive": "asterisk-22.12.0.tar.gz",
+    "source_path": "asterisk-22.12.0/codecs/gsm/COPYRIGHT"
+  },
+  {
+    "path": "licenses/asterisk-22.12.0.tar.gz/asterisk-22.12.0/codecs/ilbc/LICENSE",
+    "sha256": "ab00a482b6a3902e40211b43c5d0441962ea99b6cc7c25c0f243fa270b78d482",
+    "source_archive": "asterisk-22.12.0.tar.gz",
+    "source_path": "asterisk-22.12.0/codecs/ilbc/LICENSE"
+  },
+  {
+    "path": "licenses/asterisk-22.12.0.tar.gz/asterisk-22.12.0/codecs/ilbc/LICENSE_ADDENDUM",
+    "sha256": "1ebe5913c79cd5a1e2c50f13f584426c9eca773e64338323d850d25fee11b5de",
+    "source_archive": "asterisk-22.12.0.tar.gz",
+    "source_path": "asterisk-22.12.0/codecs/ilbc/LICENSE_ADDENDUM"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/COPYING",
+    "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/COPYING"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/gsm/COPYRIGHT",
+    "sha256": "81c68a3374937ed9b5e4929c709e81a2c4b35b5d1f450ecf8c473e2daea46ff6",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/gsm/COPYRIGHT"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/resample/COPYING",
+    "sha256": "11f669789c2d4820e68e5d740d8cfbfc68295cd90bec49c0e8fcee0e21716c37",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/resample/COPYING"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/speex/COPYING",
+    "sha256": "671bb5d8fd3c6b05a2e831d90f978ac27965c92bd8ea6d16b3df76e3440c0e9f",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/speex/COPYING"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/srtp/LICENSE",
+    "sha256": "8e19d42a1eec9561f3f347253ddf2e385c55f392f025bb0fd41b88dbf38db5ae",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/srtp/LICENSE"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/threademulation/Microsoft Permissive License.txt",
+    "sha256": "c7b072be56c07100ebb791f835f2cdd634a56f10c987cd3f81738525d43a3bb0",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/threademulation/Microsoft Permissive License.txt"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/webrtc/LICENSE",
+    "sha256": "ab00a482b6a3902e40211b43c5d0441962ea99b6cc7c25c0f243fa270b78d482",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/webrtc/LICENSE"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/webrtc/LICENSE_THIRD_PARTY",
+    "sha256": "a6e32cb08a87543c816e67a0984b15c43286d7f10dc00bfa00c5d35443f18e0d",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/webrtc/LICENSE_THIRD_PARTY"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/webrtc_aec3/LICENSE",
+    "sha256": "ab00a482b6a3902e40211b43c5d0441962ea99b6cc7c25c0f243fa270b78d482",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/webrtc_aec3/LICENSE"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/webrtc_aec3/src/absl/LICENSE",
+    "sha256": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/webrtc_aec3/src/absl/LICENSE"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/webrtc_aec3/src/common_audio/third_party/ooura/LICENSE",
+    "sha256": "25b7731b70c77ecd5f3bb19303fbaa99be18860f81d44f71da670fdcd04829db",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/webrtc_aec3/src/common_audio/third_party/ooura/LICENSE"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/webrtc_aec3/src/common_audio/third_party/spl_sqrt_floor/LICENSE",
+    "sha256": "41d791701e3e1c1073470403de7e342442d1e6a2af72681023b13a2f45f2125c",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/webrtc_aec3/src/common_audio/third_party/spl_sqrt_floor/LICENSE"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/webrtc_aec3/src/third_party/rnnoise/COPYING",
+    "sha256": "afd3088304e9d54a48d15f33134cb544a2db94d01268c7a7e5a2003fa2b32248",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/webrtc_aec3/src/third_party/rnnoise/COPYING"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/yuv/LICENSE",
+    "sha256": "2b2cc1180c7e6988328ad2033b04b80117419db9c4c584918bbb3cfec7e9364f",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/yuv/LICENSE"
+  },
+  {
+    "path": "licenses/pjproject-2.17.tar.bz2/pjproject-2.17/third_party/yuv/LICENSE_THIRD_PARTY",
+    "sha256": "d62df95ee2ada2637151bc125cadbe2703ef07ed5d9cbe163eaa53bda3949af4",
+    "source_archive": "pjproject-2.17.tar.bz2",
+    "source_path": "pjproject-2.17/third_party/yuv/LICENSE_THIRD_PARTY"
+  },
+  {
+    "path": "licenses/vicidial-r4037.zip/2026-11-05/docs/LICENSE.txt",
+    "sha256": "5f27d58d7bbfb242781ff69aaf82694d7e3e05bd55abf87ed1f4e84205f6eeaf",
+    "source_archive": "vicidial-r4037.zip",
+    "source_path": "2026-11-05/docs/LICENSE.txt"
+  },
+  {
+    "path": "licenses/viciphone.tar.gz/ViciPhone-24e98fccfa7b7079fff970e02fca5f002ac1f2cc/LICENSE",
+    "sha256": "e7ae8b5da17709474ba25316441bc064148841cf101e7eef318c3c3ee5a0827b",
+    "source_archive": "viciphone.tar.gz",
+    "source_path": "ViciPhone-24e98fccfa7b7079fff970e02fca5f002ac1f2cc/LICENSE"
+  },
+  {
+    "path": "licenses/Go/LICENSE",
+    "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "source_path": "LICENSE"
+  },
+  {
+    "path": "licenses/Go/PATENTS",
+    "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+    "source_path": "PATENTS"
+  },
+  {
+    "path": "licenses/check.v1/LICENSE",
+    "sha256": "69ce77f2b1c9c608d27f2d749b0e7d0c13960ed3b0dc07b973ac940e362e5d9c",
+    "source_path": "pkg/mod/gopkg.in/check.v1@v0.0.0-20161208181325-20d25e280405/LICENSE"
+  },
+  {
+    "path": "licenses/Apache-2.0.txt",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "source_path": "Apache-2.0.txt"
+  },
+  {
+    "path": "licenses/SIP.js-0.20.1/LICENSE.md",
+    "sha256": "e082b1599bafad6fcc8cd7e278d2ceca5547be3fe9aee740bcf229ac0395307c",
+    "source_path": "SIP.js-0.20.1/LICENSE.md"
+  },
+  {
+    "path": "licenses/Go-x-crypto/LICENSE",
+    "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "source_path": "go1.27.3/src/vendor/golang.org/x/crypto/LICENSE"
+  },
+  {
+    "path": "licenses/Go-x-crypto/PATENTS",
+    "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+    "source_path": "go1.27.3/src/vendor/golang.org/x/crypto/PATENTS"
+  },
+  {
+    "path": "licenses/Go-x-net/LICENSE",
+    "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "source_path": "go1.27.3/src/vendor/golang.org/x/net/LICENSE"
+  },
+  {
+    "path": "licenses/Go-x-net/PATENTS",
+    "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+    "source_path": "go1.27.3/src/vendor/golang.org/x/net/PATENTS"
+  },
+  {
+    "path": "licenses/Go-x-sys/LICENSE",
+    "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "source_path": "go1.27.3/src/vendor/golang.org/x/sys/LICENSE"
+  },
+  {
+    "path": "licenses/Go-x-sys/PATENTS",
+    "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+    "source_path": "go1.27.3/src/vendor/golang.org/x/sys/PATENTS"
+  },
+  {
+    "path": "licenses/Go-x-text/LICENSE",
+    "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+    "source_path": "go1.27.3/src/vendor/golang.org/x/text/LICENSE"
+  },
+  {
+    "path": "licenses/Go-x-text/PATENTS",
+    "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+    "source_path": "go1.27.3/src/vendor/golang.org/x/text/PATENTS"
+  },
+  {
+    "path": "licenses/SPDX-spec/LICENSE",
+    "sha256": "017e38491cccbd2bdb6da0a32a33db9ec245b5dab30fdcd09f2c742c975e5b35",
+    "source_path": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.3/LICENSE"
+  },
+  {
+    "extraction": "Complete leading notice and complete MD5 notice comment; remainder unchanged upstream archive",
+    "path": "licenses/SIP.js-0.20.1/embedded-notices.txt",
+    "sha256": "0f6d6d3ed8ed337952abcfd291fc4d362d5259b1f9403edced36404fd013479d",
+    "source_archive": "viciphone.tar.gz",
+    "source_path": "ViciPhone-24e98fccfa7b7079fff970e02fca5f002ac1f2cc/src/js/sip.js"
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "archive_validation": "Archive identity and reproducibility are recorded separately in protected follow-up evidence to avoid self-referential checksums.",
+  "classification": "LOCAL_REVIEW_CANDIDATE_NOT_CLEARED_FOR_PUBLICATION",
+  "modified_files": [
+    {
+      "archive": "vicidial-r4037.zip",
+      "modification_notice": "AlmaDial accepted installer transformations; qualification 2026-11-13",
+      "modified_sha256": "51abc2f7e65f8e6722e218b9714d7142e2cb76c1fba755d8a42e195a9fbf555a",
+      "original_sha256": "4406700454ec6b9803393cbf9f3672bca6b1123d01c3b5b58ef00cb1ec2c0b67",
+      "path": "2026-11-05/bin/ADMIN_keepalive_ALL.pl"
+    },
+    {
+      "archive": "vicidial-r4037.zip",
+      "modification_notice": "AlmaDial accepted installer transformations; qualification 2026-11-13",
+      "modified_sha256": "458e6fe7ad864760688e73d3031fe5de0d28e1fae6a31bbdabfc5448542f3d3e",
+      "original_sha256": "cd2115f06d8c7730af73d67d468612c4ac127f815b31689a3112b374a14d9d87",
+      "path": "2026-11-05/bin/AST_VDauto_dial.pl"
+    },
+    {
+      "archive": "vicidial-r4037.zip",
+      "modification_notice": "AlmaDial accepted installer transformations; qualification 2026-11-13",
+      "modified_sha256": "c6093d1551290b283e7cae7bbe8ef684e4e93298c2b1880e79b758083eb6b173",
+      "original_sha256": "0187ca67f99c0b435280fe76a2cfd2c4816ad7f82411f2112bc988c37ee4a596",
+      "path": "2026-11-05/bin/AST_VDremote_agents.pl"
+    },
+    {
+      "archive": "vicidial-r4037.zip",
+      "modification_notice": "AlmaDial accepted installer transformations; qualification 2026-11-13",
+      "modified_sha256": "007fc3012ea5c37e5c5a330719ed51a621aa9ad84488ade3ef13eac9d64756d3",
+      "original_sha256": "83be4e5ca25591adc6991273b84114b53164ef49b7bf04bee9e9b7413b7cb384",
+      "path": "2026-11-05/bin/AST_manager_send.pl"
+    },
+    {
+      "archive": "viciphone.tar.gz",
+      "modification_notice": "AlmaDial accepted installer transformations; qualification 2026-11-13",
+      "modified_sha256": "4fd3eff38aa505b43574cf23ae183b788f41bccee2e3e11423ab713992e5d6d0",
+      "original_sha256": "c7763fd3cc5a56d604c577291e6bbd25afe7f3b1cfa5fadbce914d30cf94779b",
+      "path": "ViciPhone-24e98fccfa7b7079fff970e02fca5f002ac1f2cc/src/js/vici_phone.js"
+    },
+    {
+      "archive": "viciphone.tar.gz",
+      "modification_notice": "AlmaDial accepted installer transformations; qualification 2026-11-13",
+      "modified_sha256": "7c088f33c53e3ffdddd61c5c65d4d90282a359c48f699d35d15e7ee0328104ce",
+      "original_sha256": "e37d92df58d3c4f1b55a24a4364f9e4c9653c45820628fb657c42bd443fb6a6c",
+      "path": "ViciPhone-24e98fccfa7b7079fff970e02fca5f002ac1f2cc/src/viciphone.php"
+    }
+  ]
+}

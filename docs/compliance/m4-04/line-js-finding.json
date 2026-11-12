@@ -1,0 +1,40 @@
+{
+  "analysis": "The words cannot charge purport to restrict charging for this software, not merely describe a zero-price download. The unspecified GPL declaration and this explanation do not establish an unambiguous grant. No distinct rights/use limitation is specified. GPL terms do not by themselves authorize disregarding this header.",
+  "archive": "vicidial-r4037.zip",
+  "archive_in_repository": false,
+  "archive_sha256": "ebdd6fab3c9bd56c5ed84f79a3118153c1c9ed38508f24a83a1b71ad803a4058",
+  "binary_bundled": false,
+  "classification": "UNRESOLVED_RIGHTS",
+  "closure": "DOCUMENTED_EXCEPTION; release authority remains BLOCKING under canonical ALM-32",
+  "complete_notice": "/* This notice must remain at all times.\n\ngraph.js\nCopyright (c) Balamurugan S, 2005. sbalamurugan @ hotmail.com\nDevelopment support by Jexp, Inc http://www.jexp.com \n\nThis package is free software. It is distributed under GPL - legalese removed, it means that you can use this for any purpose, but cannot charge for this software. Any enhancements you make to this piece of code, should be made available free to the general public! \n\nLatest version can be downloaded from http://www.sbmkpm.com\n\nThis library is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n\nline.js provides a simple mechanism to draw line graphs. It  uses \nwz_jsgraphics.js  which is copyright of its author. \n\nUsage:\nvar g = new line_graph();\ng.add(\"title1\",value);\ng.add(\"title2\",value2);\n\ng.render(\"canvas_name\", \"graph title\");\n\n//where canvas_name is a div defined INSIDE body tag \n<body>\n<div id=\"canvas_name\" style=\"overflow: auto; position:relative;height:300px;width:400px;\"></div>\n\n\n*/",
+  "decision_needed": "Rights-holder clarification of applicable GPL version and permission to charge/convey, or qualified legal determination for the actual payload. Alternative replacement/removal requires separate product scope and functional review; not performed.",
+  "delivery": "Operator-staged upstream archive; installer deploys www/ tree including this asset; browser clients of report pages receive its source",
+  "file_sha256": "877b6c3b4ba162cfebb19b67380d83855eb6fa0a57c9aa3f6f6694babde5a8e9",
+  "installed_page_references": [
+    "2026-11-05/www/vicidial/AST_AMD_log_report.php",
+    "2026-11-05/www/vicidial/AST_CLOSERstats.php",
+    "2026-11-05/www/vicidial/AST_CLOSERstats_v2.php",
+    "2026-11-05/www/vicidial/AST_LAGGED_log_report.php",
+    "2026-11-05/www/vicidial/AST_LAGGED_log_report_summary.php",
+    "2026-11-05/www/vicidial/AST_agent_debug_log_report.php",
+    "2026-11-05/www/vicidial/AST_carrier_log_report.php",
+    "2026-11-05/www/vicidial/AST_dial_log_report.php",
+    "2026-11-05/www/vicidial/AST_email_log_report.php",
+    "2026-11-05/www/vicidial/AST_hangup_cause_report.php",
+    "2026-11-05/www/vicidial/AST_parkstats.php",
+    "2026-11-05/www/vicidial/AST_url_log_report.php",
+    "2026-11-05/www/vicidial/AST_vdad_debug_log_report.php",
+    "2026-11-05/www/vicidial/AST_webserver_url_report.php",
+    "2026-11-05/www/vicidial/cid_603_report.php"
+  ],
+  "installed_path": "/var/www/html/vicidial/line.js",
+  "modified": false,
+  "path": "2026-11-05/www/vicidial/line.js",
+  "revision": "r4037 / official 2026-11-05 snapshot",
+  "upstream_lookup": {
+    "author_site": "https://www.sbmkpm.com",
+    "gpl_reference": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+    "limitation": "General GPL permits charging and forbids further restrictions; this does not resolve author intent or authority for this exact file",
+    "result": "Fetch unavailable; bounded search found no authoritative clarification"
+  }
+}

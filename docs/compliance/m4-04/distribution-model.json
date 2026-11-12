@@ -1,0 +1,52 @@
+{
+  "categories": [
+    {
+      "component": "AlmaDial original Go/Python/docs",
+      "delivery": "Repository; future installer binary",
+      "obligation": "MIT authority attested; retain original MIT and Go/YAML/linked contributor notices"
+    },
+    {
+      "component": "Five pinned upstream archives",
+      "delivery": "Operator stages upstream downloads; not embedded in installer binary or current Git repository",
+      "obligation": "Local compilation/deployment is distinct from later conveying binary/image/source; preserve licenses and exact source"
+    },
+    {
+      "component": "VICIdial r4037",
+      "delivery": "Modified Perl plus web tree installed locally; JavaScript delivered to browser clients",
+      "license": "LicenseRef-VICIdial-AGPLv2-2007",
+      "obligation": "Sections 2(a), 2(d), 3; network source clause is conditional on an upstream source-request facility. Need qualified determination of that condition; do not import GNU AGPLv3 wording.",
+      "status": "DOCUMENTED_EXCEPTION"
+    },
+    {
+      "component": "VICIphone pinned revision",
+      "delivery": "Modified PHP/JS served to local/LAN browser; SIP.js unchanged but conveyed as asset",
+      "license": "AGPL-3.0-or-later; SIP.js portions MIT AND WTFPL",
+      "obligation": "AGPLv3 section 13 requires prominently offering corresponding source to network users of a modified version. Exact local source candidate prepared; no deployed offer/access endpoint established or approved.",
+      "status": "BLOCKING before applicable deployment/distribution clearance"
+    },
+    {
+      "component": "731 RPMs",
+      "delivery": "Base image and approved repository packages; not bundled in current Git/Go binary",
+      "obligation": "An installed-system SBOM does not establish AlmaDial redistribution; future image/RPM release needs source/notice review"
+    },
+    {
+      "component": "Tracked operations patches",
+      "delivery": "Three derived patches stored in Git, separate from six unified-installer transformations",
+      "obligation": "Preserve patch identity and attribution; exact upstream base applicability not fully established. Candidate includes patches as not-applied review material.",
+      "status": "DOCUMENTED_EXCEPTION"
+    },
+    {
+      "component": "Source candidate prepared by this task",
+      "delivery": "Private local review archive only; not published or exposed via network",
+      "obligation": "Not an assertion of complete legal corresponding source or rights to convey line.js; contains five original archives, six modified source files/diffs, build/install source, license texts and notices"
+    }
+  ],
+  "private_lab_limit": "Private preparation alone is not public publication; network interaction obligations must be evaluated independently. No blanket exemption from AGPL obligations is claimed.",
+  "profile": "Accepted local/LAN installation; no release published",
+  "required_release_decisions": [
+    "Clear line.js rights for actual delivered web payload",
+    "Resolve nested linked-build/license conclusions where required by selected binary/image payload",
+    "Approve/provide source access for modified VICIphone network users and assess conditional VICIdial clause",
+    "Ensure prominent dated modification notices on conveyed modified files; separate candidate manifest does not prove installed files satisfy notice rules"
+  ]
+}

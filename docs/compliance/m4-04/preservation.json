@@ -1,0 +1,15 @@
+{
+  "archive_digests_unchanged": 5,
+  "machine_identity_unchanged": true,
+  "rpm_records_unchanged": 731,
+  "scope": "Read-only rpm/systemctl/getenforce/archive hashing; no database/application/TLS/firewall/configuration mutation commands executed. This is representative preservation, not a full managed-state before/after campaign.",
+  "selinux": "Enforcing",
+  "services": [
+    "active",
+    "active",
+    "active",
+    "active",
+    "active",
+    "active"
+  ]
+}

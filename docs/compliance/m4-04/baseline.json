@@ -1,0 +1,17 @@
+{
+  "created": "2026-11-13T00:00:00Z",
+  "git": "229c0d40fbe76c07389fae1716180a2dcd4b8bb4",
+  "host": "almadial-alm29-clean-d",
+  "installed_manifest_sha256": "80940fac407ca7ee0041378b2e1e8b4ab4d95aa95749b503d5df7d4f356009fa",
+  "kernel": "6.12.0-211.64.1.el10_2.x86_64",
+  "machine_id": "4c7b492940923838a0700adba65ed3eb",
+  "os": "AlmaLinux 10.2",
+  "ownership": {
+    "confirmation": "Confirmed: authority to license original code under MIT",
+    "date": "2026-11-13",
+    "question_id": "call_d34f20ac34da4f92a18f5d14fa0d148a",
+    "scope": "Ronniel Allan Casta\u00f1ito; AlmaDial-original code only; includes applicable employer/publication authority as asked; no upstream rights assignment or publication action implied."
+  },
+  "rpm_count": 731,
+  "snapshot": "alm29-pristine"
+}

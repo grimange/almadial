@@ -1,0 +1,21 @@
+[
+  {
+    "GoVersion": "1.27.3",
+    "Main": true,
+    "Path": "github.com/grimange/almadial"
+  },
+  {
+    "GoModSum": "h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=",
+    "GoVersion": "1.16",
+    "Path": "go.yaml.in/yaml/v3",
+    "Sum": "h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc=",
+    "Version": "v3.0.4"
+  },
+  {
+    "GoModSum": "h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=",
+    "Indirect": true,
+    "Path": "gopkg.in/check.v1",
+    "Sum": "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
+    "Version": "v0.0.0-20161208181325-20d25e280405"
+  }
+]

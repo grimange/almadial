@@ -1,0 +1,52 @@
+[
+  {
+    "bytes": 16272,
+    "path": "operations/qa/proposals/prd-03c/preview-logout.patch",
+    "sha256": "7b6f04b44d560c953106467ab9b2a52d5768ffead81a459775f6c531f4f16a0e"
+  },
+  {
+    "bytes": 16358,
+    "path": "operations/vicidial/patches/0001-preview-logout.patch",
+    "sha256": "e993957a61ef74139010ac2997ab5f8167e50798dfc6246519843a37fcbbac29"
+  },
+  {
+    "bytes": 1237,
+    "path": "operations/webphone/config/portal-phone-projection.patch",
+    "sha256": "fa9e1a59331b3331b07d6de963043f8ea15332fde2468acf71d059684bb188c5"
+  },
+  {
+    "bytes": 7827,
+    "path": "internal/provision/vicidial_source.go",
+    "sha256": "4ea379e9177b96e4e5ed0a14515a035d2bff095b77323f346f8869234e04185b"
+  },
+  {
+    "bytes": 4174,
+    "path": "internal/provision/phone_source.go",
+    "sha256": "d4ffd8bbfb78659008885ec684256867e7711478c47d9e26beac81fb5bac985d"
+  },
+  {
+    "bytes": 5317,
+    "path": "internal/provision/packages.json",
+    "sha256": "af6dbb0c7db2c0eb4843883a1e69e4ba18dd02c77b85ea6ab3856eb4d0472e21"
+  },
+  {
+    "bytes": 2051,
+    "path": "scripts/build_go.py",
+    "sha256": "dc7ab59482225d26e1521231869bd9f3d23f4be306298551caca37ed3c0b3c83"
+  },
+  {
+    "bytes": 2597,
+    "path": "manifests/stack.lock.yaml",
+    "sha256": "80940fac407ca7ee0041378b2e1e8b4ab4d95aa95749b503d5df7d4f356009fa"
+  },
+  {
+    "bytes": 82,
+    "path": "go.mod",
+    "sha256": "52b4bb4eed6231638a55cbd8094f0e2a00b850f8915e5e99327f4703730c13ed"
+  },
+  {
+    "bytes": 364,
+    "path": "go.sum",
+    "sha256": "26c315c867b11b886f3c9402fce7f341f6a9115a5d61f54afbb5e1b1fb5f6017"
+  }
+]

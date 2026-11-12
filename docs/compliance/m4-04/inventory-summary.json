@@ -1,0 +1,21 @@
+{
+  "baseline_repository_files": 898,
+  "categories": {
+    "binary-linked": 2,
+    "downloaded-source": 5,
+    "embedded-runtime-asset": 8,
+    "embedded-source-notice": 18,
+    "original-source": 1,
+    "test-only": 1,
+    "toolchain-vendored": 4,
+    "validation-data": 1
+  },
+  "components": 40,
+  "installed_rpms": 731,
+  "installer_selected_rpm_names": 44,
+  "notice_evidence_files": 38,
+  "rpm_license_conclusions": "NOASSERTION; verbatim RPM declarations retained",
+  "source_regular_files": 8134,
+  "spdx_packages": 772,
+  "spdx_sha256": "d1eb57fd60e8ce2b55cdb89483407f65fdb5a5198f1d315afe32716c6da50104"
+}
