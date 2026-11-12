@@ -135,3 +135,10 @@ member manifest; it does not hash itself. Checksums establish integrity, not the
 identity or trustworthiness of a sender. Keep the bundle private; the tool never
 uploads or publishes it. Normal probe access may append service/audit logs or
 update filesystem access times; managed application state remains unchanged.
+
+## Recording and data restoration
+
+For the bounded manual recording/configuration/database drill, use
+[recording backup and isolated restoration](recording-backup-and-restore.md).
+It restores only into a new private directory and separate schema; it does not
+replace live files or promise whole-server or transactional call recovery.
