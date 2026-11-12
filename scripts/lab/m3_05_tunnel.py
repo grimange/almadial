@@ -1,4 +1,9 @@
-import socketserver,subprocess,threading,sys
+import socketserver,subprocess,threading,sys,re
+VM = "almadial-alm16-rpm"
+if len(sys.argv) == 3 and sys.argv[1] == "--vm":
+ VM = sys.argv[2]
+ assert re.fullmatch(r"almadial-alm29-clean-[a-z]+", VM)
+ sys.argv = sys.argv[:1]
 REMOTE="""import socket,sys,threading
 s=socket.create_connection(('127.0.0.1',int(sys.argv[1])))
 def send():
@@ -21,7 +26,7 @@ except OSError:pass
 """
 class Handler(socketserver.BaseRequestHandler):
  def handle(self):
-  p=subprocess.Popen(['multipass','exec','almadial-alm16-rpm','--','python3','-u','-c',REMOTE,str(self.server.remote)],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL)
+  p=subprocess.Popen(['multipass','exec',VM,'--','python3','-u','-c',REMOTE,str(self.server.remote)],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL)
   def send():
    try:
     while True:

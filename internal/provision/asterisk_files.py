@@ -74,6 +74,19 @@ def build():
 def resource_paths():
     return [(T/'doc'/name, Path('/var/lib/asterisk/documentation')/name) for name in ('core-en_US.xml','appdocsxml.xslt','appdocsxml.dtd')]
 
+def runtime_directory(directory):
+    path = safe(directory)
+    try:
+        path.mkdir(mode=0o755)
+    except FileExistsError:
+        if not path.is_dir() or stat.S_IMODE(path.stat().st_mode) != 0o755:
+            raise ValueError('runtime directory metadata conflict')
+    else:
+        # mkdir's mode is filtered by the invoking operator's umask. These
+        # installer-created public runtime resources must remain readable by
+        # the unprivileged Asterisk account even under umask 077.
+        os.chmod(path, 0o755)
+
 def artifact_mode(dst):
     return 0o644 if dst.parent.name == 'documentation' else 0o755
 
@@ -175,7 +188,7 @@ def main():
         elif mode == 'install':
             build()
             for directory in ('/usr/lib/asterisk','/usr/lib/asterisk/modules','/var/lib/asterisk/documentation'):
-                safe(directory).mkdir(mode=0o755,exist_ok=True)
+                runtime_directory(directory)
             # Inspect every destination before copying the first byte.
             for src,dst in install_paths():
                 staged = W/'dest'/str(dst).lstrip('/')
@@ -188,7 +201,7 @@ def main():
             if install() != 'libraries-missing':
                 raise ValueError('uncertain library reconciliation')
             pairs=[(src,dst) for src,dst in install_paths() if dst.name in ('libasteriskssl.so.1','libasteriskpj.so.2') or dst.parent.name == 'documentation']
-            safe('/var/lib/asterisk/documentation').mkdir(mode=0o755,exist_ok=True)
+            runtime_directory('/var/lib/asterisk/documentation')
             for src,dst in pairs:
                 if read(W/'dest'/str(dst).lstrip('/')) != read(src) or safe(dst).exists():
                     raise ValueError('library staging conflict')
@@ -204,7 +217,7 @@ def main():
             for src,dst in resource_paths():
                 if read(W/'dest'/str(dst).lstrip('/')) != read(src) or safe(dst).exists():
                     raise ValueError('resource staging conflict')
-            safe('/var/lib/asterisk/documentation').mkdir(mode=0o755,exist_ok=True)
+            runtime_directory('/var/lib/asterisk/documentation')
             create(W/'install.before-resources.json',read(W/'install.json',0o600))
             for src,dst in resource_paths():
                 create(dst,read(src),artifact_mode(dst))

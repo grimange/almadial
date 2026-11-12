@@ -151,6 +151,13 @@ func (Linux) Run(ctx context.Context, op Operation) ([]byte, error) {
 	cmd.Stderr = io.Discard
 	err = cmd.Run()
 	if err != nil {
+		// Minimal cloud images may omit nft. A modular, currently unloaded
+		// nf_tables implementation cannot contain an nftables ruleset. Never
+		// substitute this proof for a permission error or a loaded/built-in
+		// implementation; those still require the native ruleset inspection.
+		if op == Firewall && os.IsNotExist(err) && unloadedNFTables(Linux{}) {
+			return []byte(`{"nftables":[]}`), nil
+		}
 		code := -1
 		var exit *exec.ExitError
 		if errors.As(err, &exit) {
@@ -159,6 +166,24 @@ func (Linux) Run(ctx context.Context, op Operation) ([]byte, error) {
 		return nil, &CommandError{code}
 	}
 	return b.Bytes(), nil
+}
+
+func unloadedNFTables(src Source) bool {
+	loaded, err := src.Exists("/sys/module/nf_tables")
+	if err != nil || loaded {
+		return false
+	}
+	kernel, err := src.Read("/proc/sys/kernel/osrelease")
+	name := strings.TrimSpace(string(kernel))
+	if err != nil || name == "" || strings.ContainsAny(name, "/\\\x00\n\r") {
+		return false
+	}
+	config, err := src.Read("/boot/config-" + name)
+	if err != nil || !strings.Contains("\n"+string(config), "\nCONFIG_NF_TABLES=m\n") {
+		return false
+	}
+	loaded, err = src.Exists("/sys/module/nf_tables")
+	return err == nil && !loaded
 }
 func Collect(ctx context.Context, src Source) Snapshot {
 	s := Snapshot{Known: make(map[string]bool)}

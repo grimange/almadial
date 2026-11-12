@@ -383,3 +383,21 @@ func TestProcessAndFirewallObservations(t *testing.T) {
 		t.Fatal("empty JSON ruleset misclassified")
 	}
 }
+
+func TestUnloadedNFTablesProof(t *testing.T) {
+	f := fixtureSource()
+	f.files["/boot/config-fixture"] = "CONFIG_NF_TABLES=m\n"
+	if !unloadedNFTables(f) {
+		t.Fatal("modular unloaded implementation not recognized")
+	}
+	for _, value := range []string{"CONFIG_NF_TABLES=y\n", "# CONFIG_NF_TABLES is not set\n", ""} {
+		f.files["/boot/config-fixture"] = value
+		if unloadedNFTables(f) {
+			t.Fatal("unknown or built-in implementation treated as unloaded")
+		}
+	}
+	f.files["/proc/sys/kernel/osrelease"] = "../unsafe"
+	if unloadedNFTables(f) {
+		t.Fatal("unsafe kernel name")
+	}
+}

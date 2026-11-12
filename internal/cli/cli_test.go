@@ -22,7 +22,7 @@ func TestCommands(t *testing.T) {
 		{"long version", []string{"--version"}, 0, "commit: unknown"},
 		{"unknown", []string{"secret-value"}, 2, "unknown command"},
 		{"flag", []string{"--bad"}, 2, "unknown command"},
-		{"install", []string{"install"}, 2, "unknown command"},
+		{"install", []string{"install"}, 2, "installation inputs required"},
 		{"check", []string{"check"}, 2, "unknown command"},
 		{"verify", []string{"verify"}, 2, "unknown command"},
 		{"extra", []string{"version", "extra"}, 2, "expected one command"},

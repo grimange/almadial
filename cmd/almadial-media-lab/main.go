@@ -24,6 +24,7 @@ type checks struct {
 	runner         *execution.Runner
 	repo, evidence string
 	scenario       string
+	profile        string
 }
 
 func (c checks) command(mode string) execution.Command {
@@ -34,7 +35,11 @@ func (c checks) command(mode string) execution.Command {
 	if c.scenario == "agent" {
 		script = "m3_05_agent.py"
 	}
-	return execution.Command{Executable: "/usr/bin/python3", Args: []string{filepath.Join(c.repo, "scripts/lab", script), mode, c.evidence}, Timeout: 8 * time.Minute, StdoutLimit: 65536, StderrLimit: 65536}
+	args := []string{filepath.Join(c.repo, "scripts/lab", script), mode, c.evidence}
+	if c.profile != "" {
+		args = append(args, c.profile)
+	}
+	return execution.Command{Executable: "/usr/bin/python3", Args: args, Timeout: 8 * time.Minute, StdoutLimit: 65536, StderrLimit: 65536}
 }
 func (c checks) Supports(id string) bool { return id == "media.preflight" || id == "media.cleaned" }
 func (c checks) Check(ctx context.Context, id string) error {
@@ -64,6 +69,7 @@ func main() {
 func run() error {
 	mode := flag.String("mode", "plan", "plan or apply")
 	scenario := flag.String("scenario", "media", "media or separately authorized reboot checkpoint")
+	profile := flag.String("target-profile", "", "explicit ALM-29 clean-host media or reboot profile")
 	stateDirectory := flag.String("journal-directory", "", "existing copied journal for reconciliation; never executes effects")
 	evidence := flag.String("evidence", "", "fresh protected experiment directory")
 	approved := flag.String("approved-plan", "", "reviewed plan digest")
@@ -83,7 +89,29 @@ func run() error {
 	if *scenario != "media" && *scenario != "reboot" && *scenario != "agent" {
 		return fmt.Errorf("unsupported bounded scenario")
 	}
-	c := checks{runner, repo, *evidence, *scenario}
+	hostID := "0fffa9a4683f35b696f0b6ee7330734b"
+	var profileBytes []byte
+	if *profile != "" {
+		if (*scenario != "media" && *scenario != "reboot") || !filepath.IsAbs(*profile) {
+			return fmt.Errorf("target profile requires media/reboot scenario and absolute path")
+		}
+		profileBytes, e = os.ReadFile(*profile)
+		if e != nil {
+			return e
+		}
+		var target struct {
+			Machine string `json:"machine"`
+			Task    string `json:"task"`
+		}
+		if json.Unmarshal(profileBytes, &target) != nil || target.Task != "xu7wxvch94ii2iw38hpb8d58" || len(target.Machine) != 32 {
+			return fmt.Errorf("invalid ALM-29 target profile")
+		}
+		if _, e := hex.DecodeString(target.Machine); e != nil {
+			return e
+		}
+		hostID = target.Machine
+	}
+	c := checks{runner, repo, *evidence, *scenario, *profile}
 	ctx := context.Background()
 	if e = c.Check(ctx, "media.preflight"); e != nil {
 		return e
@@ -110,13 +138,20 @@ func run() error {
 		}
 		sources[p] = hash(b)
 	}
+	if len(profileBytes) != 0 {
+		sources["target-profile"] = hash(profileBytes)
+	}
 	b, _ := json.Marshal(sources)
 	r, e := runner.Run(ctx, c.command("inspect"))
 	if e != nil {
 		return e
 	}
 	hostState := hash([]byte(r.Stdout))
-	identity := journal.Identity{Host: hash([]byte("0fffa9a4683f35b696f0b6ee7330734b")), HostState: hostState, Config: hash(b), Manifest: sources["manifests/stack.lock.yaml"], Plan: hash(append(append(b, graph.JSON()...), []byte(hostState)...)), Policy: hash([]byte("ALM27 synthetic LAN; snapshot alm25-pre-firewall-20261111; expire source-scoped RTP in 600 seconds; cleanup")), Graph: graph.Digest()}
+	policy := "ALM27 synthetic LAN; snapshot alm25-pre-firewall-20261111; expire source-scoped RTP in 600 seconds; cleanup"
+	if len(profileBytes) != 0 {
+		policy = "ALM29 disposable clean-host qualification; snapshot alm29-pristine; bounded synthetic LAN media or idle reboot; cleanup; profile " + hash(profileBytes)
+	}
+	identity := journal.Identity{Host: hash([]byte(hostID)), HostState: hostState, Config: hash(b), Manifest: sources["manifests/stack.lock.yaml"], Plan: hash(append(append(b, graph.JSON()...), []byte(hostState)...)), Policy: hash([]byte(policy)), Graph: graph.Digest()}
 	state := filepath.Join(*evidence, "execution")
 	if *stateDirectory != "" {
 		if *mode != "reconcile" {

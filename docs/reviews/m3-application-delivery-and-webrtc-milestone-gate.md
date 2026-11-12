@@ -42,7 +42,7 @@ All six M3 work packages have been independently reviewed, accepted, and recorde
 The six M3 stages establish a continuous, verified functional chain from web and transport infrastructure through WebRTC calling and operational diagnostics:
 
 ```
-[ S07 Web Runtime ]  --> Apache 2.4 + PHP 8.2 + VICIdial admin & agent pages
+[ S07 Web Runtime ]  --> Apache 2.4.63 + PHP 8.3.36 + VICIdial admin & agent pages
          │
 [ S08 Trusted TLS ]  --> Generational TLS for Apache HTTPS (443) & Asterisk WSS (8089)
          │
@@ -59,8 +59,8 @@ The six M3 stages establish a continuous, verified functional chain from web and
 
 | Stage | Responsibility | Acceptance Postconditions | Integration Status |
 | :--- | :--- | :--- | :---: |
-| **S07** | Apache/PHP Web Runtime | Apache 2.4.62, PHP 8.2.29, secure session handling, protected admin credentials, timeclock navigation, zero remote exposure. | **SATISFIED** |
-| **S08** | Trusted TLS & Key Lifecycle | Generational replacement (`current`/`previous`), atomic rollback on reload failure, Apache HTTPS (443) & Asterisk WSS (8089) trust pairing, 0640 permissions. | **SATISFIED** |
+| **S07** | Apache/PHP Web Runtime | Apache 2.4.63, PHP 8.3.36, secure session handling, protected admin credentials, timeclock navigation, zero remote exposure. | **SATISFIED** |
+| **S08** | Trusted TLS & Key Lifecycle | Generational replacement (`current`/`previous`), rollback on reload failure qualified with controlled native-adapter fixtures (live failed-reload injection NOT_RUN), Apache HTTPS (443) & Asterisk WSS (8089) trust pairing, 0640 permissions. | **SATISFIED** |
 | **S09** | Firewall & Network Isolation | Managed policy `almadial-s09`, ingress `DROP`, management SSH allowed, telephony/web ports strictly loopback-bound or source-scoped. | **SATISFIED** |
 | **S10** | VICIphone & PJSIP Templates | Pinned VICIphone (`24e98fc`), SIP.js 0.20.1, synthetic phone `alm_s10_9061`, settings container `ALMADIAL_S10`, authenticated SIP REGISTER over WSS. | **SATISFIED** |
 | **S11** | Calls, Media & Recording | DTLS-SRTP keying, active ICE, dual-tone bidirectional audio (correlation > 0.99), ConfBridge audio mixing, PCM16 mono recordings, call-log correlation, clean teardown. | **SATISFIED** |
@@ -134,7 +134,7 @@ Per the canonical requirements and the recorded 2026-11-07 Product Scope Realign
 ### Accepted in Milestone M3
 - Complete single-server web application delivery (Apache/PHP).
 - Trusted laboratory TLS termination and generational management.
-- Host network isolation and bounded Rich Rule firewall policy.
+- Host network isolation through the AlmaDial-owned firewalld ANY-to-HOST policy at priority -20000; temporary source-scoped media rich rules are separate from that baseline.
 - Pinned self-hosted VICIphone and deterministic PJSIP configuration templates.
 - Local/LAN WebRTC SIP signaling over WSS, DTLS-SRTP encryption, ConfBridge conferencing, bidirectional audio streaming, native Asterisk call recording, and FastAGI call logging.
 - Complete 11-phase VICIdial agent workflow with full channel cleanup.
@@ -175,3 +175,22 @@ Final Independent Milestone Verdict:
 ALMADIAL_M3_INTEGRATION_GATE_ACCEPTED
 ```
 Proceed to local Git milestone acceptance commit and Kaneo milestone closure.
+
+## Post-acceptance factual clarification — 2026-11-12
+
+During ALM-29, the accepted gate at `1c20d8b9e641c068c059e6edc929eff01390b329`
+was checked against the stage implementation and independent QA reports. S07
+qualified Apache 2.4.63 and PHP 8.3.36; the earlier 2.4.62/8.2.29 descriptions
+were transcription errors. S08 rollback was exercised with controlled native
+fixtures; its report explicitly records live failed-reload injection as NOT_RUN.
+S09 owns a native firewalld policy, with bounded temporary media rich rules
+used only by the S11 experiment. S11 used ConfBridge; legacy VICIdial database
+conference terminology does not imply use of the MeetMe application.
+
+Sources: [S07 implementation](../implementation/m3-01-apache-php-and-application-flows.md),
+[S07 independent QA](m3-01-apache-php-and-application-flows-independent-qa.md),
+[S08 actual qualification](../implementation/m3-02-trusted-tls-and-renewal.md),
+[S09 policy](../implementation/m3-03-firewall-and-network-isolation.md), and
+[S11 media implementation](../implementation/m3-05-call-conference-media-and-recording.md).
+This clarification changes no acceptance result, historical evidence, runtime
+configuration or milestone ownership.

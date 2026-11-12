@@ -20,7 +20,22 @@ type Native struct{ Runner execution.CommandRunner }
 
 func NewNative(sensitive []string) (Native, error) {
 	r, e := execution.NewRunner(sensitive)
-	return Native{r}, e
+	return Native{rpmInputRunner{r}}, e
+}
+
+// Keep the approved command/graph identity while transporting large RPM
+// requests over the existing bounded stdin channel. Linux limits each argv
+// element to 128 KiB, even when the total ARG_MAX budget is larger.
+type rpmInputRunner struct{ *execution.Runner }
+
+func (r rpmInputRunner) Run(ctx context.Context, c execution.Command) (execution.Result, error) {
+	if c.Executable == "/usr/bin/python3" && len(c.Args) == 5 && c.Args[0] == "-B" && c.Args[1] == "-c" && c.Args[2] == nativeAdapter && len(c.Args[4]) >= 64<<10 {
+		payload := []byte(c.Args[4])
+		c.Args = append([]string(nil), c.Args[:4]...)
+		c.Args[2] = "import sys\nsys.argv.append(sys.stdin.read())\n" + nativeAdapter
+		return r.RunInput(ctx, c, payload)
+	}
+	return r.Runner.Run(ctx, c)
 }
 func command(mode string, payload any) execution.Command {
 	args := []string{"-B", "-c", nativeAdapter, mode}

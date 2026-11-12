@@ -16,6 +16,14 @@ import sys
 import tempfile
 
 MACHINE = '0fffa9a4683f35b696f0b6ee7330734b'
+MEDIA_ADDRESS = '10.160.90.233'
+if len(sys.argv) == 3:
+    import ipaddress, re
+    target = json.loads(sys.argv[2])
+    assert target['task'] == 'xu7wxvch94ii2iw38hpb8d58'
+    assert re.fullmatch(r'[a-f0-9]{32}', target['machine'])
+    assert ipaddress.IPv4Address(target['address']).is_private
+    MACHINE, MEDIA_ADDRESS = target['machine'], target['address']
 CONTEXT = 'alm-s11-media'
 PARENT = 'alm-s10-no-calls'
 ROOM = '9600271'
@@ -24,13 +32,13 @@ WRAPPER = Path('/etc/asterisk/pjsip.conf')
 BACKUP = Path('/run/almadial-s11-pjsip.original')
 OVERLAY = Path('/etc/asterisk/almadial-s11-media.conf')
 INCLUDE = b'\n#include almadial-s11-media.conf\n'
-MEDIA_CONFIG = b"""; ALM-27 bounded LAN experiment; restored during cleanup.
+MEDIA_CONFIG = ("""; ALM-27 bounded LAN experiment; restored during cleanup.
 [alm_s10_9061](+type=endpoint)
-media_address=10.160.90.233
+media_address={address}
 bind_rtp_to_media_address=yes
 rtp_port_start=10000
 rtp_port_end=10019
-"""
+""".format(address=MEDIA_ADDRESS)).encode()
 ROUTES = [
     ('9271', 1, 'Answer()'),
     ('9271', 2, 'AGI(agi://127.0.0.1:4577/call_log)'),
@@ -118,7 +126,7 @@ def prepare():
     replace_wrapper(original, original + INCLUDE)
     cli('module reload res_pjsip.so')
     endpoint = cli('pjsip show endpoint alm_s10_9061')
-    assert '10.160.90.233' in endpoint and '10019' in endpoint, 'media endpoint override rejected'
+    assert MEDIA_ADDRESS in endpoint and '10019' in endpoint, 'media endpoint override rejected'
     # A timeout on this narrow LAN allowance is independent of the test process.
     run(['/usr/bin/firewall-cmd', '--policy=almadial-s09', '--add-rich-rule=' + RULE, '--timeout=600'])
     for extension, priority, application in ROUTES:

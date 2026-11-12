@@ -2,12 +2,14 @@
 // No mocked SIP/RTP, TLS bypass, hidden call controls or exported auth headers.
 const fs = require('fs'), cp = require('child_process');
 const {chromium} = require('/home/ra/.npm/_npx/51691537fc71f2b0/node_modules/playwright');
+const VM = process.argv[3] || 'almadial-alm16-rpm';
+if (process.argv[3] && !/^almadial-alm29-clean-[a-z]+$/.test(VM)) throw Error('invalid target VM');
 const E = process.argv[2], contexts = [], pages = [];
 const result = {pass:false, trust_bypass:false, topology:'local-LAN', participants:[], sip:[]};
-function native(command) {return cp.execFileSync('/snap/bin/multipass',['exec','almadial-alm16-rpm','--','sudo','/usr/sbin/asterisk','-rx',command],{encoding:'utf8',timeout:20000});}
+function native(command) {return cp.execFileSync('/snap/bin/multipass',['exec',VM,'--','sudo','/usr/sbin/asterisk','-rx',command],{encoding:'utf8',timeout:20000});}
 (async () => {
  try {
-  const secret = cp.execFileSync('/snap/bin/multipass',['exec','almadial-alm16-rpm','--','sudo','cat','/etc/almadial/secrets/phone-s10'],{encoding:'utf8',timeout:20000}).trim();
+  const secret = cp.execFileSync('/snap/bin/multipass',['exec',VM,'--','sudo','cat','/etc/almadial/secrets/phone-s10'],{encoding:'utf8',timeout:20000}).trim();
   for (const [i,label] of ['a','b'].entries()) {
    const context = await chromium.launchPersistentContext(E+'/profile-'+label, {
     executablePath:'/opt/google/chrome/chrome',headless:true,ignoreHTTPSErrors:false,permissions:['microphone'],

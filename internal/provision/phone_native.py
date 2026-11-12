@@ -189,6 +189,7 @@ def activate(p):
     gid=grp.getgrnam('asterisk').gr_gid
     for path in (ROOT,WORK):
         safe(path);path.mkdir(mode=0o755 if path==ROOT else 0o700)
+        os.chmod(path,0o755 if path==ROOT else 0o700)
     secret=secrets.token_hex(16)
     fd=os.open(SECRET,os.O_CREAT|os.O_EXCL|os.O_WRONLY|os.O_NOFOLLOW,0o600)
     with os.fdopen(fd,'w') as f: f.write(secret+'\n');f.flush();os.fsync(f.fileno())
@@ -197,6 +198,11 @@ def activate(p):
     for name,data in sorted(files.items()):
         target=ROOT/name
         target.parent.mkdir(parents=True,exist_ok=True,mode=0o755)
+        # All descendants belong to this newly created deployment. mkdir is
+        # filtered by umask; Apache still needs traversal under operator 077.
+        for parent in [target.parent,*target.parent.parents]:
+            if parent==ROOT: break
+            os.chmod(parent,0o755)
         atomic(target,data,0o644)
     for target in (ROOT/'index.php',ROOT/'viciphone.php'): run(['/usr/bin/php','-l',str(target)])
     run(['/usr/sbin/restorecon','-R',str(ROOT)])

@@ -17,7 +17,7 @@ const (
 
 const help = `AlmaDial — single-server VICIdial installer for AlmaLinux 10
 
-Usage: almadial [help | version | wizard | status | doctor | evidence export]
+Usage: almadial [help | version | wizard | plan | install | resume | status | doctor | evidence export]
   help, --help, -h       Show this help
   version, --version    Show version and build provenance
 
@@ -27,7 +27,7 @@ Usage: almadial [help | version | wizard | status | doctor | evidence export]
   status, doctor        Read-only operational checks; use status --help
   evidence export       Explicit bounded sanitized support bundle
 
-Unified installation and resume execution are not implemented.
+  plan, install, resume Unified authorized lab installation; use install --help
 `
 
 // Run writes successful output to stdout and errors to stderr; it never exits.

@@ -45,6 +45,20 @@ class AsteriskFiles(unittest.TestCase):
         with self.assertRaises(FileExistsError): self.m.create(p,b'clobber')
         self.assertEqual(p.read_bytes(),b'accepted')
 
+    def test_runtime_directory_under_restrictive_operator_umask(self):
+        directory = self.root/'documentation'
+        previous = os.umask(0o077)
+        try:
+            self.m.runtime_directory(directory)
+        finally:
+            os.umask(previous)
+        self.assertEqual(stat.S_IMODE(directory.stat().st_mode),0o755)
+        self.m.runtime_directory(directory)
+        directory.chmod(0o700)
+        with self.assertRaisesRegex(ValueError,'metadata conflict'):
+            self.m.runtime_directory(directory)
+        self.assertEqual(stat.S_IMODE(directory.stat().st_mode),0o700)
+
     def test_symlink_and_writable_parent_rejected(self):
         target=self.root/'operator';target.write_bytes(b'preserve')
         link=self.root/'link';link.symlink_to(target)

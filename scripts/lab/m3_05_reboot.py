@@ -16,6 +16,14 @@ os.umask(0o077)
 VM = 'almadial-alm16-rpm'
 MACHINE = '0fffa9a4683f35b696f0b6ee7330734b'
 SNAPSHOT = 'alm25-pre-firewall-20261111'
+PROFILE = json.loads(Path(sys.argv[3]).read_text()) if len(sys.argv) == 4 else None
+if PROFILE:
+    import ipaddress, re
+    assert PROFILE['task'] == 'xu7wxvch94ii2iw38hpb8d58'
+    assert re.fullmatch(r'almadial-alm29-clean-[a-z]+', PROFILE['vm'])
+    assert re.fullmatch(r'[a-f0-9]{32}', PROFILE['machine'])
+    assert ipaddress.IPv4Address(PROFILE['address']).is_private
+    VM, MACHINE, SNAPSHOT = PROFILE['vm'], PROFILE['machine'], 'alm29-pristine'
 E = Path(sys.argv[2])
 GUEST = r'''
 import hashlib,json,pathlib,subprocess,sys
@@ -43,6 +51,10 @@ probe=subprocess.run(['openssl','s_client','-connect','127.0.0.1:8089','-servern
 assert probe.returncode==0, 'Asterisk trusted TLS failed'
 print(json.dumps({'machine':pathlib.Path('/etc/machine-id').read_text().strip(),'services':services,'fastagi_workers':5,'rpm_count':731,'selinux':'Enforcing','channels':0,'temporary_media_files':0,'temporary_rules':0,'preserved':hashes,'https_status':http,'asterisk_tls_verified':True},sort_keys=True))
 '''
+
+if PROFILE:
+    GUEST = GUEST.replace('0fffa9a4683f35b696f0b6ee7330734b', MACHINE)
+    GUEST = GUEST.replace("tls=json.loads(pathlib.Path('/tmp/alm25-corrected-qualification/accepted-tls.json').read_text())['Request']\nca=tls['TrustFile']", "ca='/etc/pki/tls/almadial-s08/current/trust.pem'")
 
 
 def guest(code):
@@ -81,7 +93,7 @@ def experiment():
     first_boot = boot_id()
     save('before.json', before)
     save('reboot-intent.json', {'machine': MACHINE, 'snapshot': SNAPSHOT,
-                               'authority': 'Explicit operator authorization in ALM-27 conversation for one controlled idle lab reboot',
+                               'authority': ('ALM-29 disposable clean-host qualification authorization' if PROFILE else 'Explicit operator authorization in ALM-27 conversation for one controlled idle lab reboot'),
                                'command': ['/snap/bin/multipass', 'restart', VM], 'boot_before': first_boot})
     operation = subprocess.run(['/snap/bin/multipass', 'restart', VM], text=True, capture_output=True, timeout=180)
     save('restart-command.json', {'exit_code': operation.returncode, 'stdout': operation.stdout, 'stderr': operation.stderr})

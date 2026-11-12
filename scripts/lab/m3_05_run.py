@@ -17,11 +17,19 @@ os.umask(0o077)
 os.environ.update(HOME=pwd.getpwuid(os.getuid()).pw_dir, PATH='/usr/bin:/bin:/snap/bin')
 ROOT = Path(__file__).resolve().parents[2]
 VM = 'almadial-alm16-rpm'
+PROFILE = json.loads(Path(sys.argv[3]).read_text()) if len(sys.argv) == 4 else None
+if PROFILE:
+    import ipaddress, re
+    assert PROFILE['task'] == 'xu7wxvch94ii2iw38hpb8d58'
+    assert re.fullmatch(r'almadial-alm29-clean-[a-z]+', PROFILE['vm'])
+    assert re.fullmatch(r'[a-f0-9]{32}', PROFILE['machine'])
+    assert ipaddress.IPv4Address(PROFILE['address']).is_private
+    VM = PROFILE['vm']
 E = Path(sys.argv[2])
 
 
 def native(mode):
-    p = subprocess.run(['/snap/bin/multipass', 'exec', VM, '--', 'sudo', 'python3', '-', mode],
+    p = subprocess.run(['/snap/bin/multipass', 'exec', VM, '--', 'sudo', 'python3', '-', mode] + ([json.dumps(PROFILE)] if PROFILE else []),
                        input=(ROOT/'scripts/lab/m3_05_native.py').read_text(),
                        text=True, capture_output=True, timeout=90)
     if p.returncode:
@@ -62,6 +70,8 @@ def experiment():
     nss = home/'.pki/nssdb'
     nss.mkdir(parents=True)
     code = "import json,pathlib; p=json.loads(pathlib.Path('/tmp/alm25-corrected-qualification/accepted-tls.json').read_text()); print(pathlib.Path(p['Request']['TrustFile']).read_text())"
+    if PROFILE:
+        code = "from pathlib import Path; print(Path('/etc/pki/tls/almadial-s08/current/trust.pem').read_text())"
     ca = subprocess.check_output(['/snap/bin/multipass', 'exec', VM, '--', 'sudo', 'python3', '-c', code], timeout=30)
     (E/'public-lab-ca.pem').write_bytes(ca)
     for argv in [['certutil', '-N', '--empty-password', '-d', 'sql:'+str(nss)],
@@ -77,10 +87,10 @@ def experiment():
     try:
         save('prepared.json', native('prepare'))
         capture = subprocess.Popen(['/snap/bin/multipass', 'exec', VM, '--', 'sudo', '/usr/bin/timeout', '60', '/usr/sbin/tcpdump', '-n', '-l', '-i', 'eth0', '-c', '100', 'udp and host 10.160.90.1'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        tunnel = subprocess.Popen(['/usr/bin/python3', str(ROOT/'scripts/lab/m3_05_tunnel.py')], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        tunnel = subprocess.Popen(['/usr/bin/python3', str(ROOT/'scripts/lab/m3_05_tunnel.py')] + (['--vm', VM] if PROFILE else []), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         time.sleep(1)
         assert tunnel.poll() is None, 'loopback tunnel failed'
-        p = subprocess.run(['/usr/bin/node', str(ROOT/'scripts/lab/m3_05_browser.cjs'), str(E)], capture_output=True, text=True, timeout=220)
+        p = subprocess.run(['/usr/bin/node', str(ROOT/'scripts/lab/m3_05_browser.cjs'), str(E)] + ([VM] if PROFILE else []), capture_output=True, text=True, timeout=220)
         save('browser-command.json', {'exit_code': p.returncode, 'stdout': p.stdout[-2000:], 'stderr': p.stderr[-2000:]})
         assert p.returncode == 0, 'browser experiment failed; see protected browser.json'
     finally:
