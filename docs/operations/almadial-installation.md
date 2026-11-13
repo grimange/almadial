@@ -1,47 +1,84 @@
-# AlmaDial laboratory installation
+# AlmaDial operator installation
 
-This procedure uses the qualified private precompiled candidate. GitHub bootstrap
-delivery remains pending verification; the current remote `main` does not contain
-the guided bootstrap/acquisition implementation. No public release is implied.
-Enroll the private endpoint CA as described below before downloading the script.
+The currently qualified precompiled candidate targets fresh **AlmaLinux 10.2
+x86_64** single-server local/LAN installations. Qualification used four CPUs,
+8 GiB RAM and 80 GiB disk; these are a starting recommendation, not production
+sizing or a tested minimum. Obtain owner authorization and a recovery snapshot.
+Keep SELinux, firewalld, certificate validation and signed repositories enabled.
+
+Public GitHub bootstrap delivery is not available at the verified published
+commit. The release owner supplies the reviewed bootstrap and approved CLI URL
+through an authorized distribution channel. The portable script in this source
+tree is not automatically deployed to an existing private server by a local edit
+or commit. See the [maintainer distribution record](../development/private-distribution-lab.md)
+for the current candidate's location, identity and deployment limitations.
+
+## Distribution configuration
+
+In a root login shell on the target, set and export the owner-supplied values:
+
+| Setting | Meaning |
+|---|---|
+| `ALMADIAL_BOOTSTRAP_URL` | Trusted HTTPS location of the reviewed rendered script; used by your download command |
+| `ALMADIAL_BINARY_URL` | Full approved HTTPS URL of `almadial-linux-amd64`; the script accepts a different location only for the same pinned binary bytes |
+| `ALMADIAL_CA_FILE` | Optional readable public CA bundle for the binary download; omitted when OS trust suffices |
+
+Configure these in the target root shell after `sudo -i`, if needed; sudo need
+not preserve your original environment. Obtain URLs and trust through an
+independently trusted release-owner channel. Do not execute an unreviewed script
+merely because its server uses HTTPS. The script pins the approved CLI version
+and SHA-256; neither is configurable through environment variables.
+
+For private HTTPS, verify the public CA fingerprint supplied independently by
+the owner. Enroll that CA using the normal AlmaLinux trust procedure, for example
+with the reviewed public file named `almadial-distribution.pem`:
 
 ```bash
-ssh root@SERVER_IP
+sha256sum almadial-distribution.pem
+# Compare with the owner's independently supplied fingerprint before continuing.
+install -o root -g root -m 0644 almadial-distribution.pem /etc/pki/ca-trust/source/anchors/almadial-distribution.pem
+update-ca-trust
+```
 
-curl -fsSLO https://10.160.90.1:8447/install.sh
+Enrollment supports the bootstrap download, CLI and later source acquisition.
+`ALMADIAL_CA_FILE` affects only the bootstrap's binary download; it does not enroll
+trust for the initial curl command, the Go CLI or your browser. Distribution trust
+and application HTTPS/WSS trust are separate. Do not bypass TLS verification.
 
-bash install.sh
+## Install
+
+After obtaining both approved HTTPS URLs and establishing trust:
+
+```bash
+ssh root@YOUR_SERVER
+
+read -r -p "Approved bootstrap HTTPS URL: " ALMADIAL_BOOTSTRAP_URL
+read -r -p "Approved CLI HTTPS URL: " ALMADIAL_BINARY_URL
+export ALMADIAL_BINARY_URL
+curl -fsSLo almadial-install.sh "$ALMADIAL_BOOTSTRAP_URL"
+
+# Inspect the script and its release identity before execution.
+bash almadial-install.sh
 
 almadial install
 ```
 
-Use a fresh, owner-authorized **AlmaLinux 10.2 x86_64** lab server with four
-CPUs, 8 GiB RAM, 80 GiB disk and a recorded recovery snapshot. Keep SELinux,
-firewalld, certificate validation and signed repositories enabled. This isolated
-single-server profile is a laboratory qualification, not production sizing.
-On the supplied cloud image, log in as `ubuntu` and run `sudo -i` when root SSH
-is unavailable; run the remaining commands in that root login shell.
+If root SSH is unavailable, use the cloud image's configured operator account and
+`sudo -i`. No Go, Git, checkout, manual binary transfer or source archive staging
+is required on the target. The bootstrap verifies the binary before launching it
+or replacing `/usr/local/sbin/almadial`; a failed download/checksum/launch leaves
+the existing executable intact. A missing URL produces an actionable error.
+An approved mirror changes location only, never the pinned binary identity.
 
-The real endpoint is on the private Multipass bridge. The lab owner must keep
-it running and give the operator its public CA through the approved trusted
-channel. Before the four-command workflow, verify that public certificate's
-SHA-256 is `6e49e14cb26240689aa4ce67d1ff61bc8eac1c5dddf7fbdd73d0c6851fad2c0b`,
-then enroll it as root:
+DNS, synchronized time, approved signed package repositories and authorized
+source origins must be reachable. The CLI separately embeds its reviewed
+source-store policy: changing `ALMADIAL_BINARY_URL` does not relocate that store.
+For the existing candidate, its private source service must remain reachable
+unless the host already has all verified cached objects. See
+[artifact retention](almadial-private-artifact-retention.md) for release-owner
+policy changes. Operators do not repair unavailable sources by changing hashes.
 
-```bash
-sha256sum /path/from-owner/alm34-artifact-ca.pem
-install -o root -g root -m 0644 /path/from-owner/alm34-artifact-ca.pem /etc/pki/ca-trust/source/anchors/almadial-alm34-artifacts.pem
-update-ca-trust
-```
-
-CA enrollment was developer-tested; the independent operator host has not been
-changed. Guests must reach `10.160.90.1:8447` and approved AlmaLinux package
-repositories; DNS and synchronized time must work. The private store supplies all
-five pinned source archives automatically. Original upstream HTTPS sites are
-fallbacks, not prerequisites when the store is available. No Go, Git, source
-checkout, manual archive download or binary transfer is needed. Inspect
-`install.sh` before execution; it verifies the precompiled CLI before executing
-or installing it in `/usr/local/sbin/almadial`. Never use `curl -k`.
+## Guided configuration and completion
 
 The installer asks for the snapshot and authorization references, private IPv4
 address/interface, and TLS choice. The supported hostname is `localhost` through
@@ -55,7 +92,7 @@ The CLI verifies pinned archives, displays the installation summary and plan
 SHA-256, and asks once for `yes`. It executes that exact plan and reports progress
 and diagnostics. It never asks you to copy the digest into another command.
 
-After installation, open a tunnel from your workstation:
+After installation, open HTTPS/WSS TCP tunnels from your workstation:
 
 ```bash
 ssh -N -L 8443:127.0.0.1:443 -L 8089:127.0.0.1:8089 root@SERVER_IP
@@ -79,7 +116,9 @@ almadial doctor --ca-file /etc/pki/tls/almadial-s08/current/trust.pem --manifest
 
 Short-lived lab certificates can produce a documented warning (exit 10).
 Required service, schema, HTTPS and security failures need investigation.
-Registration alone does not prove two-way audio or recording.
+SSH TCP tunnels do not carry WebRTC UDP media. Registration alone does not prove
+two-way audio or recording; use the separately approved functional media path
+and qualification procedure in the operator handover.
 
 For a failure, follow its diagnostic and rerun `almadial install` or
 `almadial resume`. The saved exact plan is reviewed again; actual state is

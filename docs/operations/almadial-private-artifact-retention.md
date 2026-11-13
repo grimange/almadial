@@ -1,12 +1,13 @@
-# ALM-34 private artifact retention
+# Private artifact retention and release configuration
 
-These maintainer tools belong to the retained implementation checkpoint
+The source-retention and private-server tools belong to the retained implementation checkpoint
 `a9d58baac3bd748f4d10fc7abfc029e6d468bfbc`, on local branch
 `alm34/github-bootstrap-operator-acceptance`; they are not present in the current
-remote `main`. Use that reviewed checkout for maintainer operations. The operator
-uses the existing precompiled candidate and needs no development checkout.
+remote `main`. Use that reviewed checkout for source-retention/server operations.
+The current source tree contains the portable bootstrap and release generator.
+The operator uses the existing precompiled candidate and needs no development checkout.
 
-This is lab-maintainer documentation. The [operator guide](almadial-installation.md)
+This is release-maintainer documentation. The [operator guide](almadial-installation.md)
 requires no source-staging work. Private ALM-34 retention/delivery is authorized
 for this bounded test; no public third-party source publication is authorized.
 The [ALM-32 rights decision](../compliance/m4-04/distribution-rights-decision.md)
@@ -17,13 +18,13 @@ The accepted `stack.lock.yaml` retains exact versions, original provenance URLs,
 archive SHA-256 and VICIdial source-tree identity. The release-reviewed
 `manifests/acquisition-origins.json` binds private stores to that exact manifest.
 The CLI embeds both documents. A changed location does not authorize a changed
-version or content. A new lab location requires an explicitly reviewed policy and
+version or content. A new source-store location requires an explicitly reviewed policy and
 CLI rebuild; there is no operator-entered arbitrary mirror or trust bypass.
 
 Run the offline maintainer tool with an existing approved archive directory:
 
 ```bash
-python3 scripts/bootstrap/retain_sources.py --archives APPROVED_ARCHIVE_DIRECTORY --store /home/ra/almadial-lab/distribution/alm34/sources
+python3 scripts/bootstrap/retain_sources.py --archives "$APPROVED_ARCHIVES" --store "$APPROVED_SOURCE_STORE"
 ```
 
 The tool verifies all five exact archive hashes and every accepted ALM-32 file
@@ -36,28 +37,55 @@ ones. No expiration or garbage collector is installed. Back up this directory,
 its inventory and approved manifests using the lab owner's protected storage
 procedure; a release must not rely solely on an ephemeral VM cache or nightly.
 
-Current store: `/home/ra/almadial-lab/distribution/alm34/sources`.
-Current approved source endpoint: `https://10.160.90.1:8447/sources`.
-CLI payloads are separate immutable version directories under `releases/`.
-The root `install.sh` selects the reviewed CLI version with a pinned checksum.
-Never replace a versioned binary or source object under its old identity.
+## CLI delivery and source-store policy
 
-The bounded static server runs as the local lab user, binds only the approved
-private bridge and has no directory listings, uploads or execution. Its root
-contains only approved distribution files. CA/private key and evidence are
-outside that root. Start it explicitly after confirming that bridge address:
+The bootstrap script, CLI bytes and upstream source objects have separate
+identities. `scripts/bootstrap/prepare_release.py` prepares a local release
+contract; it never publishes. Use an already approved Linux amd64 binary:
 
 ```bash
-python3 -u scripts/bootstrap/serve_private.py --root /home/ra/almadial-lab/distribution/alm34 --certificate /home/ra/almadial-lab/evidence/m4-06/bootstrap-20261113T190219Z-alm34/tls/cert.pem --key /home/ra/almadial-lab/evidence/m4-06/bootstrap-20261113T190219Z-alm34/tls/key.pem --bind 10.160.90.1 --port 8447
+python3 scripts/bootstrap/prepare_release.py --binary "$APPROVED_CLI" --version "$APPROVED_VERSION" --output "$NEW_RELEASE_DIRECTORY"
 ```
 
-Keep the process and lab network available throughout independent acceptance.
-The current private CA is short-lived; renew it and explicitly enroll reviewed
-replacement trust before expiry, updating the operator kit fingerprint. This is
-a private lab distribution arrangement, not a public availability promise or a
-production artifact service. Do not open public ingress. Monitor free space and
-rehash retained objects against the inventory before handoff; the CLI independently
-rehashes and validates archive content before every use.
+The output script pins that binary's SHA-256 and version, and `release.json`
+records the supplied binary's build identity and the packaging checkout identity.
+The packaging checkout is not proof of the supplied binary's source revision.
+Review the binary's identity against the approved release before distribution;
+this generator does not authorize a new release.
+With no `--endpoint`, operators explicitly set `ALMADIAL_BINARY_URL` to an approved
+full HTTPS URL. Maintainers may set `--endpoint` to a reviewed default binary base
+URL for compatibility with a private deployment. An operator can select another
+approved mirror through the environment without editing the script; its trusted
+checksum remains fixed. URLs with credentials, query strings or fragments are
+rejected. Redirects are not followed. `ALMADIAL_CA_FILE` optionally selects a public
+CA bundle for the bootstrap download of the binary; otherwise OS trust applies.
+
+Publish the reviewed script only through an authenticated owner-approved channel.
+A checksum inside an attacker-supplied script is not an independent trust anchor.
+Never replace a versioned binary or source object under its old identity. Keep
+CLI notices/license files with the distribution. Third-party source retention
+and delivery require their own applicable authorization.
+
+The existing candidate's `manifests/acquisition-origins.json` is separate from
+these bootstrap settings. It is embedded and bound to the stack manifest; it has
+no operator-entered mirror override. Changing `ALMADIAL_BINARY_URL` or the
+bootstrap's default endpoint does not change that policy. To move source storage,
+the release owner must approve an updated policy, qualify a new CLI build and
+issue its new pinned release contract. This task preserves the qualified binary
+and does not perform that repin. A host must reach the origins in its release
+policy, or hold all verified cached objects.
+
+Keep retained sources, inventory and approved manifests for the full lifetime of
+each release. Monitor space, back up outside disposable VMs, and rehash objects
+before handoff. Source objects live at
+`sha256/ARCHIVE_SHA256/COMPONENT.artifact`. The owner must maintain DNS, endpoint
+availability and current trusted certificates; none is an AlmaDial-wide hardcoded
+network requirement. Private CA enrollment for the CLI/source store is separate
+from browser application trust. Do not open public ingress as a shortcut.
+
+The current bounded private deployment, concrete endpoint and CA details, and
+static-server configuration are recorded in the
+[maintainer lab record](../development/private-distribution-lab.md).
 
 Acquisition order is verified content-addressed host cache, approved private
 stores, then the accepted original HTTPS URL. Every redirect is rejected and TLS
