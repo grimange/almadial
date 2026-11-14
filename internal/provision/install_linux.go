@@ -228,11 +228,15 @@ func ExecuteInstallCheckpoint(ctx context.Context, p InstallPlan, m artifacts.Ma
 	// A complete receipt is only an input for fresh recursive S01-S10 inspection.
 	var phone PhoneInputs
 	if e = r.read("S10-accepted", &phone); e == nil {
-		if e = r.verifyComplete(phone); e != nil {
+		noOp, e := r.completeRuntime(phone)
+		if e != nil {
 			return result, e
 		}
-		r.result.NoOp = true
+		r.result.NoOp = noOp
 		r.result.Completed = append([]string{}, installStages[:10]...)
+		if d.Request.Network.Mode == "remote" {
+			r.result.Completed[5] = "S06 FastAGI and native VICIdial runtime"
+		}
 		return r.result, nil
 	} else if !errors.Is(e, os.ErrNotExist) {
 		return result, e
@@ -246,8 +250,15 @@ func ExecuteInstallCheckpoint(ctx context.Context, p InstallPlan, m artifacts.Ma
 	if e = r.read("S10-accepted", &phone); e != nil {
 		return r.result, e
 	}
-	if e = r.verifyComplete(phone); e != nil {
+	if _, e = r.completeRuntime(phone); e != nil {
 		return r.result, e
+	}
+	if d.Request.Network.Mode == "remote" {
+		for index, completed := range r.result.Completed {
+			if completed == installStages[5] {
+				r.result.Completed[index] = "S06 FastAGI and native VICIdial runtime"
+			}
+		}
 	}
 	return r.result, nil
 }
@@ -267,29 +278,52 @@ func (r *installRun) verifyComplete(i PhoneInputs) error {
 
 // AssessInstall reuses the recursive accepted inspectors without acquiring a
 // mutation lock or publishing inputs. A receipt alone never proves readiness.
-func AssessInstall(ctx context.Context, p InstallPlan, m artifacts.Manifest, s InstallSources, n Native, state string) error {
+func InspectInstallPlan(ctx context.Context, p InstallPlan, m artifacts.Manifest, s InstallSources, n Native, state string) ([]string, error) {
 	validated, e := DecodeInstallPlan(p.JSON(), m, s)
 	if e != nil || validated.Digest() != p.Digest() {
-		return errInstall
+		return nil, errInstall
 	}
 	d, e := p.document()
 	if e != nil {
-		return e
+		return nil, e
 	}
 	fresh, e := n.Inspect(ctx)
 	if e != nil || fresh.Host != d.Initial.Inventory.Host {
-		return errInstall
+		return nil, errInstall
 	}
 	r := installRun{ctx: ctx, plan: p, d: d, m: m, sources: s, native: n, state: state}
 	var accepted json.RawMessage
 	if e = r.read("approved-plan", &accepted); e != nil || string(accepted) != string(p.JSON()) {
-		return errInstall
+		return nil, errInstall
 	}
 	var phone PhoneInputs
 	if e = r.read("S10-accepted", &phone); e != nil {
+		return nil, e
+	}
+	if d.Request.Network.Mode != "remote" {
+		return []string{}, r.verifyComplete(phone)
+	}
+	_, stage, e := r.nativeRuntimePlan(phone)
+	if e != nil {
+		return nil, e
+	}
+	actions := []string{}
+	for _, a := range stage.Graph().Actions() {
+		actions = append(actions, a.ID+": "+a.Description)
+	}
+	return actions, nil
+}
+
+// AssessInstall succeeds only for a healthy, genuinely empty desired-state plan.
+func AssessInstall(ctx context.Context, p InstallPlan, m artifacts.Manifest, s InstallSources, n Native, state string) error {
+	actions, e := InspectInstallPlan(ctx, p, m, s, n, state)
+	if e != nil {
 		return e
 	}
-	return r.verifyComplete(phone)
+	if len(actions) > 0 {
+		return errors.New("native runtime reconciliation required; review almadial plan --plan before installation")
+	}
+	return nil
 }
 func (r *installRun) phoneNative(i PhoneInputs) PhoneNative {
 	ast := i.Parent.Parent.Parent.Parent.Parent.Parent

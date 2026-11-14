@@ -1,12 +1,12 @@
 # AlmaDial operator installation
 
 The precompiled development candidate targets fresh **AlmaLinux 10.2
-x86_64** single-server installations. Remote HTTPS/WSS and synthetic two-way
-media/recording have passed controlled off-host testing. **Normal remote agent
-operation remains blocked:** the installed updater and listener are deferred,
-and no ordinary campaign is configured. This is an implementation gap that the
-operator cannot resolve through this guide. Remote public-host acceptance has
-not run; controlled testing and isolated qualification are separate results. Qualification used four CPUs,
+x86_64** single-server installations. The corrected remote candidate passed an
+ordinary manual campaign and agent workflow, including two-way browser audio,
+recording, disposition and logout on a controlled off-host network. Native
+runtime, reboot recovery and zero-action reinstallation passed developer checks;
+independent QA is outstanding. Remote public-host acceptance has not run;
+controlled testing and isolated qualification are separate results. Qualification used four CPUs,
 8 GiB RAM and 80 GiB disk; these are a starting recommendation, not production
 sizing or a tested minimum. Obtain owner authorization and a recovery snapshot.
 Keep SELinux, firewalld, certificate validation and signed repositories enabled.
@@ -105,11 +105,13 @@ See [deployment profiles](deployment-profiles.md) for lab access and limitations
 
 Administrator `6666` uses `/etc/almadial/secrets/admin`; the synthetic phone
 `alm_s10_9061` uses `/etc/almadial/secrets/phone-s10`. Read these only in a private
-operator session. The synthetic phone is not a campaign agent. The current
-remote candidate's deferred agent services are a P0 blocker; Doctor reports them
-as failures. Preserve the journals and request a corrected installer rather
-than manually enabling lab-only units or expanding AMI permissions. Never export credentials, private keys or recordings
-into public support reports.
+operator session. The synthetic phone is not a campaign agent. Create ordinary
+phones, users and campaigns in VICIdial administration. Browser phones use the
+installed `ALMADIAL_WEBRTC` configuration template and `default` context;
+assign the phone and campaign to the intended agent. The remote installer owns
+the required native updater, listener, sender, autodial and maintenance setup.
+Do not enable a competing keepalive supervisor or the lab's deferred units.
+Never export credentials, private keys or recordings into public support reports.
 
 Verify the completion summary and run:
 

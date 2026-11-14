@@ -115,6 +115,7 @@ type runtimeChecks struct {
 	host            RuntimeHost
 	before, current RuntimeSnapshot
 	action          execution.Action
+	policy          string
 }
 
 func runtimeSameFoundation(a, b RuntimeSnapshot) bool {
@@ -151,7 +152,12 @@ func (c *runtimeChecks) Check(ctx context.Context, id string) error {
 	w := c.current
 	switch c.action.ID {
 	case "runtime.00.files":
+		// Native readiness can become observable after restoring a missing
+		// generated prerequisite while already-running workers remain unchanged.
 		w.Files = s.Files
+		if c.policy == NativeRuntimePolicyDigest() {
+			w.Services, w.Health = s.Services, s.Health
+		}
 	case "runtime.01.services":
 		w.Services = s.Services
 		w.Health = s.Health
@@ -172,7 +178,11 @@ func (c *runtimeChecks) Observe(ctx context.Context, r journal.Record) (journal.
 		return journal.Observation{State: journal.Unknown}, e
 	}
 	if value := runtimeValue(s, r.ID); shaPattern.MatchString(value) {
-		evidence := hash(struct{ Policy, ID, Value string }{RuntimePolicyDigest(), r.ID, value})
+		policy := c.policy
+		if policy == "" {
+			policy = RuntimePolicyDigest()
+		}
+		evidence := hash(struct{ Policy, ID, Value string }{policy, r.ID, value})
 		if r.State == journal.Succeeded && r.Evidence != evidence {
 			return journal.Observation{State: journal.Unknown}, nil
 		}
@@ -180,7 +190,7 @@ func (c *runtimeChecks) Observe(ctx context.Context, r journal.Record) (journal.
 	}
 	// Only absent/matching files can be replayed automatically. An incomplete
 	// service transition requires a new assessment and reviewed execution.
-	if r.ID == "runtime.00.files" {
+	if r.ID == "runtime.00.files" || c.policy == NativeRuntimePolicyDigest() {
 		return journal.Observation{State: journal.Absent, Evidence: s.Digest()}, nil
 	}
 	return journal.Observation{State: journal.Unknown}, nil
@@ -191,6 +201,12 @@ func ExecuteRuntimeLab(ctx context.Context, s RuntimeStage, m artifacts.Manifest
 	if ctx == nil || host == nil || runner == nil || a.validate(s, m) != nil {
 		return out, errRuntime
 	}
+	return executeRuntimeStage(ctx, s, stateDir, host, runner, resume, log, hash(a))
+}
+
+// Shared durable executor for the isolated and remote native runtime policies.
+func executeRuntimeStage(ctx context.Context, s RuntimeStage, stateDir string, host RuntimeHost, runner execution.CommandRunner, resume bool, log *operatorlog.Logger, authorization string) (out Outcome, err error) {
+	out.Traces = []execution.Trace{}
 	session, e := journal.Acquire(stateDir)
 	if e != nil {
 		return out, e
@@ -209,15 +225,15 @@ func ExecuteRuntimeLab(ctx context.Context, s RuntimeStage, m artifacts.Manifest
 	if !runtimeReady(fresh) || !runtimeSameFoundation(d.Before, fresh) {
 		return out, errRuntime
 	}
-	c := &runtimeChecks{host: host, before: d.Before, current: d.Before}
+	c := &runtimeChecks{host: host, before: d.Before, current: d.Before, policy: d.Policy}
 	retries := map[string]journal.Retry{}
 	for _, action := range s.graph.Actions() {
 		retries[action.ID] = journal.Never
-		if action.ID == "runtime.00.files" {
+		if action.ID == "runtime.00.files" || d.Policy == NativeRuntimePolicyDigest() {
 			retries[action.ID] = journal.Idempotent
 		}
 	}
-	doc, e := journal.New(journal.Identity{Host: d.Before.Host, HostState: d.Before.Digest(), Config: d.Config, Manifest: d.Manifest, Plan: d.Parent, Policy: hash(struct{ Policy, Stage, Authorization string }{d.Policy, s.Digest(), hash(a)}), Graph: s.graph.Digest()}, s.graph, retries)
+	doc, e := journal.New(journal.Identity{Host: d.Before.Host, HostState: d.Before.Digest(), Config: d.Config, Manifest: d.Manifest, Plan: d.Parent, Policy: hash(struct{ Policy, Stage, Authorization string }{d.Policy, s.Digest(), authorization}), Graph: s.graph.Digest()}, s.graph, retries)
 	if e != nil {
 		return out, e
 	}

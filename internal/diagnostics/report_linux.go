@@ -8,6 +8,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -230,20 +231,40 @@ func (c Collector) Collect(ctx context.Context, o Options) Report {
 		}
 	}
 	test("runtime.fastagi", ok, count == 6 && !foreign, fmt.Sprintf("%d FastAGI processes; identity and unit checked", count), "one parent plus five workers owned by asterisk in accepted unit", "Inspect systemctl status almadial-s06-fastagi and exact process ownership; do not start a competing keepalive.")
-	for _, component := range provision.RuntimeInventory() {
-		if component.Classification != "REQUIRED_CONFIGURED" {
-			continue
+	if network.Mode == "remote" {
+		for _, name := range []string{"updater", "listener", "sender", "autodial"} {
+			unit := "almadial-native-" + name + ".service"
+			a, aok := c.probe(ctx, "/usr/bin/systemctl", "show", "--property=ActiveState", "--value", unit)
+			b, bok := c.probe(ctx, "/usr/bin/systemctl", "show", "--property=UnitFileState", "--value", unit)
+			test("runtime."+name, aok && bok, a == "active" && b == "enabled", "native upstream worker activation checked", "active and enabled", "P0: reconcile the approved installation plan; inspect the owned native worker journal without exporting secrets.")
 		}
-		a, aok := c.probe(ctx, "/usr/bin/systemctl", "show", "--property=ActiveState", "--value", component.Owner)
-		b, bok := c.probe(ctx, "/usr/bin/systemctl", "show", "--property=UnitFileState", "--value", component.Owner)
-		if network.Mode == "remote" {
-			test("runtime."+component.ID, aok && bok, a == "active" && b == "enabled", "remote agent runtime activation checked", "active and enabled with a verified remote runtime policy", "P0: this candidate still defers the VICIdial updater/listener. Synthetic media success does not qualify agent operation. Preserve journals; do not manually enable the lab units or broaden AMI permissions.")
-		} else {
+		b, e := c.ReadFile("/etc/cron.d/almadial-native", 16384)
+		test("runtime.cron", e == nil, string(b) == provision.NativeRuntimeCron(), "native maintenance schedule inspected", "exact owned upstream maintenance schedule", "Reconcile the approved plan; do not start a competing ADMIN_keepalive.")
+		output, ok := c.probe(ctx, "/usr/bin/python3", "-B", "-c", provision.NativeRuntimeHealthProgram(), "native-health")
+		var health struct {
+			Services bool `json:"services"`
+			AMI      bool `json:"ami"`
+			Runtime  bool `json:"runtime"`
+		}
+		valid := ok && json.Unmarshal([]byte(output), &health) == nil
+		for _, entry := range []struct {
+			id   string
+			pass bool
+		}{{"supervision", health.Services}, {"ami", health.AMI}, {"readiness", health.Runtime}} {
+			test("runtime."+entry.id, valid, entry.pass, "authenticated native readiness checked without exporting secrets", "owned processes, local AMI, modules, dialplan, schema and fresh updater heartbeat", "P0: preserve journals and reconcile the approved plan; inspect failed native units, AMI permissions and server_updater heartbeat.")
+		}
+	} else {
+		for _, component := range provision.RuntimeInventory() {
+			if component.Classification != "REQUIRED_CONFIGURED" {
+				continue
+			}
+			a, aok := c.probe(ctx, "/usr/bin/systemctl", "show", "--property=ActiveState", "--value", component.Owner)
+			b, bok := c.probe(ctx, "/usr/bin/systemctl", "show", "--property=UnitFileState", "--value", component.Owner)
 			test("runtime."+component.ID, aok && bok, a == "inactive" && b == "disabled", "deferred unit activation checked", "disabled and inactive by accepted policy", "Inspect unit status; activation requires a separate reviewed runtime policy.")
 		}
+		b, e := c.ReadFile("/etc/cron.d/almadial-s06", 16384)
+		test("runtime.cron", e == nil, string(b) == provision.RuntimeCron(), "owned cron definition compared to accepted inactive contract", "exact S06 definition; zero active application jobs", "Inspect /etc/cron.d/almadial-s06; foreign schedules are not changed.")
 	}
-	b, e := c.ReadFile("/etc/cron.d/almadial-s06", 16384)
-	test("runtime.cron", e == nil, string(b) == provision.RuntimeCron(), "owned cron definition compared to accepted inactive contract", "exact S06 definition; zero active application jobs", "Inspect /etc/cron.d/almadial-s06. Foreign schedules are not copied or changed; a complete cron audit remains an operator check.")
 	_, readable := c.probe(ctx, "/usr/bin/test", "-r", "/var/www/html/vicidial/admin.php")
 	_, nonempty := c.probe(ctx, "/usr/bin/test", "-s", "/var/www/html/vicidial/admin.php")
 	test("vicidial.application", true, readable && nonempty, "administrator entry point readable and nonempty", "accepted application file available", "Inspect accepted S05 deployment hashes and Apache/PHP-FPM logs; diagnostics do not authenticate or exercise sessions.")

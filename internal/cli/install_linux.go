@@ -156,14 +156,15 @@ func runInstall(ctx context.Context, args []string, out, errout io.Writer) int {
 		if e != nil {
 			return fail(e)
 		}
-		if e = provision.AssessInstall(ctx, p, m, sources, n, "/var/lib/almadial-install"); e != nil {
+		actions, e := provision.InspectInstallPlan(ctx, p, m, sources, n, "/var/lib/almadial-install")
+		if e != nil {
 			return fail(e)
 		}
 		if e = json.NewEncoder(out).Encode(struct {
 			PlanSHA256 string   `json:"plan_sha256"`
 			Actions    []string `json:"actions"`
 			NoOp       bool     `json:"no_op"`
-		}{p.Digest(), []string{}, true}); e != nil {
+		}{p.Digest(), actions, len(actions) == 0}); e != nil {
 			return fail(e)
 		}
 		return Success
@@ -224,6 +225,11 @@ func runInstall(ctx context.Context, args []string, out, errout io.Writer) int {
 	}
 	hostname := installedRequest.TLS.Hostname
 	endpoints := []string{"https://" + hostname + "/vicidial/admin.php", "https://" + hostname + "/agc/vicidial.php", "https://" + hostname + "/almadial-phone/", installedRequest.Phone.WSSURL}
+	for _, check := range health.Checks {
+		if check.Blocking && (check.State == "FAIL" || check.State == "UNKNOWN") {
+			result.NoOp = false
+		}
+	}
 	report := struct {
 		provision.InstallResult
 		Build       string             `json:"build"`

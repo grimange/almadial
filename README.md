@@ -8,8 +8,8 @@ VICIdial remains the upstream dialer application; AlmaDial manages its installat
 AlmaDial targets **AlmaLinux 10.2 on x86_64** with two deployment profiles:
 remote single-server HTTPS access and an isolated laboratory profile.
 The remote profile is a development candidate: controlled off-host HTTPS/WSS,
-two-way synthetic media and recording have passed, but ordinary VICIdial agent
-operation is blocked by the deferred agent runtime. Public-host acceptance has
+ordinary manual campaign operation, two-way browser audio and recording have
+passed developer qualification. Independent QA and public-host acceptance have
 not run. A precompiled private development build is available to authorized
 operators. Independent operator acceptance is pending; production deployment and
 unrestricted public distribution are not approved.
@@ -135,12 +135,11 @@ that trusts the application certificate. For example, with your own hostname:
 WSS uses the same origin at `/ws`; Asterisk’s internal WebSocket listener stays
 on loopback. Browser media uses the configured UDP range directly to the server.
 The included synthetic phone and conference support a bounded call check. The
-remote candidate still disables VICIdial's updater and manager listener, and
-does not provision an ordinary agent campaign. This is an implementation blocker,
-not a missing operator configuration step. Doctor reports it as a blocking
-failure; do not use this candidate for normal agent operation or manually enable
-those services to bypass the installer. A registration or answered call alone
-does not prove audio.
+remote installer also configures native VICIdial workers and maintenance.
+Create ordinary phones, agents and campaigns through VICIdial administration;
+browser phones use the installed `ALMADIAL_WEBRTC` template. See the
+[installation guide](docs/operations/almadial-installation.md) for the runtime
+contract. A registration or answered call alone does not prove audio.
 
 The **lab** profile retains loopback HTTPS/WSS and optional SSH TCP forwarding;
 see the [deployment profiles](docs/operations/deployment-profiles.md).
@@ -180,9 +179,9 @@ installer, durable acquisition and remote-profile implementation. Public-host
 and independent operator acceptance remain separate gates; a local commit does
 not publish a new bootstrap or binary.
 
-The remote candidate is not ready for independent acceptance until its normal
-agent runtime and campaign workflow are implemented and tested. The successful
-controlled synthetic call does not establish that workflow or public-network
+The corrected native runtime and ordinary manual agent workflow have
+[controlled developer evidence](docs/implementation/alm46-native-runtime-p0-closure.md).
+That result does not establish independent acceptance or public-network
 operation. The isolated lab remains a separate regression profile.
 
 AlmaDial-original code is licensed under [MIT](LICENSE). Upstream applications,

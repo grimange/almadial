@@ -1,8 +1,20 @@
 # Remote single-server implementation and controlled qualification
 
+## Native runtime correction
+
+The original network qualification below is retained as historical evidence.
+Its agent-runtime P0 is superseded by the
+[native runtime correction and ordinary agent qualification](alm46-native-runtime-p0-closure.md).
+The corrected candidate passed an authenticated manual campaign workflow,
+bidirectional audio, correlated WAV recording, disposition, logout, reboot and
+healthy zero-action installation on the authorized development host. Codex
+developer qualification is separate from independent AGY review and ALM-34
+human operator acceptance. Public-host testing remains `NOT_RUN`.
+
 ## Result and acceptance boundary
 
-Implementation task ALM-46 is **In Progress**, owned by Codex. The result is
+At the original checkpoint, implementation task ALM-46 was **In Progress**,
+owned by Codex. That checkpoint's result was
 `ALMADIAL_REMOTE_SINGLE_SERVER_P0_CHANGES_REQUIRED`.
 
 Direct trusted HTTPS, same-origin WSS, an installed synthetic ConfBridge route,

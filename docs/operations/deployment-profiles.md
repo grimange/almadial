@@ -4,13 +4,13 @@ Both profiles use the same immutable plan, exclusive execution lock, durable
 journal and postcondition checks. Select the profile in `almadial install`.
 Remote is the default selection; it is not a production readiness assertion.
 
-**Current gate:** trusted direct HTTPS/WSS and the synthetic call, two-way media
-and recording path passed controlled off-host testing. Normal VICIdial agent
-operation has not passed: updater/listener services are deliberately disabled
-by the existing lab runtime policy and there is no ordinary campaign. Remote
-Doctor now reports this as a blocking P0. Keep the profile on authorized
-development hosts until a corrected runtime and agent workflow are qualified.
-No public test host was available; public-host acceptance is `NOT_RUN`.
+**Current gate:** the remote development candidate passed an ordinary manual
+campaign workflow on a controlled off-host network: administrator navigation,
+agent login, embedded browser phone, agent-controlled internal call, two-way
+audio, recording, disposition and logout. Native workers, reboot recovery and
+zero-action reinstallation were also exercised. Independent QA is outstanding.
+No public test host was available; public-host acceptance is `NOT_RUN`. See the
+[native runtime qualification](../implementation/alm46-native-runtime-p0-closure.md).
 
 | Input or behavior | Remote single-server | Isolated lab |
 |---|---|---|
@@ -22,6 +22,8 @@ No public test host was available; public-host acceptance is `NOT_RUN`.
 | Media | Selected even-start UDP range; endpoint bound to the configured address; ICE and DTLS-SRTP | Separate controlled functional-media qualification |
 | Inbound firewall | Existing SSH port, 443 TCP, exact UDP media range, essential ICMP | Existing SSH port and essential ICMP |
 | Internal services | Database, AMI, FastAGI and Asterisk HTTP/WS stay loopback | Loopback |
+| VICIdial workers | Native updater, listener, sender and autodial supervised by systemd | Existing deferred policy |
+| Maintenance | Native keepalive configuration generation and upstream cron jobs | Existing inactive schedule |
 
 Remote requires working client/server DNS and certificate trust before use.
 The first topology is a server with one directly attached address, not a
@@ -35,10 +37,18 @@ calling and recording without a carrier. It is not a replacement for VICIdial
 agent/campaign/phone administration. A successful synthetic call does not by
 itself qualify a campaign workflow.
 
-Do not manually enable the deferred services, broaden the read-only AMI account,
-or use temporary functional-test overlays as an installed-runtime repair. The
-remaining correction must be represented in the same source-bound immutable
-plan and durable provisioning stages.
+The remote installer provisions a separate authenticated loopback AMI account
+for native operations; the diagnostic account remains read-only. Systemd owns
+the four workers and FastAGI. Cron runs native maintenance, configuration
+generation, hopper maintenance and WAV recording archival. Do not start a second
+keepalive supervisor or manually enable the lab's deferred units. The installer
+reconciles the native contract through the existing lock and durable journals.
+
+Create ordinary phones, users and campaigns through VICIdial administration.
+For a browser phone, select the installed `ALMADIAL_WEBRTC` configuration
+template and the `default` context. This template supplies the configured remote
+media address, TLS and WSS transport. Test accounts and campaigns used in
+qualification are disposable fixtures, not general installation defaults.
 
 For an isolated lab, optional SSH TCP forwarding can expose local HTTPS/WSS to
 an administrator:
