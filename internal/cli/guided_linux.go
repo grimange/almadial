@@ -117,6 +117,19 @@ func approveInstall(p *operatorui.Prompts, out io.Writer, digest string) error {
 	return nil
 }
 
+// A fresh installation uses the reviewed release defaults. Mirrors are advanced
+// overrides, not mandatory operator inputs. The caller preserves an existing
+// saved policy before considering this function, so retries never change origins.
+func guidedOrigins(m artifacts.Manifest, store string) ([]byte, error) {
+	if store != "" {
+		return artifacts.AcquisitionPolicy(m, store)
+	}
+	if _, err := artifacts.WithAcquisitionOrigins(m, bytes.NewReader(releaseassets.Origins)); err != nil {
+		return nil, err
+	}
+	return append([]byte(nil), releaseassets.Origins...), nil
+}
+
 func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) int {
 	fail := func(err error) int {
 		fmt.Fprintln(errout, "almadial installation:", err, "\nCompleted stage state is preserved. Correct the reported prerequisite and rerun almadial install; do not delete the journal.")
@@ -127,7 +140,7 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 		return Usage
 	}
 	if os.Geteuid() != 0 {
-		return fail(errors.New("guided installation requires local root on the authorized disposable host"))
+		return fail(errors.New("guided installation requires local root on the authorized target"))
 	}
 	fmt.Fprintln(out, "AlmaDial: single-server AlmaLinux 10.2 installation. Qualified resource baseline: 4 CPUs, 8 GiB RAM, 80 GiB disk. Choose remote HTTPS access or the isolated laboratory profile. Carrier configuration is outside this installer.")
 	prompts := operatorui.NewPrompts(ctx, in, out)
@@ -149,11 +162,7 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 	} else if !os.IsNotExist(e) {
 		return fail(e)
 	} else {
-		base, e := prompts.Ask("Approved private HTTPS source store (content-addressed /sources base; CA must be enrolled in OS trust)", os.Getenv("ALMADIAL_ARTIFACT_STORE"))
-		if e != nil {
-			return fail(e)
-		}
-		originBytes, e = artifacts.AcquisitionPolicy(m, base)
+		originBytes, e = guidedOrigins(m, os.Getenv("ALMADIAL_ARTIFACT_STORE"))
 		if e != nil {
 			return fail(e)
 		}
@@ -199,7 +208,6 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 	} else if !os.IsNotExist(e) {
 		return fail(e)
 	}
-	fmt.Fprintln(out, "Remote candidate limitation: the normal VICIdial agent runtime is not yet qualified. Direct synthetic phone/media testing is separate; Doctor reports the deferred runtime as P0.")
 	profile, err := prompts.Ask("Deployment profile: remote (direct HTTPS/WSS and UDP media) or lab (loopback)", "remote")
 	if err != nil {
 		return fail(err)

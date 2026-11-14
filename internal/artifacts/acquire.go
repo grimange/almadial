@@ -11,7 +11,8 @@ import (
 var installComponents = []string{"vicidial", "asterisk", "pjproject", "net-telnet", "viciphone"}
 
 // AcquireInstall explicitly fetches the five pinned archives from their reviewed
-// HTTPS origins. Fetch revalidates cache hits and rejects redirects and corruption.
+// HTTPS origins or VICIdial's tree-verified authoritative revision. Fetch
+// revalidates cache hits and rejects redirects and corruption.
 // Planning never calls this function. Completed downloads survive a later failure.
 func AcquireInstall(ctx context.Context, m Manifest, directory string, out io.Writer) (map[string]string, error) {
 	paths := make(map[string]string)
@@ -37,7 +38,7 @@ func AcquireInstall(ctx context.Context, m Manifest, directory string, out io.Wr
 		if err != nil {
 			return nil, fmt.Errorf("%s acquisition unavailable or invalid: %w; preserve cache, restore the exact pinned origin or obtain an approved mirror; rerun almadial install", component, err)
 		}
-		fmt.Fprintf(out, "Verified %s SHA-256 %s (%s)\n", component, result.ActualSHA256, result.Provenance)
+		fmt.Fprintf(out, "Verified %s representation SHA-256 %s; policy %s; tree %s (%s)\n", component, result.ActualSHA256, result.ContentPolicy, result.TreeSHA256, result.Provenance)
 		paths[component] = filepath.Join(contentDir, component+".artifact")
 	}
 	return paths, nil

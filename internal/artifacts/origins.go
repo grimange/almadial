@@ -13,7 +13,8 @@ import (
 // WithAcquisitionOrigins attaches a release-reviewed location policy without
 // changing the accepted source manifest, versions, hashes or plan identity.
 // This is configuration, never an assertion of third-party distribution rights.
-// Only exact-byte archives are supported; SVN repackaging is not permitted.
+// Mirror objects require exact archive bytes. The separately defined VICIdial
+// revision fallback requires the accepted complete source-tree identity.
 func WithAcquisitionOrigins(m Manifest, input io.Reader) (Manifest, error) {
 	var p struct {
 		Schema         int      `json:"schema"`
@@ -26,7 +27,7 @@ func WithAcquisitionOrigins(m Manifest, input io.Reader) (Manifest, error) {
 	}
 	dec := json.NewDecoder(bytes.NewReader(b))
 	dec.DisallowUnknownFields()
-	if dec.Decode(&p) != nil || dec.Decode(new(any)) != io.EOF || p.Schema != 1 || m.digest == "" || p.ManifestSHA256 != m.Digest() || len(p.Stores) == 0 || len(p.Stores) > 4 {
+	if dec.Decode(&p) != nil || dec.Decode(new(any)) != io.EOF || p.Schema != 1 || m.digest == "" || p.ManifestSHA256 != m.Digest() || p.Stores == nil || len(p.Stores) > 4 {
 		return Manifest{}, errors.New("origins: expected bounded policy bound to the exact source manifest")
 	}
 	seen := map[string]bool{}
@@ -50,14 +51,19 @@ func WithAcquisitionOrigins(m Manifest, input io.Reader) (Manifest, error) {
 	return m, nil
 }
 
-// AcquisitionPolicy binds an explicitly selected location to the existing exact
-// manifest. Location selection cannot change approved archive identities.
+// AcquisitionPolicy binds an optional mirror to the existing exact manifest.
+// An empty store selects the pinned public upstreams, without a private-network
+// dependency. Location selection cannot change approved archive identities.
 func AcquisitionPolicy(m Manifest, store string) ([]byte, error) {
+	stores := []string{}
+	if store != "" {
+		stores = append(stores, store)
+	}
 	b, err := json.Marshal(struct {
 		Schema         int      `json:"schema"`
 		ManifestSHA256 string   `json:"manifest_sha256"`
 		Stores         []string `json:"private_content_addressed_stores"`
-	}{1, m.Digest(), []string{store}})
+	}{1, m.Digest(), stores})
 	if err != nil {
 		return nil, err
 	}

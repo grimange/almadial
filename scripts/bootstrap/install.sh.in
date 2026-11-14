@@ -29,9 +29,17 @@ fi
 [[ -d /usr/local/sbin && ! -L /usr/local/sbin ]] || fail '/usr/local/sbin must be a real directory'
 staging=$(mktemp -d /usr/local/sbin/.almadial-bootstrap.XXXXXXXX)
 trap 'rm -rf -- "$staging"' EXIT
-# Do not follow redirects to unreviewed origins. Default trust is the OS store.
-curl --fail --silent --show-error --proto '=https' --tlsv1.2 --connect-timeout 15 --max-time 180 --max-filesize 67108864 "${trust_args[@]}" --output "$staging/almadial" "$BINARY_URL"
+# GitHub release assets redirect to its HTTPS asset CDN. Bound redirects and
+# prohibit transport downgrade; the release-pinned hash still gates execution.
+curl --fail --silent --show-error --location --max-redirs 3 --proto '=https' --proto-redir '=https' --tlsv1.2 --connect-timeout 15 --max-time 180 --max-filesize 67108864 "${trust_args[@]}" --output "$staging/almadial" "$BINARY_URL"
 printf '%s  %s\n' "$BINARY_SHA256" "$staging/almadial" | sha256sum --check --status || fail 'binary checksum mismatch; nothing installed or executed'
+# Revision acquisition uses upstream SVN with the accepted complete tree digest.
+# Obtain only the utility from signed OS repositories; never run source scripts.
+if [[ ! -x /usr/bin/svn ]]; then
+  command -v dnf >/dev/null || fail 'signed AlmaLinux subversion package is required; dnf is unavailable'
+  dnf install -y --setopt=gpgcheck=1 --setopt=localpkg_gpgcheck=1 subversion || fail 'cannot install signed SVN acquisition utility; existing CLI preserved'
+  [[ -x /usr/bin/svn ]] || fail 'SVN acquisition utility missing after package installation'
+fi
 install -o root -g root -m 0755 "$staging/almadial" "$staging/verified"
 # Only verified bytes are executed. Check before replacing an existing CLI.
 "$staging/verified" --version || fail 'verified CLI launch failed; existing executable preserved'

@@ -4,13 +4,31 @@ Both profiles use the same immutable plan, exclusive execution lock, durable
 journal and postcondition checks. Select the profile in `almadial install`.
 Remote is the default selection; it is not a production readiness assertion.
 
-**Current gate:** the remote development candidate passed an ordinary manual
-campaign workflow on a controlled off-host network: administrator navigation,
-agent login, embedded browser phone, agent-controlled internal call, two-way
-audio, recording, disposition and logout. Native workers, reboot recovery and
-zero-action reinstallation were also exercised. Independent QA is outstanding.
-No public test host was available; public-host acceptance is `NOT_RUN`. See the
-[native runtime qualification](../implementation/alm46-native-runtime-p0-closure.md).
+## Product deployment contract
+
+**Standard remote deployment is the product acceptance target.** A supported
+AlmaLinux 10.2 x86_64 physical server, cloud VM or VPS must obtain the published,
+versioned, integrity-verified CLI and every pinned source through ordinary
+internet access, without developer-LAN routes, Multipass, Go, Git, manual source
+transfers or mandatory distribution overrides. Public source defaults and optional
+private mirrors have separate roles. A private release test cannot satisfy the
+external distribution gate. This contract supersedes earlier laboratory-specific
+distribution assumptions.
+
+Remote requires a configured FQDN, matching trusted application TLS, direct
+HTTPS/WSS, reachable UDP media, native VICIdial runtime, durable recovery and
+healthy repeat installation. Initial supported topology uses a directly attached
+reachable IPv4; arbitrary NAT/firewall topologies are not implied.
+
+The laboratory profile is a disposable development/regression environment.
+Private addresses, isolated trust and private stores are acceptable there, but
+must not define standard distribution or imply internet acceptance.
+
+The remote native runtime and ordinary campaign workflow passed
+[independent QA](../reviews/alm46-native-runtime-independent-qa.md). That acceptance
+is preserved. Public-host deployment is **NOT_RUN**: the owner confirmed that no
+external test host is available. Public release publication remains pending;
+see the [distribution correction](../implementation/internet-distribution-correction.md).
 
 | Input or behavior | Remote single-server | Isolated lab |
 |---|---|---|

@@ -9,50 +9,43 @@ AlmaDial targets **AlmaLinux 10.2 on x86_64** with two deployment profiles:
 remote single-server HTTPS access and an isolated laboratory profile.
 The remote profile has passed independent QA on a controlled off-host network,
 including ordinary agent/campaign operation, bidirectional browser audio,
-recording, reboot recovery and healthy repeat installation. The accepted
-**`alm46-native-rc1`** CLI is available through an authorized private
-release-candidate distribution. Independent human operator acceptance is pending;
-public-host qualification and unrestricted public distribution are not approved.
+recording, reboot recovery and healthy repeat installation. The remote implementation is accepted on that controlled topology; internet
+release distribution and independent human installation acceptance remain pending.
 
-## Quick installation
+## Installation availability
 
-Use the [operator installation guide](docs/operations/almadial-installation.md)
-and its [current private release-candidate procedure](docs/development/private-distribution-lab.md#current-accepted-release-candidate).
-That procedure provides the tested bootstrap URL, script checksum and distribution
-CA prerequisites. The server must reach the approved CLI and source stores.
-A public remote-profile binary release is not available. The older script on
-GitHub installs an earlier laboratory CLI and must not be used for this candidate.
+**There is not yet a published internet-installable release.** Do not use the
+older bootstrap on the repository's published branch: it installs a laboratory
+candidate. A private laboratory bootstrap is not the standard installation path.
 
-After enrolling the approved distribution CA when required, run in a root login
-shell on the fresh server:
+The prepared release workflow is a versioned GitHub Releases `install.sh`, which
+automatically downloads its pinned Linux amd64 CLI using ordinary system HTTPS
+trust. After a release is approved, published and verified, this page and the
+[operator guide](docs/operations/almadial-installation.md) will carry its exact
+working download command. No endpoint override, custom laboratory CA, Go, Git,
+manual archive transfer or copied plan digest belongs in the normal workflow.
+See the [distribution correction and publication gate](docs/implementation/internet-distribution-correction.md)
+for the current factual status. No public URL is presented as working prematurely.
+
+Once the published bootstrap has installed the CLI, run:
 
 ```bash
-ssh root@YOUR_SERVER
-
-read -r -p "Approved release-candidate bootstrap HTTPS URL: " ALMADIAL_BOOTSTRAP_URL
-curl -fsSLo almadial-install.sh "$ALMADIAL_BOOTSTRAP_URL"
-# Compare its SHA-256 with the independently supplied release contract; inspect it.
-bash almadial-install.sh
 almadial --version
 almadial install
 ```
 
-The expected version is **`alm46-native-rc1`**, source commit
-`92b14eb4452b7bfb949e0ee7efc571a83d9e799c`. The binary SHA-256 is
-`a58235bdc435cbd48c43e444aead04f77415af682743055b550535efdca62cc3`.
-The reviewed private script supplies its approved binary URL. An approved mirror
-may be selected with `ALMADIAL_BINARY_URL`; the trusted checksum stays fixed.
-For cloud images, SSH with the configured account and use `sudo -i` first.
-The target needs no Go, Git, manual binary/source transfer, stage commands or
-copied plan hashes. Select **remote** for direct HTTPS/WSS browser access.
+Choose **remote** and supply your server's FQDN, directly attached IPv4/interface
+and matching trusted certificate inputs. Cloud-image users normally connect with
+the configured account and enter a root shell using `sudo -i`.
 
 ## Features
 
 The installer provides these capabilities, subject to the deployment limitations below:
 
 - Guided configuration, host preflight and one approval of the exact immutable plan.
-- Automatic acquisition of pinned source archives with SHA-256 verification,
-  approved-store fallback and offline reuse of verified cached artifacts.
+- Automatic pinned source acquisition with exact archive SHA-256 verification
+  or full accepted VICIdial revision-tree verification, optional mirrors and
+  offline reuse of reverified cached inputs.
 - MariaDB, Asterisk/PJSIP, VICIdial and VICIphone integration with HTTPS/WSS,
   ConfBridge and SELinux/firewalld-aware configuration.
 - Durable journals, actual postcondition checks and documented resume/reconciliation.
@@ -67,9 +60,9 @@ The installer provides these capabilities, subject to the deployment limitations
 | OS and CPU | Fresh AlmaLinux **10.2**, **x86_64 / Linux amd64** |
 | Resources | **4 vCPUs, 8 GiB RAM, 80 GiB disk** used in qualification; a recommended starting point, not a tested minimum or production capacity estimate |
 | Access | Root or an authorized account with `sudo`, working SSH and a recovery snapshot |
-| Network | DNS, synchronized time, HTTPS access to configured approved distribution sources and signed package repositories |
-| Trust | Trusted distribution CA where private HTTPS is used; separately, trusted application TLS for the browser |
-| Source availability | The release owner maintains the exact approved source objects at origins authorized by the CLI's release policy |
+| Network | DNS, synchronized time, HTTPS access to release/upstream sources and signed package repositories; outbound TCP 3690 for pinned VICIdial SVN fallback |
+| Trust | OS trust for standard release downloads; matching trusted application TLS for the browser; private distribution CA only for optional mirrors |
+| Source availability | Pinned upstream downloads plus authoritative revision retrieval; every input is verified against the accepted manifest |
 
 Keep SELinux enforcing, firewalld enabled and signature/certificate validation
 active. Reserve additional recording/backup storage for your retention needs.
@@ -78,11 +71,10 @@ attached IPv4 address and a matching trusted certificate. Supply that certificat
 AlmaDial does not provision ACME. Other operating systems, carrier/PSTN, NAT
 traversal and production capacity are not qualified.
 
-The binary location and source store are independent configuration. Set
-`ALMADIAL_ARTIFACT_STORE` to an approved HTTPS content-addressed source-store base,
-or enter it when prompted. Source versions and SHA-256 identities stay pinned.
-The saved store policy is reused on resume; relocation requires deliberate
-review of saved inputs. See the [retention guide](docs/operations/almadial-private-artifact-retention.md).
+The standard candidate's source policy uses public upstreams. No private store
+is required. `ALMADIAL_ARTIFACT_STORE` optionally selects an authorized HTTPS
+mirror without changing source versions or integrity checks. Resume retains the
+saved policy. See the [retention guide](docs/operations/almadial-private-artifact-retention.md).
 
 ## Guided installation
 
@@ -143,7 +135,7 @@ An SSH TCP tunnel does not carry WebRTC UDP media.
 
 | Situation | Next step |
 |---|---|
-| No binary endpoint configured | Obtain the release owner's approved CLI URL and export `ALMADIAL_BINARY_URL`; no source edit or checksum override is needed. |
+| No binary endpoint configured | You have an unconfigured or historical bootstrap. Use the exact published release contract once available; endpoint overrides are for specialized distributions. |
 | Download cannot connect | Check connectivity to the configured source and ask its owner to verify availability. |
 | Certificate validation fails | Check system time and approved CA trust; obtain corrected trust from the owner. Keep verification enabled. |
 | Checksum mismatch | Stop. The download is rejected before execution/replacement; ask the owner to restore the exact approved binary. |

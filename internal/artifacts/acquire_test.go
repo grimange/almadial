@@ -156,7 +156,7 @@ func TestConfiguredStorePreservesIdentity(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, store := range []string{"https://first.example.test/sources", "https://second.example.test/sources"} {
+	for _, store := range []string{"", "https://first.example.test/sources", "https://second.example.test/sources"} {
 		policy, err := AcquisitionPolicy(m, store)
 		if err != nil {
 			t.Fatal(err)
@@ -168,12 +168,19 @@ func TestConfiguredStorePreservesIdentity(t *testing.T) {
 		for _, name := range installComponents {
 			original, _ := m.artifact(name)
 			candidate, _ := configured.artifact(name)
-			if original.sha256 != candidate.sha256 || !strings.Contains(configured.origins[name][0], original.sha256) {
+			if original.sha256 != candidate.sha256 || original.version != candidate.version || original.tree != candidate.tree {
 				t.Fatal("identity changed", name)
+			}
+			if store == "" {
+				if len(configured.origins[name]) != 0 {
+					t.Fatal("upstream-only policy injected a mirror", name)
+				}
+			} else if len(configured.origins[name]) != 1 || !strings.Contains(configured.origins[name][0], original.sha256) {
+				t.Fatal("mirror does not retain content identity", name)
 			}
 		}
 	}
-	for _, bad := range []string{"", "http://example.test/sources", "https://user:secret@example.test/sources"} {
+	for _, bad := range []string{"http://example.test/sources", "https://user:secret@example.test/sources"} {
 		if _, err := AcquisitionPolicy(m, bad); err == nil {
 			t.Fatal("unsafe store accepted")
 		}

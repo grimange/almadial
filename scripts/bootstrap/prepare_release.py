@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Prepare an installer-only private release directory; never publishes it."""
+"""Prepare installer-only release assets for review; never publishes or tags."""
 import argparse
+import gzip
 import hashlib
 import json
 from pathlib import Path
 import re
 import shutil
 import subprocess
+import tarfile
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -14,11 +16,19 @@ ROOT = Path(__file__).resolve().parents[2]
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--binary', type=Path, required=True)
-    p.add_argument('--endpoint', default='', help='optional reviewed default binary base URL; omit for operator-configured delivery')
+    origins = p.add_mutually_exclusive_group()
+    origins.add_argument('--endpoint', default='', help='reviewed binary base URL for a private/custom distribution')
+    origins.add_argument('--github-repository', help='prepare a versioned GitHub Releases default (owner/repository); publication still requires approval')
     p.add_argument('--version', required=True)
     p.add_argument('--expected-sha256', help='approved binary digest; checked before executing the supplied binary')
     p.add_argument('--output', type=Path, required=True)
     a = p.parse_args()
+    if a.github_repository:
+        if not re.fullmatch(r'[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+', a.github_repository):
+            p.error('expected GitHub owner/repository')
+        if not a.expected_sha256:
+            p.error('GitHub release preparation requires --expected-sha256')
+        a.endpoint = 'https://github.com/'+a.github_repository+'/releases/download/'+a.version
     u = urlsplit(a.endpoint)
     if a.endpoint and (u.scheme != 'https' or not u.hostname or u.username or u.password or u.query or u.fragment or not re.fullmatch(r'https://[A-Za-z0-9][A-Za-z0-9.:/_-]*', a.endpoint)):
         p.error('a reviewed HTTPS endpoint without credentials/query is required')
@@ -50,6 +60,8 @@ def main():
                 'packaging_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
                 'packaging_source_payload_sha256':hashlib.sha256(b''.join(str(f.relative_to(ROOT)).encode()+b'\0'+hashlib.sha256(f.read_bytes()).digest() for f in sorted({*ROOT.glob('cmd/**/*'),*ROOT.glob('internal/**/*'),ROOT/'go.mod',ROOT/'go.sum'}) if f.is_file() and '__pycache__' not in f.parts)).hexdigest(),
                 'packaging_diff_sha256':hashlib.sha256(subprocess.check_output(['git','diff','HEAD'],cwd=ROOT)).hexdigest(),
+                'publication_status':'NOT_PUBLISHED',
+                'channel':'github-release' if a.github_repository else 'custom',
                 'distribution':'AlmaDial CLI only; no upstream application archives'}
     (a.output / 'release.json').write_text(json.dumps(manifest,indent=2)+'\n')
     shutil.copyfile(ROOT/'LICENSE', a.output/'LICENSE')
@@ -68,6 +80,21 @@ def main():
         'licenses/Apache-2.0.txt (MIT and Apache-2.0 portions).\n'
         'THIRD_PARTY_NOTICES.md preserves the broader repository review and its unresolved '
         'application-distribution boundaries; those applications are not in this payload.\n')
+    # GitHub accepts file assets, not directories. Include all linked-code notices
+    # in one deterministic asset; never include upstream application archives.
+    with (a.output/'almadial-cli-notices.tar.gz').open('wb') as raw:
+        with gzip.GzipFile(fileobj=raw, mode='wb', filename='', mtime=0) as compressed:
+            with tarfile.open(fileobj=compressed, mode='w') as archive:
+                for f in sorted(a.output.rglob('*')):
+                    relative = f.relative_to(a.output)
+                    if not f.is_file() or not (relative.parts[0] == 'licenses' or relative.name in ('LICENSE', 'THIRD_PARTY_NOTICES.md', 'CLI-NOTICES.txt')):
+                        continue
+                    info = archive.gettarinfo(str(f), arcname=str(relative))
+                    info.uid = info.gid = info.mtime = 0
+                    info.uname = info.gname = ''
+                    info.mode = 0o644
+                    with f.open('rb') as content:
+                        archive.addfile(info, content)
     (a.output/'SHA256SUMS').write_text(''.join(hashlib.sha256(f.read_bytes()).hexdigest()+'  '+str(f.relative_to(a.output))+'\n' for f in sorted(a.output.rglob('*')) if f.is_file()))
     print(json.dumps(manifest,indent=2))
 

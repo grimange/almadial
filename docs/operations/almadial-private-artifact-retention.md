@@ -1,113 +1,107 @@
-# Private artifact retention and release configuration
+# Source retention and release distribution
 
-The current source tree contains the reviewed source-retention tool, private
-HTTPS server, portable bootstrap and release generator. The operator uses the
-accepted precompiled CLI and needs no development checkout. Availability on
-GitHub is separate from local source availability; the current remote `main`
-bootstrap still pins an older CLI.
+This is maintainer documentation. The [operator guide](almadial-installation.md)
+describes the standard workflow. Private mirrors are optional; they must not be
+required to compensate for a missing official release. Current publication and
+external-test gates are in the [distribution correction report](../implementation/internet-distribution-correction.md).
 
-This is release-maintainer documentation. The [operator guide](almadial-installation.md)
-requires no source-staging work. Private ALM-34 retention/delivery is authorized
-for this bounded test; no public third-party source publication is authorized.
-The [ALM-32 rights decision](../compliance/m4-04/distribution-rights-decision.md)
-and outstanding rights/source obligations still apply. Intact upstream archives
-retain their licenses/notices. AlmaDial CLI distribution remains separate.
+## Standard source acquisition
 
-The accepted `stack.lock.yaml` retains exact versions, original provenance URLs,
-archive SHA-256 and VICIdial source-tree identity. The release-reviewed
-`manifests/acquisition-origins.json` binds private stores to that exact manifest.
-The CLI embeds the source manifest. Guided installation asks for an approved
-HTTPS source-store base, defaulting to `ALMADIAL_ARTIFACT_STORE`, and saves the
-derived manifest-bound location policy in protected inputs. A changed location
-does not authorize a changed version or content. No checksum or TLS trust bypass
-is provided; a mirror must supply the exact approved bytes.
+The embedded `stack.lock.yaml` retains exact versions, original archive SHA-256,
+provenance URLs and the accepted VICIdial source-tree digest. The embedded
+`acquisition-origins.json` has an explicit empty mirror list. A fresh guided
+installation uses public upstreams without prompting for a private source store.
+An existing saved installation retains its original reviewed policy on resume.
 
-Run the offline maintainer tool with an existing approved archive directory:
+Acquisition tries a reverified private host cache, optional approved HTTPS mirrors,
+and the original pinned HTTPS archive. Four inputs remain available at public
+pinned origins: Asterisk 22.12.0, PJPROJECT 2.17, Net::Telnet 3.05 and VICIphone
+commit `24e98fccfa7b7079fff970e02fca5f002ac1f2cc`. Their archive bytes must match
+exactly. HTTPS source redirects remain rejected; these tested URLs return content
+directly. Asterisk's accepted detached signature and keyring remain independently
+verified by the existing source loader.
+
+The expired VICIdial nightly ZIP is not the sole origin. When its original exact
+bytes are unavailable, the installer exports authoritative
+`svn://svn.eflo.net:3690/agc_2-X/trunk@4037` at revision 4037, with externals ignored
+and native EOL fixed to LF. It verifies all **2,511** paths and contents against
+accepted tree SHA-256
+`04a41c36c381981853cd0fc49a82fea9dda611cf39b336e9e8d92d459551eaed`.
+The real export was also compared file-by-file with the independently accepted
+compliance inventory. A revision label alone is insufficient.
+
+SVN transport is unauthenticated; the full independently accepted tree digest
+provides content identity, not a new publisher-authentication claim. This requires
+outbound TCP 3690. The bootstrap obtains the `subversion` utility through signed
+AlmaLinux repositories when needed. Exports are private, bounded, timed and never
+executed before verification. Failure stops prerequisite acquisition before any
+provisioning. No Go or Git is needed on the target.
+
+The canonical ZIP representation is explicitly tagged and records its actual
+archive SHA-256 separately from the original reference ZIP hash. `VerifyLocal`
+continues enforcing original archive bytes; install-input verification additionally
+supports this narrowly scoped full-tree policy. Source loaders rehash the actual
+representation after reopening and retain their accepted SQL/source identities.
+The cache namespace uses the original manifest artifact reference; that directory
+name must not be interpreted as the reconstructed ZIP's own checksum. Every cache
+hit rechecks its applicable policy. Corrupt inputs are quarantined as `.rejected-*`.
+Canonical exports also work offline after successful acquisition.
+
+## Optional private mirrors
+
+Set `ALMADIAL_ARTIFACT_STORE` before the first guided installation to select an
+authorized HTTPS store. The installer derives
+`sha256/REFERENCE_ARCHIVE_SHA256/COMPONENT.artifact` locations without changing any
+source identity. Mirrors currently serve original exact archive bytes. Canonical
+SVN representations are host-cache inputs, not silently accepted HTTPS substitutes.
+The saved manifest-bound policy is at
+`/var/lib/almadial-inputs/acquisition-origins.json`. Relocation requires deliberate
+reconciliation rather than changing a resumed installation's environment.
+
+For approved existing archives, retain sources using:
 
 ```bash
 python3 scripts/bootstrap/retain_sources.py --archives "$APPROVED_ARCHIVES" --store "$APPROVED_SOURCE_STORE"
 ```
 
-The tool verifies all five exact archive hashes and every accepted ALM-32 file
-record before adding objects. It never fetches or reconstructs source. Existing
-objects must match byte-for-byte; unsafe metadata or changed bytes cause refusal.
-Objects have private directories and read-only files at
-`sha256/ARCHIVE_SHA256/COMPONENT.artifact`. Retain all referenced objects for the
-lifetime of their approved release, including older versions after adding new
-ones. No expiration or garbage collector is installed. Back up this directory,
-its inventory and approved manifests using the lab owner's protected storage
-procedure; a release must not rely solely on an ephemeral VM cache or nightly.
+This offline maintainer tool verifies all five original archive hashes and the
+accepted provenance inventory. It does not fetch, reconstruct or authorize
+redistribution. Preserve licenses/notices, immutable objects, inventories and
+approved manifests for the full lifetime of their releases; back up outside
+any disposable VM. Private CA enrollment is optional infrastructure configuration,
+separate from application/browser trust. Historical laboratory details remain in
+the [maintainer lab record](../development/private-distribution-lab.md).
 
-## CLI delivery and source-store policy
+## First-party GitHub release preparation
 
-The bootstrap script, CLI bytes and upstream source objects have separate
-identities. `scripts/bootstrap/prepare_release.py` prepares a local release
-contract; it never publishes. Use an already approved Linux amd64 binary:
+Use a reproducibly built, committed Linux amd64 CLI with a new identity when its
+source differs from the accepted runtime binary. Prepare a versioned default:
 
 ```bash
-python3 scripts/bootstrap/prepare_release.py --binary "$APPROVED_CLI" --version "$APPROVED_VERSION" --expected-sha256 "$APPROVED_SHA256" --output "$NEW_RELEASE_DIRECTORY"
+python3 scripts/bootstrap/prepare_release.py \
+  --binary "$APPROVED_CLI" --version "$APPROVED_VERSION" \
+  --expected-sha256 "$APPROVED_SHA256" \
+  --github-repository grimange/almadial --output "$NEW_RELEASE_DIRECTORY"
 ```
 
-The output script pins that binary's SHA-256 and version, and `release.json`
-records `source_commit` from the binary’s exact committed build identity, separately
-from `packaging_commit`, `packaging_source_payload_sha256` and
-`packaging_diff_sha256`. The generator rejects a mismatched approved SHA-256
-before running the binary, and rejects mismatched versions or dirty/unidentified
-source identities before creating output. Self-reported identity is not proof of
-source equivalence; compare with accepted reproducible-build evidence.
-Review the binary's identity against the approved release before distribution;
-this generator does not authorize a new release.
-With no `--endpoint`, operators explicitly set `ALMADIAL_BINARY_URL` to an approved
-full HTTPS URL. Maintainers may set `--endpoint` to a reviewed default binary base
-URL for compatibility with a private deployment. An operator can select another
-approved mirror through the environment without editing the script; its trusted
-checksum remains fixed. URLs with credentials, query strings or fragments are
-rejected. Redirects are not followed. `ALMADIAL_CA_FILE` optionally selects a public
-CA bundle for the bootstrap download of the binary; otherwise OS trust applies.
+This generates `install.sh` with the versioned GitHub binary URL and fixed hash,
+`release.json`, `SHA256SUMS`, the binary and a deterministic CLI notice bundle.
+The generator never publishes, pushes or creates tags. Metadata says
+`NOT_PUBLISHED` until actual publication is independently verified. Source commit
+and packaging commit are recorded separately. Review reproducible-build evidence;
+a binary's self-reported commit is not proof by itself.
 
-Publish the reviewed script only through an authenticated owner-approved channel.
-A checksum inside an attacker-supplied script is not an independent trust anchor.
-Never replace a versioned binary or source object under its old identity. Keep
-CLI notices/license files with the distribution. Third-party source retention
-and delivery require their own applicable authorization.
+GitHub binary asset redirects are followed for at most three hops, with TLS
+verification and HTTPS-only redirect targets. The fixed SHA-256 gates launch and
+replacement. `ALMADIAL_BINARY_URL` is an advanced mirror override; it cannot change
+the trusted hash. `ALMADIAL_CA_FILE` only changes bootstrap binary-download trust.
+The custom `--endpoint` option remains available for specialized distributions.
+An unconfigured template/reference script is not the standard release asset.
 
-`ALMADIAL_BINARY_URL` selects first-party CLI delivery only. For this remote-profile
-implementation, `ALMADIAL_ARTIFACT_STORE` (or the interactive source-store prompt)
-selects a separately authorized HTTPS source base. The installer derives each
-content-addressed object URL from the embedded manifest and persists that policy
-at `/var/lib/almadial-inputs/acquisition-origins.json`. Resume reads that protected
-policy rather than silently adopting a changed environment variable. A policy
-relocation needs deliberate owner review and reconciliation of saved inputs.
-Earlier binaries may still embed release-bound origins; use the reviewed script
-and binary contract for the intended version. Trust for Go source acquisition
-comes from OS CA enrollment, independently of bootstrap `ALMADIAL_CA_FILE`.
-
-Keep retained sources, inventory and approved manifests for the full lifetime of
-each release. Monitor space, back up outside disposable VMs, and rehash objects
-before handoff. Source objects live at
-`sha256/ARCHIVE_SHA256/COMPONENT.artifact`. The owner must maintain DNS, endpoint
-availability and current trusted certificates; none is an AlmaDial-wide hardcoded
-network requirement. Private CA enrollment for the CLI/source store is separate
-from browser application trust. Do not open public ingress as a shortcut.
-
-The current bounded private deployment, concrete endpoint and CA details, and
-static-server configuration are recorded in the
-[maintainer lab record](../development/private-distribution-lab.md).
-
-Acquisition order is verified content-addressed host cache, approved private
-stores, then the accepted original HTTPS URL. Every redirect is rejected and TLS
-uses OS trust. All candidates must satisfy the same archive SHA-256 and existing
-archive/tree rules. Asterisk's detached signature is checked separately by the
-accepted installer. Corrupt private cache files are retained as `.rejected-*`
-for diagnosis; the next verified download is published without overwriting an
-existing object. Exhausted origins stop prerequisite acquisition before planning
-or provisioning. SVN reconstruction is deliberately unsupported for this release:
-all original bytes were recovered, so no alternate verification mode or repin is
-needed. A future reconstruction requires reviewed tree equivalence and an explicit
-policy change, never changing ZIP bytes under the old SHA-256.
-
-The accepted five are Asterisk 22.12.0, PJPROJECT 2.17, Net::Telnet 3.05, VICIdial
-r4037/schema 1748 and VICIphone commit 24e98fccfa7b7079fff970e02fca5f002ac1f2cc.
-Core/extra sound archives are not pinned inputs: the accepted Asterisk build uses
-no-sounds configuration. DNF still acquires signed RPM dependencies from the
-accepted repositories; package mirroring is outside this correction.
+Publish only the specifically approved first-party payload after owner approval.
+Do not replace bytes under an existing version. No VICIdial, VICIphone or other
+upstream application archives are in this release packet. Direct upstream retrieval
+avoids AlmaDial public mirroring; it does not erase installed-software licensing
+or corresponding-source obligations. The [ALM-32 decision](../compliance/m4-04/distribution-rights-decision.md)
+still governs affected application distribution and source delivery. No unrestricted
+third-party redistribution permission is inferred from technical SBOM acceptance.

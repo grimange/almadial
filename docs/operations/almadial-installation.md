@@ -11,92 +11,70 @@ Qualification used four CPUs, 8 GiB RAM and 80 GiB disk: a recommended starting
 point, not a tested minimum or production sizing. Obtain authorization and a
 recovery snapshot. Keep SELinux, firewalld, TLS and repository verification enabled.
 
-The **working current private distribution**, exact bootstrap URL, script
-checksum, public CA identity and operator-VM recovery commands are in the
-[current release-candidate procedure](../development/private-distribution-lab.md#current-accepted-release-candidate).
-That service runs on a dedicated VM, independently of the developer checkout.
-The target must deliberately have network access and trust for it. No public
-remote-profile binary release is claimed. The immutable GitHub script at
-`f885482478e2fa13fa95a1211c0ab688363b617d` was reverified but pins an older CLI;
-it is unsuitable for this installation.
+## Internet release availability
 
-Expected installed identity:
+**Publication is pending.** No current public bootstrap installs the new
+internet-distribution candidate. The published historical GitHub script pins an
+older laboratory CLI. Do not use it as the remote release.
 
-- Version: `alm46-native-rc1`.
-- Source commit: `92b14eb4452b7bfb949e0ee7efc571a83d9e799c`.
-- Binary SHA-256: `a58235bdc435cbd48c43e444aead04f77415af682743055b550535efdca62cc3`.
+The [distribution correction report](../implementation/internet-distribution-correction.md)
+records the prepared first-party payload, public source paths and the remaining
+publication/external-host gates. The [private laboratory procedure](../development/private-distribution-lab.md#current-accepted-release-candidate)
+is historical test infrastructure, not a prerequisite or substitute for the
+standard product. Do not start independent acceptance using an unavailable release.
 
-## Distribution configuration
+## Standard installation contract
 
-In a root login shell on the target, use the owner-approved release contract:
-
-| Setting | Meaning |
-|---|---|
-| `ALMADIAL_BOOTSTRAP_URL` | Trusted HTTPS location of the reviewed rendered script; used by your download command |
-| `ALMADIAL_BINARY_URL` | Optional override of the rendered script’s approved default; full approved HTTPS URL of `almadial-linux-amd64`; the script accepts a different location only for the same pinned binary bytes |
-| `ALMADIAL_CA_FILE` | Optional readable public CA bundle for the binary download; omitted when OS trust suffices |
-
-Configure these in the target root shell after `sudo -i`, if needed; sudo need
-not preserve your original environment. Obtain URLs and trust through an
-independently trusted release-owner channel. Do not execute an unreviewed script
-merely because its server uses HTTPS. The script pins the approved CLI version
-and SHA-256; neither is configurable through environment variables.
-
-For private HTTPS, verify the public CA fingerprint supplied independently by
-the owner. Enroll that CA using the normal AlmaLinux trust procedure, for example
-with the reviewed public file named `almadial-distribution.pem`:
+A published version will provide its exact GitHub Releases `install.sh` URL,
+script checksum, CLI version, binary checksum and source commit together. Download
+that script over verified HTTPS, compare it with the release contract, inspect it
+and execute `bash install.sh` as root. Then run:
 
 ```bash
-sha256sum almadial-distribution.pem
-# Compare with the owner's independently supplied fingerprint before continuing.
-install -o root -g root -m 0644 almadial-distribution.pem /etc/pki/ca-trust/source/anchors/almadial-distribution.pem
-update-ca-trust
-```
-
-Enrollment supports the bootstrap download, CLI and later source acquisition.
-`ALMADIAL_CA_FILE` affects only the bootstrap's binary download; it does not enroll
-trust for the initial curl command, the Go CLI or your browser. Distribution trust
-and application HTTPS/WSS trust are separate. Do not bypass TLS verification.
-
-## Install
-
-After obtaining the approved bootstrap URL, recorded script checksum and CA trust:
-
-```bash
-ssh root@YOUR_SERVER
-
-read -r -p "Approved bootstrap HTTPS URL: " ALMADIAL_BOOTSTRAP_URL
-curl -fsSLo almadial-install.sh "$ALMADIAL_BOOTSTRAP_URL"
-
-# Verify the script against the independently supplied SHA-256 and inspect it.
-bash almadial-install.sh
 almadial --version
 sha256sum /usr/local/sbin/almadial
-
 almadial install
 ```
 
-If root SSH is unavailable, use the cloud image's configured operator account and
-`sudo -i`. No Go, Git, checkout, manual binary transfer or source archive staging
-is required on the target. The bootstrap verifies the binary before launching it
-or replacing `/usr/local/sbin/almadial`; a failed download/checksum/launch leaves
-the existing executable intact. A portable script without a configured/default URL produces an actionable error.
-An approved mirror changes location only, never the pinned binary identity.
+Use the configured cloud account and `sudo -i` when root SSH is unavailable.
+No Go, Git, manual executable/source transfer, source edit, stage commands or
+copied plan hashes are required. The rendered release script automatically chooses
+its versioned GitHub binary location and pins its checksum. Failed downloads,
+untrusted TLS, mismatches and failed launch preserve the previous executable.
+GitHub asset redirects are HTTPS-only and bounded.
 
-DNS, synchronized time, signed package repositories and approved HTTPS sources
-must be reachable. Set `ALMADIAL_ARTIFACT_STORE` to the approved `/sources` base
-before `almadial install`, or enter it at the prompt. The CLI derives
-`/sha256/DIGEST/COMPONENT.artifact` locations while retaining every manifest hash.
-OS trust must include that source service’s CA. This is independent of the
-bootstrap binary URL. Cached verified archives work offline.
+The bootstrap obtains the SVN acquisition utility, when missing, through DNF
+with package signature checking enabled. It does not provision VICIdial in Bash.
+DNS, synchronized time, HTTPS release/upstream access, signed AlmaLinux package
+repositories and outbound TCP 3690 to the authoritative VICIdial SVN service must
+be reachable. Standard distribution uses OS CA trust. Application/browser TLS is
+a separate prerequisite: provide your FQDN's matching trusted certificate, key
+and chain; the installer does not provision ACME.
+
+The new source policy requires no `ALMADIAL_ARTIFACT_STORE`. Asterisk, PJPROJECT,
+Net::Telnet and VICIphone use their pinned public HTTPS origins and exact archive
+hashes. VICIdial first tries a valid cache, optional authorized mirrors and the
+original archive, then retrieves authoritative r4037 and verifies all 2,511 files
+against the independently accepted source-tree digest. A reconstructed ZIP has
+its own recorded SHA-256; it is not claimed to equal the original nightly ZIP.
+SVN transport does not authenticate a publisher; the trusted accepted tree digest
+binds all paths and contents before provisioning. Cached inputs are reverified
+before every use. No unverified source is executed.
+
+## Optional private and offline deployments
+
+`ALMADIAL_BINARY_URL` selects an alternate approved binary location while the
+release checksum remains fixed. `ALMADIAL_CA_FILE` supplies a reviewed public CA
+bundle for that binary request only. Neither is required by the standard release.
+For private source mirrors, enroll the independently authenticated CA through
+normal AlmaLinux OS trust and optionally set `ALMADIAL_ARTIFACT_STORE` before the
+first guided install. The mirror must supply the original exact archive bytes.
+Saved policy is reused on resume; do not edit saved inputs to bypass reconciliation.
+See the [retention guide](almadial-private-artifact-retention.md). Never disable
+certificate verification. A bootstrap-specific CA variable does not configure
+Go source acquisition or application browser trust.
 
 ## Guided configuration and completion
-
-The exact accepted binary still prints a historical “normal VICIdial agent
-runtime is not yet qualified” banner. That text is stale: the accepted
-[independent QA](../reviews/alm46-native-runtime-independent-qa.md) supersedes it.
-It does not change the required runtime checks; actual failed checks must never
-be ignored. Binary bytes remain unchanged to preserve the approved identity.
 
 Choose `remote` (the default) for direct browser access, or `lab` to retain
 loopback isolation. Supply snapshot and authorization references for your

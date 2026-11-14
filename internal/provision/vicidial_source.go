@@ -58,11 +58,13 @@ func LoadVICIdialSource(ctx context.Context, m artifacts.Manifest, archive strin
 	if e != nil {
 		return VICIdialSource{}, e
 	}
-	r, e := artifacts.VerifyLocal(ctx, spec, archive)
+	r, e := artifacts.VerifyInstallInput(ctx, spec, archive)
 	if e != nil || r.Identity != artifacts.Verified {
 		return VICIdialSource{}, errVICIdial
 	}
-	b, e := sourceBytes(archive, databaseArchiveSHA)
+	// Retain exactly the representation just verified, closing the reopen race.
+	// Digest() binds the accepted reference inventory, not repackaged ZIP bytes.
+	b, e := sourceBytes(archive, r.ActualSHA256)
 	if e != nil {
 		return VICIdialSource{}, errVICIdial
 	}

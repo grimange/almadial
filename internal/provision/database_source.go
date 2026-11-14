@@ -36,7 +36,7 @@ func LoadDatabaseSource(ctx context.Context, m artifacts.Manifest, path string) 
 	if e != nil {
 		return DatabaseSource{}, e
 	}
-	r, e := artifacts.VerifyLocal(ctx, spec, path)
+	r, e := artifacts.VerifyInstallInput(ctx, spec, path)
 	if e != nil || r.Identity != artifacts.Verified {
 		return DatabaseSource{}, errDatabase
 	}
@@ -46,7 +46,7 @@ func LoadDatabaseSource(ctx context.Context, m artifacts.Manifest, path string) 
 	}
 	defer f.Close()
 	b, e := io.ReadAll(io.LimitReader(f, 512<<20+1))
-	if e != nil || len(b) > 512<<20 || rawSHA(b) != databaseArchiveSHA {
+	if e != nil || len(b) > 512<<20 || rawSHA(b) != r.ActualSHA256 {
 		return DatabaseSource{}, errDatabase
 	}
 	z, e := zip.NewReader(bytes.NewReader(b), int64(len(b)))

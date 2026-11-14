@@ -30,6 +30,10 @@ type FetchOptions struct {
 // then the original pinned upstream URL. Every candidate uses identical content
 // verification; changing location cannot change source identity or policy.
 func Fetch(ctx context.Context, s Spec, o FetchOptions) (Result, error) {
+	return fetch(ctx, s, o, exportSVN)
+}
+
+func fetch(ctx context.Context, s Spec, o FetchOptions, exporter revisionExporter) (Result, error) {
 	r := initial(s)
 	if !s.valid() {
 		return r, errors.New("artifact: uninitialized specification")
@@ -55,7 +59,7 @@ func Fetch(ctx context.Context, s Spec, o FetchOptions) (Result, error) {
 		if e != nil {
 			return r, errors.New("cache: cannot inspect existing artifact")
 		}
-		r, e = verifyFile(ctx, s, f)
+		r, e = verifyInstallFile(ctx, s, f)
 		f.Close()
 		if e == nil {
 			return r, nil
@@ -85,6 +89,13 @@ func Fetch(ctx context.Context, s Spec, o FetchOptions) (Result, error) {
 			return r, nil
 		}
 		failures = append(failures, origin+": "+err.Error())
+	}
+	if revisionSpec(s) {
+		r, err = fetchRevision(ctx, s, root, final, exporter)
+		if err == nil {
+			return r, nil
+		}
+		failures = append(failures, vicidialSVN+"@4037: "+err.Error())
 	}
 	return r, fmt.Errorf("fetch: all approved acquisition origins exhausted: %s; restore the exact pinned object in an approved store or retry connectivity; source repinning requires review", strings.Join(failures, "; "))
 }

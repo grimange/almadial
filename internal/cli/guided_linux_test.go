@@ -10,8 +10,41 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/grimange/almadial/internal/artifacts"
 	"github.com/grimange/almadial/internal/operatorui"
+	"github.com/grimange/almadial/internal/releaseassets"
 )
+
+func TestGuidedOriginsDefaultAndOptionalMirror(t *testing.T) {
+	m, err := artifacts.Load(bytes.NewReader(releaseassets.Manifest))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, store := range []string{"", "https://enterprise.example.test/sources"} {
+		policy, err := guidedOrigins(m, store)
+		if err != nil {
+			t.Fatal(err)
+		}
+		configured, err := artifacts.WithAcquisitionOrigins(m, bytes.NewReader(policy))
+		if err != nil || configured.Digest() != m.Digest() {
+			t.Fatal("source identity changed", err)
+		}
+		if store == "" && (!bytes.Equal(policy, releaseassets.Origins) || bytes.Contains(policy, []byte("10.160.90."))) {
+			t.Fatal("default requires developer infrastructure")
+		}
+		if store != "" && !bytes.Contains(policy, []byte(store)) {
+			t.Fatal("explicit enterprise override ignored")
+		}
+		// Release defaults are immutable even if a caller changes its returned copy.
+		policy[0] = '!'
+		if _, err := guidedOrigins(m, ""); err != nil {
+			t.Fatal("caller changed embedded release policy", err)
+		}
+	}
+	if _, err := guidedOrigins(m, "http://untrusted.example.test"); err == nil {
+		t.Fatal("untrusted mirror accepted")
+	}
+}
 
 func TestGuidedApproval(t *testing.T) {
 	for _, tc := range []struct {

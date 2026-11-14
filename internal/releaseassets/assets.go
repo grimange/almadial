@@ -13,7 +13,8 @@ var Keyring []byte
 //go:embed asterisk.asc
 var Signature []byte
 
-// Origins is the release-reviewed private lab source retention policy.
+// Origins is the release-reviewed optional mirror policy. An empty store list
+// uses the exact pinned public upstreams; it does not assert their availability.
 //
 //go:embed acquisition-origins.json
 var Origins []byte

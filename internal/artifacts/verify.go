@@ -1,6 +1,7 @@
 package artifacts
 
 import (
+	"archive/zip"
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
@@ -65,6 +66,9 @@ type Result struct {
 	Version                string      `json:"version"`
 	Source                 string      `json:"source"`
 	ExpectedSHA256         string      `json:"expected_sha256"`
+	ContentPolicy          string      `json:"content_policy"`
+	ReferenceArchiveSHA256 string      `json:"reference_archive_sha256,omitempty"`
+	ExpectedTreeSHA256     string      `json:"expected_tree_sha256,omitempty"`
 	ActualSHA256           string      `json:"actual_sha256"`
 	Size                   int64       `json:"size"`
 	TreeSHA256             string      `json:"tree_sha256,omitempty"`
@@ -79,7 +83,7 @@ type Result struct {
 }
 
 func initial(s Spec) Result {
-	return Result{Component: s.component, Version: s.version, Source: s.source, ExpectedSHA256: s.sha256, Identity: NotVerified, Transport: NotVerified, Publisher: NotVerified, Disposition: NotVerified, Limitations: []string{"candidate policy is not installation authorization", "local checksum alone does not authenticate publisher"}}
+	return Result{Component: s.component, Version: s.version, Source: s.source, ExpectedSHA256: s.sha256, ContentPolicy: "archive-sha256", Identity: NotVerified, Transport: NotVerified, Publisher: NotVerified, Disposition: NotVerified, Limitations: []string{"candidate policy is not installation authorization", "local checksum alone does not authenticate publisher"}}
 }
 func (s Spec) valid() bool {
 	b, e := hex.DecodeString(s.sha256)
@@ -90,6 +94,18 @@ func (s Spec) valid() bool {
 // skips verification. The caller must provide a stable artifact; a private copy is
 // needed before a later executor uses it (this package exposes no executor).
 func VerifyLocal(ctx context.Context, s Spec, path string) (Result, error) {
+	return verifyLocal(ctx, s, path, false)
+}
+
+// VerifyInstallInput additionally accepts the explicit canonical SVN export
+// representation. Ordinary archives still require their exact pinned SHA-256.
+// Export verification uses the independently accepted manifest tree digest and
+// full inventory; a revision label or ZIP comment alone never authorizes input.
+func VerifyInstallInput(ctx context.Context, s Spec, path string) (Result, error) {
+	return verifyLocal(ctx, s, path, true)
+}
+
+func verifyLocal(ctx context.Context, s Spec, path string, canonical bool) (Result, error) {
 	r := initial(s)
 	if !s.valid() {
 		return r, errors.New("artifact: uninitialized specification")
@@ -103,7 +119,41 @@ func VerifyLocal(ctx context.Context, s Spec, path string) (Result, error) {
 	if err != nil || !st.Mode().IsRegular() {
 		return r, errors.New("artifact: expected regular file")
 	}
+	if canonical {
+		return verifyInstallFile(ctx, s, f)
+	}
 	return verifyFile(ctx, s, f)
+}
+
+func verifyInstallFile(ctx context.Context, s Spec, f *os.File) (Result, error) {
+	r, err := verifyFile(ctx, s, f)
+	if err == nil || ctx.Err() != nil || !revisionSpec(s) || r.Size > maxArchiveBytes {
+		return r, err
+	}
+	// Only the tagged export representation opts into canonical verification.
+	// A damaged original archive must not silently become a tree-verified input.
+	if zipBounds(f, r.Size) != nil {
+		return r, err
+	}
+	z, e := zip.NewReader(f, r.Size)
+	if e != nil || z.Comment != revisionComment(s) {
+		return r, err
+	}
+	r.ContentPolicy = "svn-revision-tree-sha256"
+	r.ReferenceArchiveSHA256, r.ExpectedSHA256 = s.sha256, ""
+	r.ExpectedTreeSHA256 = s.tree
+	if _, e = f.Seek(0, io.SeekStart); e != nil {
+		return r, e
+	}
+	r.Files, r.TreeSHA256, e = inspect(ctx, s, f, r.Size)
+	if e != nil {
+		return r, fmt.Errorf("canonical revision export: %w", e)
+	}
+	r.Identity, r.Disposition = Verified, NotVerified
+	r.Source = vicidialSVN + "@4037"
+	r.Provenance = "exact r4037 source-tree identity from the independently accepted manifest; reconstructed ZIP bytes differ from the reference archive"
+	r.Limitations = []string{"SVN transport is unauthenticated; publisher identity is not independently authenticated", "all 2511 file contents and paths are bound by the accepted tree digest", "candidate policy is not installation authorization"}
+	return r, nil
 }
 
 type contextReader struct {
