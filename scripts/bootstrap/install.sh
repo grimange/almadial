@@ -2,9 +2,9 @@
 # Rendered by prepare_release.py: inspect this script before running it.
 set -euo pipefail
 umask 077
-readonly RELEASE_VERSION='m4-06-acquisition-dev'
+readonly RELEASE_VERSION='alm46-native-rc1'
 readonly DEFAULT_BINARY_URL=''
-readonly BINARY_SHA256='4b484239a3939e9f1f12eb6fda22a0f74a2e3d035023d3b01ec8e9e43aaf78f9'
+readonly BINARY_SHA256='a58235bdc435cbd48c43e444aead04f77415af682743055b550535efdca62cc3'
 # A mirror selects a location, never a different release or trusted checksum.
 readonly BINARY_URL="${ALMADIAL_BINARY_URL:-$DEFAULT_BINARY_URL}"
 fail() { printf 'AlmaDial bootstrap: %s\n' "$*" >&2; exit 1; }

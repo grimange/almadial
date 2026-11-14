@@ -14,8 +14,8 @@ import unittest
 from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
-VERSION = 'm4-06-acquisition-dev'
-DIGEST = '4b484239a3939e9f1f12eb6fda22a0f74a2e3d035023d3b01ec8e9e43aaf78f9'
+VERSION = 'alm46-native-rc1'
+DIGEST = 'a58235bdc435cbd48c43e444aead04f77415af682743055b550535efdca62cc3'
 
 
 @contextmanager
@@ -214,15 +214,40 @@ class BootstrapTests(unittest.TestCase):
                     argv += ['--endpoint', endpoint]
                 # No synthetic ELF is executed. Only identity collection is mocked.
                 with mock.patch('sys.argv', argv), mock.patch.object(generator.subprocess, 'check_output',
-                        side_effect=['fixture version\n', 'packaging-checkout\n', b'']), mock.patch('builtins.print'):
+                        side_effect=['almadial fixture\ncommit: '+('a'*40)+'\n', 'packaging-checkout\n', b'']), mock.patch('builtins.print'):
                     generator.main()
                 release = json.loads((output/'release.json').read_text())
                 self.assertEqual(release['sha256'], expected)
                 self.assertEqual(release['version'], 'fixture')
+                self.assertEqual(release['source_commit'], 'a'*40)
+                self.assertEqual(release['packaging_commit'], 'packaging-checkout')
                 self.assertEqual(release['endpoint'], endpoint)
                 rendered = (output/'install.sh').read_text()
                 self.assertIn("readonly BINARY_SHA256='"+expected+"'", rendered)
                 self.assertIn("readonly DEFAULT_BINARY_URL='"+(endpoint+'/almadial-linux-amd64' if endpoint else '')+"'", rendered)
+
+
+    def test_release_generator_rejects_unapproved_identity_before_publication(self):
+        spec = importlib.util.spec_from_file_location('prepare_release', ROOT/'scripts/bootstrap/prepare_release.py')
+        generator = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(generator)
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d)
+            binary = p/'fixture-cli'
+            elf = bytearray(64)
+            elf[:4], elf[18:20] = b'\x7fELF', b'\x3e\x00'
+            binary.write_bytes(elf)
+            for name, identity, extra in (
+                    ('checksum', '', ['--expected-sha256', '0'*64]),
+                    ('version', 'almadial wrong\ncommit: '+('a'*40)+'\n', []),
+                    ('dirty', 'almadial fixture\ncommit: dirty-build\n', [])):
+                output = p/name
+                argv = ['prepare_release.py', '--binary', str(binary), '--version', 'fixture', '--output', str(output)]+extra
+                with mock.patch('sys.argv', argv), mock.patch.object(generator.subprocess, 'check_output', return_value=identity) as run, mock.patch('sys.stderr'), self.assertRaises(SystemExit):
+                    generator.main()
+                self.assertFalse(output.exists())
+                if name == 'checksum':
+                    run.assert_not_called()
 
 
 if __name__ == '__main__':

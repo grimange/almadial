@@ -7,50 +7,44 @@ VICIdial remains the upstream dialer application; AlmaDial manages its installat
 
 AlmaDial targets **AlmaLinux 10.2 on x86_64** with two deployment profiles:
 remote single-server HTTPS access and an isolated laboratory profile.
-The remote profile is a development candidate: controlled off-host HTTPS/WSS,
-ordinary manual campaign operation, two-way browser audio and recording have
-passed developer qualification. Independent QA and public-host acceptance have
-not run. A precompiled private development build is available to authorized
-operators. Independent operator acceptance is pending; production deployment and
-unrestricted public distribution are not approved.
+The remote profile has passed independent QA on a controlled off-host network,
+including ordinary agent/campaign operation, bidirectional browser audio,
+recording, reboot recovery and healthy repeat installation. The accepted
+**`alm46-native-rc1`** CLI is available through an authorized private
+release-candidate distribution. Independent human operator acceptance is pending;
+public-host qualification and unrestricted public distribution are not approved.
 
 ## Quick installation
 
-**Distribution status:** the source bootstrap is available on GitHub at the
-[verified immutable reference](https://raw.githubusercontent.com/grimange/almadial/f885482478e2fa13fa95a1211c0ab688363b617d/scripts/bootstrap/install.sh).
-That published script pins the earlier laboratory CLI, **not this remote-profile
-build**. For remote installation, obtain the reviewed script and matching
-precompiled CLI URL from your release owner. No public remote-profile binary
-release is available. The configured distribution and source stores must be
-reachable from your server; no developer network address is built into the
-installation workflow.
+Use the [operator installation guide](docs/operations/almadial-installation.md)
+and its [current private release-candidate procedure](docs/development/private-distribution-lab.md#current-accepted-release-candidate).
+That procedure provides the tested bootstrap URL, script checksum and distribution
+CA prerequisites. The server must reach the approved CLI and source stores.
+A public remote-profile binary release is not available. The older script on
+GitHub installs an earlier laboratory CLI and must not be used for this candidate.
 
-After completing the [trust and endpoint setup](docs/operations/almadial-installation.md#distribution-configuration),
-connect to the fresh server and run in a root login shell:
+After enrolling the approved distribution CA when required, run in a root login
+shell on the fresh server:
 
 ```bash
 ssh root@YOUR_SERVER
 
-read -r -p "Approved bootstrap HTTPS URL: " ALMADIAL_BOOTSTRAP_URL
-read -r -p "Approved CLI HTTPS URL: " ALMADIAL_BINARY_URL
-export ALMADIAL_BINARY_URL
-curl -fsSLo almadial-install.sh "${ALMADIAL_BOOTSTRAP_URL:?Set the approved bootstrap URL}"
-
-# Inspect the downloaded script before running it.
+read -r -p "Approved release-candidate bootstrap HTTPS URL: " ALMADIAL_BOOTSTRAP_URL
+curl -fsSLo almadial-install.sh "$ALMADIAL_BOOTSTRAP_URL"
+# Compare its SHA-256 with the independently supplied release contract; inspect it.
 bash almadial-install.sh
-
+almadial --version
 almadial install
 ```
 
-Export `ALMADIAL_BINARY_URL` to select the approved CLI location. Its version and
-SHA-256 stay pinned in the reviewed script; changing the URL cannot select a
-different binary. Private deployments may also set `ALMADIAL_CA_FILE` to an
-approved public CA file. The installation guide gives the complete procedure.
-If the cloud image requires an operator account, SSH with that account and use
-`sudo -i` before configuring these variables.
-
-The target needs no Go compiler, Git checkout, manual binary transfer, source
-archive staging, individual stage commands or copied plan hashes.
+The expected version is **`alm46-native-rc1`**, source commit
+`92b14eb4452b7bfb949e0ee7efc571a83d9e799c`. The binary SHA-256 is
+`a58235bdc435cbd48c43e444aead04f77415af682743055b550535efdca62cc3`.
+The reviewed private script supplies its approved binary URL. An approved mirror
+may be selected with `ALMADIAL_BINARY_URL`; the trusted checksum stays fixed.
+For cloud images, SSH with the configured account and use `sudo -i` first.
+The target needs no Go, Git, manual binary/source transfer, stage commands or
+copied plan hashes. Select **remote** for direct HTTPS/WSS browser access.
 
 ## Features
 
@@ -172,17 +166,18 @@ Keep credentials, keys and recordings out of support submissions.
 ## Project status and licensing
 
 Clean-host installation, recovery, diagnostics, isolated HTTPS/WSS, browser media,
-recordings and repeat-run behavior have qualification evidence. Developer
-qualification does not replace the pending independent operator run and review.
+recordings and repeat-run behavior have qualification evidence. Independent ALM-46 QA does not replace the pending unassisted human operator run.
 The stack manifest remains candidate. This source tree includes the guided
 installer, durable acquisition and remote-profile implementation. Public-host
 and independent operator acceptance remain separate gates; a local commit does
-not publish a new bootstrap or binary.
+not update GitHub or create a public release.
 
-The corrected native runtime and ordinary manual agent workflow have
-[controlled developer evidence](docs/implementation/alm46-native-runtime-p0-closure.md).
-That result does not establish independent acceptance or public-network
-operation. The isolated lab remains a separate regression profile.
+The native runtime and ordinary manual agent workflow passed
+[independent controlled-network QA](docs/reviews/alm46-native-runtime-independent-qa.md).
+Public VPS/DNS/CA topology, physical headset perception and remote archived-recording
+HTTP playback remain unqualified. Recording URLs may still reference loopback;
+local recording creation and correlation are qualified. External carrier/PSTN and
+capacity testing are outside this scope. The isolated lab remains a regression profile.
 
 AlmaDial-original code is licensed under [MIT](LICENSE). Upstream applications,
 libraries and OS packages retain their own licenses and notices. Technical SBOM

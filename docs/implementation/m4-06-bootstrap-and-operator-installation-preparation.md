@@ -1,5 +1,9 @@
 # M4-06 — Durable acquisition and operator installation preparation
 
+For the current accepted remote CLI and working private operator distribution,
+see [accepted remote CLI distribution preparation](m4-06-accepted-remote-cli-distribution.md).
+The release identities and hosts below are the historical acquisition qualification.
+
 Developer qualification passed. The bootstrap is ready for independent human
 operator execution; that acceptance and AGY assessment have not begun. This report supersedes the initial blocked
 bootstrap report, preserved as `prior-bootstrap-report.md` in the new protected

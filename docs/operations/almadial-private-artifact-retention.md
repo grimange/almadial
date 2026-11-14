@@ -1,11 +1,10 @@
 # Private artifact retention and release configuration
 
-The source-retention and private-server tools belong to the retained implementation checkpoint
-`a9d58baac3bd748f4d10fc7abfc029e6d468bfbc`, on local branch
-`alm34/github-bootstrap-operator-acceptance`; they are not present in the current
-remote `main`. Use that reviewed checkout for source-retention/server operations.
-The current source tree contains the portable bootstrap and release generator.
-The operator uses the existing precompiled candidate and needs no development checkout.
+The current source tree contains the reviewed source-retention tool, private
+HTTPS server, portable bootstrap and release generator. The operator uses the
+accepted precompiled CLI and needs no development checkout. Availability on
+GitHub is separate from local source availability; the current remote `main`
+bootstrap still pins an older CLI.
 
 This is release-maintainer documentation. The [operator guide](almadial-installation.md)
 requires no source-staging work. Private ALM-34 retention/delivery is authorized
@@ -46,12 +45,16 @@ identities. `scripts/bootstrap/prepare_release.py` prepares a local release
 contract; it never publishes. Use an already approved Linux amd64 binary:
 
 ```bash
-python3 scripts/bootstrap/prepare_release.py --binary "$APPROVED_CLI" --version "$APPROVED_VERSION" --output "$NEW_RELEASE_DIRECTORY"
+python3 scripts/bootstrap/prepare_release.py --binary "$APPROVED_CLI" --version "$APPROVED_VERSION" --expected-sha256 "$APPROVED_SHA256" --output "$NEW_RELEASE_DIRECTORY"
 ```
 
 The output script pins that binary's SHA-256 and version, and `release.json`
-records the supplied binary's build identity and the packaging checkout identity.
-The packaging checkout is not proof of the supplied binary's source revision.
+records `source_commit` from the binary’s exact committed build identity, separately
+from `packaging_commit`, `packaging_source_payload_sha256` and
+`packaging_diff_sha256`. The generator rejects a mismatched approved SHA-256
+before running the binary, and rejects mismatched versions or dirty/unidentified
+source identities before creating output. Self-reported identity is not proof of
+source equivalence; compare with accepted reproducible-build evidence.
 Review the binary's identity against the approved release before distribution;
 this generator does not authorize a new release.
 With no `--endpoint`, operators explicitly set `ALMADIAL_BINARY_URL` to an approved

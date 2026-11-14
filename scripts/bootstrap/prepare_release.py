@@ -16,6 +16,7 @@ def main():
     p.add_argument('--binary', type=Path, required=True)
     p.add_argument('--endpoint', default='', help='optional reviewed default binary base URL; omit for operator-configured delivery')
     p.add_argument('--version', required=True)
+    p.add_argument('--expected-sha256', help='approved binary digest; checked before executing the supplied binary')
     p.add_argument('--output', type=Path, required=True)
     a = p.parse_args()
     u = urlsplit(a.endpoint)
@@ -26,8 +27,16 @@ def main():
     binary = a.binary.read_bytes()
     if binary[:4] != b'\x7fELF' or binary[18:20] != b'\x3e\x00':
         p.error('expected Linux amd64 ELF')
-    a.output.mkdir(mode=0o700, parents=True, exist_ok=False)
     sha = hashlib.sha256(binary).hexdigest()
+    if a.expected_sha256 and (not re.fullmatch(r'[0-9a-f]{64}', a.expected_sha256) or sha != a.expected_sha256):
+        p.error('binary does not match the approved SHA-256')
+    identity = subprocess.check_output([str(a.binary.resolve()), '--version'], text=True)
+    if identity.splitlines()[0:1] != ['almadial '+a.version]:
+        p.error('binary version does not match the requested release')
+    source = re.search(r'^commit: ([0-9a-f]{40})$', identity, re.MULTILINE)
+    if not source:
+        p.error('binary must identify an exact committed source revision')
+    a.output.mkdir(mode=0o700, parents=True, exist_ok=False)
     name = 'almadial-linux-amd64'
     (a.output / name).write_bytes(binary)
     script = (ROOT / 'scripts/bootstrap/install.sh.in').read_text()
@@ -36,10 +45,11 @@ def main():
     (a.output / 'install.sh').write_text(script)
     manifest = {'schema':1,'version':a.version,'binary':name,'sha256':sha,
                 'target':'linux/amd64','endpoint':a.endpoint,
-                'build_identity':subprocess.check_output([str(a.binary.resolve()),'--version'],text=True),
-                'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
-                'source_payload_sha256':hashlib.sha256(b''.join(str(f.relative_to(ROOT)).encode()+b'\0'+hashlib.sha256(f.read_bytes()).digest() for f in sorted({*ROOT.glob('cmd/**/*'),*ROOT.glob('internal/**/*'),ROOT/'go.mod',ROOT/'go.sum'}) if f.is_file() and '__pycache__' not in f.parts)).hexdigest(),
-                'source_diff_sha256':hashlib.sha256(subprocess.check_output(['git','diff','HEAD'],cwd=ROOT)).hexdigest(),
+                'build_identity':identity,
+                'source_commit':source.group(1),
+                'packaging_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+                'packaging_source_payload_sha256':hashlib.sha256(b''.join(str(f.relative_to(ROOT)).encode()+b'\0'+hashlib.sha256(f.read_bytes()).digest() for f in sorted({*ROOT.glob('cmd/**/*'),*ROOT.glob('internal/**/*'),ROOT/'go.mod',ROOT/'go.sum'}) if f.is_file() and '__pycache__' not in f.parts)).hexdigest(),
+                'packaging_diff_sha256':hashlib.sha256(subprocess.check_output(['git','diff','HEAD'],cwd=ROOT)).hexdigest(),
                 'distribution':'AlmaDial CLI only; no upstream application archives'}
     (a.output / 'release.json').write_text(json.dumps(manifest,indent=2)+'\n')
     shutil.copyfile(ROOT/'LICENSE', a.output/'LICENSE')

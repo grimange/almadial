@@ -1,30 +1,39 @@
 # AlmaDial operator installation
 
-The precompiled development candidate targets fresh **AlmaLinux 10.2
-x86_64** single-server installations. The corrected remote candidate passed an
-ordinary manual campaign and agent workflow, including two-way browser audio,
-recording, disposition and logout on a controlled off-host network. Native
-runtime, reboot recovery and zero-action reinstallation passed developer checks;
-independent QA is outstanding. Remote public-host acceptance has not run;
-controlled testing and isolated qualification are separate results. Qualification used four CPUs,
-8 GiB RAM and 80 GiB disk; these are a starting recommendation, not production
-sizing or a tested minimum. Obtain owner authorization and a recovery snapshot.
-Keep SELinux, firewalld, certificate validation and signed repositories enabled.
+The accepted **`alm46-native-rc1`** precompiled CLI targets fresh **AlmaLinux
+10.2 x86_64** single-server installations. Native runtime, ordinary manual
+campaign/agent operation, bidirectional WebRTC audio, recording, reboot recovery
+and healthy NO_OP passed independent controlled-network QA. Independent human
+operator installation acceptance remains outstanding. Public VPS/DNS/CA topology,
+physical headset perception and remote recording HTTP playback remain unqualified.
 
-The [published bootstrap](https://raw.githubusercontent.com/grimange/almadial/f885482478e2fa13fa95a1211c0ab688363b617d/scripts/bootstrap/install.sh)
-was retrieved and verified against that commit. It pins an earlier laboratory
-binary and cannot select a new remote-profile binary by changing its URL.
-Obtain the release owner’s reviewed rendered script and matching CLI URL for
-this implementation. A public remote-profile release has not been published.
+Qualification used four CPUs, 8 GiB RAM and 80 GiB disk: a recommended starting
+point, not a tested minimum or production sizing. Obtain authorization and a
+recovery snapshot. Keep SELinux, firewalld, TLS and repository verification enabled.
+
+The **working current private distribution**, exact bootstrap URL, script
+checksum, public CA identity and operator-VM recovery commands are in the
+[current release-candidate procedure](../development/private-distribution-lab.md#current-accepted-release-candidate).
+That service runs on a dedicated VM, independently of the developer checkout.
+The target must deliberately have network access and trust for it. No public
+remote-profile binary release is claimed. The immutable GitHub script at
+`f885482478e2fa13fa95a1211c0ab688363b617d` was reverified but pins an older CLI;
+it is unsuitable for this installation.
+
+Expected installed identity:
+
+- Version: `alm46-native-rc1`.
+- Source commit: `92b14eb4452b7bfb949e0ee7efc571a83d9e799c`.
+- Binary SHA-256: `a58235bdc435cbd48c43e444aead04f77415af682743055b550535efdca62cc3`.
 
 ## Distribution configuration
 
-In a root login shell on the target, set and export the owner-supplied values:
+In a root login shell on the target, use the owner-approved release contract:
 
 | Setting | Meaning |
 |---|---|
 | `ALMADIAL_BOOTSTRAP_URL` | Trusted HTTPS location of the reviewed rendered script; used by your download command |
-| `ALMADIAL_BINARY_URL` | Full approved HTTPS URL of `almadial-linux-amd64`; the script accepts a different location only for the same pinned binary bytes |
+| `ALMADIAL_BINARY_URL` | Optional override of the rendered script’s approved default; full approved HTTPS URL of `almadial-linux-amd64`; the script accepts a different location only for the same pinned binary bytes |
 | `ALMADIAL_CA_FILE` | Optional readable public CA bundle for the binary download; omitted when OS trust suffices |
 
 Configure these in the target root shell after `sudo -i`, if needed; sudo need
@@ -51,18 +60,18 @@ and application HTTPS/WSS trust are separate. Do not bypass TLS verification.
 
 ## Install
 
-After obtaining both approved HTTPS URLs and establishing trust:
+After obtaining the approved bootstrap URL, recorded script checksum and CA trust:
 
 ```bash
 ssh root@YOUR_SERVER
 
 read -r -p "Approved bootstrap HTTPS URL: " ALMADIAL_BOOTSTRAP_URL
-read -r -p "Approved CLI HTTPS URL: " ALMADIAL_BINARY_URL
-export ALMADIAL_BINARY_URL
 curl -fsSLo almadial-install.sh "$ALMADIAL_BOOTSTRAP_URL"
 
-# Inspect the script and its release identity before execution.
+# Verify the script against the independently supplied SHA-256 and inspect it.
 bash almadial-install.sh
+almadial --version
+sha256sum /usr/local/sbin/almadial
 
 almadial install
 ```
@@ -71,7 +80,7 @@ If root SSH is unavailable, use the cloud image's configured operator account an
 `sudo -i`. No Go, Git, checkout, manual binary transfer or source archive staging
 is required on the target. The bootstrap verifies the binary before launching it
 or replacing `/usr/local/sbin/almadial`; a failed download/checksum/launch leaves
-the existing executable intact. A missing URL produces an actionable error.
+the existing executable intact. A portable script without a configured/default URL produces an actionable error.
 An approved mirror changes location only, never the pinned binary identity.
 
 DNS, synchronized time, signed package repositories and approved HTTPS sources
@@ -82,6 +91,12 @@ OS trust must include that source service’s CA. This is independent of the
 bootstrap binary URL. Cached verified archives work offline.
 
 ## Guided configuration and completion
+
+The exact accepted binary still prints a historical “normal VICIdial agent
+runtime is not yet qualified” banner. That text is stale: the accepted
+[independent QA](../reviews/alm46-native-runtime-independent-qa.md) supersedes it.
+It does not change the required runtime checks; actual failed checks must never
+be ignored. Binary bytes remain unchanged to preserve the approved identity.
 
 Choose `remote` (the default) for direct browser access, or `lab` to retain
 loopback isolation. Supply snapshot and authorization references for your
