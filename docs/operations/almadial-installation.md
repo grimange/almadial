@@ -1,7 +1,9 @@
 # AlmaDial operator installation
 
-The accepted **`alm46-native-rc1`** precompiled CLI targets fresh **AlmaLinux
-10.2 x86_64** single-server installations. Native runtime, ordinary manual
+The published **`alm46-internet-rc1`** precompiled CLI targets fresh **AlmaLinux
+10.2 x86_64** single-server installations. It preserves the accepted
+`alm46-native-rc1` runtime with corrected public source acquisition. Native runtime,
+ordinary manual
 campaign/agent operation, bidirectional WebRTC audio, recording, reboot recovery
 and healthy NO_OP passed independent controlled-network QA. Independent human
 operator installation acceptance remains outstanding. Public VPS/DNS/CA topology,
@@ -13,30 +15,43 @@ recovery snapshot. Keep SELinux, firewalld, TLS and repository verification enab
 
 ## Internet release availability
 
-**Publication is pending.** No current public bootstrap installs the new
-internet-distribution candidate. The published historical GitHub script pins an
-older laboratory CLI. Do not use it as the remote release.
-
-The [distribution correction report](../implementation/internet-distribution-correction.md)
-records the prepared first-party payload, public source paths and the remaining
-publication/external-host gates. The [private laboratory procedure](../development/private-distribution-lab.md#current-accepted-release-candidate)
-is historical test infrastructure, not a prerequisite or substitute for the
-standard product. Do not start independent acceptance using an unavailable release.
+The [alm46-internet-rc1 GitHub prerelease](https://github.com/grimange/almadial/releases/tag/alm46-internet-rc1)
+is public. Its bootstrap and CLI were downloaded without authentication and matched
+the approved hashes. This is a prerelease, not a stable production release.
+Independent internet-host installation remains **NOT_RUN** because no authorized
+external host has been supplied; human operator acceptance remains separate.
 
 ## Standard installation contract
 
-A published version will provide its exact GitHub Releases `install.sh` URL,
-script checksum, CLI version, binary checksum and source commit together. Download
-that script over verified HTTPS, compare it with the release contract, inspect it
-and execute `bash install.sh` as root. Then run:
+Connect to a fresh supported host as root. If the cloud image requires its
+configured account, connect with that account and enter `sudo -i` first.
 
 ```bash
+ssh root@YOUR_SERVER
+
+curl -fsSLO \
+  https://github.com/grimange/almadial/releases/download/alm46-internet-rc1/install.sh
+
+printf '%s  %s\n' \
+  26a99a84302a498afab5bd6a1d4dfd27c7bc10aa87b4180e99ac710bf0dabba4 \
+  install.sh | sha256sum -c -
+
+bash install.sh
+
 almadial --version
 sha256sum /usr/local/sbin/almadial
 almadial install
 ```
 
-Use the configured cloud account and `sudo -i` when root SSH is unavailable.
+Require script verification to succeed and inspect it before execution. The installed
+version must be `alm46-internet-rc1`; binary SHA-256 must be
+`618f4b0441cde7f17d1a35382b581da5669e0efa67b04f28175bc0cb38c8e6b5`.
+Binary source is `e543c56821e306d348fd5bc9930bf563cd403d0e`; the release tag
+points to distribution checkpoint `00c629bc2f0181664bd3c51ef829939b29d09968`.
+These identities describe different steps. The approved `release.json` retains
+its preparation-time `NOT_PUBLISHED` field; GitHub's published release state and
+the subsequent download verification establish actual publication.
+
 No Go, Git, manual executable/source transfer, source edit, stage commands or
 copied plan hashes are required. The rendered release script automatically chooses
 its versioned GitHub binary location and pins its checksum. Failed downloads,

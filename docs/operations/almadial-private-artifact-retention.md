@@ -87,7 +87,9 @@ python3 scripts/bootstrap/prepare_release.py \
 This generates `install.sh` with the versioned GitHub binary URL and fixed hash,
 `release.json`, `SHA256SUMS`, the binary and a deterministic CLI notice bundle.
 The generator never publishes, pushes or creates tags. Metadata says
-`NOT_PUBLISHED` until actual publication is independently verified. Source commit
+`NOT_PUBLISHED` at preparation time. Approved assets remain byte-identical after
+publication: published GitHub state and download-verification evidence supersede
+that historical field without mutating the packet. Source commit
 and packaging commit are recorded separately. Review reproducible-build evidence;
 a binary's self-reported commit is not proof by itself.
 

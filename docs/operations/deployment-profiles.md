@@ -27,7 +27,8 @@ must not define standard distribution or imply internet acceptance.
 The remote native runtime and ordinary campaign workflow passed
 [independent QA](../reviews/alm46-native-runtime-independent-qa.md). That acceptance
 is preserved. Public-host deployment is **NOT_RUN**: the owner confirmed that no
-external test host is available. Public release publication remains pending;
+external test host is available. The `alm46-internet-rc1` prerelease is published
+and its public bootstrap/CLI downloads are verified. External installation is separate;
 see the [distribution correction](../implementation/internet-distribution-correction.md).
 
 | Input or behavior | Remote single-server | Isolated lab |

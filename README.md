@@ -9,30 +9,38 @@ AlmaDial targets **AlmaLinux 10.2 on x86_64** with two deployment profiles:
 remote single-server HTTPS access and an isolated laboratory profile.
 The remote profile has passed independent QA on a controlled off-host network,
 including ordinary agent/campaign operation, bidirectional browser audio,
-recording, reboot recovery and healthy repeat installation. The remote implementation is accepted on that controlled topology; internet
-release distribution and independent human installation acceptance remain pending.
+recording, reboot recovery and healthy repeat installation. The remote implementation
+is accepted on that controlled topology. Public prerelease downloads are verified;
+independent internet-host installation and human operator acceptance remain pending.
 
-## Installation availability
+## Quick installation
 
-**There is not yet a published internet-installable release.** Do not use the
-older bootstrap on the repository's published branch: it installs a laboratory
-candidate. A private laboratory bootstrap is not the standard installation path.
-
-The prepared release workflow is a versioned GitHub Releases `install.sh`, which
-automatically downloads its pinned Linux amd64 CLI using ordinary system HTTPS
-trust. After a release is approved, published and verified, this page and the
-[operator guide](docs/operations/almadial-installation.md) will carry its exact
-working download command. No endpoint override, custom laboratory CA, Go, Git,
-manual archive transfer or copied plan digest belongs in the normal workflow.
-See the [distribution correction and publication gate](docs/implementation/internet-distribution-correction.md)
-for the current factual status. No public URL is presented as working prematurely.
-
-Once the published bootstrap has installed the CLI, run:
+The [alm46-internet-rc1 prerelease](https://github.com/grimange/almadial/releases/tag/alm46-internet-rc1)
+provides a verified bootstrap and Linux amd64 CLI. This is a release candidate,
+not a stable production release. On a fresh supported host:
 
 ```bash
+ssh root@YOUR_SERVER
+
+curl -fsSLO \
+  https://github.com/grimange/almadial/releases/download/alm46-internet-rc1/install.sh
+
+printf '%s  %s\n' \
+  26a99a84302a498afab5bd6a1d4dfd27c7bc10aa87b4180e99ac710bf0dabba4 \
+  install.sh | sha256sum -c -
+
+bash install.sh
+
 almadial --version
 almadial install
 ```
+
+Check that script verification succeeds and inspect the script before running it.
+The CLI must report `alm46-internet-rc1`. The bootstrap downloads the pinned CLI
+over trusted HTTPS and verifies it before execution. No endpoint override, custom
+laboratory CA, Go, Git, manual archive transfer or copied plan digest is required.
+For full inputs, binary identity and recovery, see the
+[operator guide](docs/operations/almadial-installation.md).
 
 Choose **remote** and supply your server's FQDN, directly attached IPv4/interface
 and matching trusted certificate inputs. Cloud-image users normally connect with
@@ -135,7 +143,7 @@ An SSH TCP tunnel does not carry WebRTC UDP media.
 
 | Situation | Next step |
 |---|---|
-| No binary endpoint configured | You have an unconfigured or historical bootstrap. Use the exact published release contract once available; endpoint overrides are for specialized distributions. |
+| No binary endpoint configured | You have an unconfigured or historical bootstrap. Use the versioned prerelease above; endpoint overrides are for specialized distributions. |
 | Download cannot connect | Check connectivity to the configured source and ask its owner to verify availability. |
 | Certificate validation fails | Check system time and approved CA trust; obtain corrected trust from the owner. Keep verification enabled. |
 | Checksum mismatch | Stop. The download is rejected before execution/replacement; ask the owner to restore the exact approved binary. |
@@ -161,8 +169,9 @@ Clean-host installation, recovery, diagnostics, isolated HTTPS/WSS, browser medi
 recordings and repeat-run behavior have qualification evidence. Independent ALM-46 QA does not replace the pending unassisted human operator run.
 The stack manifest remains candidate. This source tree includes the guided
 installer, durable acquisition and remote-profile implementation. Public-host
-and independent operator acceptance remain separate gates; a local commit does
-not update GitHub or create a public release.
+and independent operator acceptance remain separate gates. The published
+prerelease's bootstrap and CLI downloads are verified; that does not establish a
+complete installation on an independent internet-connected host.
 
 The native runtime and ordinary manual agent workflow passed
 [independent controlled-network QA](docs/reviews/alm46-native-runtime-independent-qa.md).

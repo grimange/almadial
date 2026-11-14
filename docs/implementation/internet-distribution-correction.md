@@ -1,5 +1,32 @@
 # Internet distribution correction
 
+## Publication update — 2026-11-14
+
+Following explicit project-owner authorization, the exact eight-asset packet was
+published as the public [alm46-internet-rc1 prerelease](https://github.com/grimange/almadial/releases/tag/alm46-internet-rc1)
+at `2026-11-14T06:08:52Z`. The tag resolves to
+`00c629bc2f0181664bd3c51ef829939b29d09968`; the binary source remains
+`e543c56821e306d348fd5bc9930bf563cd403d0e`. No binary or asset bytes changed.
+
+Draft metadata and all eight GitHub asset digests matched the approved packet
+before publication. Every published asset was downloaded and matched byte-for-byte.
+Separate unauthenticated curl downloads of `install.sh` and `almadial-linux-amd64`
+returned HTTP 200 after one verified HTTPS CDN redirect and matched their pinned
+SHA-256 values. The downloaded CLI version/help passed, and all 16 bounded bootstrap
+tests passed. The approved metadata's `NOT_PUBLISHED` field records preparation
+time, not the subsequently observed GitHub publication state.
+
+No private endpoint or laboratory CA is required for standard release retrieval.
+Independent external-host installation remains **NOT_RUN**; no authorized host
+has been supplied. No operator VM or accepted runtime host was modified, and
+ALM-34 remains In Progress under Codex. This publication does not establish
+internet deployment or independent human acceptance.
+
+Protected verification evidence:
+`~/almadial-lab/evidence/internet-distribution/publication-20261114T060817Z/`.
+The findings below preserve the pre-publication investigation and preparation
+record; this update supersedes their publication-pending statements.
+
 ## Product contract and confirmed cause
 
 The [deployment contract](../operations/deployment-profiles.md#product-deployment-contract)
