@@ -23,12 +23,17 @@ func TestInstallationImmutableIdentity(t *testing.T) {
 	for _, key := range preflight.RequiredProbes() {
 		initial.Preflight.Known[key] = true
 	}
-	r := InstallRequest{Config: initial.Config, Requirements: initial.Requirements, TLS: TLSRequest{"provided", "localhost", "/cert.pem", "/key.pem", "/trust.pem"}, Network: NetworkRequest{"isolated", "eth0", "10.1.2.3", 22}, Phone: PhoneRequest{phoneIdentity, "localhost", "wss://localhost:8089/ws"}, Authorization: InstallAuthorization{"xu7wxvch94ii2iw38hpb8d58", initial.Inventory.Host, hash("snapshot"), hash("authority"), true, true}}
+	r := InstallRequest{Config: initial.Config, Requirements: initial.Requirements, TLS: TLSRequest{"provided", "localhost", "/cert.pem", "/key.pem", "/trust.pem"}, Network: NetworkRequest{"isolated", "eth0", "10.1.2.3", 22, 0, 0}, Phone: PhoneRequest{phoneIdentity, "localhost", "wss://localhost:8089/ws"}, Authorization: InstallAuthorization{"xu7wxvch94ii2iw38hpb8d58", initial.Inventory.Host, hash("snapshot"), hash("authority"), true, true}}
 	src := InstallSources{db, ast, app, perl, PhoneSource{files: map[string][]byte{"fixture": []byte("verified fixture")}}}
 	cert := TLSCertificate{LeafSHA256: hash("leaf")}
 	p, e := PrepareInstall(r, initial, m, src, cert)
 	if e != nil {
 		t.Fatal(e)
+	}
+	bootstrap := r
+	bootstrap.Authorization.TaskID = "it8aq4utqix0uz8sjgxrtssk"
+	if _, err := PrepareInstall(bootstrap, initial, m, src, cert); err != nil {
+		t.Fatal("authorized ALM-34 lab scope rejected", err)
 	}
 	again, e := DecodeInstallPlan(p.JSON(), m, src)
 	if e != nil || p.Digest() != again.Digest() {
@@ -39,11 +44,13 @@ func TestInstallationImmutableIdentity(t *testing.T) {
 	if p.JSON()[0] != '{' {
 		t.Fatal("mutable plan")
 	}
-	for _, tc := range []string{"host", "authorization", "recovery", "source", "config"} {
+	for _, tc := range []string{"host", "task", "authorization", "recovery", "source", "config"} {
 		t.Run(tc, func(t *testing.T) {
 			bad := r
 			s := src
 			switch tc {
+			case "task":
+				bad.Authorization.TaskID = "unapproved-task"
 			case "host":
 				bad.Authorization.Host = hash("other")
 			case "authorization":

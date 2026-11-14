@@ -71,9 +71,10 @@ func (n RuntimeNative) adapter(ctx context.Context, mode string) (RuntimeSnapsho
 		Content                                          []byte
 	}
 	payload := struct {
-		Files      []file
-		TLSHandoff bool
-	}{TLSHandoff: n.Application.Asterisk.TLSHandoff && mode == "runtime-inspect"}
+		Files            []file
+		TLSHandoff       bool
+		RemoteTLSHandoff bool
+	}{RemoteTLSHandoff: n.Application.Asterisk.RemoteTLSHandoff, TLSHandoff: n.Application.Asterisk.TLSHandoff && mode == "runtime-inspect"}
 	for _, f := range files {
 		prior := ""
 		if f.path == "/etc/astguiclient-s06.conf" {

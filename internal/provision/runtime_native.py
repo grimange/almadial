@@ -183,7 +183,7 @@ def runtime_processes(service):
     return rows
 
 
-def runtime_state(files, tls_handoff=False):
+def runtime_state(files, tls_handoff=False, remote_tls_handoff=False):
     if run(['/usr/sbin/getenforce']) != 'Enforcing':
         raise ValueError('S06 SELinux must remain Enforcing')
     foreign = runtime_schedules()
@@ -219,7 +219,7 @@ def runtime_state(files, tls_handoff=False):
         # unconnected ephemeral PJPROJECT resolver sockets (not SIP transports).
         if parts[0] == 'udp' and '"asterisk"' in line:
             continue
-        if tls_handoff and ((local=='127.0.0.1:443' and '"httpd"' in line) or (local=='127.0.0.1:8089' and '"asterisk"' in line)):
+        if tls_handoff and ((local==('0.0.0.0:443' if remote_tls_handoff else '127.0.0.1:443') and '"httpd"' in line) or (local=='127.0.0.1:8089' and '"asterisk"' in line)):
             continue
         if local not in ('127.0.0.1:3306', '127.0.0.1:5038', '127.0.0.1:8088', '127.0.0.1:80', '127.0.0.1:4577'):
             raise ValueError('S06 unauthorized application listener')
@@ -241,7 +241,7 @@ def runtime_main():
         p = json.load(sys.stdin)
         mode = sys.argv[1:]
         if mode == ['runtime-inspect']:
-            print(json.dumps(runtime_state(p['Files'], p.get('TLSHandoff',False))))
+            print(json.dumps(runtime_state(p['Files'], p.get('TLSHandoff',False), p.get('RemoteTLSHandoff',False))))
         elif mode == ['runtime-files']:
             runtime_state(p['Files'])  # Conflict check before first publication.
             runtime_owned(p['Files'], True)

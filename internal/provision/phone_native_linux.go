@@ -35,7 +35,7 @@ func (e *phoneCommandError) Unwrap() error { return errPhone }
 
 func (n PhoneNative) adapter(ctx context.Context, mode, expected string) (PhoneSnapshot, error) {
 	var s PhoneSnapshot
-	b, e := json.Marshal(map[string]any{"Request": n.Request, "Files": n.Source.files, "Source": n.Source.Digest(), "ExpectedCurrent": expected})
+	b, e := json.Marshal(map[string]any{"Request": n.Request, "Network": n.Network.Request, "Files": n.Source.files, "Source": n.Source.Digest(), "ExpectedCurrent": expected})
 	if e != nil {
 		return s, e
 	}

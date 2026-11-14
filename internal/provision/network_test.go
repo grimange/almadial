@@ -7,7 +7,7 @@ import (
 )
 
 func TestNetworkIsolatedPolicy(t *testing.T) {
-	r := NetworkRequest{"isolated", "eth0", "10.160.90.233", 2222}
+	r := NetworkRequest{"isolated", "eth0", "10.160.90.233", 2222, 0, 0}
 	a, e := NetworkPolicy(r)
 	if e != nil {
 		t.Fatal(e)
@@ -40,7 +40,7 @@ func TestNetworkIsolatedPolicy(t *testing.T) {
 	}
 }
 func TestNetworkRejectUnsupportedTopology(t *testing.T) {
-	for _, r := range []NetworkRequest{{"public", "eth0", "10.1.2.3", 22}, {"isolated", "eth0", "8.8.8.8", 22}, {"isolated", "lo", "127.0.0.1", 22}, {"isolated", "eth0\n", "10.1.2.3", 22}, {"isolated", "eth0", "10.1.2.3", 0}, {"isolated", "eth0", "fe80::1", 22}} {
+	for _, r := range []NetworkRequest{{"public", "eth0", "10.1.2.3", 22, 0, 0}, {"isolated", "eth0", "8.8.8.8", 22, 0, 0}, {"isolated", "lo", "127.0.0.1", 22, 0, 0}, {"isolated", "eth0\n", "10.1.2.3", 22, 0, 0}, {"isolated", "eth0", "10.1.2.3", 0, 0, 0}, {"isolated", "eth0", "fe80::1", 22, 0, 0}} {
 		if _, e := NetworkPolicy(r); e == nil {
 			t.Fatal(r)
 		}

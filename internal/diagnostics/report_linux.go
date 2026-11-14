@@ -50,7 +50,7 @@ func (r Report) ExitCode() int {
 	return 0
 }
 
-type Options struct{ Manifest, Journal, CAFile string }
+type Options struct{ Manifest, Journal, CAFile, Plan string }
 type Runner interface {
 	Run(context.Context, execution.Command) (execution.Result, error)
 }
@@ -187,17 +187,36 @@ func (c Collector) Collect(ctx context.Context, o Options) Report {
 	lines := strings.Split(s, "\n")
 	dbok := len(lines) == 2 && version.FindString(lines[0]) == "10.11.18" && lines[1] == "1748"
 	test("database.schema", ok, dbok, "database version and schema queried without credentials in argv", "MariaDB 10.11.18; schema 1748", "Run as authorized local root for socket authentication; inspect mariadb service and accepted schema evidence. Never reimport a partial schema.")
-	s, ok = c.probe(ctx, "/usr/bin/getent", "ahostsv4", "localhost")
+	hostname, address := "localhost", "127.0.0.1"
+	network := provision.NetworkRequest{Mode: "isolated", SSHPort: 22}
+	if o.Plan != "" {
+		raw, e := c.ReadFile(o.Plan, 32<<20)
+		request, pe := provision.InstallPlanRequest(raw)
+		valid := e == nil && pe == nil && (request.Network.Mode == "isolated" || request.Network.Mode == "remote")
+		if valid && request.Network.Mode == "remote" {
+			valid = request.TLS.Mode == "remote" && request.TLS.Hostname == request.Phone.Hostname && request.Phone.WSSURL == "wss://"+request.TLS.Hostname+"/ws" && regexp.MustCompile(`^[a-z0-9][a-z0-9.-]{1,251}[a-z0-9]$`).MatchString(request.TLS.Hostname) && request.Network.RTPStart >= 1024 && request.Network.RTPEnd > request.Network.RTPStart
+		}
+		test("installer.profile", true, valid, "explicit saved plan deployment profile inspected", "valid saved profile", "Select the original protected installation plan with --plan; do not edit it.")
+		if !valid {
+			return r
+		}
+		network = request.Network
+		if network.Mode == "remote" {
+			hostname = request.TLS.Hostname
+			address = network.ManagementAddress
+		}
+	}
+	s, ok = c.probe(ctx, "/usr/bin/getent", "ahostsv4", hostname)
 	dnsok := len(strings.Fields(s)) > 0
 	for _, l := range strings.Split(s, "\n") {
 		f := strings.Fields(l)
-		if len(f) > 0 && f[0] != "127.0.0.1" {
+		if len(f) > 0 && f[0] != address {
 			dnsok = false
 		}
 	}
-	test("network.dns", ok, dnsok, "localhost resolution checked", "localhost resolves to loopback", "Inspect getent ahostsv4 localhost and /etc/hosts. External DNS is outside the accepted localhost topology.")
-	c.listeners(ctx, test)
-	c.firewall(ctx, test)
+	test("network.dns", ok, dnsok, "configured hostname resolution checked", "hostname resolves to the configured server address", "Inspect DNS and the approved deployment profile.")
+	c.listeners(ctx, network, test)
+	c.firewall(ctx, network, test)
 	s, ok = c.probe(ctx, "/usr/bin/ps", "-eo", "unit=,user=,args=")
 	count := 0
 	foreign := false
@@ -217,14 +236,18 @@ func (c Collector) Collect(ctx context.Context, o Options) Report {
 		}
 		a, aok := c.probe(ctx, "/usr/bin/systemctl", "show", "--property=ActiveState", "--value", component.Owner)
 		b, bok := c.probe(ctx, "/usr/bin/systemctl", "show", "--property=UnitFileState", "--value", component.Owner)
-		test("runtime."+component.ID, aok && bok, a == "inactive" && b == "disabled", "deferred unit activation checked", "disabled and inactive by accepted policy", "Inspect unit status; activation requires a separate reviewed runtime policy.")
+		if network.Mode == "remote" {
+			test("runtime."+component.ID, aok && bok, a == "active" && b == "enabled", "remote agent runtime activation checked", "active and enabled with a verified remote runtime policy", "P0: this candidate still defers the VICIdial updater/listener. Synthetic media success does not qualify agent operation. Preserve journals; do not manually enable the lab units or broaden AMI permissions.")
+		} else {
+			test("runtime."+component.ID, aok && bok, a == "inactive" && b == "disabled", "deferred unit activation checked", "disabled and inactive by accepted policy", "Inspect unit status; activation requires a separate reviewed runtime policy.")
+		}
 	}
 	b, e := c.ReadFile("/etc/cron.d/almadial-s06", 16384)
 	test("runtime.cron", e == nil, string(b) == provision.RuntimeCron(), "owned cron definition compared to accepted inactive contract", "exact S06 definition; zero active application jobs", "Inspect /etc/cron.d/almadial-s06. Foreign schedules are not copied or changed; a complete cron audit remains an operator check.")
 	_, readable := c.probe(ctx, "/usr/bin/test", "-r", "/var/www/html/vicidial/admin.php")
 	_, nonempty := c.probe(ctx, "/usr/bin/test", "-s", "/var/www/html/vicidial/admin.php")
 	test("vicidial.application", true, readable && nonempty, "administrator entry point readable and nonempty", "accepted application file available", "Inspect accepted S05 deployment hashes and Apache/PHP-FPM logs; diagnostics do not authenticate or exercise sessions.")
-	c.tls(ctx, o, test, add)
+	c.tls(ctx, o, hostname, network.Mode == "remote", test, add)
 	s, ok = c.probe(ctx, "/usr/bin/stat", "-f", "--format=%a %S", "/var/spool/asterisk/monitor")
 	f := strings.Fields(s)
 	var free uint64
@@ -247,7 +270,7 @@ func (c Collector) Collect(ctx context.Context, o Options) Report {
 type testCheck func(string, bool, bool, string, string, string)
 type addCheck func(string, string, string, string, string, bool)
 
-func (c Collector) listeners(ctx context.Context, test testCheck) {
+func (c Collector) listeners(ctx context.Context, network provision.NetworkRequest, test testCheck) {
 	s, ok := c.probe(ctx, "/usr/sbin/ss", "-H", "-lnt")
 	for _, port := range []string{"80", "443", "8088", "8089", "3306", "5038", "4577"} {
 		found := false
@@ -260,15 +283,19 @@ func (c Collector) listeners(ctx context.Context, test testCheck) {
 			a := f[3]
 			if strings.HasSuffix(a, ":"+port) {
 				found = true
-				if a != "127.0.0.1:"+port {
+				expected := "127.0.0.1:" + port
+				if network.Mode == "remote" && port == "443" {
+					expected = "0.0.0.0:443"
+				}
+				if a != expected {
 					unsafe = true
 				}
 			}
 		}
-		test("listener."+port, ok, found && !unsafe, "bind scope inspected", "required TCP listener on 127.0.0.1 only", "Inspect ss -lntp locally; a firewall permission does not change service binding.")
+		test("listener."+port, ok, found && !unsafe, "bind scope inspected", "profile-bound HTTPS; internal TCP services on loopback", "Inspect ss -lntp locally; a firewall permission does not change service binding.")
 	}
 }
-func (c Collector) firewall(ctx context.Context, test testCheck) {
+func (c Collector) firewall(ctx context.Context, network provision.NetworkRequest, test testCheck) {
 	a, ok := c.probe(ctx, "/usr/bin/firewall-cmd", "--info-policy=almadial-s09")
 	b, bok := c.probe(ctx, "/usr/bin/firewall-cmd", "--permanent", "--info-policy=almadial-s09")
 	normalize := func(s string) string {
@@ -293,21 +320,37 @@ func (c Collector) firewall(ctx context.Context, test testCheck) {
 		}
 		if strings.HasPrefix(l, "ports:") {
 			fields := strings.Fields(strings.TrimPrefix(l, "ports:"))
-			if len(fields) != 1 || !regexp.MustCompile(`^[0-9]{1,5}/tcp$`).MatchString(fields[0]) {
+			validPorts := len(fields) == 1 && regexp.MustCompile(`^[0-9]{1,5}/tcp$`).MatchString(fields[0])
+			if network.Mode == "remote" {
+				expected := map[string]bool{fmt.Sprintf("%d/tcp", network.SSHPort): true, "443/tcp": true, fmt.Sprintf("%d-%d/udp", network.RTPStart, network.RTPEnd): true}
+				validPorts = len(fields) == len(expected)
+				for _, port := range fields {
+					if !expected[port] {
+						validPorts = false
+					}
+					delete(expected, port)
+				}
+				validPorts = validPorts && len(expected) == 0
+			}
+			if !validPorts {
 				good = false
 			}
 		}
 	}
-	test("firewall.policy", ok && bok, good, "managed runtime/permanent policy summary compared", "isolated DROP policy, matching permanent configuration, one management TCP port", "Inspect firewall-cmd --info-policy=almadial-s09 and nft list ruleset. This summary does not replace S09 full policy qualification.")
+	test("firewall.policy", ok && bok, good, "managed runtime/permanent policy summary compared", "profile-bound DROP policy and exact persistent ports", "Inspect firewall-cmd --info-policy=almadial-s09 and nft list ruleset. This summary does not replace S09 full policy qualification.")
 }
-func (c Collector) tls(ctx context.Context, o Options, test testCheck, add addCheck) {
+func (c Collector) tls(ctx context.Context, o Options, hostname string, remote bool, test testCheck, add addCheck) {
 	if o.CAFile == "" {
 		add("tls.trust", "NOT_CONFIGURED", "explicit trust anchor not supplied", "--ca-file for the intended public/private CA", "Supply the approved CA file; insecure TLS bypasses are never used.", true)
 		return
 	}
-	for _, p := range []struct{ id, url, expected string }{{"https", "https://localhost/vicidial/admin.php", "401"}, {"wss", "https://localhost:8089/ws", "426"}} {
+	wss := "https://localhost:8089/ws"
+	if remote {
+		wss = "https://" + hostname + "/ws"
+	}
+	for _, p := range []struct{ id, url, expected string }{{"https", "https://" + hostname + "/vicidial/admin.php", "401"}, {"wss", wss, "426"}} {
 		s, ok := c.probe(ctx, "/usr/bin/curl", "--disable", "--noproxy", "*", "--silent", "--show-error", "--max-time", "3", "--cacert", o.CAFile, "--output", "/dev/null", "--write-out", "%{http_code}", p.url)
-		test("tls."+p.id, ok, s == p.expected, "trusted TLS handshake and expected unauthenticated route response checked", "valid localhost certificate chain; HTTP "+p.expected, "Inspect approved CA, certificate expiration, Apache/Asterisk logs and HTTPS/WSS listeners. No authentication, SIP session or media test is performed.")
+		test("tls."+p.id, ok, s == p.expected, "trusted TLS handshake and expected unauthenticated route response checked", "valid configured hostname certificate chain; HTTP "+p.expected, "Inspect approved CA, certificate expiration, Apache/Asterisk logs and HTTPS/WSS listeners. No authentication, SIP session or media test is performed.")
 	}
 	// OpenSSL prints only public certificate expiration; key material is never read.
 	s, ok := c.probe(ctx, "/usr/bin/openssl", "x509", "-in", "/etc/pki/tls/almadial-s08/current/fullchain.pem", "-noout", "-checkend", "2592000")

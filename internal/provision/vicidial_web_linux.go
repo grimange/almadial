@@ -65,13 +65,14 @@ func verifyVICIdialHTTPResponse(path string, status int, header http.Header, bod
 	return false
 }
 
-// ss is independent of Apache configuration text. Reject public HTTP/HTTPS,
-// duplicate local listeners and unexpected processes on the qualification port.
+// ss independently checks listener addresses and process ownership. Remote HTTPS
+// is admitted only by the verified S08 handoff; HTTP remains loopback-only.
 func verifyVICIdialWebListeners(raw string, pid int) error {
 	return verifyVICIdialWebListenersTLS(raw, pid, false)
 }
-func verifyVICIdialWebListenersTLS(raw string, pid int, tlsHandoff bool) error {
+func verifyVICIdialWebListenersTLS(raw string, pid int, tlsHandoff bool, remote ...bool) error {
 	count := 0
+	remoteTLS := tlsHandoff && len(remote) == 1 && remote[0]
 	if pid < 2 {
 		return errVICIdial
 	}
@@ -92,7 +93,7 @@ func verifyVICIdialWebListenersTLS(raw string, pid int, tlsHandoff bool) error {
 		if !relevant {
 			continue
 		}
-		if fields[0] != "tcp" || host != "127.0.0.1" || (port != "80" && !(tlsHandoff && port == "443")) || !strings.Contains(line, "\"httpd\"") || !strings.Contains(line, "pid="+strconv.Itoa(pid)+",") {
+		if fields[0] != "tcp" || !(host == "127.0.0.1" && port == "80" || tlsHandoff && port == "443" && (host == "127.0.0.1" && !remoteTLS || host == "0.0.0.0" && remoteTLS)) || (port != "80" && !(tlsHandoff && port == "443")) || !strings.Contains(line, "\"httpd\"") || !strings.Contains(line, "pid="+strconv.Itoa(pid)+",") {
 			return errVICIdial
 		}
 		count++
@@ -106,7 +107,7 @@ func verifyVICIdialWebListenersTLS(raw string, pid int, tlsHandoff bool) error {
 func inspectVICIdialWebService(ctx context.Context, runner execution.CommandRunner) (string, error) {
 	return inspectVICIdialWebServiceTLS(ctx, runner, false)
 }
-func inspectVICIdialWebServiceTLS(ctx context.Context, runner execution.CommandRunner, tlsHandoff bool) (string, error) {
+func inspectVICIdialWebServiceTLS(ctx context.Context, runner execution.CommandRunner, tlsHandoff bool, remote ...bool) (string, error) {
 	run := func(c execution.Command) (string, error) {
 		r, e := runner.Run(ctx, c)
 		if e != nil || !r.Started || r.ExitCode != 0 || r.StdoutTruncated || r.StderrTruncated {
@@ -127,7 +128,7 @@ func inspectVICIdialWebServiceTLS(ctx context.Context, runner execution.CommandR
 	}
 	pid, _ := strconv.Atoi(fields["MainPID"])
 	sockets, e := run(dbCommand("/usr/sbin/ss", "-H", "-lntup"))
-	if e != nil || verifyVICIdialWebListenersTLS(sockets, pid, tlsHandoff) != nil {
+	if e != nil || verifyVICIdialWebListenersTLS(sockets, pid, tlsHandoff, remote...) != nil {
 		return "", errVICIdial
 	}
 	// Require the distribution FPM service to be active. The separate application

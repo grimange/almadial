@@ -5,18 +5,25 @@ single-server VICIdial system on supported AlmaLinux hosts. It provisions and
 checks Asterisk, MariaDB, Apache/PHP, TLS, WebRTC and supporting services.
 VICIdial remains the upstream dialer application; AlmaDial manages its installation.
 
-The qualified profile is **AlmaLinux 10.2 on x86_64, in an isolated local/LAN
-environment**. A precompiled private release candidate is available to authorized
+AlmaDial targets **AlmaLinux 10.2 on x86_64** with two deployment profiles:
+remote single-server HTTPS access and an isolated laboratory profile.
+The remote profile is a development candidate: controlled off-host HTTPS/WSS,
+two-way synthetic media and recording have passed, but ordinary VICIdial agent
+operation is blocked by the deferred agent runtime. Public-host acceptance has
+not run. A precompiled private development build is available to authorized
 operators. Independent operator acceptance is pending; production deployment and
 unrestricted public distribution are not approved.
 
 ## Quick installation
 
-**Distribution status:** a GitHub-hosted bootstrap is not currently available.
-The published repository commit was checked and its bootstrap path returned HTTP
-404. Obtain the reviewed bootstrap URL, approved CLI download URL and any required
-public CA certificate from your release owner. These are deployment configuration,
-not fixed AlmaDial network addresses. No public binary release is implied.
+**Distribution status:** the source bootstrap is available on GitHub at the
+[verified immutable reference](https://raw.githubusercontent.com/grimange/almadial/f885482478e2fa13fa95a1211c0ab688363b617d/scripts/bootstrap/install.sh).
+That published script pins the earlier laboratory CLI, **not this remote-profile
+build**. For remote installation, obtain the reviewed script and matching
+precompiled CLI URL from your release owner. No public remote-profile binary
+release is available. The configured distribution and source stores must be
+reachable from your server; no developer network address is built into the
+installation workflow.
 
 After completing the [trust and endpoint setup](docs/operations/almadial-installation.md#distribution-configuration),
 connect to the fresh server and run in a root login shell:
@@ -47,7 +54,7 @@ archive staging, individual stage commands or copied plan hashes.
 
 ## Features
 
-The qualified precompiled candidate provides:
+The installer provides these capabilities, subject to the deployment limitations below:
 
 - Guided configuration, host preflight and one approval of the exact immutable plan.
 - Automatic acquisition of pinned source archives with SHA-256 verification,
@@ -72,29 +79,29 @@ The qualified precompiled candidate provides:
 
 Keep SELinux enforcing, firewalld enabled and signature/certificate validation
 active. Reserve additional recording/backup storage for your retention needs.
-Public DNS and ACME are unnecessary for this profile. Other operating systems,
-public carrier/PSTN, public Internet access and NAT traversal are not qualified.
+The remote profile requires a hostname resolving to the server’s directly
+attached IPv4 address and a matching trusted certificate. Supply that certificate;
+AlmaDial does not provision ACME. Other operating systems, carrier/PSTN, NAT
+traversal and production capacity are not qualified.
 
-The CLI download location and upstream source-store policy are separate. Moving
-the binary to a different approved HTTPS origin does not change its embedded
-source origins. The current candidate still needs access to its approved private
-source store, or its verified cache. Source-store relocation requires a reviewed
-policy and a newly approved CLI build, as described in the
-[retention guide](docs/operations/almadial-private-artifact-retention.md).
+The binary location and source store are independent configuration. Set
+`ALMADIAL_ARTIFACT_STORE` to an approved HTTPS content-addressed source-store base,
+or enter it when prompted. Source versions and SHA-256 identities stay pinned.
+The saved store policy is reused on resume; relocation requires deliberate
+review of saved inputs. See the [retention guide](docs/operations/almadial-private-artifact-retention.md).
 
 ## Guided installation
 
-Run `almadial install` in an interactive root terminal. It checks readiness and
-prompts for the authorization/recovery references, private network address and
-interface, and TLS configuration. The qualified application hostname is
-`localhost`. Choose generated laboratory TLS or supply a reviewed matching
-certificate, key and trusted CA. Credentials are stored in protected server files.
+Run `almadial install` in an interactive root terminal. Choose **remote** for
+normal browser access or **lab** for isolated loopback access. For remote, supply
+the FQDN, directly attached IPv4/interface, matching certificate/key/CA paths,
+and the UDP media range. DNS, trust and host readiness are checked before
+provisioning. Credentials are generated into protected server files.
 
-The installer acquires and verifies its pinned inputs, displays proposed changes
-and the plan SHA-256, then asks once for `yes`. It executes that exact plan,
-reports progress and verifies completion. See the
-[operator installation guide](docs/operations/almadial-installation.md) for inputs,
-credential locations, progress and recovery.
+The installer verifies pinned archives, displays its plan and SHA-256, then asks
+once for `yes`. It executes that exact plan and reports progress and completion
+checks. See the [installation guide](docs/operations/almadial-installation.md)
+for prerequisites and recovery.
 
 ## Common commands
 
@@ -105,8 +112,8 @@ These forms are supported by the qualified precompiled candidate:
 | `almadial install` | Guided configuration, exact-plan approval and installation |
 | `almadial resume` | Review the saved plan and continue after actual-state reconciliation |
 | `almadial plan --request FILE --manifest FILE` | Advanced read-only plan generation |
-| `almadial status --ca-file FILE` | Inspect health; add `--json` for structured output |
-| `almadial doctor --ca-file FILE` | Include expected conditions and diagnostic guidance |
+| `almadial status --plan FILE --ca-file FILE` | Inspect health; add `--json` for structured output |
+| `almadial doctor --plan FILE --ca-file FILE` | Include expected conditions and diagnostic guidance |
 | `almadial evidence export --output /absolute/private/support.tar.gz --ca-file FILE` | Create a sanitized bundle in an existing private directory |
 | `almadial --version` | Show CLI version and build identity |
 | `almadial install --help` | Show guided and explicit-plan options |
@@ -116,26 +123,28 @@ manifest and journal paths. They inspect the host without repairing it.
 
 ## Accessing VICIdial
 
-Application HTTPS and WSS listeners are bound to loopback in the qualified
-profile. From your workstation, establish the TCP tunnels:
+For the **remote** profile, open the configured hostname directly in a browser
+that trusts the application certificate. For example, with your own hostname:
 
-```bash
-ssh -N -L 8443:127.0.0.1:443 -L 8089:127.0.0.1:8089 root@YOUR_SERVER
-```
-
-Trust the **public application CA** in the browser; never transfer the private key.
-Then open:
-
-| Interface | Address through the tunnel |
+| Interface | URL path |
 |---|---|
-| Administration | `https://localhost:8443/vicidial/admin.php` |
-| Agent login | `https://localhost:8443/agc/vicidial.php` |
-| Browser phone | `https://localhost:8443/almadial-phone/` |
+| Administration | `https://YOUR_FQDN/vicidial/admin.php` |
+| Agent login | `https://YOUR_FQDN/agc/vicidial.php` |
+| Browser phone | `https://YOUR_FQDN/almadial-phone/` |
 
-The phone uses trusted `wss://localhost:8089/ws`. **SSH TCP tunnels do not carry
-WebRTC UDP media.** Registration alone proves neither two-way audio nor recording;
-the separate documented functional media qualification requires its approved
-network path. Do not open additional firewall ports to make this profile public.
+WSS uses the same origin at `/ws`; Asterisk’s internal WebSocket listener stays
+on loopback. Browser media uses the configured UDP range directly to the server.
+The included synthetic phone and conference support a bounded call check. The
+remote candidate still disables VICIdial's updater and manager listener, and
+does not provision an ordinary agent campaign. This is an implementation blocker,
+not a missing operator configuration step. Doctor reports it as a blocking
+failure; do not use this candidate for normal agent operation or manually enable
+those services to bypass the installer. A registration or answered call alone
+does not prove audio.
+
+The **lab** profile retains loopback HTTPS/WSS and optional SSH TCP forwarding;
+see the [deployment profiles](docs/operations/deployment-profiles.md).
+An SSH TCP tunnel does not carry WebRTC UDP media.
 
 ## Troubleshooting
 
@@ -166,10 +175,15 @@ Keep credentials, keys and recordings out of support submissions.
 Clean-host installation, recovery, diagnostics, isolated HTTPS/WSS, browser media,
 recordings and repeat-run behavior have qualification evidence. Developer
 qualification does not replace the pending independent operator run and review.
-The stack manifest remains candidate. The qualified private binary contains guided
-installation/acquisition additions retained on a separate implementation branch;
-this source tree's Go installer predates those additions. The portable bootstrap
-changes do not replace that binary or constitute a new public release.
+The stack manifest remains candidate. This source tree includes the guided
+installer, durable acquisition and remote-profile implementation. Public-host
+and independent operator acceptance remain separate gates; a local commit does
+not publish a new bootstrap or binary.
+
+The remote candidate is not ready for independent acceptance until its normal
+agent runtime and campaign workflow are implemented and tested. The successful
+controlled synthetic call does not establish that workflow or public-network
+operation. The isolated lab remains a separate regression profile.
 
 AlmaDial-original code is licensed under [MIT](LICENSE). Upstream applications,
 libraries and OS packages retain their own licenses and notices. Technical SBOM

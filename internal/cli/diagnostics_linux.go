@@ -15,8 +15,8 @@ import (
 )
 
 const diagnosticHelp = `Usage:
-  almadial status [--json] [--ca-file FILE] [--manifest FILE] [--journal FILE]
-  almadial doctor [--json] [--ca-file FILE] [--manifest FILE] [--journal FILE]
+  almadial status [--json] [--ca-file FILE] [--manifest FILE] [--journal FILE] [--plan FILE]
+  almadial doctor [--json] [--ca-file FILE] [--manifest FILE] [--journal FILE] [--plan FILE]
   almadial evidence export --output /absolute/new-bundle.tar.gz [same inputs]
   almadial support-bundle --output /absolute/new-bundle.tar.gz [same inputs]
 
@@ -46,6 +46,7 @@ func runDiagnostics(ctx context.Context, args []string, out, errout io.Writer) i
 	fs.StringVar(&o.CAFile, "ca-file", "", "")
 	fs.StringVar(&o.Manifest, "manifest", "", "")
 	fs.StringVar(&o.Journal, "journal", "", "")
+	fs.StringVar(&o.Plan, "plan", "", "")
 	fs.StringVar(&output, "output", "", "")
 	fs.BoolVar(&machine, "json", false, "")
 	fs.BoolVar(&help, "help", false, "")
@@ -64,7 +65,7 @@ func runDiagnostics(ctx context.Context, args []string, out, errout io.Writer) i
 		fmt.Fprintln(errout, "almadial: explicit --output required only for bundle export")
 		return Usage
 	}
-	for _, p := range []string{o.CAFile, o.Manifest, o.Journal, output} {
+	for _, p := range []string{o.CAFile, o.Manifest, o.Journal, o.Plan, output} {
 		if p != "" && (!filepath.IsAbs(p) || filepath.Clean(p) != p || strings.ContainsAny(p, "\x00\r\n")) {
 			fmt.Fprintln(errout, "almadial: diagnostic paths must be absolute, clean paths")
 			return Usage

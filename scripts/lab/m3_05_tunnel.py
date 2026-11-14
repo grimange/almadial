@@ -2,7 +2,7 @@ import socketserver,subprocess,threading,sys,re
 VM = "almadial-alm16-rpm"
 if len(sys.argv) == 3 and sys.argv[1] == "--vm":
  VM = sys.argv[2]
- assert re.fullmatch(r"almadial-alm29-clean-[a-z]+", VM)
+ assert VM == "almadial-alm34-bootstrap-dev" or re.fullmatch(r"almadial-alm29-clean-[a-z]+", VM)
  sys.argv = sys.argv[:1]
 REMOTE="""import socket,sys,threading
 s=socket.create_connection(('127.0.0.1',int(sys.argv[1])))

@@ -3,9 +3,12 @@
 const fs = require('fs'), cp = require('child_process');
 const {chromium} = require('/home/ra/.npm/_npx/51691537fc71f2b0/node_modules/playwright');
 const VM = process.argv[3] || 'almadial-alm16-rpm';
-if (process.argv[3] && !/^almadial-alm29-clean-[a-z]+$/.test(VM)) throw Error('invalid target VM');
+const remote = process.argv[4] ? JSON.parse(fs.readFileSync(process.argv[4], 'utf8')) : null;
+if (remote && (VM !== 'almadial-alm46-remote-dev' || remote.machine !== '436ca8ae883439638507ab64b02d98e8' || !/^[a-z0-9.-]+$/.test(remote.hostname) || !/^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(remote.address))) throw Error('invalid controlled remote target');
+if (remote && cp.execFileSync('/snap/bin/multipass',['exec',VM,'--','cat','/etc/machine-id'],{encoding:'utf8'}).trim() !== remote.machine) throw Error('target identity changed');
+if (process.argv[3] && !remote && VM !== 'almadial-alm34-bootstrap-dev' && !/^almadial-alm29-clean-[a-z]+$/.test(VM)) throw Error('invalid target VM');
 const E = process.argv[2], contexts = [], pages = [];
-const result = {pass:false, trust_bypass:false, topology:'local-LAN', participants:[], sip:[]};
+const result = {pass:false, trust_bypass:false, topology:remote?'controlled-off-host-no-tunnel':'local-LAN', participants:[], sip:[]};
 function native(command) {return cp.execFileSync('/snap/bin/multipass',['exec',VM,'--','sudo','/usr/sbin/asterisk','-rx',command],{encoding:'utf8',timeout:20000});}
 (async () => {
  try {
@@ -16,6 +19,7 @@ function native(command) {return cp.execFileSync('/snap/bin/multipass',['exec',V
     env:{...process.env,HOME:E+'/browser-home'},
     args:['--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream',
      '--use-file-for-fake-audio-capture='+E+'/signal-'+label+'.wav',
+     ...(remote?['--host-resolver-rules=MAP '+remote.hostname+' '+remote.address]:[]),
      '--autoplay-policy=no-user-gesture-required','--disable-background-timer-throttling',
      '--disable-renderer-backgrounding','--disable-features=WebRtcHideLocalIpsWithMdns']});
    contexts.push(context); const p = await context.newPage();pages.push(p);
@@ -29,7 +33,7 @@ function native(command) {return cp.execFileSync('/snap/bin/multipass',['exec',V
     alm.snapshot=async()=>({utc:new Date().toISOString(),ice:alm.pc?.iceConnectionState,connection:alm.pc?.connectionState,
      rows:alm.pc?[...(await alm.pc.getStats()).values()].filter(r=>['inbound-rtp','outbound-rtp','transport','candidate-pair','codec','local-candidate','remote-candidate'].includes(r.type)):[]});
    });
-   const response=await p.goto('https://localhost:8443/almadial-phone/');
+   const response=await p.goto(remote?'https://'+remote.hostname+'/almadial-phone/':'https://localhost:8443/almadial-phone/');
    result.participants.push({label,http:response.status(),tls:await response.securityDetails()});
    await p.locator('[name=password]').fill(secret);await p.getByRole('button',{name:'Open phone'}).click();await p.getByRole('button',{name:'Connect phone'}).click();
    await p.waitForFunction(()=>document.querySelector('#reg_status')?.value.startsWith('Registered'),{},{timeout:20000});

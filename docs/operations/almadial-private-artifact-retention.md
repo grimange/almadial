@@ -17,9 +17,11 @@ retain their licenses/notices. AlmaDial CLI distribution remains separate.
 The accepted `stack.lock.yaml` retains exact versions, original provenance URLs,
 archive SHA-256 and VICIdial source-tree identity. The release-reviewed
 `manifests/acquisition-origins.json` binds private stores to that exact manifest.
-The CLI embeds both documents. A changed location does not authorize a changed
-version or content. A new source-store location requires an explicitly reviewed policy and
-CLI rebuild; there is no operator-entered arbitrary mirror or trust bypass.
+The CLI embeds the source manifest. Guided installation asks for an approved
+HTTPS source-store base, defaulting to `ALMADIAL_ARTIFACT_STORE`, and saves the
+derived manifest-bound location policy in protected inputs. A changed location
+does not authorize a changed version or content. No checksum or TLS trust bypass
+is provided; a mirror must supply the exact approved bytes.
 
 Run the offline maintainer tool with an existing approved archive directory:
 
@@ -66,14 +68,16 @@ Never replace a versioned binary or source object under its old identity. Keep
 CLI notices/license files with the distribution. Third-party source retention
 and delivery require their own applicable authorization.
 
-The existing candidate's `manifests/acquisition-origins.json` is separate from
-these bootstrap settings. It is embedded and bound to the stack manifest; it has
-no operator-entered mirror override. Changing `ALMADIAL_BINARY_URL` or the
-bootstrap's default endpoint does not change that policy. To move source storage,
-the release owner must approve an updated policy, qualify a new CLI build and
-issue its new pinned release contract. This task preserves the qualified binary
-and does not perform that repin. A host must reach the origins in its release
-policy, or hold all verified cached objects.
+`ALMADIAL_BINARY_URL` selects first-party CLI delivery only. For this remote-profile
+implementation, `ALMADIAL_ARTIFACT_STORE` (or the interactive source-store prompt)
+selects a separately authorized HTTPS source base. The installer derives each
+content-addressed object URL from the embedded manifest and persists that policy
+at `/var/lib/almadial-inputs/acquisition-origins.json`. Resume reads that protected
+policy rather than silently adopting a changed environment variable. A policy
+relocation needs deliberate owner review and reconciliation of saved inputs.
+Earlier binaries may still embed release-bound origins; use the reviewed script
+and binary contract for the intended version. Trust for Go source acquisition
+comes from OS CA enrollment, independently of bootstrap `ALMADIAL_CA_FILE`.
 
 Keep retained sources, inventory and approved manifests for the full lifetime of
 each release. Monitor space, back up outside disposable VMs, and rehash objects

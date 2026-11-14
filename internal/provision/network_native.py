@@ -145,7 +145,7 @@ def foreign_runtime():
 
 def contracts(p):
     r=p['Request']
-    if r['Mode']!='isolated' or not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,14}',r['Interface']): raise ValueError('topology')
+    if r['Mode'] not in ('isolated','remote') or not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,14}',r['Interface']): raise ValueError('topology')
     if run(['/usr/sbin/getenforce'])!='Enforcing': raise ValueError('SELinux')
     links=json.loads(run(['/usr/sbin/ip','-j','address','show','dev',r['Interface']]))
     if r['ManagementAddress'] not in [a['local'] for l in links for a in l['addr_info']]: raise ValueError('management address changed')
@@ -158,7 +158,8 @@ def contracts(p):
         fields=l.split()
         if len(fields)<6: raise ValueError('socket format')
         if any('"'+name+'"' in l for name in ('httpd','asterisk','mariadbd','perl')) and fields[0]=='tcp':
-            if not fields[4].startswith(('127.0.0.1:','[::1]:')): raise ValueError('public application listener')
+            remote_https = r['Mode']=='remote' and '"httpd"' in l and fields[4]=='0.0.0.0:443'
+            if not remote_https and not fields[4].startswith(('127.0.0.1:','[::1]:')): raise ValueError('public application listener')
     safe(POLICY)
     if POLICY.exists() and POLICY.read_text()!=p['XML']: raise ValueError('conflicting owned policy')
     run(['/usr/bin/firewall-offline-cmd','--check-config'])
@@ -172,11 +173,16 @@ def policy_health(p):
     if run(['/usr/sbin/matchpathcon','-V',str(POLICY)],True) is None: return False
     if 'almadial-s09' not in (fw('--get-active-policies') or '').split(): return False
     if normalized(fw('--info-policy=almadial-s09'))!=normalized(fw('--info-policy=almadial-s09',permanent=True)): return False
+    ports={str(p['Request']['SSHPort'])+'/tcp'}
+    if p['Request'].get('Mode')=='remote':
+        ports.update(('443/tcp',str(p['Request']['RTPStart'])+'-'+str(p['Request']['RTPEnd'])+'/udp'))
     for permanent in (False,True):
         args={'--get-target':'DROP','--get-priority':'-20000','--list-ingress-zones':'ANY','--list-egress-zones':'HOST','--list-ports':str(p['Request']['SSHPort'])+'/tcp','--list-protocols':'icmp ipv6-icmp'}
         for arg,want in args.items():
             got=fw('--policy=almadial-s09',arg,permanent=permanent or arg in ('--get-target','--get-priority'))
-            if arg=='--list-protocols':
+            if arg=='--list-ports':
+                if set(got.split())!=ports: return False
+            elif arg=='--list-protocols':
                 if set(got.split())!=set(want.split()): return False
             elif got!=want: return False
         for arg in ('--list-services','--list-source-ports','--list-rich-rules','--list-forward-ports'):

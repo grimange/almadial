@@ -36,7 +36,7 @@ func tlsSatisfied(s TLSSnapshot) bool {
 	return tlsReady(s) && shaPattern.MatchString(s.Files) && shaPattern.MatchString(s.Services) && shaPattern.MatchString(s.Health)
 }
 func TLSPolicyDigest() string {
-	return hash(struct{ Adapter, HTTP, Loader, Vhost string }{tlsAdapterSource, tlsAsteriskHTTP, tlsLoader, TLSVhost("localhost")})
+	return hash(struct{ Adapter, HTTP, Loader, Vhost, RemoteVhost string }{tlsAdapterSource, tlsAsteriskHTTP, tlsLoader, TLSVhost("localhost"), RemoteTLSVhost("remote.example.test")})
 }
 
 type TLSInputs struct {
@@ -275,7 +275,10 @@ func ExecuteTLSLab(ctx context.Context, s TLSStage, m artifacts.Manifest, a TLSL
 }
 
 func tlsRequestValid(r TLSRequest) bool {
-	if r.Mode != "provided" || !tlsHostname.MatchString(r.Hostname) {
+	if (r.Mode != "provided" && r.Mode != "remote") || !tlsHostname.MatchString(r.Hostname) {
+		return false
+	}
+	if r.Mode == "remote" && (!strings.Contains(r.Hostname, ".") || r.Hostname == "localhost" || strings.Contains(r.Hostname, "..")) {
 		return false
 	}
 	for _, p := range []string{r.CertificateFile, r.PrivateKeyFile, r.TrustFile} {

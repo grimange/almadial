@@ -43,7 +43,7 @@ func TestPhoneExecutionRecoveryAndNoOp(t *testing.T) {
 			p.Snapshot.Health = hash("rh")
 			w := WebInputs{p, WebSnapshot{Host: p.Snapshot.Host, Foundation: p.Snapshot.Digest(), Foreign: hash("foreign"), Files: hash("wf"), Services: hash("ws"), Health: hash("wh")}}
 			parent := TLSInputs{Parent: w, Request: TLSRequest{"provided", "localhost", "/cert.pem", "/key.pem", "/trust.pem"}, Certificate: TLSCertificate{LeafSHA256: hash("leaf"), ChainSHA256: hash("chain"), TrustSHA256: hash("trust")}, Snapshot: TLSSnapshot{Host: w.Snapshot.Host, Foundation: w.Snapshot.Digest(), Foreign: hash("tlsforeign"), Current: hash("tls current"), Files: hash("tlsfiles"), Services: hash("tlsservices"), Health: hash("tlshealth")}}
-			network := NetworkInputs{Parent: parent, Request: NetworkRequest{"isolated", "eth0", "10.1.2.3", 22}, Snapshot: NetworkSnapshot{Host: parent.Snapshot.Host, Foundation: parent.Snapshot.Digest(), Foreign: hash("nf"), Current: hash("nc"), Files: hash("nfiles"), Services: hash("ns"), Health: hash("nh")}}
+			network := NetworkInputs{Parent: parent, Request: NetworkRequest{"isolated", "eth0", "10.1.2.3", 22, 0, 0}, Snapshot: NetworkSnapshot{Host: parent.Snapshot.Host, Foundation: parent.Snapshot.Digest(), Foreign: hash("nf"), Current: hash("nc"), Files: hash("nfiles"), Services: hash("ns"), Health: hash("nh")}}
 			phone := PhoneSource{files: map[string][]byte{"fixture": []byte("verified fixture")}}
 			i := PhoneInputs{Parent: network, Request: PhoneRequest{phoneIdentity, "localhost", "wss://localhost:8089/ws"}, PhoneSourceSHA256: phone.Digest(), Snapshot: PhoneSnapshot{Host: network.Snapshot.Host, Foundation: network.Snapshot.Digest(), Foreign: hash("foreign"), Current: hash("old"), Files: "absent", Services: "absent", Health: "absent"}}
 

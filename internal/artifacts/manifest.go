@@ -79,8 +79,9 @@ type manifestDocument struct {
 // Manifest is constructed only by strict decoding against the reviewed M0 policy.
 // Its identity is SHA-256 of the original document bytes (including comments).
 type Manifest struct {
-	doc    manifestDocument
-	digest string
+	doc     manifestDocument
+	digest  string
+	origins map[string][]string
 }
 
 func Load(r io.Reader) (Manifest, error) {
@@ -118,7 +119,7 @@ func Load(r io.Reader) (Manifest, error) {
 	if err = node.Decode(&d); err != nil {
 		return Manifest{}, errors.New("manifest: invalid field type")
 	}
-	return Manifest{d, digestBytes(b)}, nil
+	return Manifest{doc: d, digest: digestBytes(b)}, nil
 }
 func validateNode(n *yaml.Node, path string, seen map[string]bool) error {
 	if n.Anchor != "" || n.Kind == yaml.AliasNode {

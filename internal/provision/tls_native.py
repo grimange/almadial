@@ -86,7 +86,7 @@ def context(p):
 
 def request(p,port,path,auth=None,websocket=False):
     ctx=context(p)
-    with socket.create_connection(('127.0.0.1',port),5) as raw:
+    with socket.create_connection((p['Hostname'] if p.get('Remote') and port==443 else '127.0.0.1',port),5) as raw:
         with ctx.wrap_socket(raw,server_hostname=p['Hostname']) as s:
             if sha(s.getpeercert(binary_form=True))!=p['Leaf']: raise ValueError('wrong active certificate')
             headers='GET '+path+' HTTP/1.1\r\nHost: '+p['Hostname']+'\r\nConnection: '+('Upgrade' if websocket else 'close')+'\r\n'
@@ -108,9 +108,10 @@ def health(p):
     if current()!=p['Generation']: return False
     for path,data in ((AP,p['HTTP']),(VH,p['Vhost']),(LD,p['Loader'])):
         if not path.exists() or read(path)!=data.encode(): return False
+    if p.get('Remote') and (proxy_boolean() != ('on','on') or proxy_port() != 'http_port_t'): return False
     for port,process in ((443,'httpd'),(8089,'asterisk')):
         lines=[l for l in run(['/usr/sbin/ss','-H','-lntp']).splitlines() if l.split()[3].endswith(':'+str(port))]
-        if len(lines)!=1 or lines[0].split()[3]!='127.0.0.1:'+str(port) or '"'+process+'"' not in lines[0]: return False
+        if len(lines)!=1 or lines[0].split()[3]!=(('0.0.0.0' if p.get('Remote') and port==443 else '127.0.0.1')+':'+str(port)) or '"'+process+'"' not in lines[0]: return False
     try:
         admin=request(p,443,'/vicidial/admin.php')
         if ' 401 ' not in admin.split('\r\n')[0] or 'www-authenticate: basic' not in admin.lower(): return False
@@ -122,7 +123,7 @@ def health(p):
         if ' 200 ' not in agent.split('\r\n')[0] or 'phone_login' not in agent.lower(): return False
         for path in ('/agc/options.php','/vicidial/options.php'):
             if ' 403 ' not in request(p,443,path).split('\r\n')[0]: return False
-        wss=request(p,8089,'/ws',websocket=True)
+        wss=request(p,443 if p.get('Remote') else 8089,'/ws',websocket=True)
         if ' 101 ' not in wss.split('\r\n')[0] or 'Sec-WebSocket-Accept: BACScCJPNqyz+UBoqMH89VmURoA='.lower() not in wss.lower(): return False
         return True
     except (OSError,ValueError,ssl.SSLError): return False
@@ -136,7 +137,35 @@ def inspect(p):
             raw=read(g/name,0o640,grp.getgrnam('asterisk').gr_gid,'cert_t')
             if c==p['Generation'] and raw!=base64.b64decode(p[field],validate=True): raise ValueError('installed TLS generation drift')
     ready=health(p)
-    return dict(Current=inventory(),Files=sha(b'S08 files') if c==p['Generation'] else 'absent',Services=sha(b'S08 endpoints') if ready else 'absent',Health=p['CertificateDigest'] if ready else 'absent',Foreign=sha(b'S08 closed local TLS ownership'))
+    return dict(Current=sha((inventory()+str(proxy_boolean())+str(proxy_port())).encode()) if p.get('Remote') else inventory(),Files=sha(b'S08 files') if c==p['Generation'] else 'absent',Services=sha(b'S08 endpoints') if ready else 'absent',Health=p['CertificateDigest'] if ready else 'absent',Foreign=sha(b'S08 closed local TLS ownership'))
+
+def proxy_boolean():
+    # semanage reports current and persistent default separately. Read-only;
+    # refuse ambiguous state instead of equating a runtime toggle with persistence.
+    import re
+    text=run(['/usr/sbin/semanage','boolean','-l'])
+    m=re.search(r'^httpd_can_network_relay\s+\((on|off)\s*,\s*(on|off)\)',text,re.M)
+    if not m: raise ValueError('proxy SELinux boolean unavailable')
+    return m.groups()
+
+def proxy_port():
+    # 8088 is not an HTTP-labelled port in the supported AlmaLinux policy.
+    # relay alone therefore does not allow httpd_t to proxy to Asterisk.
+    # Own only this exact local override; never relabel an operator override.
+    text=run(['/usr/sbin/semanage','port','-l','-C'])
+    matches=[]
+    for line in text.splitlines():
+        cells=line.split()
+        if len(cells)<3 or cells[1]!='tcp': continue
+        for item in ''.join(cells[2:]).split(','):
+            ends=item.split('-')
+            if not all(x.isdigit() for x in ends): continue
+            if int(ends[0])<=8088<=int(ends[-1]):
+                if item!='8088' or cells[0]!='http_port_t':
+                    raise ValueError('conflicting local SELinux proxy port policy')
+                matches.append(cells[0])
+    if len(matches)>1: raise ValueError('ambiguous proxy port policy')
+    return matches[0] if matches else None
 
 def reload_services():
     run(['/usr/sbin/httpd','-t','-f','/etc/httpd/conf/almadial-s05.conf'])
@@ -149,6 +178,9 @@ def activate(p):
     gid=contracts(p)
     if health(p): return
     old=current()
+    prior_proxy=proxy_boolean() if p.get('Remote') else None
+    prior_port=proxy_port() if p.get('Remote') else None
+    added_port=False
     before={path:read(path) if path.exists() else None for path in (AP,VH,LD)}
     if not R.exists():
         R.mkdir(mode=0o750);os.chown(R,0,gid);os.chmod(R,0o750)
@@ -169,6 +201,11 @@ def activate(p):
         pointer('current',p['Generation'])
         for path,data in ((AP,p['HTTP']),(VH,p['Vhost']),(LD,p['Loader'])):
             if before[path]!=data.encode(): write(path,data.encode(),0o640 if path==AP else 0o644,gid if path==AP else 0,'etc_t' if path==AP else 'httpd_config_t')
+        if prior_proxy is not None and prior_proxy != ('on','on'):
+            run(['/usr/sbin/setsebool','-P','httpd_can_network_relay','on'])
+        if p.get('Remote') and prior_port is None:
+            run(['/usr/sbin/semanage','port','-a','-t','http_port_t','-p','tcp','8088'])
+            added_port=True
         reload_services()
         for _ in range(50):
             if health(p): break
@@ -183,6 +220,11 @@ def activate(p):
             if data is None:
                 if path.exists(): path.unlink();fsync_dir(path.parent)
             elif read(path)!=data: write(path,data,0o640 if path==AP else 0o644,gid if path==AP else 0,'etc_t' if path==AP else 'httpd_config_t')
+        if added_port and proxy_port()=='http_port_t':
+            run(['/usr/sbin/semanage','port','-d','-p','tcp','8088'])
+        if prior_proxy is not None:
+            run(['/usr/sbin/setsebool','-P','httpd_can_network_relay',prior_proxy[1]])
+            if prior_proxy[0]!=prior_proxy[1]: run(['/usr/sbin/setsebool','httpd_can_network_relay',prior_proxy[0]])
         reload_services()
         raise ValueError('TLS activation failed; previous configuration restored, verify endpoints')
 

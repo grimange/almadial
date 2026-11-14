@@ -6,6 +6,26 @@ AlmaDial network requirement or a public release announcement. The
 configuration contract; the [retention guide](../operations/almadial-private-artifact-retention.md)
 describes source policy and release ownership.
 
+## Later remote-profile development observation
+
+The sections below are the historical portability-correction record, not the
+current publication or runtime state. During the later remote-profile work,
+GitHub main was observed at `f885482478e2fa13fa95a1211c0ab688363b617d`.
+Its immutable bootstrap URL returned HTTP success and matched its Git blob.
+That script still pins the earlier laboratory CLI. Guided installation and
+durable acquisition were reconciled from the retained implementation checkpoint
+into the current tree, and source-store selection is now explicit rather than
+an embedded workstation dependency.
+
+Two dedicated development VMs provided a separate controlled HTTPS artifact
+origin and an off-host deployment target. Their concrete network/trust inputs
+remain in protected evidence, not generic operator defaults. The latest CLI is
+`alm46-remote-dev4`; it is a private development artifact, not a public release.
+See the [remote implementation report](../implementation/remote-single-server-controlled-qualification.md)
+for exact identities, successful synthetic media checks and the remaining normal
+agent-runtime P0. These observations do not update the historical server or
+complete independent operator acceptance.
+
 ## Repository and publication observation
 
 At this correction, local `main` and GitHub `main` resolve to

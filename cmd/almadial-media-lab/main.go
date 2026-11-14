@@ -29,6 +29,9 @@ type checks struct {
 
 func (c checks) command(mode string) execution.Command {
 	script := "m3_05_run.py"
+	if c.scenario == "remote-media" {
+		script = "remote_single_server.py"
+	}
 	if c.scenario == "reboot" {
 		script = "m3_05_reboot.py"
 	}
@@ -69,7 +72,7 @@ func main() {
 func run() error {
 	mode := flag.String("mode", "plan", "plan or apply")
 	scenario := flag.String("scenario", "media", "media or separately authorized reboot checkpoint")
-	profile := flag.String("target-profile", "", "explicit ALM-29 clean-host media or reboot profile")
+	profile := flag.String("target-profile", "", "explicit authorized clean-host media or reboot profile")
 	stateDirectory := flag.String("journal-directory", "", "existing copied journal for reconciliation; never executes effects")
 	evidence := flag.String("evidence", "", "fresh protected experiment directory")
 	approved := flag.String("approved-plan", "", "reviewed plan digest")
@@ -86,13 +89,13 @@ func run() error {
 	if e != nil {
 		return e
 	}
-	if *scenario != "media" && *scenario != "reboot" && *scenario != "agent" {
+	if *scenario != "media" && *scenario != "reboot" && *scenario != "agent" && *scenario != "remote-media" {
 		return fmt.Errorf("unsupported bounded scenario")
 	}
 	hostID := "0fffa9a4683f35b696f0b6ee7330734b"
 	var profileBytes []byte
 	if *profile != "" {
-		if (*scenario != "media" && *scenario != "reboot") || !filepath.IsAbs(*profile) {
+		if (*scenario != "media" && *scenario != "reboot" && *scenario != "remote-media") || !filepath.IsAbs(*profile) {
 			return fmt.Errorf("target profile requires media/reboot scenario and absolute path")
 		}
 		profileBytes, e = os.ReadFile(*profile)
@@ -102,9 +105,10 @@ func run() error {
 		var target struct {
 			Machine string `json:"machine"`
 			Task    string `json:"task"`
+			VM      string `json:"vm"`
 		}
-		if json.Unmarshal(profileBytes, &target) != nil || target.Task != "xu7wxvch94ii2iw38hpb8d58" || len(target.Machine) != 32 {
-			return fmt.Errorf("invalid ALM-29 target profile")
+		if json.Unmarshal(profileBytes, &target) != nil || !authorizedTarget(target.Task, target.VM, target.Machine, *scenario) || len(target.Machine) != 32 {
+			return fmt.Errorf("invalid authorized target profile")
 		}
 		if _, e := hex.DecodeString(target.Machine); e != nil {
 			return e
@@ -131,7 +135,7 @@ func run() error {
 	// Bind every executable fixture, the manifest, the immutable graph and the
 	// current read-only host observation before acquiring execution ownership.
 	sources := map[string]string{}
-	for _, p := range []string{"cmd/almadial-media-lab/main.go", "scripts/lab/m3_05_agent.py", "scripts/lab/m3_05_agent_guest.py", "scripts/lab/m3_05_agent_browser.cjs", "scripts/lab/m0_07_assets.py", "internal/provision/phone_native.py", "scripts/lab/m3_05_reboot.py", "scripts/lab/m3_05_run.py", "scripts/lab/m3_05_native.py", "scripts/lab/m3_05_browser.cjs", "scripts/lab/m3_05_tunnel.py", "scripts/lab/m0_05_capture.js", "scripts/lab/m0_03_signal.py", "manifests/stack.lock.yaml"} {
+	for _, p := range []string{"cmd/almadial-media-lab/main.go", "scripts/lab/remote_single_server.py", "scripts/lab/m3_05_agent.py", "scripts/lab/m3_05_agent_guest.py", "scripts/lab/m3_05_agent_browser.cjs", "scripts/lab/m0_07_assets.py", "internal/provision/phone_native.py", "scripts/lab/m3_05_reboot.py", "scripts/lab/m3_05_run.py", "scripts/lab/m3_05_native.py", "scripts/lab/m3_05_browser.cjs", "scripts/lab/m3_05_tunnel.py", "scripts/lab/m0_05_capture.js", "scripts/lab/m0_03_signal.py", "manifests/stack.lock.yaml"} {
 		b, err := os.ReadFile(filepath.Join(repo, p))
 		if err != nil {
 			return err
@@ -150,6 +154,16 @@ func run() error {
 	policy := "ALM27 synthetic LAN; snapshot alm25-pre-firewall-20261111; expire source-scoped RTP in 600 seconds; cleanup"
 	if len(profileBytes) != 0 {
 		policy = "ALM29 disposable clean-host qualification; snapshot alm29-pristine; bounded synthetic LAN media or idle reboot; cleanup; profile " + hash(profileBytes)
+		var target struct {
+			Task string `json:"task"`
+		}
+		_ = json.Unmarshal(profileBytes, &target)
+		if target.Task == "a1doi4qsyn1lspqtydw84smh" {
+			policy = "ALM46 dedicated controlled off-host HTTPS and permanent-profile synthetic media; snapshot alm46-pristine; no tunnels or temporary server overlays; profile " + hash(profileBytes)
+		}
+		if target.Task == "it8aq4utqix0uz8sjgxrtssk" {
+			policy = "ALM34 developer-only bounded synthetic LAN media; snapshot alm34-pristine; cleanup; profile " + hash(profileBytes)
+		}
 	}
 	identity := journal.Identity{Host: hash([]byte(hostID)), HostState: hostState, Config: hash(b), Manifest: sources["manifests/stack.lock.yaml"], Plan: hash(append(append(b, graph.JSON()...), []byte(hostState)...)), Policy: hash([]byte(policy)), Graph: graph.Digest()}
 	state := filepath.Join(*evidence, "execution")
@@ -228,4 +242,10 @@ func run() error {
 		}
 	}
 	return execErr
+}
+
+// ALM-34 extends the existing harness only to its recorded disposable developer
+// VM. It does not authorize the independent operator VM or accepted M3 hosts.
+func authorizedTarget(task, vm, machine, scenario string) bool {
+	return (task == "a1doi4qsyn1lspqtydw84smh" && vm == "almadial-alm46-remote-dev" && machine == "436ca8ae883439638507ab64b02d98e8" && scenario == "remote-media") || task == "xu7wxvch94ii2iw38hpb8d58" || (task == "it8aq4utqix0uz8sjgxrtssk" && vm == "almadial-alm34-bootstrap-dev" && machine == "d8e73788e2a9328a8655aa707be8816a" && scenario == "media")
 }

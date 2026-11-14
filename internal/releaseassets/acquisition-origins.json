@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "manifest_sha256": "80940fac407ca7ee0041378b2e1e8b4ab4d95aa95749b503d5df7d4f356009fa",
+  "private_content_addressed_stores": [
+    "https://10.160.90.1:8447/sources"
+  ]
+}

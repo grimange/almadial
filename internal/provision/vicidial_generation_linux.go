@@ -56,6 +56,11 @@ func inspectVICIdialGenerationPhone(ctx context.Context, runner vicidialInputRun
             before, added = WRAPPERS[name]
             if wrapper_bytes[name] == before + added + extra:
                 wrapper_bytes[name] = before + added
+            name = 'extensions.conf'
+            before, added = WRAPPERS[name]
+            extra = b'#include "almadial-s10-remote.conf"\n'
+            if wrapper_bytes[name] == before + added + extra:
+                wrapper_bytes[name] = before + added
         published = {name:`, 1)
 		input, _ := json.Marshal(struct {
 			Binding, Inputs string

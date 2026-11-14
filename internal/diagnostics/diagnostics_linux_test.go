@@ -362,3 +362,39 @@ func TestAVCNoMatchIsNotCommandFailure(t *testing.T) {
 		t.Fatal("no-match exit status misclassified")
 	}
 }
+
+func TestRemoteProfileRejectsDeferredAgentRuntime(t *testing.T) {
+	f := &fakeRunner{}
+	c := fixture(f)
+	read := c.ReadFile
+	request := provision.InstallRequest{
+		Network: provision.NetworkRequest{Mode: "remote", ManagementAddress: "192.0.2.10", Interface: "eth0", SSHPort: 22, RTPStart: 10000, RTPEnd: 10019},
+		TLS:     provision.TLSRequest{Mode: "remote", Hostname: "dialer.example.test"},
+		Phone:   provision.PhoneRequest{Hostname: "dialer.example.test", WSSURL: "wss://dialer.example.test/ws"},
+	}
+	plan, err := json.Marshal(struct{ Request provision.InstallRequest }{request})
+	if err != nil {
+		t.Fatal(err)
+	}
+	c.ReadFile = func(path string, limit int) ([]byte, error) {
+		if path == "/protected/plan.json" {
+			return plan, nil
+		}
+		return read(path, limit)
+	}
+	r := c.Collect(context.Background(), Options{Plan: "/protected/plan.json"})
+	for _, id := range []string{"runtime.updater", "runtime.listener"} {
+		got := check(t, r, id)
+		if got.State != "FAIL" || !got.Blocking || !strings.Contains(got.Guidance, "P0:") {
+			t.Fatalf("remote inactive runtime treated as healthy: %+v", got)
+		}
+	}
+	if r.ExitCode() != 10 {
+		t.Fatal("degraded remote deployment must exit 10")
+	}
+	// The identical deferred state remains valid in the retained lab profile.
+	lab := c.Collect(context.Background(), Options{})
+	if check(t, lab, "runtime.updater").State != "OK" {
+		t.Fatal("lab activation contract changed")
+	}
+}

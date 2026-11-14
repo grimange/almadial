@@ -22,6 +22,8 @@ import (
 )
 
 const installationHelp = `Usage:
+  almadial install             Guided remote or isolated laboratory installation
+  almadial resume              Review and continue the saved exact plan
   almadial plan --request FILE --manifest FILE
   almadial plan --plan FILE --manifest FILE
   almadial install --plan FILE --manifest FILE --approve-sha256 SHA256
@@ -214,14 +216,20 @@ func runInstall(ctx context.Context, args []string, out, errout io.Writer) int {
 	if e != nil {
 		return fail(e)
 	}
-	health := diagnostics.New().Collect(ctx, diagnostics.Options{CAFile: "/etc/pki/tls/almadial-s08/current/trust.pem", Manifest: *manifest})
+	health := diagnostics.New().Collect(ctx, diagnostics.Options{CAFile: "/etc/pki/tls/almadial-s08/current/trust.pem", Manifest: *manifest, Plan: *planFile})
 	result.Completed = append(result.Completed, "S12 read-only diagnostics")
+	installedRequest, e := provision.InstallPlanRequest(planRaw)
+	if e != nil {
+		return fail(e)
+	}
+	hostname := installedRequest.TLS.Hostname
+	endpoints := []string{"https://" + hostname + "/vicidial/admin.php", "https://" + hostname + "/agc/vicidial.php", "https://" + hostname + "/almadial-phone/", installedRequest.Phone.WSSURL}
 	report := struct {
 		provision.InstallResult
 		Build       string             `json:"build"`
 		Diagnostics diagnostics.Report `json:"diagnostics"`
 		Endpoints   []string           `json:"endpoints"`
-	}{result, buildinfo.String(), health, []string{"https://localhost/vicidial/admin.php", "https://localhost/agc/vicidial.php", "https://localhost/almadial-phone/", "wss://localhost:8089/ws"}}
+	}{result, buildinfo.String(), health, endpoints}
 	if e = json.NewEncoder(out).Encode(report); e != nil {
 		return fail(e)
 	}

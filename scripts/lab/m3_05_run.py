@@ -20,8 +20,7 @@ VM = 'almadial-alm16-rpm'
 PROFILE = json.loads(Path(sys.argv[3]).read_text()) if len(sys.argv) == 4 else None
 if PROFILE:
     import ipaddress, re
-    assert PROFILE['task'] == 'xu7wxvch94ii2iw38hpb8d58'
-    assert re.fullmatch(r'almadial-alm29-clean-[a-z]+', PROFILE['vm'])
+    assert (PROFILE['task'] == 'xu7wxvch94ii2iw38hpb8d58' and re.fullmatch(r'almadial-alm29-clean-[a-z]+', PROFILE['vm'])) or (PROFILE['task'] == 'it8aq4utqix0uz8sjgxrtssk' and PROFILE['vm'] == 'almadial-alm34-bootstrap-dev' and PROFILE['machine'] == 'd8e73788e2a9328a8655aa707be8816a')
     assert re.fullmatch(r'[a-f0-9]{32}', PROFILE['machine'])
     assert ipaddress.IPv4Address(PROFILE['address']).is_private
     VM = PROFILE['vm']

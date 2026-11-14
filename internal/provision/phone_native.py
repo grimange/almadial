@@ -6,6 +6,7 @@ import base64
 import grp
 import hashlib
 import json
+import ipaddress
 import os
 from pathlib import Path
 import re
@@ -70,16 +71,18 @@ def rows(table,where):
     data=sorted(raw.splitlines())
     return cols,data
 
-def phone_values(secret):
+def phone_values(secret, payload=None):
+    remote=payload is not None and payload.get('Network',{}).get('Mode')=='remote'
+    context='alm-remote-synthetic' if remote else 'alm-s10-no-calls'
     return dict(extension=IDENTITY,dialplan_number='9061',voicemail_id='9061',server_ip='127.0.0.1',login=IDENTITY,pass_=secret,
                 active='Y',status='ACTIVE',phone_type='ALMADIAL_S10',fullname='AlmaDial synthetic WebRTC',protocol='PJSIP',login_pass=secret,
-                ext_context='alm-s10-no-calls',phone_context='alm-s10-no-calls',template_id='--NONE--',
+                ext_context=context,phone_context=context,template_id='--NONE--',
                 is_webphone='Y',webphone_settings=CONTAINER,webphone_dialpad='N',webphone_auto_answer='N',webphone_debug='N',codecs_list='ulaw,alaw',codecs_with_template='0')
-def desired_values(secret):
-    v=phone_values(secret);v['pass']=v.pop('pass_');return v
+def desired_values(secret, payload=None):
+    v=phone_values(secret,payload);v['pass']=v.pop('pass_');return v
 
-def config(secret):
-    return (''' ; AlmaDial S10: synthetic registration only; no dialplan routes.
+def config(secret, payload=None):
+    text=(''' ; AlmaDial S10: synthetic registration only; no dialplan routes.
 [almadial-s10-wss]
 type=transport
 protocol=wss
@@ -112,7 +115,12 @@ remove_existing=yes
 minimum_expiration=60
 maximum_expiration=600
 default_expiration=600
-''').lstrip().encode()
+''').lstrip()
+    if payload is not None and payload.get('Network',{}).get('Mode')=='remote':
+        n=payload['Network']
+        text=text.replace('context=alm-s10-no-calls','context=alm-remote-synthetic')
+        text=text.replace('direct_media=no', 'direct_media=no\nmedia_address='+n['ManagementAddress']+'\nbind_rtp_to_media_address=yes\nrtp_port_start='+str(n['RTPStart'])+'\nrtp_port_end='+str(n['RTPEnd'])+'\nice_support=yes\ndtls_verify=fingerprint\ndtls_setup=actpass\ndtls_cert_file=/etc/pki/tls/almadial-s08/current/fullchain.pem\ndtls_private_key=/etc/pki/tls/almadial-s08/current/key.pem')
+    return text.encode()
 
 # The operator supplies the synthetic phone password through a normal form.
 # Settings are read from VICIdial; no SIP secret is exposed in URLs or logs.
@@ -136,6 +144,39 @@ echo '<button type="submit">Connect phone</button></form>';
 ?>
 '''.encode()
 
+EXTENSIONS=Path('/etc/asterisk/extensions.conf')
+EXTENSION_BASE=b'#include almadial-s04-extensions.conf\n[globals]\n#include "extensions-vicidial.conf"\n'
+REMOTE_ROUTES=Path('/etc/asterisk/almadial-s10-remote.conf')
+REMOTE_INCLUDE=b'#include "almadial-s10-remote.conf"\n'
+ROUTES=b"""; AlmaDial remote synthetic acceptance only; no carrier routes.
+[alm-remote-synthetic]
+exten => 9271,1,Answer()
+ same => n,AGI(agi://127.0.0.1:4577/call_log)
+ same => n,MixMonitor(/var/spool/asterisk/monitor/alm-remote-${UNIQUEID}.wav,r(/var/spool/asterisk/monitor/alm-remote-${UNIQUEID}-rx.wav)t(/var/spool/asterisk/monitor/alm-remote-${UNIQUEID}-tx.wav))
+ same => n,ConfBridge(9600271,default_bridge,default_user)
+ same => n,Hangup()
+exten => h,1,StopMixMonitor()
+ same => n,AGI(agi://127.0.0.1:4577/call_log--HVcauses--PRI-----NODEBUG-----1)
+"""
+
+def remote(payload): return payload.get('Network',{}).get('Mode')=='remote'
+def launcher(payload):
+    if not remote(payload): return LAUNCHER
+    r=payload['Request']
+    return LAUNCHER.replace(b"'server_ip'=>'localhost'",("'server_ip'=>'"+r['Hostname']+"'").encode()).replace(b'wss://localhost:8089/ws',r['WSSURL'].encode())
+
+def validate_request(payload):
+    r=payload['Request']
+    if not remote(payload):
+        if r!={'Identity':IDENTITY,'Hostname':'localhost','WSSURL':'wss://localhost:8089/ws'}: raise ValueError('unsupported phone topology')
+        return
+    hostname=r.get('Hostname','')
+    if r.get('Identity')!=IDENTITY or len(hostname)>253 or '.' not in hostname or not all(re.fullmatch(r'[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?',label) for label in hostname.split('.')) or r.get('WSSURL')!='wss://'+hostname+'/ws':
+        raise ValueError('remote phone requires a canonical FQDN and same-origin WSS')
+    n=payload['Network']; address=ipaddress.IPv4Address(n['ManagementAddress'])
+    if address.is_loopback or address.is_multicast or address.is_unspecified or not isinstance(n['RTPStart'],int) or not isinstance(n['RTPEnd'],int) or not 1024<=n['RTPStart']<n['RTPEnd']<=65535 or n['RTPStart']%2:
+        raise ValueError('invalid remote media address/range')
+
 def inspect(payload):
     gid=grp.getgrnam('asterisk').gr_gid
     wrapper=read(WRAPPER,0o640,gid)
@@ -147,7 +188,7 @@ def inspect(payload):
     if SECRET.exists():
         secret=read(SECRET,0o600).decode().strip()
         if not re.fullmatch('[0-9a-f]{32}',secret): raise ValueError('invalid protected phone credential')
-    files={k:base64.b64decode(v,validate=True) for k,v in payload['Files'].items()};files['index.php']=LAUNCHER
+    files={k:base64.b64decode(v,validate=True) for k,v in payload['Files'].items()};files['index.php']=launcher(payload)
     if any('/' in part and ('..' in part.split('/')) for part in files): raise ValueError('unsafe asset path')
     state='absent';manifest={}
     if ROOT.exists():
@@ -160,16 +201,22 @@ def inspect(payload):
         state=digest(manifest)
     pjsip=None
     if PJSIP.exists(): pjsip=read(PJSIP,0o640,gid)
+    if remote(payload):
+        ext=read(EXTENSIONS,0o640,gid)
+        if ext not in (EXTENSION_BASE,EXTENSION_BASE+REMOTE_INCLUDE): raise ValueError('foreign extensions wrapper')
+        routes=read(REMOTE_ROUTES,0o640,gid) if REMOTE_ROUTES.exists() else None
+        if (wrapper==WRAPPED and (ext!=EXTENSION_BASE+REMOTE_INCLUDE or routes!=ROUTES)) or (wrapper==BASE and (ext!=EXTENSION_BASE or routes is not None)): raise ValueError('remote route drift or partial state')
     if not phones and not containers and secret is None and state=='absent' and pjsip is None and wrapper==BASE:
         current=digest([foreign,'absent'])
         return dict(Host='',Foundation='',Foreign=foreign,Files='absent',Services='absent',Health='absent',Current=current)
-    if not secret or len(phones)!=1 or len(containers)!=1 or state=='absent' or pjsip!=config(secret) or wrapper!=WRAPPED:
+    if not secret or len(phones)!=1 or len(containers)!=1 or state=='absent' or pjsip!=config(secret,payload) or wrapper!=WRAPPED:
         raise ValueError('partial S10 state requires explicit reconciliation')
     row=json.loads(phones[0]);values={k:None if v is None else bytes.fromhex(v).decode() for k,v in zip(cols,row)}
-    if any(values[k]!=v for k,v in desired_values(secret).items()): raise ValueError('synthetic phone row mismatch')
+    if any(values[k]!=v for k,v in desired_values(secret,payload).items()): raise ValueError('synthetic phone row mismatch')
     if sql('SELECT container_entry FROM vicidial_settings_containers WHERE container_id='+literal(CONTAINER))!=SETTINGS: raise ValueError('settings container drift')
     receipt=json.loads(read(WORK/'receipt.json',0o600))
     expected=dict(Source=payload['Source'],Phone=digest(phones),Container=digest(containers),Assets=state,PJSIP=sha(pjsip),Credential=sha(secret.encode()))
+    if remote(payload): expected['RemoteRoutes']=sha(ROUTES);expected['Request']=digest([payload['Request'],payload['Network']])
     if receipt!=expected: raise ValueError('S10 receipt mismatch')
     endpoint=run(['/usr/sbin/asterisk','-rx','pjsip show endpoint '+IDENTITY])
     transport=run(['/usr/sbin/asterisk','-rx','pjsip show transport almadial-s10-wss'])
@@ -194,7 +241,7 @@ def activate(p):
     fd=os.open(SECRET,os.O_CREAT|os.O_EXCL|os.O_WRONLY|os.O_NOFOLLOW,0o600)
     with os.fdopen(fd,'w') as f: f.write(secret+'\n');f.flush();os.fsync(f.fileno())
     run(['/usr/sbin/restorecon',str(SECRET)])
-    files={k:base64.b64decode(v,validate=True) for k,v in p['Files'].items()};files['index.php']=LAUNCHER
+    files={k:base64.b64decode(v,validate=True) for k,v in p['Files'].items()};files['index.php']=launcher(p)
     for name,data in sorted(files.items()):
         target=ROOT/name
         target.parent.mkdir(parents=True,exist_ok=True,mode=0o755)
@@ -206,17 +253,23 @@ def activate(p):
         atomic(target,data,0o644)
     for target in (ROOT/'index.php',ROOT/'viciphone.php'): run(['/usr/bin/php','-l',str(target)])
     run(['/usr/sbin/restorecon','-R',str(ROOT)])
-    vals=desired_values(secret)
+    vals=desired_values(secret,p)
     columns=','.join('`'+x+'`' for x in vals)
     query='START TRANSACTION; INSERT INTO phones ('+columns+') VALUES ('+','.join(literal(v) for v in vals.values())+');'
     query+='INSERT INTO vicidial_settings_containers (container_id,container_type,container_entry) VALUES ('+literal(CONTAINER)+",'WEBPHONE_SETTINGS',"+literal(SETTINGS)+'); COMMIT;'
     sql(query)
     atomic(WORK/'pjsip.conf.before',BASE,0o600)
-    atomic(PJSIP,config(secret),0o640,gid)
+    atomic(PJSIP,config(secret,p),0o640,gid)
+    if remote(p):
+        atomic(WORK/'extensions.conf.before',EXTENSION_BASE,0o600)
+        atomic(REMOTE_ROUTES,ROUTES,0o640,gid)
+        atomic(EXTENSIONS,EXTENSION_BASE+REMOTE_INCLUDE,0o640,gid)
+        run(['/usr/sbin/asterisk','-rx','dialplan reload'])
     atomic(WRAPPER,WRAPPED,0o640,gid)
     _,phone=rows('phones','extension='+literal(IDENTITY))
     _,container=rows('vicidial_settings_containers','container_id='+literal(CONTAINER))
-    receipt=dict(Source=p['Source'],Phone=digest(phone),Container=digest(container),Assets=digest({k:sha(v) for k,v in files.items()}),PJSIP=sha(config(secret)),Credential=sha(secret.encode()))
+    receipt=dict(Source=p['Source'],Phone=digest(phone),Container=digest(container),Assets=digest({k:sha(v) for k,v in files.items()}),PJSIP=sha(config(secret,p)),Credential=sha(secret.encode()))
+    if remote(p): receipt['RemoteRoutes']=sha(ROUTES);receipt['Request']=digest([p['Request'],p['Network']])
     atomic(WORK/'receipt.json',json.dumps(receipt,sort_keys=True).encode(),0o600)
     run(['/usr/sbin/asterisk','-rx','module reload res_pjsip.so'])
     out=inspect(p)
@@ -226,7 +279,7 @@ def activate(p):
 def main():
     try:
         payload=json.load(sys.stdin)
-        if payload['Request']!={'Identity':IDENTITY,'Hostname':'localhost','WSSURL':'wss://localhost:8089/ws'}: raise ValueError('unsupported phone topology')
+        validate_request(payload)
         if run(['/usr/sbin/getenforce'])!='Enforcing': raise ValueError('SELinux not enforcing')
         result=inspect(payload) if sys.argv[1]=='phone-inspect' else activate(payload) if sys.argv[1]=='phone-activate' else None
         if result is None: raise ValueError('unknown S10 operation')

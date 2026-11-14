@@ -7,12 +7,14 @@ import (
 	"crypto/x509"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"io"
 	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 )
@@ -24,17 +26,19 @@ type FetchOptions struct {
 	RootCAs   *x509.CertPool
 }
 
-// Fetch is an explicit network operation, never called by preflight or planning.
-// It only uses Spec's approved URL; every redirect is rejected. Cache publication
-// means identity-verified storage, not permission to execute/extract/install.
+// Fetch revalidates a private cache before trying approved retention origins,
+// then the original pinned upstream URL. Every candidate uses identical content
+// verification; changing location cannot change source identity or policy.
 func Fetch(ctx context.Context, s Spec, o FetchOptions) (Result, error) {
 	r := initial(s)
 	if !s.valid() {
 		return r, errors.New("artifact: uninitialized specification")
 	}
-	u, err := url.Parse(s.source)
-	if err != nil || u.Scheme != "https" || u.Host == "" || u.User != nil || u.RawQuery != "" || u.Fragment != "" {
-		return r, errors.New("fetch: approved HTTPS source required")
+	origins := append(append([]string{}, s.origins...), s.source)
+	for _, origin := range origins {
+		if !approvedHTTPS(origin) {
+			return r, errors.New("fetch: approved HTTPS source required")
+		}
 	}
 	root, err := privateRoot(o.Directory)
 	if err != nil {
@@ -42,19 +46,57 @@ func Fetch(ctx context.Context, s Spec, o FetchOptions) (Result, error) {
 	}
 	defer root.Close()
 	final := s.component + ".artifact"
-	if st, e := root.Lstat(final); e == nil && (!st.Mode().IsRegular() || st.Mode().Perm()&0077 != 0) {
-		return r, errors.New("cache: expected private regular file")
-	}
-	if f, err := root.Open(final); err == nil {
-		defer f.Close()
-		st, e := f.Stat()
-		if e != nil || !st.Mode().IsRegular() {
-			return r, errors.New("cache: expected regular file")
+	if st, e := root.Lstat(final); e == nil {
+		owner, ok := st.Sys().(*syscall.Stat_t)
+		if !st.Mode().IsRegular() || st.Mode().Perm()&0077 != 0 || !ok || owner.Uid != uint32(os.Geteuid()) {
+			return r, errors.New("cache: expected owned private regular file")
 		}
-		return verifyFile(ctx, s, f)
-	} else if !os.IsNotExist(err) {
+		f, e := root.OpenFile(final, os.O_RDONLY|syscall.O_NOFOLLOW|syscall.O_NONBLOCK, 0)
+		if e != nil {
+			return r, errors.New("cache: cannot inspect existing artifact")
+		}
+		r, e = verifyFile(ctx, s, f)
+		f.Close()
+		if e == nil {
+			return r, nil
+		}
+		if ctx.Err() != nil {
+			return r, ctx.Err()
+		}
+		// Keep rejected bytes for diagnosis, but permit verified replacement. A
+		// private root and random destination avoid overwriting earlier evidence.
+		nonce := make([]byte, 16)
+		if _, err = rand.Read(nonce); err != nil {
+			return r, err
+		}
+		if err = root.Rename(final, final+".rejected-"+hex.EncodeToString(nonce)); err != nil {
+			return r, errors.New("cache: cannot quarantine rejected artifact")
+		}
+	} else if !os.IsNotExist(e) {
 		return r, errors.New("cache: cannot inspect existing artifact")
 	}
+	failures := []string{}
+	for _, origin := range origins {
+		if ctx.Err() != nil {
+			return r, ctx.Err()
+		}
+		r, err = fetchFrom(ctx, s, o, root, final, origin)
+		if err == nil {
+			return r, nil
+		}
+		failures = append(failures, origin+": "+err.Error())
+	}
+	return r, fmt.Errorf("fetch: all approved acquisition origins exhausted: %s; restore the exact pinned object in an approved store or retry connectivity; source repinning requires review", strings.Join(failures, "; "))
+}
+
+func approvedHTTPS(source string) bool {
+	u, err := url.Parse(source)
+	return err == nil && u.Scheme == "https" && u.Host != "" && u.User == nil && u.RawQuery == "" && u.Fragment == "" && u.Opaque == "" && u.RawPath == "" && !strings.ContainsAny(source, "\\\r\n\t")
+}
+
+func fetchFrom(ctx context.Context, s Spec, o FetchOptions, root *os.Root, final, origin string) (Result, error) {
+	r := initial(s)
+	var err error
 	nonce := make([]byte, 16)
 	if _, err = rand.Read(nonce); err != nil {
 		return r, errors.New("fetch: cannot allocate staging name")
@@ -71,7 +113,7 @@ func Fetch(ctx context.Context, s Spec, o FetchOptions) (Result, error) {
 	transport := &http.Transport{Proxy: nil, DialContext: (&net.Dialer{Timeout: 15 * time.Second}).DialContext, TLSClientConfig: &tls.Config{MinVersion: tls.VersionTLS12, RootCAs: o.RootCAs}, TLSHandshakeTimeout: 15 * time.Second, ResponseHeaderTimeout: 20 * time.Second, DisableCompression: true}
 	defer transport.CloseIdleConnections()
 	client := &http.Client{Transport: transport, CheckRedirect: func(*http.Request, []*http.Request) error { return errors.New("redirect rejected") }}
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, s.source, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, origin, nil)
 	if err != nil {
 		return r, errors.New("fetch: invalid request")
 	}
@@ -82,7 +124,7 @@ func Fetch(ctx context.Context, s Spec, o FetchOptions) (Result, error) {
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		return r, errors.New("fetch: HTTP status rejected")
+		return r, fmt.Errorf("fetch: HTTP status %d rejected", resp.StatusCode)
 	}
 	if resp.ContentLength > maxArchiveBytes {
 		return r, errors.New("fetch: download exceeds limit")
@@ -98,6 +140,7 @@ func Fetch(ctx context.Context, s Spec, o FetchOptions) (Result, error) {
 	if err != nil {
 		return r, err
 	}
+	r.Source = origin
 	r.Transport = Verified
 	r.Provenance = "approved pinned HTTPS origin and exact content identity; no detached signature claim"
 	if s.component != "asterisk" {

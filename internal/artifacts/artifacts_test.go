@@ -265,8 +265,8 @@ func TestFetch(t *testing.T) {
 	if e = os.WriteFile(filepath.Join(dir, "fixture.artifact"), []byte("corruption"), 0600); e != nil {
 		t.Fatal(e)
 	}
-	if _, e = Fetch(context.Background(), s, FetchOptions{dir, roots}); e == nil || hits != 1 {
-		t.Fatal("cache corruption accepted/downloaded over")
+	if _, e = Fetch(context.Background(), s, FetchOptions{dir, roots}); e != nil || hits != 2 {
+		t.Fatal("corrupt cache not replaced by verified acquisition", e)
 	}
 	if _, e = Fetch(context.Background(), s, FetchOptions{privateDir(t), nil}); e == nil {
 		t.Fatal("untrusted TLS accepted")

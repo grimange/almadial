@@ -23,12 +23,21 @@ const maxArchiveBytes int64 = 512 << 20
 // callers from substituting expected digests, approved origins or trust modes.
 type Spec struct {
 	component, version, source, sha256, format, root, tree, embeddedPath, embeddedSHA string
+	origins                                                                           []string
 	files                                                                             int
 }
 
 func (s Spec) Component() string { return s.component }
 func (s Spec) Source() string    { return s.source }
 func (m Manifest) Artifact(component string) (Spec, error) {
+	s, err := m.artifact(component)
+	if err == nil {
+		s.origins = append([]string{}, m.origins[component]...)
+	}
+	return s, err
+}
+
+func (m Manifest) artifact(component string) (Spec, error) {
 	if m.digest == "" {
 		return Spec{}, errors.New("manifest: uninitialized")
 	}

@@ -82,3 +82,21 @@ func TLSVhost(host string) string {
 	return "# AlmaDial S08: trusted local HTTPS\nListen 127.0.0.1:443 https\n" +
 		strings.Replace(strings.Replace(WebVhost(), "<VirtualHost 127.0.0.1:80>", "<VirtualHost 127.0.0.1:443>\n    SSLEngine on\n    SSLProtocol -all +TLSv1.2 +TLSv1.3\n    SSLCertificateFile "+tlsRoot+"/current/fullchain.pem\n    SSLCertificateKeyFile "+tlsRoot+"/current/key.pem", 1), "ServerName localhost", "ServerName "+host, 1)
 }
+
+// RemoteTLSVhost keeps the unencrypted application and Asterisk HTTP listeners
+// on loopback. Only the trusted Apache origin is exposed to the browser.
+func RemoteTLSVhost(host string) string {
+	v := strings.ReplaceAll(TLSVhost(host), "127.0.0.1:443", "0.0.0.0:443")
+	v = strings.ReplaceAll(v, "Require local", "Require all granted")
+	return strings.Replace(v, "</VirtualHost>", `    ProxyRequests Off
+    ProxyPreserveHost On
+    ProxyPass "/ws" "ws://127.0.0.1:8088/ws"
+    ProxyPassReverse "/ws" "ws://127.0.0.1:8088/ws"
+</VirtualHost>`, 1)
+}
+func tlsVhostFor(r TLSRequest) string {
+	if r.Mode == "remote" {
+		return RemoteTLSVhost(r.Hostname)
+	}
+	return TLSVhost(r.Hostname)
+}

@@ -23,7 +23,10 @@ var errPhone = errors.New("S10 phone contract failed; preserve existing identiti
 type PhoneRequest struct{ Identity, Hostname, WSSURL string }
 
 func phoneRequestValid(r PhoneRequest) bool {
-	return r == (PhoneRequest{phoneIdentity, "localhost", "wss://localhost:8089/ws"})
+	if r == (PhoneRequest{phoneIdentity, "localhost", "wss://localhost:8089/ws"}) {
+		return true
+	}
+	return r.Identity == phoneIdentity && tlsHostname.MatchString(r.Hostname) && strings.Contains(r.Hostname, ".") && !strings.Contains(r.Hostname, "..") && r.WSSURL == "wss://"+r.Hostname+"/ws"
 }
 
 // Verified bytes are retained so activation cannot substitute another archive.

@@ -20,7 +20,7 @@ MEDIA_ADDRESS = '10.160.90.233'
 if len(sys.argv) == 3:
     import ipaddress, re
     target = json.loads(sys.argv[2])
-    assert target['task'] == 'xu7wxvch94ii2iw38hpb8d58'
+    assert target['task'] == 'xu7wxvch94ii2iw38hpb8d58' or (target['task'] == 'it8aq4utqix0uz8sjgxrtssk' and target['vm'] == 'almadial-alm34-bootstrap-dev' and target['machine'] == 'd8e73788e2a9328a8655aa707be8816a')
     assert re.fullmatch(r'[a-f0-9]{32}', target['machine'])
     assert ipaddress.IPv4Address(target['address']).is_private
     MACHINE, MEDIA_ADDRESS = target['machine'], target['address']

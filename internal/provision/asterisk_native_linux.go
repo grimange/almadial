@@ -21,10 +21,11 @@ import (
 var asteriskAdapter string
 
 type AsteriskNative struct {
-	PhoneHandoff bool // Closed S10 PJSIP include, read-only inspection.
-	TLSHandoff   bool // S08 inspector alone accepts the closed local HTTPS wrapper.
-	Database     DatabaseNative
-	Source       AsteriskSource
+	PhoneHandoff     bool // Closed S10 PJSIP include, read-only inspection.
+	RemoteTLSHandoff bool // Set only after the remote S08 state has been verified.
+	TLSHandoff       bool // S08 inspector alone accepts the closed local HTTPS wrapper.
+	Database         DatabaseNative
+	Source           AsteriskSource
 }
 
 func asteriskCommand(exe string, args ...string) execution.Command {

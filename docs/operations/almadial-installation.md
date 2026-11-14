@@ -1,17 +1,21 @@
 # AlmaDial operator installation
 
-The currently qualified precompiled candidate targets fresh **AlmaLinux 10.2
-x86_64** single-server local/LAN installations. Qualification used four CPUs,
+The precompiled development candidate targets fresh **AlmaLinux 10.2
+x86_64** single-server installations. Remote HTTPS/WSS and synthetic two-way
+media/recording have passed controlled off-host testing. **Normal remote agent
+operation remains blocked:** the installed updater and listener are deferred,
+and no ordinary campaign is configured. This is an implementation gap that the
+operator cannot resolve through this guide. Remote public-host acceptance has
+not run; controlled testing and isolated qualification are separate results. Qualification used four CPUs,
 8 GiB RAM and 80 GiB disk; these are a starting recommendation, not production
 sizing or a tested minimum. Obtain owner authorization and a recovery snapshot.
 Keep SELinux, firewalld, certificate validation and signed repositories enabled.
 
-Public GitHub bootstrap delivery is not available at the verified published
-commit. The release owner supplies the reviewed bootstrap and approved CLI URL
-through an authorized distribution channel. The portable script in this source
-tree is not automatically deployed to an existing private server by a local edit
-or commit. See the [maintainer distribution record](../development/private-distribution-lab.md)
-for the current candidate's location, identity and deployment limitations.
+The [published bootstrap](https://raw.githubusercontent.com/grimange/almadial/f885482478e2fa13fa95a1211c0ab688363b617d/scripts/bootstrap/install.sh)
+was retrieved and verified against that commit. It pins an earlier laboratory
+binary and cannot select a new remote-profile binary by changing its URL.
+Obtain the release owner’s reviewed rendered script and matching CLI URL for
+this implementation. A public remote-profile release has not been published.
 
 ## Distribution configuration
 
@@ -70,52 +74,53 @@ or replacing `/usr/local/sbin/almadial`; a failed download/checksum/launch leave
 the existing executable intact. A missing URL produces an actionable error.
 An approved mirror changes location only, never the pinned binary identity.
 
-DNS, synchronized time, approved signed package repositories and authorized
-source origins must be reachable. The CLI separately embeds its reviewed
-source-store policy: changing `ALMADIAL_BINARY_URL` does not relocate that store.
-For the existing candidate, its private source service must remain reachable
-unless the host already has all verified cached objects. See
-[artifact retention](almadial-private-artifact-retention.md) for release-owner
-policy changes. Operators do not repair unavailable sources by changing hashes.
+DNS, synchronized time, signed package repositories and approved HTTPS sources
+must be reachable. Set `ALMADIAL_ARTIFACT_STORE` to the approved `/sources` base
+before `almadial install`, or enter it at the prompt. The CLI derives
+`/sha256/DIGEST/COMPONENT.artifact` locations while retaining every manifest hash.
+OS trust must include that source service’s CA. This is independent of the
+bootstrap binary URL. Cached verified archives work offline.
 
 ## Guided configuration and completion
 
-The installer asks for the snapshot and authorization references, private IPv4
-address/interface, and TLS choice. The supported hostname is `localhost` through
-an SSH tunnel. Choose `lab` to generate a private application CA and localhost
-certificate, or `provided` to give paths to a valid localhost certificate,
-matching private key and trusted CA. Public DNS and ACME are unnecessary. This
-application CA is separate from the bootstrap endpoint CA. Credentials are
-created in protected server files; no passwords belong in logs or evidence.
+Choose `remote` (the default) for direct browser access, or `lab` to retain
+loopback isolation. Supply snapshot and authorization references for your
+authorized disposable target. Remote inputs are the FQDN, directly attached
+IPv4/interface, matching certificate, private key and CA paths, and RTP range
+(default 10000–10019 UDP). The server must resolve the hostname to that address;
+browsers must resolve it too and trust its certificate. The initial profile does
+not support a separate NAT/public address. Certificate files must be root-owned,
+private regular files; keep keys on the server. Lab TLS can be generated.
 
 The CLI verifies pinned archives, displays the installation summary and plan
 SHA-256, and asks once for `yes`. It executes that exact plan and reports progress
 and diagnostics. It never asks you to copy the digest into another command.
 
-After installation, open HTTPS/WSS TCP tunnels from your workstation:
+For remote access, open the configured hostname directly:
+`https://YOUR_FQDN/vicidial/admin.php`, `/agc/vicidial.php` and
+`/almadial-phone/`. The phone signals through `wss://YOUR_FQDN/ws`; no SSH tunnel
+is needed. HTTPS 443 and the exact configured UDP media range must be reachable
+from the browser. No database or internal management ports need external access.
+See [deployment profiles](deployment-profiles.md) for lab access and limitations.
 
-```bash
-ssh -N -L 8443:127.0.0.1:443 -L 8089:127.0.0.1:8089 root@SERVER_IP
-```
-
-Import the **public application CA** into browser trust using the approved
-certificate procedure. Generated lab TLS stores it at
-`/var/lib/almadial-inputs/tls/trust.pem`; never copy `key.pem`. Open
-`https://localhost:8443/vicidial/admin.php`, `/agc/vicidial.php` or
-`/almadial-phone/`. Administrator `6666` uses `/etc/almadial/secrets/admin`;
-synthetic phone `alm_s10_9061` uses `/etc/almadial/secrets/phone-s10`. Read these
-only in a private operator session. See the [operator handover](almadial-operator-handover.md)
-for application use and recording recovery.
+Administrator `6666` uses `/etc/almadial/secrets/admin`; the synthetic phone
+`alm_s10_9061` uses `/etc/almadial/secrets/phone-s10`. Read these only in a private
+operator session. The synthetic phone is not a campaign agent. The current
+remote candidate's deferred agent services are a P0 blocker; Doctor reports them
+as failures. Preserve the journals and request a corrected installer rather
+than manually enabling lab-only units or expanding AMI permissions. Never export credentials, private keys or recordings
+into public support reports.
 
 Verify the completion summary and run:
 
 ```bash
-almadial status --ca-file /etc/pki/tls/almadial-s08/current/trust.pem --manifest /var/lib/almadial-inputs/stack.lock.yaml
-almadial doctor --ca-file /etc/pki/tls/almadial-s08/current/trust.pem --manifest /var/lib/almadial-inputs/stack.lock.yaml
+almadial status --plan /var/lib/almadial-inputs/plan.json --ca-file /etc/pki/tls/almadial-s08/current/trust.pem --manifest /var/lib/almadial-inputs/stack.lock.yaml
+almadial doctor --plan /var/lib/almadial-inputs/plan.json --ca-file /etc/pki/tls/almadial-s08/current/trust.pem --manifest /var/lib/almadial-inputs/stack.lock.yaml
 ```
 
 Short-lived lab certificates can produce a documented warning (exit 10).
 Required service, schema, HTTPS and security failures need investigation.
+Remote diagnostics use `--plan` to select the configured hostname and policy.
 SSH TCP tunnels do not carry WebRTC UDP media. Registration alone does not prove
 two-way audio or recording; use the separately approved functional media path
 and qualification procedure in the operator handover.

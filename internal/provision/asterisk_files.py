@@ -140,6 +140,9 @@ def config_files():
         path='/etc/asterisk/pjsip.conf'
         variant=out[path]+b'#include "almadial-s10-phone.conf"\n'
         if read(path,0o640,gid)==variant: out[path]=variant
+        path='/etc/asterisk/extensions.conf'
+        variant=out[path]+b'#include "almadial-s10-remote.conf"\n'
+        if read(path,0o640,gid)==variant: out[path]=variant
     return out, gid
 
 def configuration():

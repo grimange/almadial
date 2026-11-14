@@ -100,8 +100,16 @@ func PrepareInstall(r InstallRequest, initial Inputs, m artifacts.Manifest, sour
 	if hash(r.Config) != hash(initial.Config) || hash(r.Requirements) != hash(initial.Requirements) || initial.Transaction != nil || initial.PrepareRepositoryTrust || !networkRequestValid(r.Network) || !phoneRequestValid(r.Phone) || !tlsRequestValid(r.TLS) || !shaPattern.MatchString(cert.LeafSHA256) {
 		return InstallPlan{}, errInstall
 	}
+	if r.Network.Mode == "remote" {
+		c := config.Defaults(r.Config)
+		if r.TLS.Mode != "remote" || r.TLS.Hostname != c.Network.Hostname || r.Phone.Hostname != c.Network.Hostname || r.Phone.WSSURL != "wss://"+c.Network.Hostname+"/ws" || c.Network.BindAddress.String() != r.Network.ManagementAddress || c.Network.AdvertiseAddress != c.Network.BindAddress || int(r.Network.RTPStart) != *c.RTP.Start || int(r.Network.RTPEnd) != *c.RTP.End {
+			return InstallPlan{}, errInstall
+		}
+	} else if r.TLS.Mode != "provided" || r.TLS.Hostname != "localhost" || r.Phone.Hostname != "localhost" {
+		return InstallPlan{}, errInstall
+	}
 	a := r.Authorization
-	if a.TaskID != "xu7wxvch94ii2iw38hpb8d58" || a.Host != initial.Inventory.Host || !shaPattern.MatchString(a.SnapshotReference) || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !a.CandidateAcknowledged || !a.ManagementRecoveryVerified {
+	if (a.TaskID != "xu7wxvch94ii2iw38hpb8d58" && a.TaskID != "it8aq4utqix0uz8sjgxrtssk" && a.TaskID != "a1doi4qsyn1lspqtydw84smh") || a.Host != initial.Inventory.Host || !shaPattern.MatchString(a.SnapshotReference) || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !a.CandidateAcknowledged || !a.ManagementRecoveryVerified {
 		return InstallPlan{}, errInstall
 	}
 	if _, e := initial.Prepare(m); e != nil { // Resolution requires trust; the clean host may still need the accepted key-import action.

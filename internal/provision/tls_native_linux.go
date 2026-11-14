@@ -89,7 +89,7 @@ func (n TLSNative) payload(expected string) ([]byte, TLSCertificate, error) {
 	if n.Certificate.LeafSHA256 != "" && n.Certificate != c {
 		return nil, c, errTLS
 	}
-	p := map[string]any{"Hostname": n.Request.Hostname, "Chain": chain, "Key": key, "Trust": trust, "Leaf": c.LeafSHA256, "Generation": c.Digest(), "CertificateDigest": c.Digest(), "Base": tlsAsteriskBase, "HTTP": tlsAsteriskHTTP, "Loader": tlsLoader, "Vhost": TLSVhost(n.Request.Hostname), "ExpectedCurrent": expected}
+	p := map[string]any{"Hostname": n.Request.Hostname, "Chain": chain, "Key": key, "Trust": trust, "Leaf": c.LeafSHA256, "Generation": c.Digest(), "CertificateDigest": c.Digest(), "Base": tlsAsteriskBase, "HTTP": tlsAsteriskHTTP, "Loader": tlsLoader, "Vhost": tlsVhostFor(n.Request), "Remote": n.Request.Mode == "remote", "ExpectedCurrent": expected}
 	b, e := json.Marshal(p)
 	return b, c, e
 }
@@ -123,6 +123,7 @@ func (n TLSNative) InspectTLS(ctx context.Context) (TLSSnapshot, error) {
 	}
 	n.Web.TLSHandoff = true
 	n.Web.Runtime.Application.Asterisk.TLSHandoff = true
+	n.Web.Runtime.Application.Asterisk.RemoteTLSHandoff = n.Request.Mode == "remote"
 	parent, e := n.Web.InspectWeb(ctx)
 	if e != nil {
 		return s, fmt.Errorf("S08 S07 prerequisite: %w", e)
