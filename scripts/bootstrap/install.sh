@@ -2,9 +2,9 @@
 # Rendered by prepare_release.py: inspect this script before running it.
 set -euo pipefail
 umask 077
-readonly RELEASE_VERSION='alm46-native-rc1'
-readonly DEFAULT_BINARY_URL=''
-readonly BINARY_SHA256='a58235bdc435cbd48c43e444aead04f77415af682743055b550535efdca62cc3'
+readonly RELEASE_VERSION='alm46-internet-rc1'
+readonly DEFAULT_BINARY_URL='https://github.com/grimange/almadial/releases/download/alm46-internet-rc1/almadial-linux-amd64'
+readonly BINARY_SHA256='618f4b0441cde7f17d1a35382b581da5669e0efa67b04f28175bc0cb38c8e6b5'
 # A mirror selects a location, never a different release or trusted checksum.
 readonly BINARY_URL="${ALMADIAL_BINARY_URL:-$DEFAULT_BINARY_URL}"
 fail() { printf 'AlmaDial bootstrap: %s\n' "$*" >&2; exit 1; }

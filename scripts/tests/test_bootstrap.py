@@ -15,8 +15,8 @@ import unittest
 from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
-VERSION = 'alm46-native-rc1'
-DIGEST = 'a58235bdc435cbd48c43e444aead04f77415af682743055b550535efdca62cc3'
+VERSION = 'alm46-internet-rc1'
+DIGEST = '618f4b0441cde7f17d1a35382b581da5669e0efa67b04f28175bc0cb38c8e6b5'
 
 
 @contextmanager
@@ -41,7 +41,7 @@ def https_origin(certificate, key, payload, status=200, redirect=None):
         def handle(self):
             try:
                 super().handle()
-            except ConnectionResetError:
+            except (ConnectionResetError, BrokenPipeError):
                 pass  # Expected when curl rejects this fixture's untrusted CA.
 
         def log_message(self, *_args):
@@ -251,7 +251,7 @@ class BootstrapTests(unittest.TestCase):
 
     def test_operator_script_matches_approved_release(self):
         template = (ROOT/'scripts/bootstrap/install.sh.in').read_text()
-        for key, value in {'VERSION': VERSION, 'BINARY_URL': '', 'BINARY_SHA256': DIGEST}.items():
+        for key, value in {'VERSION': VERSION, 'BINARY_URL': 'https://github.com/grimange/almadial/releases/download/'+VERSION+'/almadial-linux-amd64', 'BINARY_SHA256': DIGEST}.items():
             template = template.replace('@'+key+'@', value)
         self.assertEqual(template, (ROOT/'scripts/bootstrap/install.sh').read_text())
         self.assertNotIn('10.160.90.1', template)

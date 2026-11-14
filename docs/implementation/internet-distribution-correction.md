@@ -107,3 +107,22 @@ Evidence is stored under
 ledger. It includes upstream HTTP observations, per-file SVN equivalence, actual
 Go acquisition results, regression logs, build identity and the unpublished release
 packet. Source archives remain private evidence, not Git content.
+
+## Locally prepared candidate
+
+Implementation commit: `e543c56821e306d348fd5bc9930bf563cd403d0e`.
+Two clean `git archive` exports built with Go 1.27.3, CGO disabled, linux/amd64
+v1, trimpath and offline module resolution produced identical binaries:
+
+- Version: `alm46-internet-rc1`.
+- Binary SHA-256: `618f4b0441cde7f17d1a35382b581da5669e0efa67b04f28175bc0cb38c8e6b5`.
+- The rendered bootstrap selects the versioned GitHub Releases asset by default.
+  This is prepared release configuration, **not an assertion that it exists online**.
+- Full vet, tests, race tests, module verification/tidy, scaffold validation, Python
+  tests and Bash syntax checks passed. Focused release tests verify safe HTTPS
+  redirects, checksum/TLS rejection, signed SVN utility preparation and alternate
+  endpoints. The native runtime and installed schema were not changed.
+
+The scoped packaging follow-up only pins these committed build bytes and records
+this evidence. Publishing the first-party assets/tag and performing the unavailable
+external-host gate remain outstanding. No public release command has been run.
