@@ -86,7 +86,7 @@ class BootstrapTests(unittest.TestCase):
         cls.tls.cleanup()
 
     def run_case(self, *, corrupt=False, trusted=True, configured=True,
-                 os_id='almalinux', version='10.2', arch='x86_64', status=200,
+                 os_id='almalinux', version='10.3', arch='x86_64', status=200,
                  default=False, url_override=None, digest_override=False, launch_failure=False,
                  redirect=None, svn_present=True, package_failure=False):
         with tempfile.TemporaryDirectory() as d:
@@ -241,7 +241,8 @@ class BootstrapTests(unittest.TestCase):
                 self.assertEqual(requests, 1)
 
     def test_unsupported_os_and_architecture(self):
-        for kwargs in ({'os_id': 'ubuntu'}, {'version': '10.1'}, {'arch': 'aarch64'}):
+        for kwargs in ({'os_id': 'ubuntu'}, {'version': '10.1'}, {'version': '10.2'},
+                       {'version': '10.4'}, {'arch': 'aarch64'}):
             with self.subTest(kwargs=kwargs):
                 run, executed, installed, requests, _ = self.run_case(**kwargs)
                 self.assertNotEqual(run.returncode, 0)
@@ -250,11 +251,15 @@ class BootstrapTests(unittest.TestCase):
                 self.assertEqual(requests, 0)
 
     def test_operator_script_matches_approved_release(self):
-        template = (ROOT/'scripts/bootstrap/install.sh.in').read_text()
-        for key, value in {'VERSION': VERSION, 'BINARY_URL': 'https://github.com/grimange/almadial/releases/download/'+VERSION+'/almadial-linux-amd64', 'BINARY_SHA256': DIGEST}.items():
-            template = template.replace('@'+key+'@', value)
-        self.assertEqual(template, (ROOT/'scripts/bootstrap/install.sh').read_text())
-        self.assertNotIn('10.160.90.1', template)
+        # The published ALM-46 bootstrap remains byte-for-byte historical even
+        # when the template for the next unpublished candidate changes.
+        published = (ROOT/'scripts/bootstrap/install.sh').read_bytes()
+        self.assertEqual(hashlib.sha256(published).hexdigest(),
+                         '26a99a84302a498afab5bd6a1d4dfd27c7bc10aa87b4180e99ac710bf0dabba4')
+        script = published.decode()
+        self.assertIn("readonly RELEASE_VERSION='"+VERSION+"'", script)
+        self.assertIn("readonly BINARY_SHA256='"+DIGEST+"'", script)
+        self.assertNotIn('10.160.90.1', script)
 
     def test_release_generator_optional_origin_keeps_content_identity(self):
         spec = importlib.util.spec_from_file_location('prepare_release', ROOT/'scripts/bootstrap/prepare_release.py')

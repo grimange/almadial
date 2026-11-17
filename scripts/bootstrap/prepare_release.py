@@ -63,6 +63,15 @@ def main():
                 'publication_status':'NOT_PUBLISHED',
                 'channel':'github-release' if a.github_repository else 'custom',
                 'distribution':'AlmaDial CLI only; no upstream application archives'}
+    policy = json.loads((ROOT/'internal/provision/packages-alma103.json').read_text())
+    # Match Go's compact struct encoding, including declaration field order.
+    policy['repositories'] = dict(sorted(policy['repositories'].items()))
+    policy_digest = hashlib.sha256(json.dumps(policy, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
+    manifest['supported_fresh_os'] = ['almalinux:10.3:x86_64']
+    manifest['package_policy'] = {'version':policy['version'], 'sha256':policy_digest}
+    manifest['historical_resume_os'] = ['almalinux:10.2:x86_64']
+    shutil.copyfile(ROOT/'internal/provision/packages-alma103.json', a.output/'package-policy.json')
+    shutil.copyfile(ROOT/'manifests/stack-almalinux-10.3.lock.yaml', a.output/'stack.lock.yaml')
     (a.output / 'release.json').write_text(json.dumps(manifest,indent=2)+'\n')
     shutil.copyfile(ROOT/'LICENSE', a.output/'LICENSE')
     # Preserve notices for the Go dependency actually linked into this CLI.

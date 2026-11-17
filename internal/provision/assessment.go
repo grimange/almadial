@@ -80,7 +80,7 @@ func (s Snapshot) ValidateTrust() error {
 // The key-preparation action alone may start without the pinned EPEL key.
 // All other host/repository requirements remain identical.
 func (s Snapshot) validateTrust(requireEPEL bool) error {
-	if !shaPattern.MatchString(s.Host) || s.OS != "almalinux" || s.Release != "10.2" || s.Arch != "x86_64" || !shaPattern.MatchString(s.HistorySHA256) || !s.HistoryComplete || s.AlmaKeyFileSHA256 != almaKeySHA || !contains(s.KeyHashes, almaKeySHA) || (requireEPEL && !contains(s.KeyHashes, epelKeySHA)) {
+	if !shaPattern.MatchString(s.Host) || s.OS != "almalinux" || (s.Release != "10.2" && s.Release != "10.3") || s.Arch != "x86_64" || !shaPattern.MatchString(s.HistorySHA256) || !s.HistoryComplete || s.AlmaKeyFileSHA256 != almaKeySHA || !contains(s.KeyHashes, almaKeySHA) || (requireEPEL && !contains(s.KeyHashes, epelKeySHA)) {
 		return errPolicy
 	}
 	seen := map[string]bool{}
@@ -165,7 +165,13 @@ type Assessment struct {
 func Assess(s Snapshot, candidates []Package, resolved bool) []Assessment {
 	out := []Assessment{}
 	trusted := s.ValidateTrust() == nil
-	for _, p := range Packages() {
+	packages := packagesFor(s.Release)
+	if packages == nil {
+		// Retain the historical diagnostic shape for incomplete inventories;
+		// failed trust keeps every entry NOT_VERIFIED and cannot authorize RPMs.
+		packages = Packages()
+	}
+	for _, p := range packages {
 		a := Assessment{p, NotVerified}
 		if trusted {
 			installed := false
@@ -217,7 +223,7 @@ func normalize(t Transaction) Transaction {
 }
 func (t Transaction) Digest() string { return hash(normalize(t)) }
 func (t Transaction) Validate(s Snapshot) error {
-	if s.ValidateTrust() != nil || t.BeforeSHA256 != s.Digest() || len(t.Remove) > len(Upgrades()) || len(t.Install) > 2048 {
+	if s.ValidateTrust() != nil || t.BeforeSHA256 != s.Digest() || len(t.Remove) > len(upgradesFor(s.Release)) || len(t.Install) > 2048 {
 		return errPolicy
 	}
 	removed := map[string]bool{}
@@ -226,7 +232,7 @@ func (t Transaction) Validate(s Snapshot) error {
 			return errPolicy
 		}
 		approved := false
-		for _, u := range Upgrades() {
+		for _, u := range upgradesFor(s.Release) {
 			if old != u.Before {
 				continue
 			}
@@ -257,7 +263,10 @@ func (t Transaction) Validate(s Snapshot) error {
 			return errPolicy
 		}
 		seen[c.Name] = true
-		if pinned := PinnedRPMHash(c.Name); pinned != "" && c.SHA256 != pinned {
+		if !approvedPayload(s.Release, c) {
+			return errPolicy
+		}
+		if pinned := PinnedRPMHash(c.Name); s.Release == "10.2" && pinned != "" && c.SHA256 != pinned {
 			return errPolicy
 		}
 		for _, i := range s.Installed {
@@ -278,7 +287,7 @@ func (t Transaction) Validate(s Snapshot) error {
 		} // No unpaired erasure, reinstall, downgrade or unrelated upgrade.
 		if c.Repository == "epel-almadial" {
 			qualified := false
-			for _, p := range Packages() {
+			for _, p := range packagesFor(s.Release) {
 				if p == c.Package {
 					qualified = true
 				}

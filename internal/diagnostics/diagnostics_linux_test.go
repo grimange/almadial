@@ -50,7 +50,9 @@ func (f *fakeRunner) Run(_ context.Context, c execution.Command) (execution.Resu
 	case "getenforce":
 		s = "Enforcing"
 	case "rpm":
-		s = strings.Repeat("fixture\n", 731)
+		for _, p := range provision.RequiredPackages("10.2") {
+			s += p.Name + "|" + p.EVR + "|" + p.Arch + "\n"
+		}
 	case "asterisk":
 		switch args {
 		case "-rx core show version":
@@ -106,6 +108,48 @@ func fixture(f *fakeRunner) Collector {
 		}
 		return nil, os.ErrNotExist
 	}}
+}
+
+func TestReleaseSpecificPackageInventory(t *testing.T) {
+	for _, tc := range []struct {
+		name, release, state string
+		omit                 bool
+		wrong                bool
+	}{
+		{"current-with-extra-packages", "10.3", "OK", false, false},
+		{"missing-required", "10.3", "FAIL", true, false},
+		{"changed-required-version", "10.3", "FAIL", false, true},
+		{"unsupported-release", "10.4", "UNKNOWN", false, false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			f := &fakeRunner{mutate: func(c execution.Command, r *execution.Result) {
+				if filepath.Base(c.Executable) != "rpm" {
+					return
+				}
+				r.Stdout = "operator-tool|0:1-1|x86_64\n"
+				for i, p := range provision.RequiredPackages(tc.release) {
+					if i == 0 && tc.omit {
+						continue
+					}
+					if i == 0 && tc.wrong {
+						p.EVR = "0:999-1"
+					}
+					r.Stdout += p.Name + "|" + p.EVR + "|" + p.Arch + "\n"
+				}
+			}}
+			c := fixture(f)
+			read := c.ReadFile
+			c.ReadFile = func(p string, limit int) ([]byte, error) {
+				if p == "/usr/lib/os-release" {
+					return []byte("ID=\"almalinux\"\nVERSION_ID=\"" + tc.release + "\"\n"), nil
+				}
+				return read(p, limit)
+			}
+			if got := check(t, c.Collect(context.Background(), Options{}), "packages.inventory").State; got != tc.state {
+				t.Fatalf("inventory state %s; want %s", got, tc.state)
+			}
+		})
+	}
 }
 func check(t *testing.T, r Report, id string) Check {
 	t.Helper()

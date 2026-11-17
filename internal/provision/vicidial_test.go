@@ -56,6 +56,28 @@ func TestVICIdialDestinationManifest(t *testing.T) {
 	}
 }
 
+func TestVICIdialRetainedRepresentationBinding(t *testing.T) {
+	s := vicidialFixture()
+	before := s.Digest()
+	s.archive = []byte("synthetic alternative representation")
+	s.archiveSHA = rawSHA(s.archive)
+	if !s.retainedArchiveVerified() || s.Digest() != before {
+		t.Fatal("verified representation changed canonical source identity")
+	}
+	c := s.archiveInstallCommand()
+	if c.Args[2] == vicidialFilesAdapter || !strings.Contains(c.Args[2], s.archiveSHA) {
+		t.Fatal("installation did not bind verified representation")
+	}
+	s.archive[0] ^= 1
+	if s.retainedArchiveVerified() || s.archiveInstallCommand().Args[2] != vicidialFilesAdapter {
+		t.Fatal("changed retained archive accepted")
+	}
+	s.archiveSHA = databaseArchiveSHA
+	if s.archiveInstallCommand().Args[2] != vicidialFilesAdapter {
+		t.Fatal("historical adapter changed")
+	}
+}
+
 func validVICIdialObservations(f []VICIdialFile) []VICIdialFileObservation {
 	o := []VICIdialFileObservation{}
 	for _, v := range f {

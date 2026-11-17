@@ -39,7 +39,7 @@ func TestAssessment(t *testing.T) {
 			s.Addresses = []netip.Addr{c.Network.BindAddress}
 		}, false, ""},
 		{"distribution", func(s *Snapshot, c *config.Config, r *Requirements) { s.OS = "other" }, true, "os"},
-		{"unqualified-minor", func(s *Snapshot, c *config.Config, r *Requirements) { s.Release = "10.3" }, true, "os"},
+		{"unqualified-minor", func(s *Snapshot, c *config.Config, r *Requirements) { s.Release = "10.4" }, true, "os"},
 		{"architecture", func(s *Snapshot, c *config.Config, r *Requirements) { s.Architecture = "arm64" }, true, "architecture"},
 		{"CPU", func(s *Snapshot, c *config.Config, r *Requirements) { s.CPUFlags = nil }, true, "cpu-budget"},
 		{"CPU-count", func(s *Snapshot, c *config.Config, r *Requirements) { s.CPUs = 0 }, true, "cpu-budget"},

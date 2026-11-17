@@ -51,3 +51,21 @@ var approvedLeaves = map[string]leaf{
 	"jansson.nevra":                  {"jansson-devel-0:2.14-3.el10.x86_64", "str"},
 	"jansson.repository":             {"crb", "str"},
 }
+
+// The 10.3 distribution refresh retains the accepted application-source and
+// server package identities; only build/development dependencies changed.
+func manifestLeaves(release string) map[string]leaf {
+	if release == "10.2" {
+		return approvedLeaves
+	}
+	if release != "10.3" {
+		return nil
+	}
+	out := make(map[string]leaf, len(approvedLeaves))
+	for k, v := range approvedLeaves {
+		out[k] = v
+	}
+	out["os.release"] = leaf{"10.3", "float"}
+	out["os.image_sha256"] = leaf{"845d3a4e41fde973bdbf9763b62a88538c1a1fadc2332a89f6ea01e2c17c78ee", "str"}
+	return out
+}

@@ -5,7 +5,7 @@ single-server VICIdial system on supported AlmaLinux hosts. It provisions and
 checks Asterisk, MariaDB, Apache/PHP, TLS, WebRTC and supporting services.
 VICIdial remains the upstream dialer application; AlmaDial manages its installation.
 
-AlmaDial targets **AlmaLinux 10.2 on x86_64** with two deployment profiles:
+AlmaDial targets **AlmaLinux 10.3 on x86_64** with two deployment profiles:
 remote single-server HTTPS access and an isolated laboratory profile.
 The remote profile has passed independent QA on a controlled off-host network,
 including ordinary agent/campaign operation, bidirectional browser audio,
@@ -15,15 +15,12 @@ independent internet-host installation and human operator acceptance remain pend
 
 ## Quick installation
 
-The standard-installer correction is prepared as **`alm34-standard-rc1`**. It is
-not published by this implementation task. The earlier `alm46-internet-rc1`
-prerelease remains unchanged and does not contain this correction. Use the version
-approved and published by the release owner; prereleases are not stable production
-releases. Developer clean-host qualification of this correction is currently
-**BLOCKED**: the configured official repositories no longer expose six accepted
-10.2 RPM pins and offer 10.3 replacements. No RPM/source-policy substitution is
-authorized by this correction; do not treat this candidate as ready for operator
-retest. On a fresh supported host, after qualification and publication:
+The corrected current-platform candidate is **`alm34-alma103-rc1`**, prepared
+locally after developer qualification; publication and independent operator
+acceptance remain separate gates. The published `alm46-internet-rc1` assets and
+historical AlmaLinux 10.2 evidence remain unchanged. Use the version approved and
+published by the release owner. Prereleases are not stable production releases.
+On a fresh supported host, after qualification and publication:
 
 ```bash
 ssh root@YOUR_SERVER
@@ -65,7 +62,7 @@ The installer provides these capabilities, subject to the deployment limitations
 
 | Item | Requirement or qualified baseline |
 |---|---|
-| OS and CPU | Fresh AlmaLinux **10.2**, **x86_64 / Linux amd64** |
+| OS and CPU | Fresh AlmaLinux **10.3**, **x86_64 / Linux amd64** |
 | Enforced resources | 4 CPUs; 7 GiB total and 4 GiB available RAM; 60 GiB free on installation filesystems; recording filesystem reserve of 1 GiB and 10,000 free inodes |
 | Qualified baseline | **4 vCPUs, 8 GiB RAM, 80 GiB disk**; recommended starting point, not production capacity sizing |
 | Access | Root or an authorized account with `sudo`, working SSH; an appropriate backup or recovery method is recommended |
@@ -80,6 +77,12 @@ attached IPv4 address and a matching trusted certificate. Supply that certificat
 AlmaDial does not provision ACME. Other operating systems, carrier/PSTN, NAT
 traversal and production capacity are not qualified.
 
+The current package policy explicitly supports AlmaLinux 10.3; future minor
+releases require separate qualification. Historical saved 10.2 plans retain their
+original interpretation and never select the 10.3 policy during resume. See the
+[package policy](docs/compatibility/alm34-release-package-policy.md) for repository
+provenance, drift handling and historical Vault limitations.
+
 The standard candidate's source policy uses public upstreams. No private store
 is required. `ALMADIAL_ARTIFACT_STORE` optionally selects an authorized HTTPS
 mirror without changing source versions or integrity checks. Resume retains the
@@ -93,7 +96,9 @@ the FQDN, directly attached IPv4/interface, matching certificate/key/CA paths,
 and the UDP media range. DNS, trust and host readiness are checked before
 provisioning. Credentials are generated into protected server files.
 
-The installer verifies pinned archives, displays its plan and SHA-256, then asks
+The installer verifies pinned archives and resolves/downloads/signature-checks the
+complete release-specific RPM transaction with DNF, including an RPM transaction
+test. It binds exact package identities and payload hashes to the plan, then asks
 once for `yes`. It executes that exact plan and reports progress and completion
 checks. See the [installation guide](docs/operations/almadial-installation.md)
 for prerequisites and recovery.

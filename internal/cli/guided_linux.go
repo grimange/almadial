@@ -16,6 +16,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -120,6 +121,9 @@ func approveInstall(p *operatorui.Prompts, out io.Writer, digest string) error {
 // overrides, not mandatory operator inputs. The caller preserves an existing
 // saved policy before considering this function, so retries never change origins.
 func guidedOrigins(m artifacts.Manifest, store string) ([]byte, error) {
+	if m.Release() == "10.3" {
+		return artifacts.AcquisitionPolicy(m, store)
+	}
 	if store != "" {
 		return artifacts.AcquisitionPolicy(m, store)
 	}
@@ -141,16 +145,26 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 	if os.Geteuid() != 0 {
 		return fail(errors.New("guided installation requires local root on the authorized target"))
 	}
-	fmt.Fprintln(out, "AlmaDial: single-server AlmaLinux 10.2 installation. Recommended qualified baseline: 4 CPUs, 8 GiB RAM, 80 GiB disk. Enforced fresh-install thresholds: 4 CPUs, 7 GiB total RAM, 4 GiB available RAM, 60 GiB free on installation filesystems, plus 1 GiB recording reserve and 10,000 recording inodes. Choose remote HTTPS access or the isolated laboratory profile. Carrier configuration is outside this installer.")
+	fmt.Fprintln(out, "AlmaDial: single-server AlmaLinux 10.3 installation (historical saved 10.2 plans retain their original policy). Recommended qualified baseline: 4 CPUs, 8 GiB RAM, 80 GiB disk. Enforced fresh-install thresholds: 4 CPUs, 7 GiB total RAM, 4 GiB available RAM, 60 GiB free on installation filesystems, plus 1 GiB recording reserve and 10,000 recording inodes. Choose remote HTTPS access or the isolated laboratory profile. Carrier configuration is outside this installer.")
 	prompts := operatorui.NewPrompts(ctx, in, out)
 	if err := guidedDirectory(guidedRoot); err != nil {
 		return fail(err)
 	}
 	manifestPath := filepath.Join(guidedRoot, "stack.lock.yaml")
-	if err := guidedSave(manifestPath, releaseassets.Manifest); err != nil {
+	manifestBytes, readErr := guidedRead(manifestPath)
+	if os.IsNotExist(readErr) {
+		hostOS, e := os.ReadFile("/etc/os-release")
+		if e != nil || !strings.Contains(string(hostOS), `VERSION_ID="10.3"`) {
+			return fail(errors.New("fresh standard installations require AlmaLinux 10.3; use the original saved plan for historical 10.2 resume"))
+		}
+		manifestBytes = releaseassets.Manifest103
+	} else if readErr != nil {
+		return fail(readErr)
+	}
+	if err := guidedSave(manifestPath, manifestBytes); err != nil {
 		return fail(err)
 	}
-	m, err := artifacts.Load(bytes.NewReader(releaseassets.Manifest))
+	m, err := artifacts.Load(bytes.NewReader(manifestBytes))
 	if err != nil {
 		return fail(err)
 	}
@@ -389,6 +403,15 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 	cert, err := (provision.TLSNative{Request: r.TLS}).Material()
 	if err != nil {
 		return fail(err)
+	}
+	if inventory.Release == "10.3" {
+		fmt.Fprintln(out, "Resolving the complete signed AlmaLinux 10.3 RPM transaction before plan approval; metadata and package caches may be written.")
+		selection, e := n.ResolveInstallPackages(ctx, inventory)
+		if e != nil {
+			return fail(e)
+		}
+		r.Packages = &selection
+		fmt.Fprintf(out, "Package policy: %s; transaction: %s; %d exact payloads.\n", selection.PolicySHA256, selection.Transaction.Digest(), len(selection.Transaction.Install))
 	}
 	p, err := provision.PrepareInstall(r, provision.Inputs{Config: c, Requirements: r.Requirements, Preflight: snapshotHost, Inventory: inventory}, m, sources, cert)
 	if err != nil {

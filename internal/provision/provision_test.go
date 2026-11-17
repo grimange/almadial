@@ -140,7 +140,7 @@ func TestRepositoryTrust(t *testing.T) {
 		edit func(*Snapshot)
 	}{
 		{"wrong OS", func(s *Snapshot) { s.OS = "centos" }},
-		{"wrong release", func(s *Snapshot) { s.Release = "10.3" }},
+		{"wrong release", func(s *Snapshot) { s.Release = "10.4" }},
 		{"wrong architecture", func(s *Snapshot) { s.Arch = "aarch64" }},
 		{"unknown host", func(s *Snapshot) { s.Host = "" }},
 		{"foreign enabled repository", func(s *Snapshot) {

@@ -1,0 +1,2744 @@
+{
+  "version": "alm34-almalinux-10.3-v1",
+  "release": "10.3",
+  "image_sha256": "845d3a4e41fde973bdbf9763b62a88538c1a1fadc2332a89f6ea01e2c17c78ee",
+  "repositories": {
+    "baseos": "https://repo.almalinux.org/almalinux/10.3/BaseOS/x86_64/os/",
+    "appstream": "https://repo.almalinux.org/almalinux/10.3/AppStream/x86_64/os/",
+    "crb": "https://repo.almalinux.org/almalinux/10.3/CRB/x86_64/os/",
+    "extras": "https://repo.almalinux.org/almalinux/10.3/extras/x86_64/os/",
+    "epel-almadial": "https://dl.fedoraproject.org/pub/epel/10.3/Everything/x86_64/"
+  },
+  "packages": [
+    {
+      "name": "autoconf",
+      "evr": "0:2.71-13.el10",
+      "arch": "noarch",
+      "repository": "appstream"
+    },
+    {
+      "name": "automake",
+      "evr": "0:1.16.5-20.el10",
+      "arch": "noarch",
+      "repository": "appstream"
+    },
+    {
+      "name": "bzip2",
+      "evr": "0:1.0.8-25.el10",
+      "arch": "x86_64",
+      "repository": "baseos"
+    },
+    {
+      "name": "ed",
+      "evr": "0:1.20-5.el10",
+      "arch": "x86_64",
+      "repository": "baseos"
+    },
+    {
+      "name": "gcc",
+      "evr": "0:14.4.1-5.el10_3.alma.3",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "gcc-c++",
+      "evr": "0:14.4.1-5.el10_3.alma.3",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "httpd",
+      "evr": "0:2.4.63-13.el10_2.8",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "jansson-devel",
+      "evr": "0:2.14-3.el10",
+      "arch": "x86_64",
+      "repository": "crb"
+    },
+    {
+      "name": "libedit-devel",
+      "evr": "0:3.1-52.20230828cvs.el10",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "libsrtp-devel",
+      "evr": "0:2.3.0-16.el10",
+      "arch": "x86_64",
+      "repository": "crb"
+    },
+    {
+      "name": "libtool",
+      "evr": "0:2.4.7-13.el10",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "libuuid-devel",
+      "evr": "0:2.40.2-24.el10_3.24",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "libxml2-devel",
+      "evr": "0:2.12.5-15.el10_3.2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "make",
+      "evr": "1:4.4.1-9.el10",
+      "arch": "x86_64",
+      "repository": "baseos"
+    },
+    {
+      "name": "mariadb",
+      "evr": "3:10.11.18-1.el10_2.alma.2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "mariadb-backup",
+      "evr": "3:10.11.18-1.el10_2.alma.2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "mariadb-server",
+      "evr": "3:10.11.18-1.el10_2.alma.2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "mod_ssl",
+      "evr": "1:2.4.63-13.el10_2.8",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "ncurses-devel",
+      "evr": "0:6.4-15.20240127.el10_1",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "openssl-devel",
+      "evr": "1:3.5.9-1.el10_3.alma.1",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "patch",
+      "evr": "0:2.7.6-26.el10",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "perl",
+      "evr": "4:5.40.2-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "perl-Class-Mix",
+      "evr": "0:0.006-22.el10_0",
+      "arch": "noarch",
+      "repository": "epel-almadial"
+    },
+    {
+      "name": "perl-Crypt-Eksblowfish",
+      "evr": "0:0.009-42.el10_0",
+      "arch": "x86_64",
+      "repository": "epel-almadial"
+    },
+    {
+      "name": "perl-DBD-MySQL",
+      "evr": "0:5.007-4.el10",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "perl-DBI",
+      "evr": "0:1.643-30.el10_3.3",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "perl-Devel-CallChecker",
+      "evr": "0:0.009-7.el10_0",
+      "arch": "x86_64",
+      "repository": "epel-almadial"
+    },
+    {
+      "name": "perl-DynaLoader-Functions",
+      "evr": "0:0.004-5.el10_0",
+      "arch": "noarch",
+      "repository": "epel-almadial"
+    },
+    {
+      "name": "perl-Net-Server",
+      "evr": "0:2.014-9.el10",
+      "arch": "noarch",
+      "repository": "appstream"
+    },
+    {
+      "name": "perl-Params-Classify",
+      "evr": "0:0.015-18.el10_0",
+      "arch": "x86_64",
+      "repository": "epel-almadial"
+    },
+    {
+      "name": "perl-Switch",
+      "evr": "0:2.17-33.el10_1",
+      "arch": "noarch",
+      "repository": "epel-almadial"
+    },
+    {
+      "name": "perl-Time-HiRes",
+      "evr": "4:1.9777-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-cli",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-common",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-fpm",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-gd",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-ldap",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-mbstring",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-mysqlnd",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-opcache",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "php-xml",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "pkgconf",
+      "evr": "0:2.1.0-3.el10",
+      "arch": "x86_64",
+      "repository": "baseos"
+    },
+    {
+      "name": "sqlite-devel",
+      "evr": "0:3.46.1-6.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "zlib-ng-compat-devel",
+      "evr": "0:2.2.3-3.el10_1",
+      "arch": "x86_64",
+      "repository": "appstream"
+    },
+    {
+      "name": "firewalld",
+      "evr": "0:2.4.3-4.el10_2",
+      "arch": "noarch",
+      "repository": "baseos"
+    }
+  ],
+  "closure": [
+    {
+      "name": "almalinux-logos-httpd",
+      "evr": "0:100.4-1.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "0d57f34c52e55fd302d00593245ff547c10f17e23b23d5e5ded7fa6de2b1ad67"
+    },
+    {
+      "name": "annobin-docs",
+      "evr": "0:13.28-1.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "36f480ae7bfdb82ff12e876e3536b7a2e59cb634718501d06925bc88c11139fd"
+    },
+    {
+      "name": "annobin-plugin-gcc",
+      "evr": "0:13.28-1.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "9ad704d5c8f687d08565998b780712a9a926f551bc2445d11ea376bb12118361"
+    },
+    {
+      "name": "apr",
+      "evr": "0:1.7.5-3.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "dca2c045ecaa00f2674cc4b070a410083691b2f39a1dbca178c03de1d793df69"
+    },
+    {
+      "name": "apr-util",
+      "evr": "0:1.6.3-23.el10_2.1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "1eedb37d5884dd39b5a78646f3603638b7792ee0e08d689244e002106b176f62"
+    },
+    {
+      "name": "apr-util-lmdb",
+      "evr": "0:1.6.3-23.el10_2.1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "b5813efc64b6457234e2b1848129e93f1e9444886ce40012e04930d06786938c"
+    },
+    {
+      "name": "autoconf",
+      "evr": "0:2.71-13.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a601c794610b261b12bc87e4986ca8bb95693a4d28a4b1d22764226b5fc9a412"
+    },
+    {
+      "name": "automake",
+      "evr": "0:1.16.5-20.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "0fbb3412d07c6fd8a763ec636e2902d52a592eb0e5f5f2b315375b214d370032"
+    },
+    {
+      "name": "binutils",
+      "evr": "0:2.41-66.el10_3.alma.1",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "e0f07a2632bbb9cac5e036951e4791b1fb8a1f21a062ed2daf9d771e6f725a04"
+    },
+    {
+      "name": "binutils-gold",
+      "evr": "0:2.41-66.el10_3.alma.1",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "da68d99be0c8253e9fad08737b3a066b33c2a2525b84db6b8f006e890b4a0b09"
+    },
+    {
+      "name": "bzip2",
+      "evr": "0:1.0.8-25.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "02933bbadb018a6c799340d6e4e0e82765a34b333bd61692ae6fc3b03e0dcfa0"
+    },
+    {
+      "name": "capstone",
+      "evr": "0:5.0.1-8.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "598873fe8106010956c0bb9f737f26684c88c5d4bde375e6d8bd3b2d10a9fc6a"
+    },
+    {
+      "name": "cmake-filesystem",
+      "evr": "0:3.31.8-1.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "95bfde3e254bd284c88254bf1e8a133d2ee6232e5e5eebca95c5e3d9ea3ff808"
+    },
+    {
+      "name": "cpp",
+      "evr": "0:14.4.1-5.el10_3.alma.3",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "b1933e210dd3dbd022618aa62d79abdcd3459183b8077a2216ada0afd5068a6e"
+    },
+    {
+      "name": "dwz",
+      "evr": "0:0.16-1.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "f919d0d35ba999b9f2f38829b7ecdc645a1dd6325a2d206ae8f76019e208dd93"
+    },
+    {
+      "name": "ed",
+      "evr": "0:1.20-5.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "d2d7eb0376307e2232b54bcbec41d3cef655b99b3e3ab32155ad7b580e189dbe"
+    },
+    {
+      "name": "efi-srpm-macros",
+      "evr": "0:6-8.el10.alma.2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "44f77359441b0245d57ff0483fc03912c9d2c279ddb074f2eb3b929ad7f20809"
+    },
+    {
+      "name": "elfutils-debuginfod-client",
+      "evr": "0:0.195-1.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "f4db58400c8a61cf397880cab474a7234bc52362bdd6743ad30931709f3eeec1"
+    },
+    {
+      "name": "emacs-filesystem",
+      "evr": "1:29.4-14.el10_2.4",
+      "arch": "noarch",
+      "repository": "baseos",
+      "sha256": "3e6e3b924afb7f0c3b18897e78bcc8a9725964b302ee83cd963d479deafd4f3f"
+    },
+    {
+      "name": "firewalld",
+      "evr": "0:2.4.3-4.el10_2",
+      "arch": "noarch",
+      "repository": "baseos",
+      "sha256": "f5f4a3dde4648d63c0788338b29d659529a82ad20b6b847a4d2435f0936d52d2"
+    },
+    {
+      "name": "firewalld-filesystem",
+      "evr": "0:2.4.3-4.el10_2",
+      "arch": "noarch",
+      "repository": "baseos",
+      "sha256": "e06163c486be0d18b840a03a604ca734b588e22687a876bf7c906423da1266c2"
+    },
+    {
+      "name": "fontconfig",
+      "evr": "0:2.15.0-7.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "4256e678f025aeb3754f7eedaad8e63c586ffad13b6c62db2d0655073de75b48"
+    },
+    {
+      "name": "fonts-srpm-macros",
+      "evr": "1:2.0.5-18.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "1c4eda423634a984d4976c2e9b4ef071aee2a3e60a16f148f1b83fcd64e05e96"
+    },
+    {
+      "name": "forge-srpm-macros",
+      "evr": "0:0.4.0-6.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c07ce83b6542f27f1f781c12dc1deee72e422c2ec8df742882e8cec9e4467471"
+    },
+    {
+      "name": "gcc",
+      "evr": "0:14.4.1-5.el10_3.alma.3",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "ac962c5a87dc52dd3503496facf5027e211a4921ecf8cde740a6ceb5c038f41f"
+    },
+    {
+      "name": "gcc-c++",
+      "evr": "0:14.4.1-5.el10_3.alma.3",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "1783c7662f0d283a5c0c11f3a935884b9af16c0277126201ff33c3abc4b21572"
+    },
+    {
+      "name": "gcc-plugin-annobin",
+      "evr": "0:14.4.1-5.el10_3.alma.3",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "45ce0fc616bb332f6f18fbf7f4b617f20094eb77073418864b2b0513d8100354"
+    },
+    {
+      "name": "gd",
+      "evr": "0:2.3.3-20.el10_2.1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "0dd6f7e7ce435648871613cad2ccae2615658dda2358bf0ec15af46e9894d407"
+    },
+    {
+      "name": "glibc-devel",
+      "evr": "0:2.39-147.el10_3.alma.1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "3ce4e2a88e70edca6035ca208c02ef985b38e8324714937dbec97c7c62e1466d"
+    },
+    {
+      "name": "go-srpm-macros",
+      "evr": "0:3.8.0-1.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9e5e87cd317a9329616ce89932e0d9c86668c820926ad28d3a55e3421290c4e2"
+    },
+    {
+      "name": "httpd",
+      "evr": "0:2.4.63-13.el10_2.8",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "82ca51b60ea07a360e4735c15b2c19ba91ffa9cc1c49edaedb99143e30690f7d"
+    },
+    {
+      "name": "httpd-core",
+      "evr": "0:2.4.63-13.el10_2.8",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "e21199d6180d44b3c70e5c145fa0e7580a6a97cc3c0a80fb056d17ac23f85362"
+    },
+    {
+      "name": "httpd-filesystem",
+      "evr": "0:2.4.63-13.el10_2.8",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "2b51e057930916d8dbabb095143e5d08565e920ef6bd7a04131e2653be29aeb3"
+    },
+    {
+      "name": "httpd-tools",
+      "evr": "0:2.4.63-13.el10_2.8",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "5e479cdaca3890857ede0693fa6e1dc65cd0a59931855acd3ef991690e008a3c"
+    },
+    {
+      "name": "jansson-devel",
+      "evr": "0:2.14-3.el10",
+      "arch": "x86_64",
+      "repository": "crb",
+      "sha256": "e2d5bd9cbba481d3a07b3d2206141d76e35cb7abb1b6595718a0f30cba996b9a"
+    },
+    {
+      "name": "jbigkit-libs",
+      "evr": "0:2.1-31.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "c6d6c893b851c1ee3449a256f17c328d5a490c0160796ed7743c1ba337c9380f"
+    },
+    {
+      "name": "kernel-headers",
+      "evr": "0:6.12.0-264.16.1.el10_3",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "a228654cde85bebe551d8a3a928ed349a8381ee1f4f426467b5157c3366bc9f8"
+    },
+    {
+      "name": "kernel-srpm-macros",
+      "evr": "0:1.0-29.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "7c901fa014f719a182cd631d6f3d18b7abb8e6ea60ac9de6649090f007505028"
+    },
+    {
+      "name": "libX11",
+      "evr": "0:1.8.13-1.el10_3.1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "f9e3bedfe296ebd318915b7ea0c51e6fdec03712a8aa73190abeeee71ed3b1bb"
+    },
+    {
+      "name": "libX11-common",
+      "evr": "0:1.8.13-1.el10_3.1",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9c016b006497aa91ba66142ee95b4dc6ee3b201722b37fbe5841dd7fae6d95e6"
+    },
+    {
+      "name": "libXau",
+      "evr": "0:1.0.11-8.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "154d0bfaf1514fc97c9d4d01087eda3195509617bc6408a4fe4ecd6a25d2522b"
+    },
+    {
+      "name": "libXpm",
+      "evr": "0:3.5.17-5.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "bd5462113a70300bed6f62857d711e3eec42a8dcbd3eae52f58c3a79df608d43"
+    },
+    {
+      "name": "libaio",
+      "evr": "0:0.3.112-1.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "1a28460147b69981d350046ec0d305d4a7da33afc8581833cdb239c14dcbc8a5"
+    },
+    {
+      "name": "libedit-devel",
+      "evr": "0:3.1-52.20230828cvs.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "72038a549eb6a946be65e43b0ad8888bd7adadd84e67318aaa40f3aa568d9af5"
+    },
+    {
+      "name": "libjpeg-turbo",
+      "evr": "0:3.0.2-4.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "472a31ac724e28017d85e12b0a82750effdf17af1ceb8bb2faa3e10d6b70d900"
+    },
+    {
+      "name": "liblerc",
+      "evr": "0:4.0.0-8.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "0805d5f5a759972fdfaf7eaa082b70953cf0f6630bae18db92ff80f8ea5f8443"
+    },
+    {
+      "name": "libmpc",
+      "evr": "0:1.3.1-7.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "f16c98ad340aa2322094a6c7c5c26d62a4e03f3c950dc108061792d0aea0b41e"
+    },
+    {
+      "name": "libnftnl",
+      "evr": "0:1.3.0-3.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "34a5277e8131c943f84d0323a28227e7445d456606f6f2250764e1f8908ff26e"
+    },
+    {
+      "name": "libpkgconf",
+      "evr": "0:2.1.0-3.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "c6687505e3de9fad0aa20f86146a90d6b3b094e5b51964caceb2df2d1eca89db"
+    },
+    {
+      "name": "libsrtp",
+      "evr": "0:2.3.0-16.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "36aafc02a74cd3444ee6fb0167261509b36ec24f7817739d6a1191e4b87e2aa3"
+    },
+    {
+      "name": "libsrtp-devel",
+      "evr": "0:2.3.0-16.el10",
+      "arch": "x86_64",
+      "repository": "crb",
+      "sha256": "4c18482b0a159b7259e9a2093431122ac903ef3666c770ad671f1cd6411bbc5a"
+    },
+    {
+      "name": "libstdc++-devel",
+      "evr": "0:14.4.1-5.el10_3.alma.3",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "9dadebf94d6d7619e790bd8d3eab91b518fb0feffc80eb354fc479b1369453f4"
+    },
+    {
+      "name": "libtiff",
+      "evr": "0:4.6.0-11.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "67fa4f20c18e1d0ee03be460f70666d39235751c795ab19a62e0860d49c37c3e"
+    },
+    {
+      "name": "libtool",
+      "evr": "0:2.4.7-13.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "dae0ca40ba80f5c53c6f21b5579785d33f01e8a91da2d3080a872ae1aeafc50c"
+    },
+    {
+      "name": "libuuid-devel",
+      "evr": "0:2.40.2-24.el10_3.24",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "0e13bda0bcce194fc44eac6f1511c02f0304ee7f74234a4ff8656bfc9cbccaab"
+    },
+    {
+      "name": "libwebp",
+      "evr": "0:1.3.2-10.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "4a8ffde16c1f454c8aaef2f5ebb875494b2d9ec1922ad75e8173bb1deff9f9be"
+    },
+    {
+      "name": "libxcb",
+      "evr": "0:1.17.0-3.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "29b594fa7a4341895931b4fdcf3890d01f26756a02dd30e9ad27a2d72498fe53"
+    },
+    {
+      "name": "libxcrypt-devel",
+      "evr": "0:4.4.36-10.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "a4dbed5ed327f21a25c6cb45fab5cf98d546b4a31333787c05eaf4632d6d0792"
+    },
+    {
+      "name": "libxml2-devel",
+      "evr": "0:2.12.5-15.el10_3.2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "bde7befa87d6145f84011949fda4abdeb9efd32e01b1d5ec50d041776d89682e"
+    },
+    {
+      "name": "libxslt",
+      "evr": "0:1.1.39-9.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "4d1fad8bea2962792dbd0cc067a668d5f13dfcd62bf904cf2eb37618c798fe21"
+    },
+    {
+      "name": "lua-srpm-macros",
+      "evr": "0:1-15.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "fabbbdf4425d90ccd25458e3b16b0f698427be88eeefaf78b6a081daf60de2bb"
+    },
+    {
+      "name": "lzo",
+      "evr": "0:2.10-14.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "569a87079caba785d45b719b9a7406e7f5da1772c83891e7010ab8ba085eed84"
+    },
+    {
+      "name": "m4",
+      "evr": "0:1.4.19-11.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "86875f7b4b35840d96f42c1cb13bd1de8d76e363cce4b596c42e02201a53ae7f"
+    },
+    {
+      "name": "mailcap",
+      "evr": "0:2.1.54-8.el10",
+      "arch": "noarch",
+      "repository": "baseos",
+      "sha256": "0e6cccb4b9e61ea5384b81ed9cd4b45e862393effd979307105d84f9cd8acd26"
+    },
+    {
+      "name": "make",
+      "evr": "1:4.4.1-9.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "ac4ef0ec3add180db4a827647709fc3ffadf8a585fc97e54529887917c1b9c3d"
+    },
+    {
+      "name": "mariadb",
+      "evr": "3:10.11.18-1.el10_2.alma.2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "8fb9085e61f37006da6337fdeca92dd70cfcec6d496ff698e7c236a6fe2d5e08"
+    },
+    {
+      "name": "mariadb-backup",
+      "evr": "3:10.11.18-1.el10_2.alma.2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "90e3484e1985c6faa8f61104db7d6107b8f210dcd999b19d163c5fa83bf04be3"
+    },
+    {
+      "name": "mariadb-common",
+      "evr": "3:10.11.18-1.el10_2.alma.2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "2c04ac38b4f80517ba3157c69c54236ce586cecaf9622fa48311b7e0a2629d30"
+    },
+    {
+      "name": "mariadb-connector-c",
+      "evr": "0:3.4.4-2.el10_2",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "1c5e6dd503f99e5baabb56f4facc0b35d1bf59898b475a5f9464ccc192a2300c"
+    },
+    {
+      "name": "mariadb-connector-c-config",
+      "evr": "0:3.4.4-2.el10_2",
+      "arch": "noarch",
+      "repository": "baseos",
+      "sha256": "b6fcb23fd7175f5ec595f2713711197fe45d0f48fc6fc2e2149de956221a13ce"
+    },
+    {
+      "name": "mariadb-errmsg",
+      "evr": "3:10.11.18-1.el10_2.alma.2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "95c7c9260cd837bdf83b405be114cf60f81ebdbdc9f8b94c76e6c7feddc4302a"
+    },
+    {
+      "name": "mariadb-server",
+      "evr": "3:10.11.18-1.el10_2.alma.2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "6b40c88a6474400d9c88648c5313fd7a959e04b14e1236fbec85ff03cef8155b"
+    },
+    {
+      "name": "mod_ssl",
+      "evr": "1:2.4.63-13.el10_2.8",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "6e3dd8f1157976984e9a225a754f190c7f0311564c3f496141c46f8020a19b6f"
+    },
+    {
+      "name": "mysql-selinux",
+      "evr": "0:1.0.18-1.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "7103f1e9776a36dc2a6c07f9cd391749ab342dd612d9ec243d27a3747fa1309f"
+    },
+    {
+      "name": "mysql8.4-common",
+      "evr": "0:8.4.11-1.el10_2.alma.1",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c88645f04b3cebf77c1371c06af54dbc511288a9c7e60b32a1b8566680f797db"
+    },
+    {
+      "name": "mysql8.4-libs",
+      "evr": "0:8.4.11-1.el10_2.alma.1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "c543e8e9ca4195cf652af1977ed7ec6aa6e2ef638b4744fe1feecb9004288602"
+    },
+    {
+      "name": "ncurses-c++-libs",
+      "evr": "0:6.4-15.20240127.el10_1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "0ef34927828328b45d960fb0b837ccb2d1e930ac06ea54ef6e1499fedaac7f4d"
+    },
+    {
+      "name": "ncurses-devel",
+      "evr": "0:6.4-15.20240127.el10_1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "0fe8eb23e30be189ccaa6151536ce306a077e6e3c1b3c5d89f180da5e2d68a1c"
+    },
+    {
+      "name": "nftables",
+      "evr": "1:1.1.5-6.el10_2",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "0d9db44ee3e3d0f74a04e97cf9cef2dd12ed26e9afd2be91b28b928763f6ed65"
+    },
+    {
+      "name": "nginx-filesystem",
+      "evr": "2:1.26.3-16.el10_3.1.alma.1",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "8d04ca129827b3f5320ec56c150703a87230e705ff9eeb753d5c0988157ef4c3"
+    },
+    {
+      "name": "nspr",
+      "evr": "0:4.39.0-5.el10_0",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "6895c3e5e11484f23bb178f5fef64017af9779d77af485ccf1cd28f3d78471f1"
+    },
+    {
+      "name": "nss",
+      "evr": "0:3.124.0-5.el10_0",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "73eddcbe27db7ab35f1f45486c6028419e847ac821db08812b5b4a111d0de508"
+    },
+    {
+      "name": "nss-softokn",
+      "evr": "0:3.124.0-5.el10_0",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "6acf4118353629e3b918e352ef5e31b7095522d653247f2244a11429e0abdb00"
+    },
+    {
+      "name": "nss-softokn-freebl",
+      "evr": "0:3.124.0-5.el10_0",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "8738beb109663836a0ea1dc1802bb7e5b9bade59bdda7ffda2c549f2253b9d2b"
+    },
+    {
+      "name": "nss-sysinit",
+      "evr": "0:3.124.0-5.el10_0",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "abd50c825b8a2d2c02e7a2c36415a32b35b32bed1ab00675a42a22bac86fd679"
+    },
+    {
+      "name": "nss-util",
+      "evr": "0:3.124.0-5.el10_0",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "c59019f91024fa1ca26468ed8d96755713848b090fa8189a903cd16260e3a759"
+    },
+    {
+      "name": "ocaml-srpm-macros",
+      "evr": "0:10-4.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f9ee48e40c5bc2dcdd87cb85a3d69088527801cf5c309f565753f834df097cb7"
+    },
+    {
+      "name": "openblas-srpm-macros",
+      "evr": "0:2-19.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "aaab4436f0b991293a491f72e8704906c2c2608032c3490c3dc05c68cff9b0ce"
+    },
+    {
+      "name": "openssl-devel",
+      "evr": "1:3.5.9-1.el10_3.alma.1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "5a84b0c216e4e51921dcbbc3d47e3d8a01eff28ce6c71b2b523c8da772f94337"
+    },
+    {
+      "name": "package-notes-srpm-macros",
+      "evr": "0:0.5-13.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a0f267a35fa2d5fb57a4310cffac67849794e005e40b4d2a24e83e71647ce0cf"
+    },
+    {
+      "name": "patch",
+      "evr": "0:2.7.6-26.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "0b238a316d38495d18caf45a6fa41e4b18346cf64410c9cb67b864f7aa423fd6"
+    },
+    {
+      "name": "perl",
+      "evr": "4:5.40.2-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "91f7da3c0d252bd4d27452fd8489cea59c4f5a97188aaaf6268e8ca74ec6df70"
+    },
+    {
+      "name": "perl-Algorithm-Diff",
+      "evr": "0:1.2010-14.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "cee8d71f19e1436d8474f3b018a3f4acb73b6c68a72f9d72ae8dfe3d351f99de"
+    },
+    {
+      "name": "perl-Archive-Tar",
+      "evr": "0:3.02-512.el10_2.2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "d2c6df33777b5bff8ce63f4a073d414a7c9afac6e1da152d7b5a41393951e548"
+    },
+    {
+      "name": "perl-Archive-Zip",
+      "evr": "0:1.68-17.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "ce9feae604b05530be7795a673c1594b0e001a71fe59c13f5b9a52ff76c4cb5f"
+    },
+    {
+      "name": "perl-Attribute-Handlers",
+      "evr": "0:1.03-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "77b3940fa81302f640a8fc18a554e27c5a3788da8a3c05b1f3e1bc3d75795a37"
+    },
+    {
+      "name": "perl-AutoLoader",
+      "evr": "0:5.74-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "1b540d06f1b3584f80113b6c546b8864cd617dffbb8513045b03d7132e826012"
+    },
+    {
+      "name": "perl-AutoSplit",
+      "evr": "0:5.74-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "6b59cf08fb7286fb3f4198e45cd3d4f5006406267051a10617fb5304cd5266d1"
+    },
+    {
+      "name": "perl-B",
+      "evr": "0:1.89-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "0ea87a1ed52e9920d1007a38064b9f023436c4338fdb60539e46332f0cffd183"
+    },
+    {
+      "name": "perl-Benchmark",
+      "evr": "0:1.25-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "b7973b40a45771d3dfd56138ebae057d2fbaf20fda1998e379b0210fd9be01a1"
+    },
+    {
+      "name": "perl-CPAN",
+      "evr": "0:2.36-514.el10_0",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e4d75af4f7a7842ffcd64d919c7b569ab36d79b10910fc26c80083897258df7a"
+    },
+    {
+      "name": "perl-CPAN-Meta",
+      "evr": "0:2.150010-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c42daa47e93bbc7b6ca5c636178949ae4331ce3050d981c017ea27b4cbdb079c"
+    },
+    {
+      "name": "perl-CPAN-Meta-Requirements",
+      "evr": "0:2.143-11.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "cbc09bf15c43597169d02fe51d9b9842bc1d57e3bffcad81c2653a696b27e558"
+    },
+    {
+      "name": "perl-CPAN-Meta-YAML",
+      "evr": "0:0.018-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "8af7c7f0d072f10486e525ab5c90eb091e7b963a48767afe58f6e043ce9c44b4"
+    },
+    {
+      "name": "perl-Carp",
+      "evr": "0:1.54-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f8ba8f4202ecfc9efb5bd7040d44690e5ad7f3bfe284325a4b8b65bdb26d5e77"
+    },
+    {
+      "name": "perl-Class-Mix",
+      "evr": "0:0.006-22.el10_0",
+      "arch": "noarch",
+      "repository": "epel-almadial",
+      "sha256": "6035a25da95dc5b31587fde5bce8e4e6b24cf5a4d7b5af3a42e556488e5fd974"
+    },
+    {
+      "name": "perl-Class-Struct",
+      "evr": "0:0.68-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f67705171349b9de0f487263220dbf6cb9e59eb628540da756ce686222c81324"
+    },
+    {
+      "name": "perl-Compress-Bzip2",
+      "evr": "0:2.28-21.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "a10da7e9b376a99b387be4707a6d5b42e463c9ffcf269aa578830711c0cccc94"
+    },
+    {
+      "name": "perl-Compress-Raw-Bzip2",
+      "evr": "0:2.212-512.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "aea5c9cadcda9a2c6272b417f02adaffa5d06e99ef60456d97d3d7bd48176be1"
+    },
+    {
+      "name": "perl-Compress-Raw-Lzma",
+      "evr": "0:2.212-3.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "74229c0757b240c9d57b4ff50eb86d401d075a1f44e3b7ada9855613cf9afed9"
+    },
+    {
+      "name": "perl-Compress-Raw-Zlib",
+      "evr": "0:2.212-513.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "f40155ec90e9a78054877fe9becd248b0cb915862925393f925efae30cba8374"
+    },
+    {
+      "name": "perl-Config-Extensions",
+      "evr": "0:0.03-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "735ba0cc433b5cf1e24d38cde1b3370a929cb3d7e9d19a4191862d988e7e06f2"
+    },
+    {
+      "name": "perl-Config-Perl-V",
+      "evr": "0:0.36-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "762b3771c54f9523b873f07e5b034be70f92a09c9db386a99ed8212aae9c608e"
+    },
+    {
+      "name": "perl-Crypt-Eksblowfish",
+      "evr": "0:0.009-42.el10_0",
+      "arch": "x86_64",
+      "repository": "epel-almadial",
+      "sha256": "5cdeb146add4bf332e9ff3b0eba6f11149d0efddb83b0049b3329f295218f3f8"
+    },
+    {
+      "name": "perl-DBD-MySQL",
+      "evr": "0:5.007-4.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "1051c51204e5eca9f4cd24a7ac6cc8d33eaa85904eb712145f23f9e54eaebe03"
+    },
+    {
+      "name": "perl-DBI",
+      "evr": "0:1.643-30.el10_3.3",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "fee41776b832090ca02230700c1d5ffdfc93384f9bddf427c867083555241bde"
+    },
+    {
+      "name": "perl-DBM_Filter",
+      "evr": "0:0.06-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9c44ff926043c1465c2b3f769f5d460af437848027936af2885671f71c45b6c3"
+    },
+    {
+      "name": "perl-Data-Dumper",
+      "evr": "0:2.189-512.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "66928989cb9ea240d18cbe88fb465e847240167d59d69a031f5b87d6eea9b13f"
+    },
+    {
+      "name": "perl-Data-OptList",
+      "evr": "0:0.114-7.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "17d77bab02dba929a5be184e62880e37c910c973863d679a3de19a385296d919"
+    },
+    {
+      "name": "perl-Data-Section",
+      "evr": "0:0.200008-8.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f03962d409f41c18e84f178b7155440dd5ac6ecab1a6feafa4a2ca6e6732f6e0"
+    },
+    {
+      "name": "perl-Devel-CallChecker",
+      "evr": "0:0.009-7.el10_0",
+      "arch": "x86_64",
+      "repository": "epel-almadial",
+      "sha256": "02246a0c1541d48723ed0a8ebe75fab15ad0ec35564846d3ab15293e7d565b7f"
+    },
+    {
+      "name": "perl-Devel-PPPort",
+      "evr": "0:3.72-512.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "26edebf2735f318b281d22d7d1d43e14575803ac46fb358cc5b22680e091cb4f"
+    },
+    {
+      "name": "perl-Devel-Peek",
+      "evr": "0:1.34-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "a1041449bca03d326f00e9dde5b91258b60d0551562b541096a6836fc10cfb3b"
+    },
+    {
+      "name": "perl-Devel-SelfStubber",
+      "evr": "0:1.06-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9bf0cebe98e3c5d7c7391fc556d152673f3f4ac637e62559e72f00322c9665ae"
+    },
+    {
+      "name": "perl-Devel-Size",
+      "evr": "0:0.84-3.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "73bdeaec2440349f7b4dc6209392479218df31564c6d16efe01dae74a756ca2d"
+    },
+    {
+      "name": "perl-Digest",
+      "evr": "0:1.20-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9f3f1c35ecaac233cd58aa91c4ab0426738d01ed848b2d324c8c313bf39b114b"
+    },
+    {
+      "name": "perl-Digest-MD5",
+      "evr": "0:2.59-6.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "7c061ab0a4ddcedcf00e6bcb8830667e822066db03b559fb74a84545910656a1"
+    },
+    {
+      "name": "perl-Digest-SHA",
+      "evr": "1:6.04-512.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "909c8871a9f9fa5180118091d6a096eddf9e9e2c0c9872620b51782a232a2fe4"
+    },
+    {
+      "name": "perl-DirHandle",
+      "evr": "0:1.05-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c74ec5ab698006562d3ebd6b4dcbd879c336390d3e5cca29cb4cce85b85b5a7d"
+    },
+    {
+      "name": "perl-Dumpvalue",
+      "evr": "0:2.27-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "5c387af29496631904e0e4512b0042204cdfe1760561da0a1a7779cd1b9432c1"
+    },
+    {
+      "name": "perl-DynaLoader",
+      "evr": "0:1.56-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "bb93b0d66ab6f14f9c86349f4ecba2b87b1a3585157f91b6a0ad6ab705033cc6"
+    },
+    {
+      "name": "perl-DynaLoader-Functions",
+      "evr": "0:0.004-5.el10_0",
+      "arch": "noarch",
+      "repository": "epel-almadial",
+      "sha256": "f784290e8fee98d81dea18499a644cc89f5b5646c9473229a02d3abf4de72ba0"
+    },
+    {
+      "name": "perl-Encode",
+      "evr": "4:3.21-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "311e23e2aab07e7f11219d3cdc8186659f47c6d1d07004d8f522e9d7d5ca74d3"
+    },
+    {
+      "name": "perl-Encode-devel",
+      "evr": "4:3.21-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "3fb6a35234bb9bb6e548b4f8091a800876d746d30356885be06b03b005b70583"
+    },
+    {
+      "name": "perl-English",
+      "evr": "0:1.11-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a81d60d0b8acf592731701a57479d115867187afff5573bd5a82fe8b130972a1"
+    },
+    {
+      "name": "perl-Env",
+      "evr": "0:1.06-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "453a4f4fa555ba7b5c99d836e4f38fa5ebd22157066a159dfcd7052ff7fd8d96"
+    },
+    {
+      "name": "perl-Errno",
+      "evr": "0:1.38-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "992ebfec13202bb641bfe67bd8995a59cabbe857f84a980f089e887f4041ca02"
+    },
+    {
+      "name": "perl-Exporter",
+      "evr": "0:5.78-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "3c23ebc3c23a498244aabebf0f6ca0257daf33423885f615b3602700823e6c7b"
+    },
+    {
+      "name": "perl-ExtUtils-CBuilder",
+      "evr": "1:0.280240-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4fad62492a7d30e88767901a6098be78700d597e2700b503802a5427067ae418"
+    },
+    {
+      "name": "perl-ExtUtils-Command",
+      "evr": "2:7.70-513.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "1177483446c28371176a66dc2c7e9c3f94c4b358c37dbffea3ac9b0da69ea5d1"
+    },
+    {
+      "name": "perl-ExtUtils-Constant",
+      "evr": "0:0.25-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "873bb09b54d407b9bf5ff9c9e00e0c0053f12ca3a38e094acf6fe08c2101501e"
+    },
+    {
+      "name": "perl-ExtUtils-Embed",
+      "evr": "0:1.35-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "68dcc2966462f39ae38c5ebcae4c337dc9e0b06c3ea981844a143d3995c06753"
+    },
+    {
+      "name": "perl-ExtUtils-Install",
+      "evr": "0:2.22-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c82c47f529f62334177947d1db392eb4119e8ef1debbdb7de26d6a5f84c702f3"
+    },
+    {
+      "name": "perl-ExtUtils-MM-Utils",
+      "evr": "2:7.70-513.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "dee9c8ba2297fa3f6b2959e5a2632ce74672511e41456a37634ee658cdbf63ca"
+    },
+    {
+      "name": "perl-ExtUtils-MakeMaker",
+      "evr": "2:7.70-513.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a0f0d1a419fbc64ed59a119758a83bde1ba4a052b6bf5130d9cfc3bffb03d9e6"
+    },
+    {
+      "name": "perl-ExtUtils-Manifest",
+      "evr": "1:1.75-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "27053445326eab81de33b4c5a8a5c2d26a3a7e4009ba6706c417aa2f87034421"
+    },
+    {
+      "name": "perl-ExtUtils-Miniperl",
+      "evr": "0:1.14-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "2b7283b3c5536e3fd89917266b3465b22de4dfbf604834e918ccc589888a8a26"
+    },
+    {
+      "name": "perl-ExtUtils-ParseXS",
+      "evr": "1:3.51-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "08653f50841f2c5ac8a07edbf93665304cae988b6fbf6e7ce680d07803ca0322"
+    },
+    {
+      "name": "perl-Fcntl",
+      "evr": "0:1.18-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "b4853b345959695a05eb2674f286bd0bd1dfc473ea270e719f8d79ceffa4bb99"
+    },
+    {
+      "name": "perl-File-Basename",
+      "evr": "0:2.86-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "20a9f2b8c608e5b9882e2d7cc64546b067e53ccd2148bbfee2b72c0bfae4b16b"
+    },
+    {
+      "name": "perl-File-Compare",
+      "evr": "0:1.100.800-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4812e8816160f70feaec391bd210415bca4a44a5155b126c3fb1ef14674b80d2"
+    },
+    {
+      "name": "perl-File-Copy",
+      "evr": "0:2.41-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "52be131ea7d5f9df8f083bcaadde9c8b8cf8165b5dbba326c37eee56e9525871"
+    },
+    {
+      "name": "perl-File-DosGlob",
+      "evr": "0:1.12-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "a60f0213cd0f302100ab09683e256e005dbfc6501dc565781ccf9a24c77e9639"
+    },
+    {
+      "name": "perl-File-Fetch",
+      "evr": "0:1.04-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "8c3b277c9c859cff9c7df36c6e58f76b2007a60df736e966bcb674d07a0736dd"
+    },
+    {
+      "name": "perl-File-Find",
+      "evr": "0:1.44-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "d2938662e54a406e838d0dd5c4ea5832760add3e33b8ef1251185069975d53a6"
+    },
+    {
+      "name": "perl-File-HomeDir",
+      "evr": "0:1.006-15.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "eeeed0c4996e6bc6c9a3d6f43a7eee2612cc1cd2672a6367c489c2de78d22b73"
+    },
+    {
+      "name": "perl-File-Path",
+      "evr": "0:2.18-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "28f643273a72c297e9f68c3f8cb8018852c7bcd97ac7cd974198a673e7fbdc14"
+    },
+    {
+      "name": "perl-File-Temp",
+      "evr": "1:0.231.100-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f75fdad502e0d6efe61c5831dcf11f1fea523e167ccba431eb05d0600365722f"
+    },
+    {
+      "name": "perl-File-Which",
+      "evr": "0:1.27-14.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "0da102b77913fa5a2ab14160ea1df00cf4edefc16602543eefe3ceac1077f61d"
+    },
+    {
+      "name": "perl-File-stat",
+      "evr": "0:1.14-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f31ab167489a383653e674718b8132503908c89658587c11e60a45911165c658"
+    },
+    {
+      "name": "perl-FileCache",
+      "evr": "0:1.10-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "30820f41d03438df0a89b8dea91241e253b67eacf1cf81d8fff01551dd83ab5e"
+    },
+    {
+      "name": "perl-FileHandle",
+      "evr": "0:2.05-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "fb1ce05e33fb4e041f6807b80f5895d12700cc578bc662ee3681533d04d61e27"
+    },
+    {
+      "name": "perl-Filter",
+      "evr": "2:1.64-512.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "06ed04fc17e3a3d15ba5252a26053c1afce7671da80bea632b0745216f177d35"
+    },
+    {
+      "name": "perl-Filter-Simple",
+      "evr": "0:0.96-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "bfdca3dad67fb50197b5952b5658c0e786efb5430d9cee78e69c2c9bd6bc4bd7"
+    },
+    {
+      "name": "perl-FindBin",
+      "evr": "0:1.54-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "541141d26cff39e511d41ad2e104dbedff7ae004eb7b60a75f1d264f0da639e7"
+    },
+    {
+      "name": "perl-GDBM_File",
+      "evr": "1:1.24-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "840bc3480de5a886e27c473ad7b9b0ef3f0f35b29dff27ab9a633cd62dbc0050"
+    },
+    {
+      "name": "perl-Getopt-Long",
+      "evr": "1:2.58-3.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "0818ae10c8f3644563f58b19e11a50113fbb030a63134a3751cec0c4bd87e28b"
+    },
+    {
+      "name": "perl-Getopt-Std",
+      "evr": "0:1.14-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "49e8e4357d64fff7c22f72bda9bbab91c9393e87d6b40473e2f3e03a651d79ad"
+    },
+    {
+      "name": "perl-HTTP-Tiny",
+      "evr": "0:0.088-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "2a09877a0cb847971f262574e289db1ab6011a6dae3b95252ad0abcf797146d3"
+    },
+    {
+      "name": "perl-Hash-Util",
+      "evr": "0:0.32-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "da7bbede5ba9d45845f205bca56b99cdfe6b7e8410896fd3cb0ae575a90aa03c"
+    },
+    {
+      "name": "perl-Hash-Util-FieldHash",
+      "evr": "0:1.27-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "fbc8be84f913f6379b1067b6dab7f66c199daffda4295d20fabb54542cb5d1c6"
+    },
+    {
+      "name": "perl-I18N-Collate",
+      "evr": "0:1.02-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "680f8b26caf1903d88f8d96263ad903bc239369406b6895e6bc27ed923fbae59"
+    },
+    {
+      "name": "perl-I18N-LangTags",
+      "evr": "0:0.45-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "069d8a8848580110635885e2c251c7423daaed882265d3fe5c2f4465f09dd325"
+    },
+    {
+      "name": "perl-I18N-Langinfo",
+      "evr": "0:0.24-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "468102e2d484ce95a10c5a6a927ee33a25f2eb8c5a2370e78a5b2a1c1c83b872"
+    },
+    {
+      "name": "perl-IO",
+      "evr": "0:1.55-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "d76cdc5474b8412934b06c7d938beb9355e1cc2967e38eb77ad8e106eb5945ca"
+    },
+    {
+      "name": "perl-IO-Compress",
+      "evr": "0:2.212-512.el10_2.1",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "741508f5ad1fac081838f6f573ee7ee5aed1ab60be165fde7eab4c556b6b2f28"
+    },
+    {
+      "name": "perl-IO-Compress-Lzma",
+      "evr": "0:2.206-8.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a330c74d059049fc1772e46c23e671640b6a7409af3db815b90d0a3784738948"
+    },
+    {
+      "name": "perl-IO-Multiplex",
+      "evr": "0:1.16-30.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4479bfc81696c991a7772100acf4faeea18aa17bff8d15dbe4a1e763a1b9d6e8"
+    },
+    {
+      "name": "perl-IO-Socket-IP",
+      "evr": "0:0.42-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e17497fb60842857e947028e41da4b669ca261b7c187442e39d3ebd7473534f7"
+    },
+    {
+      "name": "perl-IO-Socket-SSL",
+      "evr": "0:2.085-3.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "7f673ad99f77da322add6a1a696d8d359b935db3da78ff503b224907f7d5ec06"
+    },
+    {
+      "name": "perl-IO-Zlib",
+      "evr": "1:1.15-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "737006cd553813bd89a4aa7525c57f3b4eda977a41f7ea3d2e67c661251088c1"
+    },
+    {
+      "name": "perl-IPC-Cmd",
+      "evr": "2:1.04-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "3ccc494901ce2e9d8962854853f53c1ea8dbd03f865bb03e411d68b87a6d1123"
+    },
+    {
+      "name": "perl-IPC-Open3",
+      "evr": "0:1.22-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "2fe04d10b167fa28ece32046dc240d5132475190736ac8dda602198c8b51e0ae"
+    },
+    {
+      "name": "perl-IPC-SysV",
+      "evr": "0:2.09-512.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "5ca2716b2a03db7ad6ec74261c1622de482869db2ebe131c9478bf5e7a5d7dae"
+    },
+    {
+      "name": "perl-IPC-System-Simple",
+      "evr": "0:1.30-16.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "70520e27709978cb886d9d07fd16d59ee5b8849317974e0d52986083481e188b"
+    },
+    {
+      "name": "perl-JSON-PP",
+      "evr": "1:4.16-513.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e9eab12ca03efdb593634d51d5b3c5a75ecfdba6d4f09bb92a1db588e317eed1"
+    },
+    {
+      "name": "perl-Locale-Maketext",
+      "evr": "0:1.33-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "29ae938b0e5100d904d8762ef4fa21f3d6e1ee9c8afec19e01f9698fed8c9157"
+    },
+    {
+      "name": "perl-Locale-Maketext-Simple",
+      "evr": "1:0.21-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "ae46f3e2dc6318944c86ec74827ce3532cdb6a197c6944b69e880923c4c65136"
+    },
+    {
+      "name": "perl-MIME-Base64",
+      "evr": "0:3.16-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "401c216173a624464d4ad95fc87eed5d8c0f44124dd01c75ea9f2e54df5246c3"
+    },
+    {
+      "name": "perl-MRO-Compat",
+      "evr": "0:0.15-12.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9075cd518291789985bede42efb324c2bd850796236e995e427123a874ce71c1"
+    },
+    {
+      "name": "perl-Math-BigInt",
+      "evr": "1:2.0030.03-3.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "02876f2380f250e93434934b2e57ddc0b29a744039ab8906c96c25625ac6c076"
+    },
+    {
+      "name": "perl-Math-BigInt-FastCalc",
+      "evr": "0:0.501.800-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "1bc767e2ed6b78fcd3ab634e5da290a0d3feadc8c52dd1a149a10562dde618d7"
+    },
+    {
+      "name": "perl-Math-Complex",
+      "evr": "0:1.62-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "8dc64964e85a19776cd9190076559c2f76282a5d55cc10f9dcdfe14dae924e30"
+    },
+    {
+      "name": "perl-Memoize",
+      "evr": "0:1.16-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "568f92b74173236bcdb6ffd602c20f30d5ce36ddc15a9ef60bdd9531791e5d38"
+    },
+    {
+      "name": "perl-Module-Build",
+      "evr": "2:0.42.34-7.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "5a3ae36574d432531f5738b4db075b970b352014c25de2347c7346fa9f032ac1"
+    },
+    {
+      "name": "perl-Module-CoreList",
+      "evr": "1:5.20260119-1.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e7cb5df7b068a1140cbce550a2a4409e0a3bf9cde28c78eaa16b6601ef1e431f"
+    },
+    {
+      "name": "perl-Module-CoreList-tools",
+      "evr": "1:5.20260119-1.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c0edcbc8fa4251294f3d411afa57db41a51091db5633402cc4ea0d4772c348d2"
+    },
+    {
+      "name": "perl-Module-Load",
+      "evr": "1:0.36-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "04b36e1069ef8dee690a71ae89c7c9c900d61ed5a26a15329effede65cb8b680"
+    },
+    {
+      "name": "perl-Module-Load-Conditional",
+      "evr": "0:0.74-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "ae72e90cfed7b2e8245b59bc59615e1eaadb238415ac3222403dd50f4633b2c2"
+    },
+    {
+      "name": "perl-Module-Loaded",
+      "evr": "1:0.08-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "5ec1d001a8904f13be93731dc3ee10d52fea7b19718e01dde887e892f9d59e9b"
+    },
+    {
+      "name": "perl-Module-Metadata",
+      "evr": "0:1.000038-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a71f44b490196cc1ce6e2064923e7669722cfe8215234d2d44b5e88476bb48bb"
+    },
+    {
+      "name": "perl-Module-Signature",
+      "evr": "0:0.88-12.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4735784aedbbf84b047d4a7e41773d9333dbeeae535386b7daf4cbd4f754b2d7"
+    },
+    {
+      "name": "perl-Mozilla-CA",
+      "evr": "0:20231213-5.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4eaa9fd20bb34e0f137061322ff6b023abe7db9276da1dd9a6687eefe0d98e57"
+    },
+    {
+      "name": "perl-NDBM_File",
+      "evr": "0:1.17-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "44f9f5a873a53e7cbf56110bf07e5735522a5377940fdf369cb5e89c4e934736"
+    },
+    {
+      "name": "perl-NEXT",
+      "evr": "0:0.69-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "b9d74ebb73608e7ae8a41f1845f6ddffbde82b348053bf57d772c4cf1298e2f4"
+    },
+    {
+      "name": "perl-Net",
+      "evr": "0:1.04-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "32c8b627ee7e2970b1dabfa3c1024adbd59dd604b26059aa8c2dd768f3843337"
+    },
+    {
+      "name": "perl-Net-Ping",
+      "evr": "0:2.76-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "66a6fa92b3749c8996de606bc1c6d19fbd9819ee5301fbf5abfff310128ac6a3"
+    },
+    {
+      "name": "perl-Net-SSLeay",
+      "evr": "0:1.94-9.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "228b63c3604b1bff3095f0b9b7e7172e40033885f82b01f213c8da9802ba3101"
+    },
+    {
+      "name": "perl-Net-Server",
+      "evr": "0:2.014-9.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9e733600aac73f65c629f6f82042195a7ee78cd0b62686ba7af3bb32f478920b"
+    },
+    {
+      "name": "perl-ODBM_File",
+      "evr": "0:1.18-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "3adbf59c804408db6459130f7d7f373afdcca76cd68333b050c664f62e8deea2"
+    },
+    {
+      "name": "perl-Opcode",
+      "evr": "0:1.65-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "bbcdd691a1c82d4d4d6fa3a619de413cc3071c625adfaf75eabf96865a9ae017"
+    },
+    {
+      "name": "perl-POSIX",
+      "evr": "0:2.20-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "bbad35d8b0d0ac807ba101284cf2f8d6f76e304dda34cf5763a2d8c47de628d0"
+    },
+    {
+      "name": "perl-Package-Generator",
+      "evr": "0:1.106-34.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "be2738fd1b0a14b5b170ccbf076391568d764bef5e6330cb9a361fa81ae006f9"
+    },
+    {
+      "name": "perl-Params-Check",
+      "evr": "1:0.38-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a1ed4bda809da65e7217926249ba1699f45ca68e1a8a1acbe235d0e22c74731e"
+    },
+    {
+      "name": "perl-Params-Classify",
+      "evr": "0:0.015-18.el10_0",
+      "arch": "x86_64",
+      "repository": "epel-almadial",
+      "sha256": "2d29f595c2a7f2e1dca537bb639726d5eb912661b3922d913bb685262362787c"
+    },
+    {
+      "name": "perl-Params-Util",
+      "evr": "0:1.102-19.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "cfc111a1aafab1f83b547dbb7fa9d060037986e01796078bd0dc022e4bba2aa0"
+    },
+    {
+      "name": "perl-PathTools",
+      "evr": "0:3.91-512.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "8c62e7a0490f9c6b1880931f11f2d768b87e7b09680c8e751e2aa944e833b6ca"
+    },
+    {
+      "name": "perl-Perl-OSType",
+      "evr": "0:1.010-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "046d05fcff956d8c1a27e330da854acc6f53c3813ae884b4213140f8d0e9d610"
+    },
+    {
+      "name": "perl-PerlIO-via-QuotedPrint",
+      "evr": "0:0.10-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9ada7dfa5482247b7a3b596f8f4cb802450a4366a817730c8560bb7a8a780611"
+    },
+    {
+      "name": "perl-Pod-Checker",
+      "evr": "4:1.77-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a822d46b937093eba8b8f9b03d5ded24c66cee0d32b0534c0d6341d158618c23"
+    },
+    {
+      "name": "perl-Pod-Escapes",
+      "evr": "1:1.07-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a52f78ce58e47008e138a7ab77516abf7376cc800f399d57b22e6e600d4e90be"
+    },
+    {
+      "name": "perl-Pod-Functions",
+      "evr": "0:1.14-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "ac655c5595560dcb46f735702ea26b21b12051be8238ba0d5e0a38ab6f6b598d"
+    },
+    {
+      "name": "perl-Pod-Html",
+      "evr": "0:1.35-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "cde6d99dc6bedf83080168ce89ab7278dbae79370c09def2315c05a847acf9dc"
+    },
+    {
+      "name": "perl-Pod-Perldoc",
+      "evr": "0:3.28.01-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "260f92316899b869ad998cb9df861b26d2fb69da37ca4fdaceb77416b74cfb5e"
+    },
+    {
+      "name": "perl-Pod-Simple",
+      "evr": "1:3.45-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "1c80846cd751a8d0cd6779e19acc2e9f93c627caa548522928abb64d7fcd4b59"
+    },
+    {
+      "name": "perl-Pod-Usage",
+      "evr": "4:2.03-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "b3aee0f405b0ac80a0967256eb3111cef6aa5c42023099692daa3d5eba819261"
+    },
+    {
+      "name": "perl-Safe",
+      "evr": "0:2.46-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "72689b14d3ed67db6d8a591e812f40b77b791b19725266586057351632e00fd1"
+    },
+    {
+      "name": "perl-Scalar-List-Utils",
+      "evr": "5:1.63-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "2de69efbe711de95428fe93fea34ab2f5b112d647a5dea81a9ef82cfd9ae3c52"
+    },
+    {
+      "name": "perl-Search-Dict",
+      "evr": "0:1.07-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "1a7a937662f78d99a2dc924c7f668c42980aca692656cf16a5a5d1e21e6a4315"
+    },
+    {
+      "name": "perl-SelectSaver",
+      "evr": "0:1.02-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "7b99d763a3936e28b58fa9304fed7b558d8c71ad7e808a5751f3969dac867a76"
+    },
+    {
+      "name": "perl-SelfLoader",
+      "evr": "0:1.27-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4d9f02c0fedb9b29b19bc90d97045e6d723657d1f214c7e2f2490390a781c3a3"
+    },
+    {
+      "name": "perl-Socket",
+      "evr": "4:2.038-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "5e22e0d39a154bb39c71623b52b3c12586750c83dc555b17af56affd93eeffc0"
+    },
+    {
+      "name": "perl-Software-License",
+      "evr": "0:0.104006-4.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "49ecab75d298e1915645c6424db88bef49de93edb84f530ffd8b1f00988fc171"
+    },
+    {
+      "name": "perl-Storable",
+      "evr": "1:3.32-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "7fa4d3084928bbc5e5cfda276c52a8772124d57ef6c31020650b09c630a1385b"
+    },
+    {
+      "name": "perl-Sub-Exporter",
+      "evr": "0:0.991-7.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "d72c51eca8d144757e48a55c76d1c9135ccc49e69d0f3079542f15949d2e10ba"
+    },
+    {
+      "name": "perl-Sub-Install",
+      "evr": "0:0.929-8.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "92cb80f1f0a99a083dfa317fc12b0af726536ae91a0f07a11d4ac62b760d81d7"
+    },
+    {
+      "name": "perl-Switch",
+      "evr": "0:2.17-33.el10_1",
+      "arch": "noarch",
+      "repository": "epel-almadial",
+      "sha256": "fd470d089ae27612fdf331345dafa46f893f25da95a257360857dc49025bdf48"
+    },
+    {
+      "name": "perl-Symbol",
+      "evr": "0:1.09-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "6812dec84019716837e33bae8700473e5b2e874091c1a288a8dbb1726153c5c2"
+    },
+    {
+      "name": "perl-Sys-Hostname",
+      "evr": "0:1.25-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "b0a46c230c847d20f398b9814f5d57255d326b9b127183e53f090febf2324bfc"
+    },
+    {
+      "name": "perl-Sys-Syslog",
+      "evr": "0:0.36-512.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "9692e3a189c1872e968427d4ba8538804bd584ecfb573fc1efb0dd63d213f1dc"
+    },
+    {
+      "name": "perl-Term-ANSIColor",
+      "evr": "0:5.01-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c757e16b96fdca79291ff666856b382e77f79e771346bdca9d1506c3fae8453b"
+    },
+    {
+      "name": "perl-Term-Cap",
+      "evr": "0:1.18-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e6c0e01f8d0170d762de6f3d481c064186b35aafb2afefa8218708b637e4ecb6"
+    },
+    {
+      "name": "perl-Term-Complete",
+      "evr": "0:1.403-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f79ccfdef83bcc3d0425411387915ed8065e98f2ceb6fe02965034b5ade87dbc"
+    },
+    {
+      "name": "perl-Term-ReadLine",
+      "evr": "0:1.17-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "41bde263dee0557bb68f9f1d2baa8d57c8d3df3fba08a5d94ecdde225220d3b2"
+    },
+    {
+      "name": "perl-Term-Table",
+      "evr": "0:0.018-513.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "54d4b0d6a536a56a7e70c80cc43760684f43fcd140e3127d329e2a831f35d9bf"
+    },
+    {
+      "name": "perl-Test",
+      "evr": "0:1.31-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c070ca356ba1f71ae941a4b48c70eb6eea140fb8851e89fe70b444e7c15c5a25"
+    },
+    {
+      "name": "perl-Test-Harness",
+      "evr": "1:3.48-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4f95d7364a0d07a80da4d923104c661dee34ac09ec600bd4ce092569a36049fd"
+    },
+    {
+      "name": "perl-Test-Simple",
+      "evr": "3:1.302199-513.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f7ad13060a6ce8c7350f38ac58bf877d7d3a5a044cbeb996be20ef71442458cf"
+    },
+    {
+      "name": "perl-Test2-Suite",
+      "evr": "0:0.000163-4.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "d407092af2e0551d68c5322def158e0c2186de661b7d4ba55c200fff3d027efc"
+    },
+    {
+      "name": "perl-Text-Abbrev",
+      "evr": "0:1.02-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "43665b451f519dbeb4b8a05f066cc6481f8b6c143cf3e594852598a3a6b222ee"
+    },
+    {
+      "name": "perl-Text-Balanced",
+      "evr": "0:2.06-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e71870819c5c42fd438d7d953882ad7590f485fa203f6ffd126fa80ce23d5ad1"
+    },
+    {
+      "name": "perl-Text-Diff",
+      "evr": "0:1.45-25.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e00ee70dd4ceabced699fbd177a1a29415a76edd245c4e0a8848c1e42b5f2d79"
+    },
+    {
+      "name": "perl-Text-Glob",
+      "evr": "0:0.11-26.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "310cfa9b6f4c386904656354c718e82a8ee8c2b24da4d6822024529409bd05f6"
+    },
+    {
+      "name": "perl-Text-ParseWords",
+      "evr": "0:3.31-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "371701469ff48ff7c2fd9fa1903bdf1d449513352f8e8e26fec7c7f9f8f2585c"
+    },
+    {
+      "name": "perl-Text-Tabs+Wrap",
+      "evr": "0:2024.001-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f65456625bbdb4d7e02f8795ff00f2026f716382178d6a768f76dec7e6e638ca"
+    },
+    {
+      "name": "perl-Text-Template",
+      "evr": "0:1.61-8.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "6c777da05ff3a242770e64e19d09508de4eb157e33cd58f9f98c5c9ca6ecaa71"
+    },
+    {
+      "name": "perl-Thread",
+      "evr": "0:3.05-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "342387b69d0d36619df2041b925e664c5a207142020f6c17137a4ef5e7f9f184"
+    },
+    {
+      "name": "perl-Thread-Queue",
+      "evr": "0:3.14-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "d797fbefb163376189a49252c6cb0f7a53f6a66d31c5fece7e6039fa36d6b703"
+    },
+    {
+      "name": "perl-Thread-Semaphore",
+      "evr": "0:2.13-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "2d138bc731d07a757d3301cd9d65f224ad3c2a96be63b1b60cd24e1c3ddfd0e5"
+    },
+    {
+      "name": "perl-Tie",
+      "evr": "0:4.6-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e7694d6af15a4e0a27f0f2619e94bf0671e47509e7b2fadd52f4f6e193ada11c"
+    },
+    {
+      "name": "perl-Tie-File",
+      "evr": "0:1.09-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "8a33b58207a8349608b744f83eb4dc94995c8d4315559c15ba26bfd0793fac03"
+    },
+    {
+      "name": "perl-Tie-Memoize",
+      "evr": "0:1.1-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a59eb6b1ae8899f296df3fcf49cd61046571493289821a2c792002f2a31c4027"
+    },
+    {
+      "name": "perl-Tie-RefHash",
+      "evr": "0:1.40-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "7f6c20d84ee7b8ab89a05c23d3933a20671230751af20162b0cf55c53b1f0534"
+    },
+    {
+      "name": "perl-Time",
+      "evr": "0:1.04-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "648dff6e0b21d2c42534adf498ff6f73ddc53f26c65c64ad56180a18d42fc119"
+    },
+    {
+      "name": "perl-Time-HiRes",
+      "evr": "4:1.9777-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "cd487a1affd661d12038d0468f4503aa2f115767b659054b62c0c78923704489"
+    },
+    {
+      "name": "perl-Time-Local",
+      "evr": "2:1.350-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "3a4cb41e150dc2f774c690fc8257b7f5064a3b5b1f4f40cb5438e1d125224347"
+    },
+    {
+      "name": "perl-Time-Piece",
+      "evr": "0:1.3401-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "5437703e2f0a0fa0a2660a19d1188c5a7bf0ac879fa4890d1a9b4750072ff35e"
+    },
+    {
+      "name": "perl-URI",
+      "evr": "0:5.27-4.el10_3",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "cd8a57fa43ea29a6919c642ac73c7c9646aa7f92161c4fe8c3ca71196381cbdf"
+    },
+    {
+      "name": "perl-Unicode-Collate",
+      "evr": "0:1.31-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "53dab41617382e875cead89220196eae775dbec4f2d9bb33b18e06399a647324"
+    },
+    {
+      "name": "perl-Unicode-Normalize",
+      "evr": "0:1.32-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "a332100b9e71b4297a76c6af463cf35e53be73ad56ba0d4ff84e8445dae913cc"
+    },
+    {
+      "name": "perl-Unicode-UCD",
+      "evr": "0:0.78-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4307fa601ecd6edee189194d08a35b90113a9dc2e1e1c6a6a66195ec18e8d8ce"
+    },
+    {
+      "name": "perl-User-pwent",
+      "evr": "0:1.05-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "116856c6ec904a94c4b9e26465c0f24d542f6ac279c1065c986de45686011ec0"
+    },
+    {
+      "name": "perl-autodie",
+      "evr": "0:2.37-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "eaef9a8864dab0bb3e507f4dad0bc90c3bd75037ce8262fd32a8642b578210e1"
+    },
+    {
+      "name": "perl-autouse",
+      "evr": "0:1.11-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c92493fe5c4a3219b4b5313325c3ff68fc3d174cbe86b442e42cb89e470aac60"
+    },
+    {
+      "name": "perl-base",
+      "evr": "0:2.27-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9be41847f8862fdbf8b1e5c6e81cd416a80f62bffde4ab2cddf02837e9ce25ff"
+    },
+    {
+      "name": "perl-bignum",
+      "evr": "0:0.67-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "93cc32a35c0b74c751bd1351dc9547f34cb5ac6d6b0fe78631b33bb29192a0e1"
+    },
+    {
+      "name": "perl-blib",
+      "evr": "0:1.07-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "cc2a05ecd7afe0c7472aafc23a4ebe0fc7d88f744f8db7f22c533cb55779d38a"
+    },
+    {
+      "name": "perl-constant",
+      "evr": "0:1.33-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "00221c59085f4a9ec4ebc5d547bcf5e3d9ec2ab3a057a0b351b4f0d029ecff74"
+    },
+    {
+      "name": "perl-debugger",
+      "evr": "0:1.60-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "fb02e587b5524c489f54e76bb0796c696e9a08765198c33a0f44aa81847457a2"
+    },
+    {
+      "name": "perl-deprecate",
+      "evr": "0:0.04-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c05f4aa40a78c4f09380639cbcbbbd486d773026ea9acccf16495fcdb03be30f"
+    },
+    {
+      "name": "perl-devel",
+      "evr": "4:5.40.2-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "744ff48a6813b6e1dce94593435dfc3779a05f8192d4f8c7cc889a5471dca48a"
+    },
+    {
+      "name": "perl-diagnostics",
+      "evr": "0:1.40-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c8f1dc682cb1f2bf17efbda24578b0e02926b13a3e818a6d145dd4265d6ece39"
+    },
+    {
+      "name": "perl-doc",
+      "evr": "0:5.40.2-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "6cad19426ac95604a5cd8d62f8a8ffb5a38b8e8d807a982102a412825683beb8"
+    },
+    {
+      "name": "perl-encoding",
+      "evr": "4:3.00-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "2b9d009dcc9e820041fe3a17a28befcdddb90689e7e989badbac8f9ea0b6ad76"
+    },
+    {
+      "name": "perl-encoding-warnings",
+      "evr": "0:0.14-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "b8ecd57b3ebe7a0915a2932be16e7cefb2daa9d9c21ab1bc51e41bc4b14f252f"
+    },
+    {
+      "name": "perl-experimental",
+      "evr": "0:0.032-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "df3ccd55d1cdaf5ccd090abed5605e8579ebb0f572768badfd59f1837f3284d9"
+    },
+    {
+      "name": "perl-fields",
+      "evr": "0:2.27-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e70d012a4965534f70adb38c3bada5c20cbb42fc8ab2e8b685cba1d6ae51ac75"
+    },
+    {
+      "name": "perl-filetest",
+      "evr": "0:1.03-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "5ea84443d067654a9188b0fbdea88de0a413a87cca469418d8a7a2c81a63eb47"
+    },
+    {
+      "name": "perl-if",
+      "evr": "0:0.61.000-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "d81719bd35a08f147b531c2c7251abb2fdd658f32d157ad322f18d5db317b398"
+    },
+    {
+      "name": "perl-inc-latest",
+      "evr": "2:0.500-30.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "82d28276df1122d6ea851410a69a8d2b3a197ff21f611421e075d5182be7e42b"
+    },
+    {
+      "name": "perl-interpreter",
+      "evr": "4:5.40.2-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "178b05e114dd51f7ed632d6381c563ade2c69b4bc5b0329d50068fa3eb96f122"
+    },
+    {
+      "name": "perl-less",
+      "evr": "0:0.03-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "aff27fa71a37ec8dd7133ac6cfe955671da4baaa92fd1ce496e7930d188a4556"
+    },
+    {
+      "name": "perl-lib",
+      "evr": "0:0.65-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "f1d6ac4ccce329994e2b461b649772fc8b369d7fc014acffad79c38380068d06"
+    },
+    {
+      "name": "perl-libnet",
+      "evr": "0:3.15-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "1c7a64f05cf253c039ec909729408925c259d751fa764b47af823a4b5fac0ca1"
+    },
+    {
+      "name": "perl-libnetcfg",
+      "evr": "4:5.40.2-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "b6dd427dc290c38944e15a0c841f529374558fd9cc21cdb584dd0c8fe7bf32f7"
+    },
+    {
+      "name": "perl-libs",
+      "evr": "4:5.40.2-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "f45408b3fecf258f0eacb9bc7b282a204a87a2731f66c5a0ccd70e27feb26a0c"
+    },
+    {
+      "name": "perl-local-lib",
+      "evr": "0:2.000029-9.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "e69645d8c4e0b66033073578e788b58478e21260a6e3509e2ab8b06429b43d6c"
+    },
+    {
+      "name": "perl-locale",
+      "evr": "0:1.12-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c17fc22826e6adf2289f1e63d4d28f43d7938df26a23fabca9f891cd7a93313e"
+    },
+    {
+      "name": "perl-macros",
+      "evr": "4:5.40.2-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "fc7b48c861b581799e1c2bfb69697896fbacdd6dc84be691b3671b469cbd76bc"
+    },
+    {
+      "name": "perl-meta-notation",
+      "evr": "0:5.40.2-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "fe5a31ee08cb8e227798d7a83e589736648047ac72ce10ce68043d70bf3bd8f0"
+    },
+    {
+      "name": "perl-mro",
+      "evr": "0:1.29-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "2570ca7448e8d355eee8b6c565f22b2f478b23b17e8ba20e0b6451a54a047d6d"
+    },
+    {
+      "name": "perl-open",
+      "evr": "0:1.13-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "ef32423ccb9fb8aadb65d75956ca93b17f2d48ad869a00265d5b18e074f9e67d"
+    },
+    {
+      "name": "perl-overload",
+      "evr": "0:1.37-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "d3c7074b151fa50dc7404bf110e451f8a9847525e8e29fd17009086ae4ebb2e4"
+    },
+    {
+      "name": "perl-overloading",
+      "evr": "0:0.02-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "7696783c9ba2e5642cd1a30e303621daf02bf97a44f97abb2711b7d17befd20b"
+    },
+    {
+      "name": "perl-parent",
+      "evr": "1:0.241-512.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "48d35217133b3b82b86419803e6e0f4b62e5f7eedc987e3c52ade2c541c6b8a9"
+    },
+    {
+      "name": "perl-perlfaq",
+      "evr": "0:5.20240218-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "6faef71d77d814ed09b4ff2478987a6c79d2da894214e7ddb190f82917844482"
+    },
+    {
+      "name": "perl-ph",
+      "evr": "0:5.40.2-515.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "a9e4441d2fa0aed00bec3dcb037ac0e3949b5cd6d64b27061a89950ccf3587e2"
+    },
+    {
+      "name": "perl-podlators",
+      "evr": "1:5.01-511.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "0a91f03c8a56457bb7d9a11eebc0a6cbe714d2ba3db9a5c7b38e8895d59934a0"
+    },
+    {
+      "name": "perl-sigtrap",
+      "evr": "0:1.10-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c4a150e1b3c392d2bb8602ece64c0a1216c248abcea67c2a9379cb46a1911ce8"
+    },
+    {
+      "name": "perl-sort",
+      "evr": "0:2.05-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "f00ca350e4e5d6843b1ed839dabd26abfce7f303dffa9b76559b86b7160eef9c"
+    },
+    {
+      "name": "perl-srpm-macros",
+      "evr": "0:1-57.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "c36cdcd1cb756cfddedd26684ee17c6b160abb0b3fffe845457b3191a322d881"
+    },
+    {
+      "name": "perl-subs",
+      "evr": "0:1.04-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "a45bb41b5f9be010da79ffbb237a445e115026b6a66594ff029d7993071754f8"
+    },
+    {
+      "name": "perl-threads",
+      "evr": "1:2.40-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "6a04fc9865fc4e58e062cc49b41e8efd410b768d2f11af2e52b649afaad5e387"
+    },
+    {
+      "name": "perl-threads-shared",
+      "evr": "0:1.69-511.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "4e8b9435c09c2bc99f035fab09e4c6ab980c76a9604e299d28f0f55cbe3297a2"
+    },
+    {
+      "name": "perl-utils",
+      "evr": "0:5.40.2-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9cf990e411b795dac07fb0e455ab88d72d70095974d3606451d554b1a89ed148"
+    },
+    {
+      "name": "perl-vars",
+      "evr": "0:1.05-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "93da3932faa665745d14ccf5a9ddd860f562d08fbe184619cd4a7b8b274fe012"
+    },
+    {
+      "name": "perl-version",
+      "evr": "8:0.99.32-4.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "b105c7f6f1fefb036795f403d07cfc5b47ab5a8598d8c100b16d121923a358b5"
+    },
+    {
+      "name": "perl-vmsish",
+      "evr": "0:1.04-515.el10_2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "114d1690b48e176ae300aa8758eb208c31d1b490b24d8ee9e87ba6f5d21cc209"
+    },
+    {
+      "name": "php-cli",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "9173988150edb564c4ffeb3cab60a92545333dae1d35d6e4eb8071818be5703c"
+    },
+    {
+      "name": "php-common",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "ecc2f2c81e2686da114ba0bad9346e69441acc9b5319766e35a096a2c37838f5"
+    },
+    {
+      "name": "php-fpm",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "6010ccd9b630ce25369fccf2a092e8ee6bb5ce0d104f4248516e669d9ab05da6"
+    },
+    {
+      "name": "php-gd",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "6e35b669c23db4cc5c43d71941fd88d9a1c960434ed0d56f7cc2d192a8ffd675"
+    },
+    {
+      "name": "php-ldap",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "12578c34bbb8395e21fea68847432165def314f8d33c7004370c3fafc27fff1a"
+    },
+    {
+      "name": "php-mbstring",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "fc4bc779f9da2be318c7bee33004a3c6ec89d2064e61e195ef74107f6464d571"
+    },
+    {
+      "name": "php-mysqlnd",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "eb27f7f36f1848838863a9154fae6cb67d75fc31bfe957a20a0922fba20580b0"
+    },
+    {
+      "name": "php-opcache",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "28bb9f4c5d1190c60d8f70e153716c733778af4477c2b5d3cdd7f6e9bef7fba9"
+    },
+    {
+      "name": "php-pdo",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "61793577d62bb5abc6c68146bb36a49e0fc734e3953974624b7ad2133c7edd9a"
+    },
+    {
+      "name": "php-xml",
+      "evr": "0:8.3.36-1.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "9df1f1f8f32a25fcc02f7dbc3b2130c28a415b51a89e2f5e32ad706067ffc19c"
+    },
+    {
+      "name": "pkgconf",
+      "evr": "0:2.1.0-3.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "d51b663b352b8cfedb5793c2b3d52292f5ad18d793fbf7044ad6c39cff9f90ca"
+    },
+    {
+      "name": "pkgconf-m4",
+      "evr": "0:2.1.0-3.el10",
+      "arch": "noarch",
+      "repository": "baseos",
+      "sha256": "74cba7eb2aaa7c8bbc11f8125c01eb59b9be00fe60aa7f6b234ff448a7761824"
+    },
+    {
+      "name": "pkgconf-pkg-config",
+      "evr": "0:2.1.0-3.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "61793deb5203b99a467cfbd3f17a306ef24d3a1b905a9daf1d98bed21e3fd71a"
+    },
+    {
+      "name": "policycoreutils-python-utils",
+      "evr": "0:3.11-1.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "4120a3251a2e7046ba3e9645756326447485f288a666be3e7c6b6bdf68255fc4"
+    },
+    {
+      "name": "pyproject-srpm-macros",
+      "evr": "0:1.23.2-1.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "2a327d92cfdfc01777296122434f70f12a360856f8bd729c5e286df0b5701ec7"
+    },
+    {
+      "name": "python-srpm-macros",
+      "evr": "0:3.12-11.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "9407f3815a6838cb1cb4691d623bad32658714b15ee3d98a482741ed3dc51953"
+    },
+    {
+      "name": "python3-firewall",
+      "evr": "0:2.4.3-4.el10_2",
+      "arch": "noarch",
+      "repository": "baseos",
+      "sha256": "c008b6b62ec34fbcbae74fdd41f8a8e6deb2b742f38670141c120adf18ed290b"
+    },
+    {
+      "name": "python3-nftables",
+      "evr": "1:1.1.5-6.el10_2",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "68fcc65881baf3884ec5216bd7499f3f375eb817f6cf76a708ccf2df9dc784bb"
+    },
+    {
+      "name": "python3-pyparsing",
+      "evr": "0:3.1.1-7.el10",
+      "arch": "noarch",
+      "repository": "baseos",
+      "sha256": "bddd7ddda39e05a7ce9430b7407eaf7f832f9145aaa1380acfafb31b927fc904"
+    },
+    {
+      "name": "qt6-srpm-macros",
+      "evr": "0:6.10.1-1.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "894de6c329420bfac338492dbd3c77c6100f22775702f395c4d212f082abd6dd"
+    },
+    {
+      "name": "redhat-rpm-config",
+      "evr": "0:296-1.el10.alma.2",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "d8a082597eedfb402afa11285fc1f765a77baa237e968d7ca97bb89091b1cef2"
+    },
+    {
+      "name": "rust-toolset-srpm-macros",
+      "evr": "0:1.97.1-5.el10_3.alma.1",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "b9ceefdd234c924e9e2f5275157d0f3abb21804e704d2a0294b86e35ea3b50f7"
+    },
+    {
+      "name": "snappy",
+      "evr": "0:1.1.10-7.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "a1f84b41fde425706407c543f69c7b2726b5b330725d58f6bf406755a1bef6ad"
+    },
+    {
+      "name": "sqlite",
+      "evr": "0:3.46.1-6.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "864c27ea1f1337a7bb7572df090467c534f84ba324d708e958b75058f6a93f66"
+    },
+    {
+      "name": "sqlite-devel",
+      "evr": "0:3.46.1-6.el10_2",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "a0ee471eab3819dd7573451895d33d2694405d6f7bc6011800e0125f6d4c9c3b"
+    },
+    {
+      "name": "sscg",
+      "evr": "0:4.0.3-2.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "b5dc655107d4ef807b615ba215e49ca96b86611e4e35e54d8384c4d4e00cb1d3"
+    },
+    {
+      "name": "systemtap-sdt-devel",
+      "evr": "0:5.5-2.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "114c9b500d7ab9ad7a89f000a39132a871e17b32fb4b1d7317930aadebdf2f42"
+    },
+    {
+      "name": "systemtap-sdt-dtrace",
+      "evr": "0:5.5-2.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "cd67973f50db028d5afe6dd5984013384bc92f251d10b7a21203c1bd8827867a"
+    },
+    {
+      "name": "unzip",
+      "evr": "0:6.0-69.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "d20d5b892a953f5e19b62b743b986bc92321cab0f5035f59f92a3644335624e6"
+    },
+    {
+      "name": "xml-common",
+      "evr": "0:0.6.3-65.el10",
+      "arch": "noarch",
+      "repository": "appstream",
+      "sha256": "850cda3bbf605e45e08c33124c08b9f42eb5a3a5ce7f9947c2a124b383ebe30d"
+    },
+    {
+      "name": "xz-devel",
+      "evr": "1:5.6.2-5.el10",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "22a237585cc9aff1636e886f7d111b489044ce5a2ac7e317d7af296d34754a8d"
+    },
+    {
+      "name": "zip",
+      "evr": "0:3.0-45.el10",
+      "arch": "x86_64",
+      "repository": "baseos",
+      "sha256": "07af1dfdb517e0fd308a40757690a6080e4d5bcc688318360dd9a28c191bfa35"
+    },
+    {
+      "name": "zlib-ng-compat-devel",
+      "evr": "0:2.2.3-3.el10_1",
+      "arch": "x86_64",
+      "repository": "appstream",
+      "sha256": "fe75934dfe024057104508e9d672f08ef44b99f0f54674cbfdf1c2d5c68e0b00"
+    }
+  ],
+  "upgrades": []
+}

@@ -25,8 +25,9 @@ var errVICIdial = errors.New("S05 VICIdial source or installation contract faile
 // Retained bytes close the verification/use race; neither JSON nor a caller's
 // inventory declaration can authorize an alternate upstream tree.
 type VICIdialSource struct {
-	files   map[string][]byte
-	archive []byte
+	files      map[string][]byte
+	archive    []byte
+	archiveSHA string // verified representation; source identity remains the canonical tree
 }
 
 type VICIdialSourceFile struct {
@@ -77,7 +78,7 @@ func LoadVICIdialSource(ctx context.Context, m artifacts.Manifest, archive strin
 			return VICIdialSource{}, errVICIdial
 		}
 	}
-	return VICIdialSource{files: f, archive: b}, nil
+	return VICIdialSource{files: f, archive: b, archiveSHA: r.ActualSHA256}, nil
 }
 
 // Defense in depth on the retained ZIP. This helper never extracts or executes

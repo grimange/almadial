@@ -101,12 +101,20 @@ func Load(r io.Reader) (Manifest, error) {
 	if len(node.Content) != 1 {
 		return Manifest{}, errors.New("manifest: empty document")
 	}
+	var identity manifestDocument
+	if node.Decode(&identity) != nil {
+		return Manifest{}, errors.New("manifest: invalid OS selection")
+	}
+	policy := manifestLeaves(identity.OS.Release)
+	if policy == nil {
+		return Manifest{}, errors.New("manifest: unsupported AlmaLinux release; select explicit 10.3 current or historical 10.2 policy")
+	}
 	seen := map[string]bool{}
-	if err = validateNode(node.Content[0], "", seen); err != nil {
+	if err = validatePolicyNode(node.Content[0], "", seen, policy); err != nil {
 		return Manifest{}, err
 	}
-	keys := make([]string, 0, len(approvedLeaves))
-	for k := range approvedLeaves {
+	keys := make([]string, 0, len(policy))
+	for k := range policy {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)
@@ -122,6 +130,9 @@ func Load(r io.Reader) (Manifest, error) {
 	return Manifest{doc: d, digest: digestBytes(b)}, nil
 }
 func validateNode(n *yaml.Node, path string, seen map[string]bool) error {
+	return validatePolicyNode(n, path, seen, approvedLeaves)
+}
+func validatePolicyNode(n *yaml.Node, path string, seen map[string]bool, policy map[string]leaf) error {
 	if n.Anchor != "" || n.Kind == yaml.AliasNode {
 		return errors.New("manifest: aliases and anchors are not supported")
 	}
@@ -142,7 +153,7 @@ func validateNode(n *yaml.Node, path string, seen map[string]bool) error {
 			}
 			// Unknown names may contain sensitive input; never echo them.
 			known := false
-			for p := range approvedLeaves {
+			for p := range policy {
 				if p == next || len(p) > len(next) && p[:len(next)+1] == next+"." {
 					known = true
 					break
@@ -151,13 +162,13 @@ func validateNode(n *yaml.Node, path string, seen map[string]bool) error {
 			if !known {
 				return errors.New("manifest: unknown field")
 			}
-			if err := validateNode(n.Content[i+1], next, seen); err != nil {
+			if err := validatePolicyNode(n.Content[i+1], next, seen, policy); err != nil {
 				return err
 			}
 		}
 		return nil
 	}
-	expected, ok := approvedLeaves[path]
+	expected, ok := policy[path]
 	if !ok || n.Kind != yaml.ScalarNode {
 		return errors.New("manifest: unsupported structure")
 	}
@@ -185,3 +196,5 @@ func (m Manifest) InstallationAuthorized() bool { return false }
 func (m Manifest) Packages() map[string]RPM {
 	return map[string]RPM{"mariadb": m.doc.MariaDB, "php": m.doc.PHP, "perl": m.doc.Perl, "apache": m.doc.Apache, "srtp": m.doc.SRTP, "jansson": m.doc.Jansson}
 }
+
+func (m Manifest) Release() string { return m.doc.OS.Release }

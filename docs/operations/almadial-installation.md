@@ -1,12 +1,10 @@
 # AlmaDial operator installation
 
-The standard-installer correction targets fresh **AlmaLinux 10.2 x86_64**
-single-server installations. `alm34-standard-rc1` is a locally prepared candidate;
-publication and independent operator acceptance are separate gates. The previous
-public `alm46-internet-rc1` files and checksums remain unchanged. Its accepted
-native runtime and controlled-network functional QA remain historical evidence;
-that release does not include this usability correction. Public-host qualification
-must be reported separately from controlled-topology developer tests.
+Fresh standard installations target **AlmaLinux 10.3 x86_64**. The corrected
+candidate is `alm34-alma103-rc1`; publication and independent operator acceptance
+are separate gates. The published `alm46-internet-rc1` files and checksums remain
+unchanged, alongside their historical AlmaLinux 10.2 qualification. Public-host
+qualification remains separate from controlled-topology developer tests.
 
 ## Requirements and resource guidance
 
@@ -103,7 +101,8 @@ Matching private key PEM absolute path
 Issuing CA trust PEM absolute path
 RTP UDP first port (even, at least 1024) [10000]
 RTP UDP last port (open this exact range on the server network) [10019]
-<verified source acquisition, installation warning, actual immutable plan JSON and SHA-256>
+<verified public sources and complete signed RPM transaction test>
+<installation warning, actual immutable plan JSON and SHA-256>
 Approve this exact plan and execute the installation (yes/no) [no] (cancel to stop):
 ```
 
@@ -205,16 +204,39 @@ sanitized finding. Independent human acceptance follows the published procedure
 without implementer repair; AGY separately assesses that evidence. Developer
 qualification does not establish independent acceptance.
 
-## Current candidate qualification limitation
+## Release-specific packages and historical recovery
 
-`alm34-standard-rc1` is prepared locally, unpublished and **not yet qualified for
-operator retest**. Its clean AlmaLinux 10.2 developer run reached standard
-exact-plan approval and verified public application source acquisition, then
-stopped safely at RPM resolution. The configured repositories offered 10.3
-replacements for the accepted `gcc`, `gcc-c++`, `libuuid-devel`, `libxml2-devel`,
-`openssl-devel` and `perl-DBI` pins. The installer did not substitute those
-versions. Preserve the saved plan and journals; a reviewed repository-retention
-or stack-policy decision is required before qualification can complete. Do not
-manually install replacements, alter the saved plan, or infer runtime health
-from this partial installation. Historical ALM-46 runtime acceptance remains
-limited to its recorded versions and topology.
+The current installer selects only the reviewed AlmaLinux 10.3 package policy.
+Before approval it downloads the complete DNF-resolved transaction, verifies each
+payload checksum and pinned signing key, and runs the native RPM transaction test.
+The immutable plan records the policy digest, exact NEVRAs, originating repositories
+and payload SHA-256 values. Apply re-resolves and verifies the same transaction;
+repository drift never permits substituting another version. Missing packages,
+conflicts, unavailable repositories or untrusted payloads stop installation.
+
+Enable the official AlmaLinux BaseOS, AppStream, CRB and extras definitions with
+GPG checking and TLS verification enabled. AlmaDial uses release-specific official
+10.3 repository URLs in memory and a restricted official EPEL 10.3 source for its
+six pinned Perl dependencies; it does not rewrite repository files or enable a
+general EPEL repository. Allow outbound HTTPS to `repo.almalinux.org` and
+`dl.fedoraproject.org`, in addition to the documented application source origins.
+Do not run an OS upgrade or unrelated package transaction during installation.
+
+Preserve the exact saved plan, sources, TLS material and journals on resume.
+If RPM application was interrupted, follow the reported reconciliation boundary;
+do not remove RPM locks or the journal to force progress. If a required repository
+is unavailable or its exact packages changed, restore connectivity/availability
+of the approved packages or obtain an explicitly reviewed new installation path.
+A completed healthy installation verifies actual installed state and can reach
+NO_OP without re-resolving a new transaction. An unfinished package transaction
+still needs its original approved repositories and payload identities.
+
+Historical saved AlmaLinux 10.2 plans continue to use their original manifest,
+authorization, adapter bytes and journal digests. They never switch automatically
+to 10.3. The exact historical direct pins remain in official 10.2 Vault metadata,
+but live repositories follow the current minor release. Archived reconstruction
+and its qualification limits are documented in the
+[release package policy](../compatibility/alm34-release-package-policy.md).
+Do not mix 10.2 and 10.3 RPMs, downgrade core packages, edit plan identities or
+retarget repositories on a partially installed host. Fresh 10.2 installations
+are not the current standard workflow.

@@ -18,3 +18,6 @@ var Signature []byte
 //
 //go:embed acquisition-origins.json
 var Origins []byte
+
+//go:embed stack-almalinux-10.3.lock.yaml
+var Manifest103 []byte

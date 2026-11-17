@@ -29,6 +29,7 @@ type InstallRequest struct {
 	Phone         PhoneRequest
 	Sources       InstallSourcePaths
 	Authorization InstallAuthorization
+	Packages      *PackageSelection `json:",omitempty"`
 }
 type InstallSourcePaths struct {
 	VICIdial, Perl, Asterisk, Signature, Keyring, Scratch, PJProject, Phone string
@@ -106,6 +107,16 @@ func PrepareInstall(r InstallRequest, initial Inputs, m artifacts.Manifest, sour
 			return InstallPlan{}, errInstall
 		}
 	} else if r.TLS.Mode != "provided" || r.TLS.Hostname != "localhost" || r.Phone.Hostname != "localhost" {
+		return InstallPlan{}, errInstall
+	}
+	if m.Release() != initial.Inventory.Release || initial.Preflight.Release != initial.Inventory.Release {
+		return InstallPlan{}, errInstall
+	}
+	if initial.Inventory.Release == "10.3" {
+		if r.Packages == nil || r.Packages.validate(initial.Inventory) != nil {
+			return InstallPlan{}, errors.New("AlmaLinux 10.3 requires its exact, fully resolved package selection before plan approval")
+		}
+	} else if r.Packages != nil {
 		return InstallPlan{}, errInstall
 	}
 	a := r.Authorization
@@ -337,7 +348,7 @@ func (r *installRun) phoneNative(i PhoneInputs) PhoneNative {
 	ast := i.Parent.Parent.Parent.Parent.Parent.Parent
 	db := ast.Parent
 	app := VICIdialNative{Asterisk: AsteriskNative{Database: DatabaseNative{Native: r.native, Budget: db.Parent.Budget, Source: r.sources.Database}, Source: r.sources.Asterisk}, Accepted: ast.Snapshot, DatabaseAccepted: db.Snapshot, Source: r.sources.Application, Dependency: r.sources.Perl}
-	return PhoneNative{Network: NetworkNative{TLS: TLSNative{Web: WebNative{Runtime: RuntimeNative{Application: app}}, Request: i.Parent.Parent.Request, Certificate: i.Parent.Parent.Certificate}, Request: i.Parent.Request, Dependencies: i.Parent.Dependencies}, Request: i.Request, Source: r.sources.Phone}
+	return PhoneNative{Network: NetworkNative{TLS: TLSNative{Web: WebNative{Runtime: RuntimeNative{Application: app, ManagementSSHPort: r.d.Request.Network.SSHPort}}, Request: i.Parent.Parent.Request, Certificate: i.Parent.Parent.Certificate}, Request: i.Parent.Request, Dependencies: i.Parent.Dependencies}, Request: i.Request, Source: r.sources.Phone}
 }
 
 func (r *installRun) rpm(name string, i Inputs) (Outcome, error) {
@@ -397,14 +408,26 @@ func (r *installRun) packages() error {
 	i.PrepareRepositoryTrust = false
 	var tx Transaction
 	if e = r.read("S01-transaction", &tx); errors.Is(e, os.ErrNotExist) {
-		outcome, ee := r.rpm("S01-resolve", i)
-		if ee != nil {
-			return ee
+		if selection := r.d.Request.Packages; selection != nil {
+			expected := resolutionSnapshot(r.d.Initial.Inventory)
+			if expected.Digest() != fresh.Digest() {
+				return errPolicy
+			}
+			tx = selection.Transaction
+			tx.BeforeSHA256 = fresh.Digest()
+			if tx.Validate(fresh) != nil {
+				return errPolicy
+			}
+		} else {
+			outcome, ee := r.rpm("S01-resolve", i)
+			if ee != nil {
+				return ee
+			}
+			if outcome.Transaction == nil {
+				return errors.New("S01 resolution output unavailable after interruption; preserve journal and obtain a newly reviewed metadata-only resolution")
+			}
+			tx = *outcome.Transaction
 		}
-		if outcome.Transaction == nil {
-			return errors.New("S01 resolution output unavailable after interruption; preserve journal and obtain a newly reviewed metadata-only resolution")
-		}
-		tx = *outcome.Transaction
 		if e = r.preserve("S01-transaction", tx); e != nil {
 			return e
 		}
@@ -543,7 +566,7 @@ func (r *installRun) backend() error {
 	if e != nil {
 		return e
 	}
-	runtime := RuntimeNative{Application: application}
+	runtime := RuntimeNative{Application: application, ManagementSSHPort: r.d.Request.Network.SSHPort}
 	rt, e := driveInstallStage(r, "S06", func() (RuntimeInputs, error) {
 		s, e := runtime.InspectRuntime(r.ctx)
 		return RuntimeInputs{Parent: app, Snapshot: s}, e
@@ -647,7 +670,9 @@ func (r *installRun) firewallPackages(base Inputs) (NetworkDependencies, error) 
 			return dependencies, errInstall
 		}
 		var candidates []Candidate
-		if json.Unmarshal([]byte(networkDependencyCandidates), &candidates) != nil {
+		if before.Release == "10.3" {
+			candidates = []Candidate{}
+		} else if json.Unmarshal([]byte(networkDependencyCandidates), &candidates) != nil {
 			return dependencies, errInstall
 		}
 		dependencies = NetworkDependencies{Before: before, Transaction: normalize(Transaction{BeforeSHA256: before.Digest(), Install: candidates, Remove: []Package{}})}

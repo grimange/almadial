@@ -1,5 +1,9 @@
 # Deployment profiles
 
+Current fresh installations use the qualified AlmaLinux 10.3 package policy.
+Historical 10.2 plans retain their original identity; this is not an OS upgrade
+path. See the [release package policy](../compatibility/alm34-release-package-policy.md).
+
 Both profiles use the same immutable plan, exclusive execution lock, durable
 journal and postcondition checks. Select the profile in `almadial install`.
 Remote is the default selection; it is not a production readiness assertion.
@@ -7,7 +11,7 @@ Remote is the default selection; it is not a production readiness assertion.
 ## Product deployment contract
 
 **Standard remote deployment is the product acceptance target.** A supported
-AlmaLinux 10.2 x86_64 physical server, cloud VM or VPS must obtain the published,
+AlmaLinux 10.3 x86_64 physical server, cloud VM or VPS must obtain the published,
 versioned, integrity-verified CLI and every pinned source through ordinary
 internet access, without developer-LAN routes, Multipass, Go, Git, manual source
 transfers or mandatory distribution overrides. Public source defaults and optional

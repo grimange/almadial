@@ -13,7 +13,10 @@ import (
 	"github.com/grimange/almadial/internal/operatorui"
 )
 
-type RuntimeSnapshot struct{ Host, Foundation, Foreign, Files, Services, Health string }
+type RuntimeSnapshot struct {
+	Host, Foundation, Foreign, Files, Services, Health string
+	SSHPort                                            uint16 `json:",omitempty"`
+}
 
 func (s RuntimeSnapshot) Digest() string { return hash(s) }
 func runtimeReady(s RuntimeSnapshot) bool {
@@ -33,10 +36,13 @@ func runtimeSatisfied(s RuntimeSnapshot) bool {
 	return runtimeReady(s) && shaPattern.MatchString(s.Files) && shaPattern.MatchString(s.Services) && shaPattern.MatchString(s.Health)
 }
 func RuntimePolicyDigest() string {
+	return runtimePolicyDigestForSSH(0)
+}
+func runtimePolicyDigestForSSH(port uint16) string {
 	return hash(struct {
 		Inventory                                                        []RuntimeComponent
 		Cron, FastAGI, Updater, Listener, Readiness, Adapter, Derivation string
-	}{RuntimeInventory(), RuntimeCron(), runtimeUnit("fastagi", "FastAGI_log.pl", true), runtimeUnit("updater", "AST_update.pl", false), runtimeUnit("listener", "AST_manager_listen.pl", false), runtimeReadiness, runtimeAdapter(), runtimeDerivationSource})
+	}{RuntimeInventory(), RuntimeCron(), runtimeUnit("fastagi", "FastAGI_log.pl", true), runtimeUnit("updater", "AST_update.pl", false), runtimeUnit("listener", "AST_manager_listen.pl", false), runtimeReadiness, runtimeAdapterForSSH(port), runtimeDerivationSource})
 }
 
 type RuntimeInputs struct {
@@ -91,7 +97,7 @@ func (i RuntimeInputs) Prepare(m artifacts.Manifest, source VICIdialSource, perl
 	if e != nil {
 		return RuntimeStage{}, e
 	}
-	d := runtimeStageData{parent.Digest(), parent.doc().Config, m.Digest(), source.Digest(), RuntimePolicyDigest(), i.Snapshot}
+	d := runtimeStageData{parent.Digest(), parent.doc().Config, m.Digest(), source.Digest(), runtimePolicyDigestForSSH(i.Snapshot.SSHPort), i.Snapshot}
 	return RuntimeStage{jsonString(d), g}, nil
 }
 
@@ -102,7 +108,7 @@ type RuntimeLabAuthorization struct {
 
 func (a RuntimeLabAuthorization) validate(s RuntimeStage, m artifacts.Manifest) error {
 	d := s.doc()
-	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-21/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || a.PolicySHA256 != RuntimePolicyDigest() || d.Policy != a.PolicySHA256 || !a.DialingInactive {
+	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-21/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || a.PolicySHA256 != runtimePolicyDigestForSSH(d.Before.SSHPort) || d.Policy != a.PolicySHA256 || !a.DialingInactive {
 		return errRuntime
 	}
 	return nil
@@ -119,7 +125,7 @@ type runtimeChecks struct {
 }
 
 func runtimeSameFoundation(a, b RuntimeSnapshot) bool {
-	return a.Host == b.Host && a.Foundation == b.Foundation && a.Foreign == b.Foreign
+	return a.Host == b.Host && a.Foundation == b.Foundation && a.Foreign == b.Foreign && a.SSHPort == b.SSHPort
 }
 func runtimeValue(s RuntimeSnapshot, id string) string {
 	switch id {

@@ -16,6 +16,8 @@ import re
 import sqlite3
 import sys
 import traceback
+import tempfile
+import subprocess
 
 import dnf
 import hawkey
@@ -129,15 +131,23 @@ def solve(request):
         base.conf.skip_if_unavailable = False
         base.conf.best = True
         base.conf.exit_on_lock = True
-        base.conf.substitutions["releasever"] = "10"
+        policy = request.get("policy")
+        base.conf.substitutions["releasever"] = policy["release"] if policy else "10"
         # No persistent .repo changes or key imports. The only EPEL packages
         # visible to the solver are the six qualified, pinned M0 Perl RPMs.
         for repo in base.repos.values():
             if repo.id not in ("appstream", "baseos", "crb", "extras"):
                 repo.disable()
             repo.skip_if_unavailable = False
+            if policy and repo.id in policy["repositories"]:
+                repo.mirrorlist, repo.metalink = "", ""
+                repo.baseurl = [policy["repositories"][repo.id]]
+                repo.gpgcheck, repo.sslverify = True, True
+                repo.metadata_expire = 0
         epel = dnf.repo.Repo("epel-almadial", base.conf)
         epel.baseurl = ["https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/"]
+        if policy:
+            epel.baseurl = [policy["repositories"]["epel-almadial"]]
         epel.gpgcheck, epel.sslverify = True, True
         epel.skip_if_unavailable = False
         epel.includepkgs = [p["name"] for p in request["packages"] if p["repository"] == "epel-almadial"]
@@ -156,7 +166,7 @@ def solve(request):
         txn = dict(before_sha256=request["before_sha256"],
                    install=sorted(installs, key=lambda p: p["name"] + "-" + p["evr"] + "." + p["arch"] + p["repository"]),
                    remove=sorted([identity(p) for p in base.transaction.remove_set], key=lambda p: p["name"]))
-        if request["mode"] == "apply":
+        if request["mode"] == "apply" or policy:
             # RPM, rather than a Go/string version comparator, establishes
             # direction. Go separately restricts these to seven exact updates.
             for old in txn["remove"]:
@@ -172,26 +182,67 @@ def solve(request):
                 raise ValueError("origin")
             if p["repository"] == "epel-almadial" and identity_fields(p) not in request["packages"]:
                 raise ValueError("epel scope")
-        if request["mode"] == "apply":
-            if txn != request["transaction"]:
+        if request["mode"] == "apply" or policy:
+            if request["mode"] == "apply" and txn != request["transaction"]:
                 raise ValueError("stale transaction")
             base.download_packages(base.transaction.install_set)
             for p in base.transaction.install_set:
                 if file_hash(p.localPkg()) != next(c["sha256"] for c in installs if c["name"] == p.name):
                     raise ValueError("payload checksum")
                 # No implicit key import: only already reviewed RPM keyring trust.
-                if base.package_signature_check(p)[0] != 0:
+                if policy:
+                    verify_isolated_signature(p.localPkg(), request["public_key"])
+                elif base.package_signature_check(p)[0] != 0:
                     raise ValueError("signature")
-                with open(p.localPkg(), "rb") as handle:
-                    hdr = rpm.TransactionSet().hdrFromFdno(handle.fileno())
+                if policy:
+                    hdr = verified_header(p.localPkg(), request["public_key"])
+                else:
+                    with open(p.localPkg(), "rb") as handle:
+                        hdr = rpm.TransactionSet().hdrFromFdno(handle.fileno())
                 expected = "33d98517e37ed158" if p.reponame == "epel-almadial" else "dee5c11cc2a1e572"
                 if not hdr.sprintf("%{RSAHEADER:pgpsig}").lower().endswith("key id " + expected):
                     raise ValueError("signer")
             if canonical_snapshot(inspect()) != canonical_snapshot(request["before"]):
                 raise ValueError("stale host")
-            if installs:
+            if installs and policy and request["mode"] == "resolve":
+                # DNF's native RPM test performs dependency/file-conflict checks
+                # and returns before history, scriptlets or package mutation.
+                base.conf.tsflags = ["test"]
+                if not base._ts.isTsFlagSet(rpm.RPMTRANS_FLAG_TEST):
+                    raise ValueError("RPM test flag unavailable")
+                base.do_transaction()
+            if installs and request["mode"] == "apply":
                 base.do_transaction()  # native checks, RPM lock, test, scriptlets and DNF history
         return txn
+
+
+def verified_header(path, epel_key):
+    alma_key = pathlib.Path("/etc/pki/rpm-gpg/RPM-GPG-KEY-AlmaLinux-10").read_text()
+    if digest(alma_key.encode()) != "de57c3c0a2dcde88ff5b894e74335f55a0ec074815f36d472270d937c16f077b" or digest(epel_key.encode()) != "de390fc168eae5ab2852e9e93d34a0b9ddf05cf9ce90ee28d97de26a4b1f6b93":
+        raise ValueError("untrusted public key")
+    with tempfile.TemporaryDirectory(prefix="almadial-rpm-trust-") as root:
+        ts = rpm.TransactionSet(root)
+        ts.initDB()
+        for key in (alma_key, epel_key):
+            body = key.split("\n\n", 1)[1]
+            encoded = "".join(line for line in body.splitlines() if line and not line.startswith(("=", "-")))
+            if ts.pgpImportPubkey(base64.b64decode(encoded, validate=True)) != 0:
+                raise ValueError("isolated key import")
+        checked = subprocess.run(["/usr/bin/rpmkeys", "--dbpath", root + rpm.expandMacro("%{_dbpath}"), "--checksig", path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30, check=False)
+        if checked.returncode != 0:
+            raise ValueError("untrusted or unsigned RPM")
+        with open(path, "rb") as handle:
+            hdr = ts.hdrFromFdno(handle.fileno())
+            signature = hdr.sprintf("%{RSAHEADER:pgpsig}").lower()
+            if not any(signature.endswith("key id " + signer) for signer in ("dee5c11cc2a1e572", "33d98517e37ed158")):
+                raise ValueError("unsigned or untrusted RPM")
+            return hdr
+
+
+def verify_isolated_signature(path, key):
+    # hdrFromFdno verifies against only the two pinned public keys. The payload
+    # SHA-256 is checked separately against the plan-bound repository checksum.
+    verified_header(path, key)
 
 
 def evr_tuple(evr):

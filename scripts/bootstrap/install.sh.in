@@ -15,7 +15,7 @@ done
 [[ -f /etc/os-release ]] || fail 'cannot identify OS'
 # This is an OS-owned local file, not a downloaded script.
 . /etc/os-release
-[[ ${ID:-} == almalinux && ${VERSION_ID:-} == 10.2 ]] || fail 'supported OS is AlmaLinux 10.2'
+[[ ${ID:-} == almalinux && ${VERSION_ID:-} == 10.3 ]] || fail 'supported OS is AlmaLinux 10.3'
 [[ $(uname -m) == x86_64 ]] || fail 'supported architecture is x86_64'
 [[ $BINARY_SHA256 =~ ^[a-f0-9]{64}$ ]] || fail 'release is unconfigured; obtain an approved rendered bootstrap'
 [[ -n $BINARY_URL ]] || fail 'no binary endpoint configured; obtain an approved CLI URL from the release owner and set ALMADIAL_BINARY_URL (the release checksum stays pinned)'

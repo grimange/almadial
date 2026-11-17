@@ -100,7 +100,11 @@ func Assess(c config.Config, s Snapshot, r Requirements) ([]Finding, error) {
 		check("identity", s.HostID != "", "host identity unavailable")
 	}
 	if s.Known["os"] {
-		check("os", s.OS == "almalinux" && s.Release == "10.2", "only AlmaLinux 10.2 is qualified; other releases require compatibility review")
+		message := "only AlmaLinux 10.2 is qualified; other releases require compatibility review"
+		if s.Release != "10.2" {
+			message = "supported current release is AlmaLinux 10.3; historical 10.2 requires its saved policy; other releases are unsupported"
+		}
+		check("os", s.OS == "almalinux" && (s.Release == "10.2" || s.Release == "10.3"), message)
 	}
 	if s.Known["network"] {
 		ok := false

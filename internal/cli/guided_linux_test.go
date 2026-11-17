@@ -46,6 +46,25 @@ func TestGuidedOriginsDefaultAndOptionalMirror(t *testing.T) {
 	}
 }
 
+func TestCurrentReleaseOriginsBindSelectedManifest(t *testing.T) {
+	m, err := artifacts.Load(bytes.NewReader(releaseassets.Manifest103))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, store := range []string{"", "https://enterprise.example.test/sources"} {
+		policy, err := guidedOrigins(m, store)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := artifacts.WithAcquisitionOrigins(m, bytes.NewReader(policy)); err != nil {
+			t.Fatal(err)
+		}
+		if bytes.Equal(policy, releaseassets.Origins) {
+			t.Fatal("historical manifest binding reused")
+		}
+	}
+}
+
 func TestGuidedApproval(t *testing.T) {
 	for _, tc := range []struct {
 		input string

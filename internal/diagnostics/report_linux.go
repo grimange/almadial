@@ -133,7 +133,13 @@ func (c Collector) Collect(ctx context.Context, o Options) Report {
 	}
 	osb, e := c.ReadFile("/usr/lib/os-release", 8192)
 	osok := e == nil
-	test("host.os", osok, strings.Contains(string(osb), "ID=\"almalinux\"") && strings.Contains(string(osb), "VERSION_ID=\"10.2\""), "OS identity checked against accepted AlmaLinux 10.2", "AlmaLinux 10.2", "Inspect /etc/os-release; installation compatibility is bounded to the accepted stack.")
+	release := ""
+	for _, line := range strings.Split(string(osb), "\n") {
+		if strings.HasPrefix(line, "VERSION_ID=") {
+			release = strings.Trim(strings.TrimPrefix(line, "VERSION_ID="), "\"")
+		}
+	}
+	test("host.os", osok, strings.Contains(string(osb), "ID=\"almalinux\"") && (strings.Contains(string(osb), "VERSION_ID=\"10.2\"") || strings.Contains(string(osb), "VERSION_ID=\"10.3\"")), "OS identity checked against explicit AlmaLinux 10.2 historical / 10.3 current policies", "AlmaLinux 10.2 or 10.3 with matching package policy", "Inspect /etc/os-release; installation compatibility is bounded to the accepted stack.")
 	s, ok := c.probe(ctx, "/usr/bin/uname", "-r")
 	v := version.FindString(s)
 	test("host.kernel", ok && v != "", v != "", "kernel version "+v, "readable kernel version", "Inspect uname -r locally.")
@@ -153,14 +159,25 @@ func (c Collector) Collect(ctx context.Context, o Options) Report {
 		obs = "kernel AVC denials present; at most 50 selected entries inspected"
 	}
 	add("security.avc", state, obs, "no relevant denials", "Inspect journalctl -k -b and ausearch locally; no raw log messages are exported. Audit-file-only denials are outside this kernel query.", false)
-	s, ok = c.probe(ctx, "/usr/bin/rpm", "-qa", "--qf", "%{NAME}\n")
+	s, ok = c.probe(ctx, "/usr/bin/rpm", "-qa", "--qf", "%{NAME}|%{EPOCHNUM}:%{VERSION}-%{RELEASE}|%{ARCH}\n")
 	n := len(strings.Fields(s))
-	test("packages.inventory", ok, n == 731, fmt.Sprintf("%d packages installed", n), "731 accepted packages", "Compare accepted RPM/repository evidence before installing or removing anything.")
+	installed := map[string]bool{}
+	for _, line := range strings.Split(s, "\n") {
+		installed[line] = true
+	}
+	required := provision.RequiredPackages(release)
+	missing := 0
+	for _, p := range required {
+		if !installed[p.Name+"|"+p.EVR+"|"+p.Arch] {
+			missing++
+		}
+	}
+	test("packages.inventory", ok && len(required) > 0, missing == 0, fmt.Sprintf("%d packages installed; %d of %d release-specific required identities missing or different", n, missing, len(required)), "exact required RPM identities for AlmaLinux "+release, "Compare the selected package policy and rpm -qa; restore missing or changed required packages through the documented installation reconciliation. Total package count is not a compatibility test.")
 	s, ok = c.probe(ctx, "/usr/sbin/asterisk", "-rx", "core show version")
 	v = version.FindString(s)
 	test("asterisk.version", ok, v == "22.12.0", "Asterisk version "+v, "22.12.0", "Inspect asterisk -rx 'core show version'.")
 	s, ok = c.probe(ctx, "/usr/sbin/asterisk", "-rx", "module show")
-	missing := 0
+	missing = 0
 	for _, m := range provision.AsteriskModules() {
 		found := false
 		for _, line := range strings.Split(s, "\n") {

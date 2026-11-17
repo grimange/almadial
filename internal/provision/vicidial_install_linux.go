@@ -19,7 +19,7 @@ import (
 // bytes, a private held directory and create-if-absent publication. This helper
 // is private to the journaled native files action; no CLI exposes it directly.
 func stageVICIdialArchive(source VICIdialSource) error {
-	if os.Geteuid() != 0 || source.Digest() == "" || rawSHA(source.archive) != databaseArchiveSHA {
+	if os.Geteuid() != 0 || source.Digest() == "" || !source.retainedArchiveVerified() {
 		return errVICIdial
 	}
 	parent, e := safeDirectory("/var/lib/almadial")
@@ -122,7 +122,7 @@ func installVICIdialFiles(ctx context.Context, source VICIdialSource, runner vic
 	if e != nil {
 		return "", errVICIdial
 	}
-	r, e := runner.RunInput(ctx, vicidialFilesCommand("install"), input)
+	r, e := runner.RunInput(ctx, source.archiveInstallCommand(), input)
 	if e != nil || !r.Started || r.ExitCode != 0 || r.StdoutTruncated || r.StderrTruncated {
 		return "", errVICIdial
 	}

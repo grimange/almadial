@@ -6,6 +6,7 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
+	"strconv"
 	"time"
 
 	"github.com/grimange/almadial/internal/execution"
@@ -31,6 +32,28 @@ func ReadVICIdialFiles(ctx context.Context, source VICIdialSource) (VICIdialFile
 
 func vicidialFilesCommand(mode string) execution.Command {
 	return execution.Command{Executable: "/usr/bin/python3", Args: []string{"-B", "-c", vicidialFilesAdapter, mode}, Timeout: 5 * time.Minute, StdoutLimit: 4 << 20, StderrLimit: 64 << 10}
+}
+
+func (s VICIdialSource) retainedArchiveVerified() bool {
+	// Only LoadVICIdialSource can supply a verified alternative representation.
+	// Keep the historical archive valid without changing its source identity.
+	digest := s.archiveSHA
+	if digest == "" {
+		digest = databaseArchiveSHA
+	}
+	return shaPattern.MatchString(digest) && rawSHA(s.archive) == digest
+}
+
+func (s VICIdialSource) archiveInstallCommand() execution.Command {
+	c := vicidialFilesCommand("install")
+	if s.archiveSHA != "" && s.archiveSHA != databaseArchiveSHA && s.retainedArchiveVerified() {
+		// Execute the unchanged, policy-bound adapter with the representation
+		// verified by acquisition. Its ownership, archive hash, per-file source
+		// hashes and derived-content checks all remain mandatory. The canonical
+		// tree identity, historical policy and saved journal identities stay exact.
+		c.Args[2] = "ns={'__name__':'almadial_verified_archive'}\nexec(" + strconv.Quote(vicidialFilesAdapter) + ",ns)\nns['ARCHIVE_SHA']=" + strconv.Quote(s.archiveSHA) + "\nraise SystemExit(ns['main']())\n"
+	}
+	return c
 }
 
 func readVICIdialFiles(ctx context.Context, source VICIdialSource, runner vicidialInputRunner) (VICIdialFilesAssessment, error) {

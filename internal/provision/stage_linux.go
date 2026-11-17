@@ -52,7 +52,7 @@ func prepare(parent plan.Plan, m artifacts.Manifest, s Snapshot, mode string, t 
 	if e != nil {
 		return Stage{}, e
 	}
-	d := stageData{mode, parent.Digest(), parent.ConfigSHA256(), m.Digest(), PolicyDigest(), canonical(s), t, g.Digest()}
+	d := stageData{mode, parent.Digest(), parent.ConfigSHA256(), m.Digest(), PackagePolicyDigest(s.Release), canonical(s), t, g.Digest()}
 	b, e := json.Marshal(d)
 	if e != nil {
 		return Stage{}, errPolicy
@@ -103,7 +103,7 @@ type LabAuthorization struct {
 
 func (a LabAuthorization) validate(s Stage, m artifacts.Manifest) error {
 	d := s.doc()
-	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-16/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || d.Policy != PolicyDigest() {
+	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-16/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || d.Policy != PackagePolicyDigest(d.Before.Release) {
 		return &execution.Error{Category: execution.Precondition, StageID: "S01", Detail: "valid authorization mode and exact host/plan identity bindings required", ExitCode: -1}
 	}
 	return nil

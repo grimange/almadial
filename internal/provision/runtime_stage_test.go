@@ -5,6 +5,7 @@ package provision
 import (
 	"context"
 	"errors"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -13,6 +14,41 @@ import (
 	"github.com/grimange/almadial/internal/execution"
 	"github.com/grimange/almadial/internal/journal"
 )
+
+func TestRuntimeManagementSSHAndHistoricalIdentity(t *testing.T) {
+	if runtimeAdapterForSSH(22) != runtimeAdapter() || runtimePolicyDigestForSSH(22) != RuntimePolicyDigest() || runtimePolicyDigestForSSH(2222) == RuntimePolicyDigest() {
+		t.Fatal("management policy identity")
+	}
+	s := RuntimeSnapshot{Host: "host"}
+	if strings.Contains(jsonString(s), "SSHPort") {
+		t.Fatal("historical snapshot encoding changed")
+	}
+	s.SSHPort = 2222
+	if runtimeSameFoundation(s, RuntimeSnapshot{Host: "host"}) {
+		t.Fatal("changed SSH policy accepted during reconciliation")
+	}
+	// Reuse the existing Python service/listener fixtures against the actual
+	// Go-selected adapter, including ownership and wrong-port negatives.
+	program := `import sys
+sys.path.insert(0, '../../scripts/tests')
+from test_s06_runtime import RuntimeState
+t=RuntimeState();t.setUp()
+names=('run','unit','runtime_schedules','runtime_owned','runtime_processes')
+mocks={k:t.ns[k] for k in names}
+exec(compile(sys.stdin.read().removesuffix('sys.exit(runtime_main())\n'),'selected-runtime','exec'),t.ns)
+t.ns.update(mocks)
+original=t.sockets
+for port,owner,allowed in ((2222,'sshd',True),(2222,'foreign',False),(22,'sshd',False),(2223,'sshd',False)):
+ t.sockets=original+'\ntcp LISTEN 0 128 0.0.0.0:'+str(port)+' 0.0.0.0:* users:(("'+owner+'",pid=700,fd=3))'
+ try: t.state();assert allowed
+ except ValueError: assert not allowed
+`
+	c := exec.Command("/usr/bin/python3", "-B", "-c", program)
+	c.Stdin = strings.NewReader(runtimeAdapterForSSH(2222))
+	if out, err := c.CombinedOutput(); err != nil {
+		t.Fatalf("listener fixture: %v: %s", err, out)
+	}
+}
 
 func runtimeFixture(t *testing.T) (RuntimeInputs, artifacts.Manifest, VICIdialSource, VICIdialPerlSource, AsteriskSource, DatabaseSource) {
 	p, m, src, perl, ast, db := vicidialStageFixture(t)

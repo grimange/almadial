@@ -7,6 +7,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -25,7 +26,17 @@ func runtimeAdapter() string {
 //go:embed runtime.go
 var runtimeDerivationSource string
 
-type RuntimeNative struct{ Application VICIdialNative }
+type RuntimeNative struct {
+	Application       VICIdialNative
+	ManagementSSHPort uint16
+}
+
+func runtimeAdapterForSSH(port uint16) string {
+	if port == 0 || port == 22 {
+		return runtimeAdapter()
+	}
+	return strings.Replace(runtimeAdapter(), "if port == '22':", "if parts[0] == 'tcp' and port == '"+strconv.Itoa(int(port))+"' and '\"sshd\"' in line:", 1)
+}
 
 func (n RuntimeNative) files() ([]vicidialOwnedFile, error) {
 	secrets, e := databaseSecrets()
@@ -93,7 +104,7 @@ func (n RuntimeNative) adapter(ctx context.Context, mode string) (RuntimeSnapsho
 	if e != nil {
 		return out, e
 	}
-	c := dbCommand("/usr/bin/python3", "-c", runtimeAdapter(), mode)
+	c := dbCommand("/usr/bin/python3", "-c", runtimeAdapterForSSH(n.ManagementSSHPort), mode)
 	c.Timeout = 90 * time.Second
 	result, e := r.RunInput(ctx, c, input)
 	if e != nil || !result.Started || result.ExitCode != 0 || result.StdoutTruncated || result.StderrTruncated {
@@ -102,6 +113,9 @@ func (n RuntimeNative) adapter(ctx context.Context, mode string) (RuntimeSnapsho
 	}
 	if mode == "runtime-inspect" && decode(result.Stdout, &out) != nil {
 		return out, errRuntime
+	}
+	if n.ManagementSSHPort != 22 {
+		out.SSHPort = n.ManagementSSHPort
 	}
 	return out, nil
 }
@@ -126,7 +140,7 @@ type runtimeRunner struct {
 
 func (n RuntimeNative) Runner(s RuntimeStage) execution.CommandRunner { return runtimeRunner{n, s} }
 func (r runtimeRunner) Validate(c execution.Command) error {
-	if r.stage.doc().Policy != RuntimePolicyDigest() || r.stage.doc().Source != r.native.Application.Source.Digest() {
+	if r.stage.doc().Policy != runtimePolicyDigestForSSH(r.stage.doc().Before.SSHPort) || r.stage.doc().Source != r.native.Application.Source.Digest() {
 		return errRuntime
 	}
 	for _, a := range r.stage.Graph().Actions() {
