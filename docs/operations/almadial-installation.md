@@ -1,8 +1,11 @@
 # AlmaDial operator installation
 
 Fresh standard installations target **AlmaLinux 10.3 x86_64**. The corrected
-candidate is `alm34-alma103-rc1`; publication and independent operator acceptance
-are separate gates. The published `alm46-internet-rc1` files and checksums remain
+candidate is the published prerelease
+[`alm34-alma103-rc1`](https://github.com/grimange/almadial/releases/tag/alm34-alma103-rc1).
+Every release asset has been downloaded and verified; bootstrap and CLI downloads
+also passed unauthenticated HTTPS checks. Independent operator acceptance remains
+pending. The published `alm46-internet-rc1` files and checksums remain
 unchanged, alongside their historical AlmaLinux 10.2 qualification. Public-host
 qualification remains separate from controlled-topology developer tests.
 
@@ -25,14 +28,15 @@ before retrying. Do not lower saved policy to evade a failure.
 ## Standard installation contract
 
 Connect to your supported host as root, or connect with the cloud-image account
-and enter `sudo -i`. After an approved corrected version is publicly released:
+and enter `sudo -i`:
 
 ```bash
 ssh root@YOUR_SERVER
-VERSION='APPROVED_VERSION'
-curl -fsSLO "https://github.com/grimange/almadial/releases/download/${VERSION}/install.sh"
-# Compare its SHA-256 with the independently approved release packet.
-sha256sum install.sh
+curl -fsSLO \
+  https://github.com/grimange/almadial/releases/download/alm34-alma103-rc1/install.sh
+printf '%s  %s\n' \
+  5c7cd19846ef3b55f7860645f7452a55c2cb15877ec3a86406fa13a4e313e621 \
+  install.sh | sha256sum -c -
 # Inspect the verified script before execution.
 bash install.sh
 almadial --version
@@ -40,7 +44,12 @@ sha256sum /usr/local/sbin/almadial
 almadial install
 ```
 
-The version and binary hash must match the approved release packet. Distribution
+Expected version: `almadial alm34-alma103-rc1`, source commit
+`4eb5833b62400ae1c5001087f6dfe81e1e386dcc`, Go 1.27.3, Linux amd64.
+Expected installed binary SHA-256:
+`a6c38cbd76debf45eeb9a37e03209c14a9786d98e732bff8b8ed2de42746ce92`.
+The [independent operator handoff](alm34-alma103-operator-handoff.md) provides the
+bounded acceptance checklist and release verification commands. Distribution
 TLS uses the OS trust store; application/browser TLS requires separate preparation.
 A backup, provider recovery option or snapshot is recommended at the operator's
 discretion. AlmaDial does not verify external snapshots or guarantee full rollback.

@@ -15,18 +15,22 @@ independent internet-host installation and human operator acceptance remain pend
 
 ## Quick installation
 
-The corrected current-platform candidate is **`alm34-alma103-rc1`**, prepared
-locally after developer qualification; publication and independent operator
-acceptance remain separate gates. The published `alm46-internet-rc1` assets and
-historical AlmaLinux 10.2 evidence remain unchanged. Use the version approved and
-published by the release owner. Prereleases are not stable production releases.
-On a fresh supported host, after qualification and publication:
+The current developer-qualified candidate is the public prerelease
+[**`alm34-alma103-rc1`**](https://github.com/grimange/almadial/releases/tag/alm34-alma103-rc1).
+Its GitHub assets have been downloaded and checksum-verified, including the
+bootstrap and CLI over unauthenticated HTTPS. Independent operator and public VPS
+installation acceptance remain pending. The published `alm46-internet-rc1` assets
+and historical AlmaLinux 10.2 evidence remain unchanged. Prereleases are not stable
+production releases. On a fresh AlmaLinux 10.3 x86_64 host:
 
 ```bash
 ssh root@YOUR_SERVER
-VERSION='APPROVED_VERSION'
-curl -fsSLO "https://github.com/grimange/almadial/releases/download/${VERSION}/install.sh"
-# Verify install.sh against the approved release SHA-256 and inspect it.
+curl -fsSLO \
+  https://github.com/grimange/almadial/releases/download/alm34-alma103-rc1/install.sh
+printf '%s  %s\n' \
+  5c7cd19846ef3b55f7860645f7452a55c2cb15877ec3a86406fa13a4e313e621 \
+  install.sh | sha256sum -c -
+# Inspect the verified script before execution.
 bash install.sh
 almadial --version
 almadial install
@@ -42,6 +46,8 @@ certificate inputs. The installer discovers and preserves the effective SSH port
 including supported single nonstandard ports. Cloud-image users can enter a root
 shell with `sudo -i`. See the [operator guide](docs/operations/almadial-installation.md)
 for certificate preparation, exact prompts, source verification and recovery.
+The [independent operator handoff](docs/operations/alm34-alma103-operator-handoff.md)
+provides the version/binary identities and bounded acceptance checklist.
 
 ## Features
 

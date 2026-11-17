@@ -115,7 +115,20 @@ It uses verified public application sources and one immutable approval, with no
 installer snapshot/task prompts. Actual installation, trusted web access, native
 agent/media/recording, reboot and healthy repeat results belong to the protected
 developer report. Public VPS installation and independent human acceptance are
-separate gates. No candidate is published by this task.
+separate gates. The subsequent owner-authorized publication made
+[`alm34-alma103-rc1`](https://github.com/grimange/almadial/releases/tag/alm34-alma103-rc1)
+a public prerelease on 2026-11-17 UTC (2026-11-18 Asia/Manila), from commit
+`4eb5833b62400ae1c5001087f6dfe81e1e386dcc`. All ten attached assets match the
+qualified packet; unauthenticated GitHub bootstrap/CLI downloads passed normal
+TLS and checksum verification. Publication does not add public VPS or independent
+operator acceptance. Follow the [operator handoff](../operations/alm34-alma103-operator-handoff.md).
+
+The canonical policy SHA-256 above identifies the compact Go policy representation.
+The formatted release asset `package-policy.json` has file SHA-256
+`b6fb6fd438afe0221aaa6abc53f04b8d15b8f4fb11f371553b67b04a42d48562`;
+both identities are checked independently. The unchanged `release.json` records
+packet preparation (`publication_status: NOT_PUBLISHED`); live GitHub metadata
+records the subsequent publication. This preserves the qualified packet bytes.
 
 The actual 10.3 installation completed using 347 signed RPM payloads, all five
 public pinned application sources, and SSH port 2222. Documented saved-plan
