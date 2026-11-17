@@ -45,7 +45,7 @@ func (i SystemInputs) Prepare(m artifacts.Manifest) (SystemStage, error) {
 	id, e := hex.DecodeString(i.Parent.Preflight.HostID)
 	h := sha256.Sum256([]byte(i.Parent.Preflight.HostID))
 	if e != nil || len(id) != 16 || hex.EncodeToString(h[:]) != i.Snapshot.RPM.Host || i.Parent.Inventory.Digest() != i.Snapshot.RPM.Digest() || i.Parent.Transaction != nil || i.Parent.PrepareRepositoryTrust || !systemReady(i.Snapshot, i.Budget) {
-		return SystemStage{}, errSystem
+		return SystemStage{}, fmt.Errorf("%w; recording filesystem %s requires %d free bytes and %d free inodes; observed %d bytes and %d inodes on %s. Free recording storage or expand the reviewed writable local filesystem; reconcile any identity/ownership conflict before retrying", errSystem, i.Budget.Mount, i.Budget.MinAvailableBytes, i.Budget.MinFreeInodes, i.Snapshot.Recording.AvailableBytes, i.Snapshot.Recording.AvailableInodes, i.Snapshot.Recording.Mount)
 	}
 	actions := []execution.Action{}
 	add := func(id, description string, cmd execution.Command) {
@@ -99,8 +99,8 @@ type SystemLabAuthorization struct {
 
 func (a SystemLabAuthorization) validate(s SystemStage, m artifacts.Manifest) error {
 	d := s.doc()
-	if s.Digest() == "" || a.Scope != "ALM-17/disposable-lab" || a.Host != d.Before.RPM.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || d.Policy != SystemPolicyDigest() || !shaPattern.MatchString(a.SnapshotReference) || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !a.CandidateAcknowledged {
-		return &execution.Error{Category: execution.Precondition, StageID: "S02", ExitCode: -1, Detail: "exact ALM-17 disposable laboratory authorization required"}
+	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-17/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.RPM.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || d.Policy != SystemPolicyDigest() {
+		return &execution.Error{Category: execution.Precondition, StageID: "S02", ExitCode: -1, Detail: "valid authorization mode and exact system-stage identity bindings required"}
 	}
 	return nil
 }

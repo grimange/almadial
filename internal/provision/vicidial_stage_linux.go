@@ -157,8 +157,8 @@ type VICIdialLabAuthorization struct {
 
 func (a VICIdialLabAuthorization) validate(s VICIdialStage, m artifacts.Manifest) error {
 	d := s.doc()
-	if s.Digest() == "" || a.Scope != "ALM-20/disposable-lab" || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || a.SourceSHA256 != d.Source || a.DependencySHA256 != d.Dependency || d.Policy != VICIdialPolicyDigest() || !shaPattern.MatchString(a.SnapshotReference) || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !a.CandidateAcknowledged {
-		return &execution.Error{Category: execution.Precondition, StageID: "S05", ExitCode: -1, Detail: "exact ALM-20 laboratory authorization, pinned sources and fresh recovery snapshot required"}
+	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-20/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || a.SourceSHA256 != d.Source || a.DependencySHA256 != d.Dependency || d.Policy != VICIdialPolicyDigest() {
+		return &execution.Error{Category: execution.Precondition, StageID: "S05", ExitCode: -1, Detail: "valid authorization mode, exact application-stage bindings and pinned sources required"}
 	}
 	return nil
 }

@@ -381,54 +381,71 @@ func (f *fakeNative) Run(ctx context.Context, c execution.Command) (execution.Re
 	return r, nil
 }
 func TestJournaledProvisioning(t *testing.T) {
-	p, m := inputs(t)
-	for _, mode := range []string{"resolve", "apply"} {
-		t.Run(mode, func(t *testing.T) {
-			s := fixture("autoconf")
-			tx := transaction(s)
-			var st Stage
-			var e error
-			if mode == "resolve" {
-				st, e = PrepareResolution(p, m, s)
-			} else {
-				st, e = PreparePackages(p, m, s, tx)
-			}
-			if e != nil {
-				t.Fatal(e)
-			}
-			dir := filepath.Join(t.TempDir(), "state")
-			f := &fakeNative{s: s, tx: tx, after: applied(s, tx)}
-			f.onRun = func() {
-				d, e := journal.Inspect(dir)
-				if e != nil || d.Actions[0].State != journal.Running {
-					t.Fatal("process started before durable intent", d, e)
-				}
-				other, e := journal.Acquire(dir)
-				if other != nil {
-					other.Close()
-				}
-				if !errors.Is(e, journal.ErrBusy) {
-					t.Fatal("exclusive ownership missing", e)
+	for _, standard := range []bool{false, true} {
+		t.Run(map[bool]string{false: "legacy", true: "standard"}[standard], func(t *testing.T) {
+			auth := auth
+			if standard {
+				original := auth
+				auth = func(s Stage) LabAuthorization {
+					a := original(s)
+					a.Scope = StandardAuthorization
+					a.SnapshotReference = ""
+					a.OperatorEvidenceSHA256 = ""
+					a.CandidateAcknowledged = false
+					return a
 				}
 			}
-			out, e := ExecuteLab(context.Background(), st, m, auth(st), dir, Native{f}, false, nil)
-			if e != nil || out.Journal.Actions[0].State != journal.Succeeded || f.mutations != 1 || out.Transaction.Digest() != tx.Digest() {
-				t.Fatal(out, e)
-			}
-			if mode == "apply" {
-				second := transaction(f.s)
-				noop, e := PreparePackages(p, m, f.s, second)
-				if e != nil {
-					t.Fatal(e)
-				}
-				out, e = ExecuteLab(context.Background(), noop, m, auth(noop), "/must-not-be-created", Native{f}, false, nil)
-				if e != nil || !out.NoOp || f.mutations != 1 {
-					t.Fatal("second run changed packages", out, e)
-				}
+			p, m := inputs(t)
+			for _, mode := range []string{"resolve", "apply"} {
+				t.Run(mode, func(t *testing.T) {
+					s := fixture("autoconf")
+					tx := transaction(s)
+					var st Stage
+					var e error
+					if mode == "resolve" {
+						st, e = PrepareResolution(p, m, s)
+					} else {
+						st, e = PreparePackages(p, m, s, tx)
+					}
+					if e != nil {
+						t.Fatal(e)
+					}
+					dir := filepath.Join(t.TempDir(), "state")
+					f := &fakeNative{s: s, tx: tx, after: applied(s, tx)}
+					f.onRun = func() {
+						d, e := journal.Inspect(dir)
+						if e != nil || d.Actions[0].State != journal.Running {
+							t.Fatal("process started before durable intent", d, e)
+						}
+						other, e := journal.Acquire(dir)
+						if other != nil {
+							other.Close()
+						}
+						if !errors.Is(e, journal.ErrBusy) {
+							t.Fatal("exclusive ownership missing", e)
+						}
+					}
+					out, e := ExecuteLab(context.Background(), st, m, auth(st), dir, Native{f}, false, nil)
+					if e != nil || out.Journal.Actions[0].State != journal.Succeeded || f.mutations != 1 || out.Transaction.Digest() != tx.Digest() {
+						t.Fatal(out, e)
+					}
+					if mode == "apply" {
+						second := transaction(f.s)
+						noop, e := PreparePackages(p, m, f.s, second)
+						if e != nil {
+							t.Fatal(e)
+						}
+						out, e = ExecuteLab(context.Background(), noop, m, auth(noop), "/must-not-be-created", Native{f}, false, nil)
+						if e != nil || !out.NoOp || f.mutations != 1 {
+							t.Fatal("second run changed packages", out, e)
+						}
+					}
+				})
 			}
 		})
 	}
 }
+
 func TestRejectedExecution(t *testing.T) {
 	p, m := inputs(t)
 	s := fixture("autoconf")

@@ -18,9 +18,8 @@ import (
 	"github.com/grimange/almadial/internal/preflight"
 )
 
-// InstallRequest is the bounded local laboratory product profile. Certificate
-// issuance and artifact acquisition remain explicit inputs, not hidden downloads.
-// CANDIDATE qualification is never production installation authorization.
+// InstallRequest binds the supported single-server inputs. Deployment topology
+// and optional managed authorization are independent choices.
 type InstallRequest struct {
 	Config        config.Config
 	Requirements  preflight.Requirements
@@ -37,6 +36,7 @@ type InstallSourcePaths struct {
 type InstallAuthorization struct {
 	TaskID, Host, SnapshotReference, OperatorEvidenceSHA256 string
 	CandidateAcknowledged, ManagementRecoveryVerified       bool
+	Mode                                                    string `json:",omitempty"` // absent means the original strict managed contract
 }
 type InstallSources struct {
 	Database    DatabaseSource
@@ -109,7 +109,7 @@ func PrepareInstall(r InstallRequest, initial Inputs, m artifacts.Manifest, sour
 		return InstallPlan{}, errInstall
 	}
 	a := r.Authorization
-	if (a.TaskID != "xu7wxvch94ii2iw38hpb8d58" && a.TaskID != "it8aq4utqix0uz8sjgxrtssk" && a.TaskID != "a1doi4qsyn1lspqtydw84smh") || a.Host != initial.Inventory.Host || !shaPattern.MatchString(a.SnapshotReference) || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !a.CandidateAcknowledged || !a.ManagementRecoveryVerified {
+	if !a.valid(initial.Inventory.Host) {
 		return InstallPlan{}, errInstall
 	}
 	if _, e := initial.Prepare(m); e != nil { // Resolution requires trust; the clean host may still need the accepted key-import action.
@@ -124,7 +124,7 @@ func PrepareInstall(r InstallRequest, initial Inputs, m artifacts.Manifest, sour
 		return InstallPlan{}, e
 	}
 	if !parent.Eligible() {
-		return InstallPlan{}, fmt.Errorf("clean-host preflight blocked: %s", preflight.Human(parent.Findings()))
+		return InstallPlan{}, fmt.Errorf("clean-host preflight blocked: %s", preflight.Human(parent.Findings())+preflight.ResourceGuidance(initial.Preflight, r.Requirements))
 	}
 	for _, id := range sources.identities() {
 		if !shaPattern.MatchString(id) {
@@ -213,8 +213,16 @@ func ExecuteInstallCheckpoint(ctx context.Context, p InstallPlan, m artifacts.Ma
 	// Validate supplied material before any stage can mutate the host, even
 	// when TLS itself will be installed only after its web prerequisites.
 	certificate, e := (TLSNative{Request: d.Request.TLS}).Material()
-	if e != nil || certificate != d.Certificate {
-		return result, fmt.Errorf("installation TLS input changed or invalid: %w", errInstall)
+	if e != nil {
+		return result, fmt.Errorf("saved installation TLS input invalid: %w", e)
+	}
+	if certificate != d.Certificate {
+		return result, fmt.Errorf("saved installation TLS material changed; restore the original plan-bound PEM files and follow the documented certificate replacement guidance after reconciliation; do not edit the saved plan: %w", errInstall)
+	}
+	if d.Request.Authorization.Mode == StandardAuthorization {
+		if e = VerifyManagement(ctx, d.Request.Network, d.Request.TLS.Hostname); e != nil {
+			return result, e
+		}
 	}
 	lock, e := journal.Acquire(state)
 	if e != nil {
@@ -347,7 +355,7 @@ func (r *installRun) rpm(name string, i Inputs) (Outcome, error) {
 	}
 	d := stage.doc()
 	a := r.d.Request.Authorization
-	auth := LabAuthorization{Scope: "ALM-16/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged}
+	auth := LabAuthorization{Scope: a.scope("ALM-16/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged}
 	resume, e := r.resume(name)
 	if e != nil {
 		return Outcome{}, e
@@ -477,7 +485,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := SystemLabAuthorization{Scope: "ALM-17/disposable-lab", Host: d.Before.RPM.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged}
+		auth := SystemLabAuthorization{Scope: a.scope("ALM-17/disposable-lab"), Host: d.Before.RPM.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged}
 		_, e = ExecuteSystemLab(r.ctx, stage, r.m, auth, r.stageState("S02"), r.native, r.native.Runner, resume, r.log)
 		return e
 	})
@@ -494,7 +502,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := DatabaseLabAuthorization{Scope: "ALM-18/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, SourceSHA256: d.Source}
+		auth := DatabaseLabAuthorization{Scope: a.scope("ALM-18/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, SourceSHA256: d.Source}
 		_, e = ExecuteDatabaseLab(r.ctx, stage, r.m, auth, r.stageState("S03"), database, database.Runner(stage), resume, r.log)
 		return e
 	})
@@ -511,7 +519,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := AsteriskLabAuthorization{Scope: "ALM-19/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, SourceSHA256: d.Source}
+		auth := AsteriskLabAuthorization{Scope: a.scope("ALM-19/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, SourceSHA256: d.Source}
 		_, e = ExecuteAsteriskLab(r.ctx, stage, r.m, auth, r.stageState("S04"), asterisk, asterisk.Runner(stage), resume, r.log)
 		return e
 	})
@@ -528,7 +536,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := VICIdialLabAuthorization{Scope: "ALM-20/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, SourceSHA256: d.Source, DependencySHA256: d.Dependency}
+		auth := VICIdialLabAuthorization{Scope: a.scope("ALM-20/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, SourceSHA256: d.Source, DependencySHA256: d.Dependency}
 		_, e = ExecuteVICIdialLab(r.ctx, stage, r.m, auth, r.stageState("S05"), application, application.Runner(stage), resume, r.log)
 		return e
 	})
@@ -545,7 +553,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := RuntimeLabAuthorization{Scope: "ALM-21/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true}
+		auth := RuntimeLabAuthorization{Scope: a.scope("ALM-21/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true}
 		_, e = ExecuteRuntimeLab(r.ctx, stage, r.m, auth, r.stageState("S06"), runtime, runtime.Runner(stage), resume, r.log)
 		return e
 	})
@@ -562,7 +570,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := WebLabAuthorization{Scope: "ALM-23/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true}
+		auth := WebLabAuthorization{Scope: a.scope("ALM-23/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true}
 		_, e = ExecuteWebLab(r.ctx, stage, r.m, auth, r.stageState("S07"), web, web.Runner(stage), resume, r.log)
 		return e
 	})
@@ -579,7 +587,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := TLSLabAuthorization{Scope: "ALM-24/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true}
+		auth := TLSLabAuthorization{Scope: a.scope("ALM-24/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true}
 		_, e = ExecuteTLSLab(r.ctx, stage, r.m, auth, r.stageState("S08"), tls, tls.Runner(stage), resume, r.log)
 		return e
 	})
@@ -600,7 +608,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := NetworkLabAuthorization{Scope: "ALM-25/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true, ManagementRecoveryVerified: a.ManagementRecoveryVerified}
+		auth := NetworkLabAuthorization{Scope: a.scope("ALM-25/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true, ManagementRecoveryVerified: a.ManagementRecoveryVerified}
 		_, e = ExecuteNetworkLab(r.ctx, stage, r.m, auth, r.stageState("S09"), network, network.Runner(stage), resume, r.log)
 		return e
 	})
@@ -617,7 +625,7 @@ func (r *installRun) backend() error {
 			return e
 		}
 		d := stage.doc()
-		auth := PhoneLabAuthorization{Scope: "ALM-26/disposable-lab", Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true, ManagementRecoveryVerified: a.ManagementRecoveryVerified}
+		auth := PhoneLabAuthorization{Scope: a.scope("ALM-26/disposable-lab"), Host: d.Before.Host, StageSHA256: stage.Digest(), ParentSHA256: d.Parent, ManifestSHA256: d.Manifest, SnapshotReference: a.SnapshotReference, OperatorEvidenceSHA256: a.OperatorEvidenceSHA256, CandidateAcknowledged: a.CandidateAcknowledged, PolicySHA256: d.Policy, DialingInactive: true, ManagementRecoveryVerified: a.ManagementRecoveryVerified}
 		_, e = ExecutePhoneLab(r.ctx, stage, r.m, auth, r.stageState("S10"), phone, phone.Runner(stage), resume, r.log)
 		return e
 	})

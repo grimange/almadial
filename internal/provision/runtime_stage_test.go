@@ -63,42 +63,59 @@ func (f *runtimeFake) Run(_ context.Context, c execution.Command) (execution.Res
 	return execution.Result{Started: true}, nil
 }
 func TestRuntimeExecutionFreshNoOpAndDrift(t *testing.T) {
-	i, m, src, perl, ast, db := runtimeFixture(t)
-	s, e := i.Prepare(m, src, perl, ast, db)
-	if e != nil {
-		t.Fatal(e)
-	}
-	s2, e := i.Prepare(m, src, perl, ast, db)
-	if e != nil || s2.Digest() != s.Digest() || len(s.Graph().Actions()) != 3 {
-		t.Fatal("non-deterministic plan", e)
-	}
-	f := &runtimeFake{s: i.Snapshot}
-	out, e := ExecuteRuntimeLab(context.Background(), s, m, runtimeAuth(s), filepath.Join(t.TempDir(), "state"), f, f, false, nil)
-	if e != nil || out.NoOp || f.calls != 3 || !runtimeSatisfied(f.s) {
-		t.Fatal(out, e)
-	}
-	for _, r := range out.Journal.Actions {
-		if r.State != journal.Succeeded || r.Evidence == "" {
-			t.Fatal(r)
-		}
-	}
-	i.Snapshot = f.s
-	s, e = i.Prepare(m, src, perl, ast, db)
-	if e != nil {
-		t.Fatal(e)
-	}
-	out, e = ExecuteRuntimeLab(context.Background(), s, m, runtimeAuth(s), filepath.Join(t.TempDir(), "noop"), f, f, false, nil)
-	if e != nil || !out.NoOp || len(out.Traces) != 0 || f.calls != 3 {
-		t.Fatal(out, e)
-	}
-	f.s.Health = "absent"
-	if _, e = ExecuteRuntimeLab(context.Background(), s, m, runtimeAuth(s), filepath.Join(t.TempDir(), "stale"), f, f, false, nil); e == nil {
-		t.Fatal("stale health accepted")
-	}
-	i.Snapshot = f.s
-	s, e = i.Prepare(m, src, perl, ast, db)
-	if e != nil || len(s.Graph().Actions()) != 1 {
-		t.Fatal("fresh health drift missed", e)
+	for _, standard := range []bool{false, true} {
+		t.Run(map[bool]string{false: "legacy", true: "standard"}[standard], func(t *testing.T) {
+			runtimeAuth := runtimeAuth
+			if standard {
+				original := runtimeAuth
+				runtimeAuth = func(s RuntimeStage) RuntimeLabAuthorization {
+					a := original(s)
+					a.Scope = StandardAuthorization
+					a.SnapshotReference = ""
+					a.OperatorEvidenceSHA256 = ""
+					a.CandidateAcknowledged = false
+					return a
+				}
+			}
+
+			i, m, src, perl, ast, db := runtimeFixture(t)
+			s, e := i.Prepare(m, src, perl, ast, db)
+			if e != nil {
+				t.Fatal(e)
+			}
+			s2, e := i.Prepare(m, src, perl, ast, db)
+			if e != nil || s2.Digest() != s.Digest() || len(s.Graph().Actions()) != 3 {
+				t.Fatal("non-deterministic plan", e)
+			}
+			f := &runtimeFake{s: i.Snapshot}
+			out, e := ExecuteRuntimeLab(context.Background(), s, m, runtimeAuth(s), filepath.Join(t.TempDir(), "state"), f, f, false, nil)
+			if e != nil || out.NoOp || f.calls != 3 || !runtimeSatisfied(f.s) {
+				t.Fatal(out, e)
+			}
+			for _, r := range out.Journal.Actions {
+				if r.State != journal.Succeeded || r.Evidence == "" {
+					t.Fatal(r)
+				}
+			}
+			i.Snapshot = f.s
+			s, e = i.Prepare(m, src, perl, ast, db)
+			if e != nil {
+				t.Fatal(e)
+			}
+			out, e = ExecuteRuntimeLab(context.Background(), s, m, runtimeAuth(s), filepath.Join(t.TempDir(), "noop"), f, f, false, nil)
+			if e != nil || !out.NoOp || len(out.Traces) != 0 || f.calls != 3 {
+				t.Fatal(out, e)
+			}
+			f.s.Health = "absent"
+			if _, e = ExecuteRuntimeLab(context.Background(), s, m, runtimeAuth(s), filepath.Join(t.TempDir(), "stale"), f, f, false, nil); e == nil {
+				t.Fatal("stale health accepted")
+			}
+			i.Snapshot = f.s
+			s, e = i.Prepare(m, src, perl, ast, db)
+			if e != nil || len(s.Graph().Actions()) != 1 {
+				t.Fatal("fresh health drift missed", e)
+			}
+		})
 	}
 }
 func TestRuntimeAuthorizationAndFoundationBoundaries(t *testing.T) {

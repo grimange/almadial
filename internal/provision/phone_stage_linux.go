@@ -104,7 +104,7 @@ type PhoneLabAuthorization struct {
 
 func (a PhoneLabAuthorization) validate(s PhoneStage, m artifacts.Manifest) error {
 	d := s.doc()
-	if s.Digest() == "" || a.Scope != "ALM-26/disposable-lab" || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || a.PolicySHA256 != PhonePolicyDigest() || d.Policy != a.PolicySHA256 || !shaPattern.MatchString(a.SnapshotReference) || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !a.CandidateAcknowledged || !a.DialingInactive || !a.ManagementRecoveryVerified {
+	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-26/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, a.ManagementRecoveryVerified, true) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || a.PolicySHA256 != PhonePolicyDigest() || d.Policy != a.PolicySHA256 || !a.DialingInactive {
 		return errPhone
 	}
 	return nil

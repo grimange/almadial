@@ -55,7 +55,7 @@ func ValidateTLSMaterial(host string, chain, key, trust []byte, now time.Time) (
 		intermediates.AddCert(cert)
 	}
 	if _, e = leaf.Verify(x509.VerifyOptions{DNSName: host, Roots: roots, Intermediates: intermediates, CurrentTime: now, KeyUsages: []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth}}); e != nil {
-		return fail("trust, SAN, validity or server-auth verification failed")
+		return fail("certificate SAN/validity/server-auth or CA trust verification failed: " + e.Error())
 	}
 	// Reject keys hidden in public chain/trust files and trailing non-PEM data.
 	for _, input := range [][]byte{chain, trust} {

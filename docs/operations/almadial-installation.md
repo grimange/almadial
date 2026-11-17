@@ -1,56 +1,53 @@
 # AlmaDial operator installation
 
-The published **`alm46-internet-rc1`** precompiled CLI targets fresh **AlmaLinux
-10.2 x86_64** single-server installations. It preserves the accepted
-`alm46-native-rc1` runtime with corrected public source acquisition. Native runtime,
-ordinary manual
-campaign/agent operation, bidirectional WebRTC audio, recording, reboot recovery
-and healthy NO_OP passed independent controlled-network QA. Independent human
-operator installation acceptance remains outstanding. Public VPS/DNS/CA topology,
-physical headset perception and remote recording HTTP playback remain unqualified.
+The standard-installer correction targets fresh **AlmaLinux 10.2 x86_64**
+single-server installations. `alm34-standard-rc1` is a locally prepared candidate;
+publication and independent operator acceptance are separate gates. The previous
+public `alm46-internet-rc1` files and checksums remain unchanged. Its accepted
+native runtime and controlled-network functional QA remain historical evidence;
+that release does not include this usability correction. Public-host qualification
+must be reported separately from controlled-topology developer tests.
 
-Qualification used four CPUs, 8 GiB RAM and 80 GiB disk: a recommended starting
-point, not a tested minimum or production sizing. Obtain authorization and a
-recovery snapshot. Keep SELinux, firewalld, TLS and repository verification enabled.
+## Requirements and resource guidance
 
-## Internet release availability
+| Resource | Enforced fresh-install threshold | Recommended qualified baseline |
+|---|---|---|
+| CPU | 4 CPUs with SSE2 | 4 vCPU |
+| Total RAM | 7 GiB | 8 GiB RAM |
+| Available RAM | 4 GiB at preflight | Leave memory available for installation |
+| Installation filesystem free space | 60 GiB on each checked `/`, `/usr`, `/var` filesystem | 80 GiB disk |
+| Recording filesystem | 1 GiB available and 10,000 free inodes | Additional space for retention and backups |
 
-The [alm46-internet-rc1 GitHub prerelease](https://github.com/grimange/almadial/releases/tag/alm46-internet-rc1)
-is public. Its bootstrap and CLI were downloaded without authentication and matched
-the approved hashes. This is a prerelease, not a stable production release.
-Independent internet-host installation remains **NOT_RUN** because no authorized
-external host has been supplied; human operator acceptance remains separate.
+GiB means 1,073,741,824 bytes. These are installation checks, not a capacity
+benchmark or a production sizing guarantee. Resource failures report the affected
+resource, required and observed values and corrective action. Allocate more CPUs
+or RAM, free memory, expand/free the named filesystem, or resolve inode exhaustion
+before retrying. Do not lower saved policy to evade a failure.
 
 ## Standard installation contract
 
-Connect to a fresh supported host as root. If the cloud image requires its
-configured account, connect with that account and enter `sudo -i` first.
+Connect to your supported host as root, or connect with the cloud-image account
+and enter `sudo -i`. After an approved corrected version is publicly released:
 
 ```bash
 ssh root@YOUR_SERVER
-
-curl -fsSLO \
-  https://github.com/grimange/almadial/releases/download/alm46-internet-rc1/install.sh
-
-printf '%s  %s\n' \
-  26a99a84302a498afab5bd6a1d4dfd27c7bc10aa87b4180e99ac710bf0dabba4 \
-  install.sh | sha256sum -c -
-
+VERSION='APPROVED_VERSION'
+curl -fsSLO "https://github.com/grimange/almadial/releases/download/${VERSION}/install.sh"
+# Compare its SHA-256 with the independently approved release packet.
+sha256sum install.sh
+# Inspect the verified script before execution.
 bash install.sh
-
 almadial --version
 sha256sum /usr/local/sbin/almadial
 almadial install
 ```
 
-Require script verification to succeed and inspect it before execution. The installed
-version must be `alm46-internet-rc1`; binary SHA-256 must be
-`618f4b0441cde7f17d1a35382b581da5669e0efa67b04f28175bc0cb38c8e6b5`.
-Binary source is `e543c56821e306d348fd5bc9930bf563cd403d0e`; the release tag
-points to distribution checkpoint `00c629bc2f0181664bd3c51ef829939b29d09968`.
-These identities describe different steps. The approved `release.json` retains
-its preparation-time `NOT_PUBLISHED` field; GitHub's published release state and
-the subsequent download verification establish actual publication.
+The version and binary hash must match the approved release packet. Distribution
+TLS uses the OS trust store; application/browser TLS requires separate preparation.
+A backup, provider recovery option or snapshot is recommended at the operator's
+discretion. AlmaDial does not verify external snapshots or guarantee full rollback.
+No hypervisor, Kaneo task, internal authorization reference or recovery assertion
+is a prerequisite for standard installation, including the isolated lab profile.
 
 No Go, Git, manual executable/source transfer, source edit, stage commands or
 copied plan hashes are required. The rendered release script automatically chooses
@@ -91,18 +88,71 @@ Go source acquisition or application browser trust.
 
 ## Guided configuration and completion
 
-Choose `remote` (the default) for direct browser access, or `lab` to retain
-loopback isolation. Supply snapshot and authorization references for your
-authorized disposable target. Remote inputs are the FQDN, directly attached
-IPv4/interface, matching certificate, private key and CA paths, and RTP range
-(default 10000–10019 UDP). The server must resolve the hostname to that address;
-browsers must resolve it too and trust its certificate. The initial profile does
-not support a separate NAT/public address. Certificate files must be root-owned,
-private regular files; keep keys on the server. Lab TLS can be generated.
+Standard installation presents the following prompts, in order (one address is
+proposed only when exactly one suitable assigned address/interface pair exists):
 
-The CLI verifies pinned archives, displays the installation summary and plan
-SHA-256, and asks once for `yes`. It executes that exact plan and reports progress
-and diagnostics. It never asks you to copy the digest into another command.
+```text
+Deployment profile: remote (direct HTTPS/WSS and UDP media) or lab (loopback) [remote]
+Server FQDN matching the supplied trusted certificate
+Directly attached server IPv4 management/media address [unique assigned IPv4, if any]
+Management network interface for selected IPv4 [matching assigned interface, if unique]
+Preserve existing SSH management port: <discovered-port>/tcp   (observation, not a prompt)
+TLS: provided (certificate/key/CA files), or lab (localhost private CA only) [provided]
+Hostname certificate full-chain PEM absolute path
+Matching private key PEM absolute path
+Issuing CA trust PEM absolute path
+RTP UDP first port (even, at least 1024) [10000]
+RTP UDP last port (open this exact range on the server network) [10019]
+<verified source acquisition, installation warning, actual immutable plan JSON and SHA-256>
+Approve this exact plan and execute the installation (yes/no) [no] (cancel to stop):
+```
+
+There are no snapshot/task prompts and no separate recovery confirmation. `yes`
+approves the displayed exact plan once. `no`, blank input, EOF and cancel reject
+provisioning. Preparation can download verified sources and save protected inputs;
+package/service/database/firewall provisioning begins only after approval.
+
+Effective `sshd -T` and actual sshd-owned listeners must agree on a single port;
+22 and nonstandard ports such as 2222 are supported. The selected port is bound
+into the immutable plan and allowed through the firewall. AlmaDial does not
+reconfigure SSH. Multiple ports, conflicting listener addresses, or unsupported
+socket activation require administrator reconciliation before installation.
+The selected IPv4 must actually be assigned to the selected active interface;
+no literal `eth0` default is assumed. With several choices, select the appropriate
+assigned pair. The FQDN's IPv4 resolution must equal that address. This does not
+prove internet reachability: arrange external DNS, HTTPS and the exact UDP media
+range yourself. A public DNS address translated onto a private host address,
+arbitrary NAT, multiple public media addresses and general TURN are unsupported
+and must be resolved before provisioning.
+
+## Prepare application TLS
+
+Remote mode requires an FQDN/SAN match, matching unencrypted private key, valid
+full chain and explicit CA trust PEM. Browsers must trust the same issuing CA.
+Do not use `localhost` lab certificates for remote mode. AlmaDial has no ACME
+client. Certificate-manager paths containing symlinks are deliberately rejected.
+Prepare root-owned regular copies in a real directory; for example, as root:
+
+```bash
+install -d -o root -g root -m 0700 /etc/almadial-tls-inputs
+install -o root -g root -m 0644 /YOUR_RESOLVED_SOURCE/fullchain.pem /etc/almadial-tls-inputs/fullchain.pem
+install -o root -g root -m 0600 /YOUR_RESOLVED_SOURCE/privkey.pem /etc/almadial-tls-inputs/key.pem
+install -o root -g root -m 0644 /YOUR_RESOLVED_SOURCE/ca-bundle.pem /etc/almadial-tls-inputs/trust.pem
+openssl x509 -in /etc/almadial-tls-inputs/fullchain.pem -noout -subject -issuer -dates -ext subjectAltName
+```
+
+Resolve and inspect your certificate-manager source paths first. No symlink may
+remain in any supplied destination path or parent directory. Inputs must be at
+most 4 MiB, without group/world writes; private keys must have owner read/write,
+no world access and only root or the accepted asterisk group. Prefer 0600
+root:root for the input key. The CLI names the failing input/path and restriction;
+it never prints key contents. Keep these original PEM bytes at their original
+paths through resume: a saved plan binds certificate, chain, CA, hostname and
+paths. Replacing certificate material can invalidate saved-plan reconciliation.
+There is no automatic renewal/replanning of an installation; preserve the working
+generation and obtain operator-led reconciliation before certificate replacement.
+Never edit plan hashes or delete journals to force renewal. Bootstrap CA overrides
+affect distribution downloads only, not application or browser trust.
 
 For remote access, open the configured hostname directly:
 `https://YOUR_FQDN/vicidial/admin.php`, `/agc/vicidial.php` and
@@ -154,3 +204,17 @@ credential leak. Preserve private logs and report the command, exit status and
 sanitized finding. Independent human acceptance follows the published procedure
 without implementer repair; AGY separately assesses that evidence. Developer
 qualification does not establish independent acceptance.
+
+## Current candidate qualification limitation
+
+`alm34-standard-rc1` is prepared locally, unpublished and **not yet qualified for
+operator retest**. Its clean AlmaLinux 10.2 developer run reached standard
+exact-plan approval and verified public application source acquisition, then
+stopped safely at RPM resolution. The configured repositories offered 10.3
+replacements for the accepted `gcc`, `gcc-c++`, `libuuid-devel`, `libxml2-devel`,
+`openssl-devel` and `perl-DBI` pins. The installer did not substitute those
+versions. Preserve the saved plan and journals; a reviewed repository-retention
+or stack-policy decision is required before qualification can complete. Do not
+manually install replacements, alter the saved plan, or infer runtime health
+from this partial installation. Historical ALM-46 runtime acceptance remains
+limited to its recorded versions and topology.

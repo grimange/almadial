@@ -36,8 +36,9 @@ The plan command inspects the local host without provisioning. Save its JSON
 output and review all twelve stage responsibilities before approving its digest.
 Install/resume require local root and the same approved, host-bound plan.
 State: /var/lib/almadial-install (existing stage journals and immutable inputs).
-The candidate manifest supports authorized disposable laboratory qualification;
-it does not authorize production installation. Browser/media acceptance remains
+Standard installations require host binding and explicit exact-plan approval,
+without internal task or snapshot evidence. Legacy managed plans retain their
+original authorization. Deployment profile and managed governance are separate. Browser/media acceptance remains
 an explicit functional qualification after provisioning.
 `
 
@@ -170,6 +171,11 @@ func runInstall(ctx context.Context, args []string, out, errout io.Writer) int {
 		return Success
 	}
 	if planning {
+		if r.Authorization.Mode == provision.StandardAuthorization {
+			if e = provision.VerifyManagement(ctx, r.Network, r.TLS.Hostname); e != nil {
+				return fail(e)
+			}
+		}
 		inventory, e := n.Inspect(ctx)
 		if e != nil {
 			return fail(e)

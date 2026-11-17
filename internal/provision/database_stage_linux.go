@@ -97,8 +97,8 @@ type DatabaseLabAuthorization struct {
 
 func (a DatabaseLabAuthorization) validate(s DatabaseStage, m artifacts.Manifest) error {
 	d := s.doc()
-	if s.Digest() == "" || a.Scope != "ALM-18/disposable-lab" || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || a.SourceSHA256 != d.Source || m.Digest() != d.Manifest || d.Policy != DatabasePolicyDigest() || !shaPattern.MatchString(a.SnapshotReference) || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !a.CandidateAcknowledged {
-		return &execution.Error{Category: execution.Precondition, StageID: "S03", ExitCode: -1, Detail: "exact ALM-18 laboratory authorization, verified source and fresh recovery snapshot required"}
+	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-18/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || a.SourceSHA256 != d.Source || m.Digest() != d.Manifest || d.Policy != DatabasePolicyDigest() {
+		return &execution.Error{Category: execution.Precondition, StageID: "S03", ExitCode: -1, Detail: "valid authorization mode, exact database-stage bindings and verified source required"}
 	}
 	return nil
 }

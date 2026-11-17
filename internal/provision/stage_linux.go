@@ -103,8 +103,8 @@ type LabAuthorization struct {
 
 func (a LabAuthorization) validate(s Stage, m artifacts.Manifest) error {
 	d := s.doc()
-	if s.Digest() == "" || a.Scope != "ALM-16/disposable-lab" || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || d.Policy != PolicyDigest() || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !shaPattern.MatchString(a.SnapshotReference) || !a.CandidateAcknowledged {
-		return &execution.Error{Category: execution.Precondition, StageID: "S01", Detail: "explicit disposable laboratory authorization and exact identity bindings required", ExitCode: -1}
+	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-16/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || d.Policy != PolicyDigest() {
+		return &execution.Error{Category: execution.Precondition, StageID: "S01", Detail: "valid authorization mode and exact host/plan identity bindings required", ExitCode: -1}
 	}
 	return nil
 }

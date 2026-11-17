@@ -104,7 +104,7 @@ type TLSLabAuthorization struct {
 
 func (a TLSLabAuthorization) validate(s TLSStage, m artifacts.Manifest) error {
 	d := s.doc()
-	if s.Digest() == "" || a.Scope != "ALM-24/disposable-lab" || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || a.PolicySHA256 != TLSPolicyDigest() || d.Policy != a.PolicySHA256 || !shaPattern.MatchString(a.SnapshotReference) || !shaPattern.MatchString(a.OperatorEvidenceSHA256) || !a.CandidateAcknowledged || !a.DialingInactive {
+	if s.Digest() == "" || !stageAuthorization(a.Scope, "ALM-24/disposable-lab", a.SnapshotReference, a.OperatorEvidenceSHA256, a.CandidateAcknowledged, false, false) || a.Host != d.Before.Host || a.StageSHA256 != s.Digest() || a.ParentSHA256 != d.Parent || a.ManifestSHA256 != d.Manifest || m.Digest() != d.Manifest || a.PolicySHA256 != TLSPolicyDigest() || d.Policy != a.PolicySHA256 || !a.DialingInactive {
 		return errTLS
 	}
 	return nil

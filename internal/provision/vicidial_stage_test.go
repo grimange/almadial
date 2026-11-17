@@ -79,38 +79,55 @@ func (f *vicidialStageFake) Run(_ context.Context, c execution.Command) (executi
 	return execution.Result{Started: true}, nil
 }
 func TestVICIdialStageExecutionAndFreshNoOp(t *testing.T) {
-	i, m, src, dep, ast, db := vicidialStageFixture(t)
-	s, e := i.Prepare(m, src, dep, ast, db)
-	if e != nil {
-		t.Fatal(e)
-	}
-	again, e := i.Prepare(m, src, dep, ast, db)
-	if e != nil || s.Digest() != again.Digest() || len(s.Graph().Actions()) != 7 {
-		t.Fatal("non-deterministic plan", e)
-	}
-	f := &vicidialStageFake{s: i.Snapshot}
-	dir := filepath.Join(t.TempDir(), "state")
-	o, e := ExecuteVICIdialLab(context.Background(), s, m, vicidialAuth(s), dir, f, f, false, nil)
-	if e != nil || o.NoOp || !vicidialSatisfied(f.s) || f.calls != 7 {
-		t.Fatal(e, o)
-	}
-	for _, a := range o.Journal.Actions {
-		if a.State != journal.Succeeded || a.Evidence == "" {
-			t.Fatal(a)
-		}
-	}
-	o, e = ExecuteVICIdialLab(context.Background(), s, m, vicidialAuth(s), dir, f, f, true, nil)
-	if e != nil || !o.NoOp || f.calls != 7 {
-		t.Fatal("resume", e)
-	}
-	i.Snapshot = f.s
-	s, e = i.Prepare(m, src, dep, ast, db)
-	if e != nil || len(s.Graph().Actions()) != 0 {
-		t.Fatal(e)
-	}
-	o, e = ExecuteVICIdialLab(context.Background(), s, m, vicidialAuth(s), filepath.Join(t.TempDir(), "noop"), f, f, false, nil)
-	if e != nil || !o.NoOp || f.calls != 7 {
-		t.Fatal("fresh NO_OP", e)
+	for _, standard := range []bool{false, true} {
+		t.Run(map[bool]string{false: "legacy", true: "standard"}[standard], func(t *testing.T) {
+			vicidialAuth := vicidialAuth
+			if standard {
+				original := vicidialAuth
+				vicidialAuth = func(s VICIdialStage) VICIdialLabAuthorization {
+					a := original(s)
+					a.Scope = StandardAuthorization
+					a.SnapshotReference = ""
+					a.OperatorEvidenceSHA256 = ""
+					a.CandidateAcknowledged = false
+					return a
+				}
+			}
+
+			i, m, src, dep, ast, db := vicidialStageFixture(t)
+			s, e := i.Prepare(m, src, dep, ast, db)
+			if e != nil {
+				t.Fatal(e)
+			}
+			again, e := i.Prepare(m, src, dep, ast, db)
+			if e != nil || s.Digest() != again.Digest() || len(s.Graph().Actions()) != 7 {
+				t.Fatal("non-deterministic plan", e)
+			}
+			f := &vicidialStageFake{s: i.Snapshot}
+			dir := filepath.Join(t.TempDir(), "state")
+			o, e := ExecuteVICIdialLab(context.Background(), s, m, vicidialAuth(s), dir, f, f, false, nil)
+			if e != nil || o.NoOp || !vicidialSatisfied(f.s) || f.calls != 7 {
+				t.Fatal(e, o)
+			}
+			for _, a := range o.Journal.Actions {
+				if a.State != journal.Succeeded || a.Evidence == "" {
+					t.Fatal(a)
+				}
+			}
+			o, e = ExecuteVICIdialLab(context.Background(), s, m, vicidialAuth(s), dir, f, f, true, nil)
+			if e != nil || !o.NoOp || f.calls != 7 {
+				t.Fatal("resume", e)
+			}
+			i.Snapshot = f.s
+			s, e = i.Prepare(m, src, dep, ast, db)
+			if e != nil || len(s.Graph().Actions()) != 0 {
+				t.Fatal(e)
+			}
+			o, e = ExecuteVICIdialLab(context.Background(), s, m, vicidialAuth(s), filepath.Join(t.TempDir(), "noop"), f, f, false, nil)
+			if e != nil || !o.NoOp || f.calls != 7 {
+				t.Fatal("fresh NO_OP", e)
+			}
+		})
 	}
 }
 func TestVICIdialAuthorizationAndStalePlan(t *testing.T) {

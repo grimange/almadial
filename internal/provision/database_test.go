@@ -172,46 +172,63 @@ func TestDatabaseStates(t *testing.T) {
 	}
 }
 func TestDatabasePlanAndNoOp(t *testing.T) {
-	i, m, src := databaseInputs(t, false)
-	s, e := i.Prepare(m, src)
-	if e != nil {
-		t.Fatal(e)
-	}
-	again, e := i.Prepare(m, src)
-	if e != nil || s.Digest() != again.Digest() || len(s.Graph().Actions()) != 6 {
-		t.Fatal("determinism", e)
-	}
-	for j, a := range s.Graph().Actions() {
-		if a.StageID != "S03" || a.Command.Timeout <= 0 || j > 0 && (len(a.Dependencies) != 1 || a.Dependencies[0] != s.Graph().Actions()[j-1].ID) {
-			t.Fatal(a)
-		}
-	}
-	f := &dbFake{s: i.Snapshot}
-	dir := filepath.Join(t.TempDir(), "state")
-	o, e := ExecuteDatabaseLab(context.Background(), s, m, dbAuth(s), dir, f, f, false, nil)
-	if e != nil || len(o.Traces) != 6 || o.NoOp || !databaseSatisfied(f.s) {
-		t.Fatal(e, o)
-	}
-	for _, r := range o.Journal.Actions {
-		if r.State != journal.Succeeded || r.Retry != journal.Never {
-			t.Fatal(r)
-		}
-	}
-	o, e = ExecuteDatabaseLab(context.Background(), s, m, dbAuth(s), dir, f, f, true, nil)
-	if e != nil || !o.NoOp || f.calls != 6 {
-		t.Fatal("replay", e)
-	}
-	i.Snapshot = f.s
-	s, e = i.Prepare(m, src)
-	if e != nil || len(s.Graph().Actions()) != 0 {
-		t.Fatal(e)
-	}
-	o, e = ExecuteDatabaseLab(context.Background(), s, m, dbAuth(s), filepath.Join(t.TempDir(), "noop"), f, f, false, nil)
-	if e != nil || !o.NoOp || f.calls != 6 {
-		t.Fatal(e)
-	}
-	if VerifyDatabaseForApplication(f.s, src) != nil || VerifyDatabaseForApplication(f.s, DatabaseSource{}) == nil {
-		t.Fatal("S05 source gate")
+	for _, standard := range []bool{false, true} {
+		t.Run(map[bool]string{false: "legacy", true: "standard"}[standard], func(t *testing.T) {
+			dbAuth := dbAuth
+			if standard {
+				original := dbAuth
+				dbAuth = func(s DatabaseStage) DatabaseLabAuthorization {
+					a := original(s)
+					a.Scope = StandardAuthorization
+					a.SnapshotReference = ""
+					a.OperatorEvidenceSHA256 = ""
+					a.CandidateAcknowledged = false
+					return a
+				}
+			}
+
+			i, m, src := databaseInputs(t, false)
+			s, e := i.Prepare(m, src)
+			if e != nil {
+				t.Fatal(e)
+			}
+			again, e := i.Prepare(m, src)
+			if e != nil || s.Digest() != again.Digest() || len(s.Graph().Actions()) != 6 {
+				t.Fatal("determinism", e)
+			}
+			for j, a := range s.Graph().Actions() {
+				if a.StageID != "S03" || a.Command.Timeout <= 0 || j > 0 && (len(a.Dependencies) != 1 || a.Dependencies[0] != s.Graph().Actions()[j-1].ID) {
+					t.Fatal(a)
+				}
+			}
+			f := &dbFake{s: i.Snapshot}
+			dir := filepath.Join(t.TempDir(), "state")
+			o, e := ExecuteDatabaseLab(context.Background(), s, m, dbAuth(s), dir, f, f, false, nil)
+			if e != nil || len(o.Traces) != 6 || o.NoOp || !databaseSatisfied(f.s) {
+				t.Fatal(e, o)
+			}
+			for _, r := range o.Journal.Actions {
+				if r.State != journal.Succeeded || r.Retry != journal.Never {
+					t.Fatal(r)
+				}
+			}
+			o, e = ExecuteDatabaseLab(context.Background(), s, m, dbAuth(s), dir, f, f, true, nil)
+			if e != nil || !o.NoOp || f.calls != 6 {
+				t.Fatal("replay", e)
+			}
+			i.Snapshot = f.s
+			s, e = i.Prepare(m, src)
+			if e != nil || len(s.Graph().Actions()) != 0 {
+				t.Fatal(e)
+			}
+			o, e = ExecuteDatabaseLab(context.Background(), s, m, dbAuth(s), filepath.Join(t.TempDir(), "noop"), f, f, false, nil)
+			if e != nil || !o.NoOp || f.calls != 6 {
+				t.Fatal(e)
+			}
+			if VerifyDatabaseForApplication(f.s, src) != nil || VerifyDatabaseForApplication(f.s, DatabaseSource{}) == nil {
+				t.Fatal("S05 source gate")
+			}
+		})
 	}
 }
 func TestDatabaseInputRejection(t *testing.T) {

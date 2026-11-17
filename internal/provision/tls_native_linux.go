@@ -12,6 +12,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -30,10 +31,16 @@ type TLSNative struct {
 // Read only bounded regular files. Private keys may be root-only or readable
 // by the endpoint's asterisk group; group/world writes and world reads fail.
 func tlsRead(path string, private bool) ([]byte, error) {
+	reject := func(reason string) ([]byte, error) {
+		return nil, fmt.Errorf("TLS input %q: %s; supply an absolute root-owned regular PEM file with no symlink in its path; use 0600 root:root for private keys and 0644 root:root for certificate/CA files", path, reason)
+	}
+	if !filepath.IsAbs(path) {
+		return reject("absolute path required")
+	}
 	for p := filepath.Dir(path); ; p = filepath.Dir(p) {
 		st, e := os.Lstat(p)
 		if e != nil || !st.IsDir() || st.Mode()&os.ModeSymlink != 0 {
-			return nil, errTLS
+			return reject("parent directory is missing, is not a directory, or is a symlink")
 		}
 		if p == "/" {
 			break
@@ -41,21 +48,21 @@ func tlsRead(path string, private bool) ([]byte, error) {
 	}
 	f, e := os.OpenFile(path, os.O_RDONLY|syscall.O_NOFOLLOW|syscall.O_NONBLOCK, 0)
 	if e != nil {
-		return nil, errTLS
+		return reject("cannot open input; missing file, symlink, or inaccessible path")
 	}
 	defer f.Close()
 	s, e := f.Stat()
 	if e != nil || !s.Mode().IsRegular() || s.Size() > 4<<20 || s.Mode().Perm()&0022 != 0 {
-		return nil, errTLS
+		return reject("input must be a regular PEM file of at most 4 MiB, without group/world write permission")
 	}
 	st, ok := s.Sys().(*syscall.Stat_t)
 	if !ok || st.Uid != 0 || private && (s.Mode().Perm()&0007 != 0 || s.Mode().Perm()&0700 != 0600) {
-		return nil, errTLS
+		return reject("root ownership required; private keys require owner read/write and no world access")
 	}
 	if private && st.Gid != 0 {
 		group, e := user.LookupGroup("asterisk")
 		if e != nil || strconv.FormatUint(uint64(st.Gid), 10) != group.Gid {
-			return nil, errTLS
+			return reject("private key group must be root or asterisk")
 		}
 	}
 	return io.ReadAll(io.LimitReader(f, 4<<20))
@@ -67,24 +74,29 @@ func (n TLSNative) Material() (TLSCertificate, error) {
 }
 
 func (n TLSNative) payload(expected string) ([]byte, TLSCertificate, error) {
+	for _, input := range []struct{ name, path string }{{"certificate full-chain", n.Request.CertificateFile}, {"private key", n.Request.PrivateKeyFile}, {"CA trust", n.Request.TrustFile}} {
+		if !filepath.IsAbs(input.path) || filepath.Clean(input.path) != input.path || strings.ContainsAny(input.path, "\n\r\x00") {
+			return nil, TLSCertificate{}, fmt.Errorf("TLS %s input %q: supply a clean absolute path to a root-owned regular PEM file without symlinks", input.name, input.path)
+		}
+	}
 	if !tlsRequestValid(n.Request) {
-		return nil, TLSCertificate{}, errTLS
+		return nil, TLSCertificate{}, fmt.Errorf("TLS request: require a valid FQDN for remote mode, supported mode, and separate certificate/trust paths from the private key: %w", errTLS)
 	}
 	chain, e := tlsRead(n.Request.CertificateFile, false)
 	if e != nil {
-		return nil, TLSCertificate{}, e
+		return nil, TLSCertificate{}, fmt.Errorf("certificate full-chain input: %w", e)
 	}
 	key, e := tlsRead(n.Request.PrivateKeyFile, true)
 	if e != nil {
-		return nil, TLSCertificate{}, e
+		return nil, TLSCertificate{}, fmt.Errorf("private-key input: %w", e)
 	}
 	trust, e := tlsRead(n.Request.TrustFile, false)
 	if e != nil {
-		return nil, TLSCertificate{}, e
+		return nil, TLSCertificate{}, fmt.Errorf("CA trust input: %w", e)
 	}
 	c, e := ValidateTLSMaterial(n.Request.Hostname, chain, key, trust, time.Now())
 	if e != nil {
-		return nil, c, e
+		return nil, c, fmt.Errorf("TLS certificate %q / private key %q / CA trust %q for hostname %q: %w", n.Request.CertificateFile, n.Request.PrivateKeyFile, n.Request.TrustFile, n.Request.Hostname, e)
 	}
 	if n.Certificate.LeafSHA256 != "" && n.Certificate != c {
 		return nil, c, errTLS

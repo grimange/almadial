@@ -20,7 +20,17 @@ HTTPS/WSS, reachable UDP media, native VICIdial runtime, durable recovery and
 healthy repeat installation. Initial supported topology uses a directly attached
 reachable IPv4; arbitrary NAT/firewall topologies are not implied.
 
-The laboratory profile is a disposable development/regression environment.
+The isolated laboratory profile describes network exposure, independently of
+authorization policy. Standard host-bound exact-plan approval works in either
+profile without task/snapshot metadata. Historical managed plans retain their
+original strict validation, bytes, digests and resume contract; managed governance
+is selected explicitly through that existing request representation.
+
+AI-worker infrastructure authorization is a separate repository control: task
+authority, host identity and snapshots govern developer mutations. End users
+installing on their own supported servers do not need Kaneo evidence.
+
+The laboratory profile is suitable for disposable development/regression environments.
 Private addresses, isolated trust and private stores are acceptable there, but
 must not define standard distribution or imply internet acceptance.
 
@@ -95,3 +105,23 @@ profiles, SIP authentication and recordings out of public reports.
 
 Preserve saved inputs and journals. Rerun `almadial resume` to reconcile the
 approved plan; do not edit a plan or replace hashes to bypass a failed check.
+
+
+## Management discovery and operator recovery
+
+The installer observes active assigned IPv4/interface pairs and effective SSH
+configuration plus actual listeners before standard provisioning. A single SSH
+port, including 2222, is preserved in the immutable plan and firewalld policy.
+It does not change sshd configuration. Multiple configured ports, mismatched
+listeners, an unassigned selected address or DNS-to-private NAT mapping fail
+before provisioning with an explanation. Configured addresses do not establish
+public reachability. Direct-address remote mode remains the supported topology.
+
+Use `almadial install` or `almadial resume` after correcting an interruption.
+Review and approve the same saved plan. Locks, stage journals and fresh
+postconditions determine safe progress; completion receipts alone are not health
+proof. Backups/snapshots are recommended, without an installer assertion that
+recovery has been tested. Full system rollback is not guaranteed. Foreign file
+changes, changed plan-bound TLS material or uncertain database operations require
+operator reconciliation rather than blind retry. See the
+[installation guide](almadial-installation.md) for resource thresholds and commands.

@@ -11,7 +11,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"net"
 	"net/netip"
 	"os"
 	"os/exec"
@@ -142,7 +141,7 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 	if os.Geteuid() != 0 {
 		return fail(errors.New("guided installation requires local root on the authorized target"))
 	}
-	fmt.Fprintln(out, "AlmaDial: single-server AlmaLinux 10.2 installation. Qualified resource baseline: 4 CPUs, 8 GiB RAM, 80 GiB disk. Choose remote HTTPS access or the isolated laboratory profile. Carrier configuration is outside this installer.")
+	fmt.Fprintln(out, "AlmaDial: single-server AlmaLinux 10.2 installation. Recommended qualified baseline: 4 CPUs, 8 GiB RAM, 80 GiB disk. Enforced fresh-install thresholds: 4 CPUs, 7 GiB total RAM, 4 GiB available RAM, 60 GiB free on installation filesystems, plus 1 GiB recording reserve and 10,000 recording inodes. Choose remote HTTPS access or the isolated laboratory profile. Carrier configuration is outside this installer.")
 	prompts := operatorui.NewPrompts(ctx, in, out)
 	if err := guidedDirectory(guidedRoot); err != nil {
 		return fail(err)
@@ -201,10 +200,19 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 		}
 		fmt.Fprintln(out, "Saved installation plan: revalidate completed stages and resume remaining work; a completed host must verify NO_OP.")
 		fmt.Fprintf(out, "Profile: %s; HTTPS hostname %s; management %s on %s; install pinned database, telephony, web and browser-phone components.\n", request.Network.Mode, request.TLS.Hostname, request.Network.ManagementAddress, request.Network.Interface)
-		if e = approveInstall(prompts, out, plan.Digest()); e != nil {
+		if request.Authorization.Mode == provision.StandardAuthorization {
+			if e = provision.VerifyManagement(ctx, request.Network, request.TLS.Hostname); e != nil {
+				return fail(e)
+			}
+		}
+		if e = reviewInstall(prompts, out, plan); e != nil {
 			return fail(e)
 		}
-		return runInstall(ctx, []string{"resume", "--plan", planPath, "--manifest", manifestPath, "--approve-sha256", plan.Digest()}, out, errout)
+		result := runInstall(ctx, []string{"resume", "--plan", planPath, "--manifest", manifestPath, "--approve-sha256", plan.Digest()}, out, errout)
+		if result == Success {
+			guidedCompletion(out, request.Network.Mode, request.TLS.Hostname)
+		}
+		return result
 	} else if !os.IsNotExist(e) {
 		return fail(e)
 	}
@@ -222,21 +230,6 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 			return fail(err)
 		}
 	}
-	snapshot, err := prompts.Ask("Recovery snapshot identity (required; created before installation)", "")
-	if err != nil {
-		return fail(err)
-	}
-	authority, err := prompts.Ask("Operator/task authorization reference for this disposable host", "")
-	if err != nil {
-		return fail(err)
-	}
-	recovery, err := prompts.YesNo("Confirm snapshot exists, management recovery works, and candidate deployment profile is authorized", true)
-	if err != nil {
-		return fail(err)
-	}
-	if snapshot == "" || authority == "" || !recovery {
-		return fail(errors.New("explicit deployment authorization and recovery snapshot are required"))
-	}
 	n, err := provision.NewNative(nil)
 	if err != nil {
 		return fail(err)
@@ -246,37 +239,42 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 		return fail(err)
 	}
 	snapshotHost := preflight.Collect(ctx, preflight.Linux{})
+	pairs, err := provision.DiscoverIPv4Interfaces(ctx)
+	if err != nil {
+		return fail(err)
+	}
 	defaultIP := ""
-	for _, a := range snapshotHost.Addresses {
-		if a.Is4() && a.IsPrivate() && !a.IsLoopback() {
-			defaultIP = a.String()
-			break
+	if len(pairs) == 1 {
+		defaultIP = pairs[0].Address
+	} else {
+		fmt.Fprintln(out, "Assigned IPv4/interface choices (configured addresses do not prove public reachability):")
+		for _, pair := range pairs {
+			fmt.Fprintf(out, "  %s on %s\n", pair.Address, pair.Interface)
 		}
 	}
 	address, err := prompts.Ask("Directly attached server IPv4 management/media address", defaultIP)
 	if err != nil {
 		return fail(err)
 	}
-	ip, err := netip.ParseAddr(address)
-	if err != nil || !ip.Is4() || !ip.IsGlobalUnicast() || (profile == "lab" && !ip.IsPrivate()) {
-		return fail(errors.New("a directly attached unicast IPv4 address is required (lab requires private IPv4)"))
+	defaultInterface := ""
+	for _, pair := range pairs {
+		if pair.Address == address {
+			if defaultInterface != "" {
+				defaultInterface = ""
+				break
+			}
+			defaultInterface = pair.Interface
+		}
 	}
-	iface, err := prompts.Ask("Management network interface", "eth0")
+	iface, err := prompts.Ask("Management network interface for selected IPv4", defaultInterface)
 	if err != nil {
 		return fail(err)
 	}
-	if profile == "remote" {
-		resolved, e := net.DefaultResolver.LookupNetIP(ctx, "ip4", hostname)
-		matched := false
-		for _, a := range resolved {
-			if a.Unmap() == ip {
-				matched = true
-			}
-		}
-		if e != nil || !matched {
-			return fail(errors.New("server FQDN must resolve to the configured server IPv4 before provisioning"))
-		}
+	sshPort, err := provision.DiscoverManagementSSH(ctx, address)
+	if err != nil {
+		return fail(err)
 	}
+	fmt.Fprintf(out, "Preserve existing SSH management port: %d/tcp\n", sshPort)
 	tlsDefault := "lab"
 	if profile == "remote" {
 		tlsDefault = "provided"
@@ -308,10 +306,14 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 	if _, err = (provision.TLSNative{Request: tlsRequest}).Material(); err != nil {
 		return fail(err)
 	}
+	ip, err := netip.ParseAddr(address)
+	if err != nil || !ip.Is4() {
+		return fail(errors.New("select a valid assigned IPv4 address"))
+	}
 	c := config.Config{SchemaVersion: 1, Network: config.Network{BindAddress: ip, AdvertiseAddress: ip, Hostname: hostname}, WebRTC: config.WebRTC{Enabled: true, TLS: &config.TLS{CertificateFile: tlsRequest.CertificateFile, PrivateKeyFile: tlsRequest.PrivateKeyFile}}}
 	c.Credentials = config.Credentials{Database: config.SecretRef{Type: config.File, Source: "/etc/almadial/secrets/database"}, AMI: config.SecretRef{Type: config.File, Source: "/etc/almadial/secrets/vicidial-ami"}, SIP: config.SecretRef{Type: config.File, Source: "/etc/almadial/secrets/phone-s10"}, Admin: config.SecretRef{Type: config.File, Source: "/etc/almadial/secrets/admin"}}
 	c = config.Defaults(c)
-	network := provision.NetworkRequest{Mode: "isolated", Interface: iface, ManagementAddress: address, SSHPort: 22}
+	network := provision.NetworkRequest{Mode: "isolated", Interface: iface, ManagementAddress: address, SSHPort: sshPort}
 	phone := provision.PhoneRequest{Identity: "alm_s10_9061", Hostname: "localhost", WSSURL: "wss://localhost:8089/ws"}
 	if profile == "remote" {
 		first, e := prompts.Ask("RTP UDP first port (even, at least 1024)", "10000")
@@ -338,8 +340,12 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 		phone.WSSURL = "wss://" + hostname + "/ws"
 	}
 
+	if err = provision.VerifyManagement(ctx, network, hostname); err != nil {
+		return fail(err)
+	}
+
 	fmt.Fprintln(out, "Credentials will be securely generated by the existing provisioning stages and retained in root-only files under /etc/almadial/secrets. They are never printed in the installation log.")
-	r := provision.InstallRequest{Config: c, Requirements: preflight.Requirements{Profile: "ALM46-single-server-not-production-sizing", MinCPUs: 4, CPUFlags: []string{"sse2"}, MinTotalMemory: 7516192768, MinAvailableMemory: 4294967296, MinDiskAvailable: 64424509440}, TLS: tlsRequest, Network: network, Phone: phone, Authorization: provision.InstallAuthorization{TaskID: "a1doi4qsyn1lspqtydw84smh", Host: inventory.Host, SnapshotReference: inputDigest(snapshot), OperatorEvidenceSHA256: inputDigest(authority), CandidateAcknowledged: true, ManagementRecoveryVerified: true}}
+	r := provision.InstallRequest{Config: c, Requirements: preflight.Requirements{Profile: "ALM46-single-server-not-production-sizing", MinCPUs: 4, CPUFlags: []string{"sse2"}, MinTotalMemory: 7516192768, MinAvailableMemory: 4294967296, MinDiskAvailable: 64424509440}, TLS: tlsRequest, Network: network, Phone: phone, Authorization: provision.InstallAuthorization{Mode: provision.StandardAuthorization, Host: inventory.Host}}
 	// Read-only mount discovery; no storage changes or shell interpolation.
 	mountCtx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
@@ -388,8 +394,8 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 	if err != nil {
 		return fail(err)
 	}
-	fmt.Fprintln(out, "Plan: install pinned signed RPMs, local database/schema, Asterisk, VICIdial, Apache/PHP, profile-bound TLS, WSS and firewall; generate protected credentials and configure synthetic phone; retain durable journals and verify actual postconditions. Existing SSH port 22 remains available. Browser/media and reboot acceptance require the separate operator run.")
-	if err = approveInstall(prompts, out, p.Digest()); err != nil {
+	fmt.Fprintln(out, "Plan: install pinned signed RPMs, local database/schema, Asterisk, VICIdial, Apache/PHP, profile-bound TLS, WSS and firewall; generate protected credentials and configure synthetic phone; retain durable journals and verify actual postconditions. The discovered SSH management port remains available. Browser/media and reboot acceptance require the separate operator run.")
+	if err = reviewInstall(prompts, out, p); err != nil {
 		return fail(err)
 	}
 	if err = guidedSave(planPath, p.JSON()); err != nil {
@@ -397,7 +403,29 @@ func runGuidedInstall(ctx context.Context, in io.Reader, out, errout io.Writer) 
 	}
 	result := runInstall(ctx, []string{"install", "--plan", planPath, "--manifest", manifestPath, "--approve-sha256", p.Digest()}, out, errout)
 	if result == Success {
-		fmt.Fprintf(out, "Access: https://%s/vicidial/admin.php ; https://%s/agc/vicidial.php ; https://%s/almadial-phone/ . Browser trust must include the issuing CA. Lab access uses an authorized SSH tunnel. Run almadial doctor with the saved plan and CA.\n", hostname, hostname, hostname)
+		guidedCompletion(out, network.Mode, hostname)
 	}
 	return result
+}
+
+func reviewInstall(p *operatorui.Prompts, out io.Writer, plan provision.InstallPlan) error {
+	if _, err := fmt.Fprintln(out, "AlmaDial will install or modify system packages, services, database configuration, certificates and firewall rules. Supported interrupted installations can be resumed, but AlmaDial does not guarantee complete system rollback. Maintain an appropriate backup or recovery method before proceeding."); err != nil {
+		return err
+	}
+	if _, err := fmt.Fprintln(out, string(plan.JSON())); err != nil {
+		return err
+	}
+	return approveInstall(p, out, plan.Digest())
+}
+
+func guidedCompletion(out io.Writer, profile, hostname string) {
+	fmt.Fprintf(out, "Installed profile: %s; hostname: %s\nAccess: https://%s/vicidial/admin.php ; https://%s/agc/vicidial.php ; https://%s/almadial-phone/\n", profile, hostname, hostname, hostname, hostname)
+	if profile == "isolated" {
+		fmt.Fprintln(out, "Lab HTTPS is loopback only; use the documented SSH tunnel and trust the application CA.")
+	}
+	fmt.Fprintln(out, "Status and Doctor report actual health; warnings require review and required failures require correction:")
+	for _, command := range []string{"status", "doctor"} {
+		fmt.Fprintf(out, "almadial %s --plan /var/lib/almadial-inputs/plan.json --manifest /var/lib/almadial-inputs/stack.lock.yaml --ca-file /etc/pki/tls/almadial-s08/current/trust.pem\n", command)
+	}
+	fmt.Fprintln(out, "Resume: almadial install (or almadial resume). Review the same saved plan; completed stages are reconciled. Preserve inputs and journals. Changed TLS material, foreign files or unsafe interrupted database operations require operator reconciliation; no complete rollback is guaranteed.")
 }

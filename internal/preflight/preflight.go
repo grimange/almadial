@@ -271,3 +271,30 @@ func Human(findings []Finding) string {
 	b.WriteString("Host changes requested by preflight: NONE\n")
 	return b.String()
 }
+
+// ResourceGuidance is deliberately outside Assess/Fingerprint: historical plan
+// eligibility findings and identities must not change when wording improves.
+func ResourceGuidance(s Snapshot, r Requirements) string {
+	var b strings.Builder
+	missingISA := false
+	for _, flag := range r.CPUFlags {
+		if !contains(s.CPUFlags, flag) {
+			missingISA = true
+		}
+	}
+	if s.CPUs < r.MinCPUs || missingISA {
+		fmt.Fprintf(&b, "CPU: required %d CPUs with %v; observed %d CPUs with %v. Increase allocated CPUs and verify required ISA flags.\n", r.MinCPUs, r.CPUFlags, s.CPUs, s.CPUFlags)
+	}
+	if s.TotalMemory < r.MinTotalMemory {
+		fmt.Fprintf(&b, "Total RAM: required %d bytes; observed %d bytes. Increase server RAM.\n", r.MinTotalMemory, s.TotalMemory)
+	}
+	if s.AvailableMemory < r.MinAvailableMemory {
+		fmt.Fprintf(&b, "Available RAM: required %d bytes; observed %d bytes. Free memory or increase server RAM.\n", r.MinAvailableMemory, s.AvailableMemory)
+	}
+	for _, d := range s.Disks {
+		if d.Available < r.MinDiskAvailable {
+			fmt.Fprintf(&b, "Filesystem %s: required %d free bytes; observed %d free bytes. Free space or expand this filesystem before retrying.\n", d.Path, r.MinDiskAvailable, d.Available)
+		}
+	}
+	return b.String()
+}

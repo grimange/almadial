@@ -8,9 +8,9 @@ access. The installer is not a monitoring daemon or a production-readiness audit
 ## Daily inspection
 
 ```bash
-sudo almadial status --ca-file /etc/pki/tls/almadial-s08/current/trust.pem
-sudo almadial doctor --ca-file /etc/pki/tls/almadial-s08/current/trust.pem
-sudo almadial status --json --ca-file /etc/pki/tls/almadial-s08/current/trust.pem
+sudo /usr/local/sbin/almadial status --ca-file /etc/pki/tls/almadial-s08/current/trust.pem
+sudo /usr/local/sbin/almadial doctor --ca-file /etc/pki/tls/almadial-s08/current/trust.pem
+sudo /usr/local/sbin/almadial status --json --ca-file /etc/pki/tls/almadial-s08/current/trust.pem
 ```
 
 `status` prints one line per check. `doctor` adds the expected condition and local
@@ -101,7 +101,7 @@ activation each require their existing authorized recovery boundary.
 ## Explicit support collection
 
 ```bash
-sudo almadial evidence export --output /absolute/existing/private-directory/support.tar.gz \
+sudo /usr/local/sbin/almadial evidence export --output /absolute/existing/private-directory/support.tar.gz \
   --ca-file /etc/pki/tls/almadial-s08/current/trust.pem
 # Equivalent alias: almadial support-bundle --output ...
 ```
@@ -142,3 +142,23 @@ For the bounded manual recording/configuration/database drill, use
 [recording backup and isolated restoration](recording-backup-and-restore.md).
 It restores only into a new private directory and separate schema; it does not
 replace live files or promise whole-server or transactional call recovery.
+
+
+## Standard installer recovery
+
+For corrected standard candidates, run `almadial install` or `almadial resume`
+in a root terminal. Review and approve the saved exact plan again; do not issue
+manual stage commands. Preserve `/var/lib/almadial-inputs` (including original
+plan-bound TLS files at their supplied paths) and `/var/lib/almadial-install`.
+Completed stages are reconciled against live postconditions; a healthy repeat
+must report `NO_OP`. A prior success receipt does not override current failures.
+
+Warnings and required failures retain their diagnostic exit behavior. Changed
+TLS bytes, foreign files, host identity mismatch, uncertain database state or an
+unsafe interrupted operation require operator reconciliation. Do not edit plan
+or journal identities or replace original certificates to force a resume.
+There is no automatic complete rollback or application-certificate renewal.
+Maintain an appropriate backup/recovery method. Development snapshot and task
+records are not required by customer installations. See the current
+[operator installation guide](almadial-installation.md) for standard prompts,
+Status/Doctor examples and certificate preparation.

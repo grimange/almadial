@@ -23,7 +23,7 @@ func TestInstallationImmutableIdentity(t *testing.T) {
 	for _, key := range preflight.RequiredProbes() {
 		initial.Preflight.Known[key] = true
 	}
-	r := InstallRequest{Config: initial.Config, Requirements: initial.Requirements, TLS: TLSRequest{"provided", "localhost", "/cert.pem", "/key.pem", "/trust.pem"}, Network: NetworkRequest{"isolated", "eth0", "10.1.2.3", 22, 0, 0}, Phone: PhoneRequest{phoneIdentity, "localhost", "wss://localhost:8089/ws"}, Authorization: InstallAuthorization{"xu7wxvch94ii2iw38hpb8d58", initial.Inventory.Host, hash("snapshot"), hash("authority"), true, true}}
+	r := InstallRequest{Config: initial.Config, Requirements: initial.Requirements, TLS: TLSRequest{"provided", "localhost", "/cert.pem", "/key.pem", "/trust.pem"}, Network: NetworkRequest{"isolated", "eth0", "10.1.2.3", 22, 0, 0}, Phone: PhoneRequest{phoneIdentity, "localhost", "wss://localhost:8089/ws"}, Authorization: InstallAuthorization{"xu7wxvch94ii2iw38hpb8d58", initial.Inventory.Host, hash("snapshot"), hash("authority"), true, true, ""}}
 	src := InstallSources{db, ast, app, perl, PhoneSource{files: map[string][]byte{"fixture": []byte("verified fixture")}}}
 	cert := TLSCertificate{LeafSHA256: hash("leaf")}
 	p, e := PrepareInstall(r, initial, m, src, cert)

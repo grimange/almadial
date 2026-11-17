@@ -89,38 +89,55 @@ func (f *astFake) Run(_ context.Context, c execution.Command) (execution.Result,
 	return execution.Result{Started: true, ExitCode: 0}, nil
 }
 func TestAsteriskPlanRuntimeAndNoOp(t *testing.T) {
-	i, m, src := asteriskInputs(t)
-	s, e := i.Prepare(m, src)
-	if e != nil {
-		t.Fatal(e)
-	}
-	again, _ := i.Prepare(m, src)
-	if s.Digest() != again.Digest() || len(s.Graph().Actions()) != 6 {
-		t.Fatal("nondeterministic graph")
-	}
-	f := &astFake{s: i.Snapshot}
-	dir := filepath.Join(t.TempDir(), "journal")
-	o, e := ExecuteAsteriskLab(context.Background(), s, m, astAuth(s), dir, f, f, false, nil)
-	if e != nil || o.NoOp || !asteriskSatisfied(f.s) {
-		t.Fatal(e, o)
-	}
-	for _, v := range o.Journal.Actions {
-		if v.State != journal.Succeeded || v.Retry != journal.Never || v.Evidence == "" {
-			t.Fatal(v)
-		}
-	}
-	o, e = ExecuteAsteriskLab(context.Background(), s, m, astAuth(s), dir, f, f, true, nil)
-	if e != nil || !o.NoOp || f.calls != 6 {
-		t.Fatal("resume", e)
-	}
-	i.Snapshot = f.s
-	s, e = i.Prepare(m, src)
-	if e != nil || len(s.Graph().Actions()) != 0 {
-		t.Fatal(e)
-	}
-	o, e = ExecuteAsteriskLab(context.Background(), s, m, astAuth(s), filepath.Join(t.TempDir(), "noop"), f, f, false, nil)
-	if e != nil || !o.NoOp || f.calls != 6 {
-		t.Fatal("fresh no-op", e)
+	for _, standard := range []bool{false, true} {
+		t.Run(map[bool]string{false: "legacy", true: "standard"}[standard], func(t *testing.T) {
+			astAuth := astAuth
+			if standard {
+				original := astAuth
+				astAuth = func(s AsteriskStage) AsteriskLabAuthorization {
+					a := original(s)
+					a.Scope = StandardAuthorization
+					a.SnapshotReference = ""
+					a.OperatorEvidenceSHA256 = ""
+					a.CandidateAcknowledged = false
+					return a
+				}
+			}
+
+			i, m, src := asteriskInputs(t)
+			s, e := i.Prepare(m, src)
+			if e != nil {
+				t.Fatal(e)
+			}
+			again, _ := i.Prepare(m, src)
+			if s.Digest() != again.Digest() || len(s.Graph().Actions()) != 6 {
+				t.Fatal("nondeterministic graph")
+			}
+			f := &astFake{s: i.Snapshot}
+			dir := filepath.Join(t.TempDir(), "journal")
+			o, e := ExecuteAsteriskLab(context.Background(), s, m, astAuth(s), dir, f, f, false, nil)
+			if e != nil || o.NoOp || !asteriskSatisfied(f.s) {
+				t.Fatal(e, o)
+			}
+			for _, v := range o.Journal.Actions {
+				if v.State != journal.Succeeded || v.Retry != journal.Never || v.Evidence == "" {
+					t.Fatal(v)
+				}
+			}
+			o, e = ExecuteAsteriskLab(context.Background(), s, m, astAuth(s), dir, f, f, true, nil)
+			if e != nil || !o.NoOp || f.calls != 6 {
+				t.Fatal("resume", e)
+			}
+			i.Snapshot = f.s
+			s, e = i.Prepare(m, src)
+			if e != nil || len(s.Graph().Actions()) != 0 {
+				t.Fatal(e)
+			}
+			o, e = ExecuteAsteriskLab(context.Background(), s, m, astAuth(s), filepath.Join(t.TempDir(), "noop"), f, f, false, nil)
+			if e != nil || !o.NoOp || f.calls != 6 {
+				t.Fatal("fresh no-op", e)
+			}
+		})
 	}
 }
 func TestAsteriskRejectInputs(t *testing.T) {

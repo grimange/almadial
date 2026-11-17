@@ -15,36 +15,36 @@ independent internet-host installation and human operator acceptance remain pend
 
 ## Quick installation
 
-The [alm46-internet-rc1 prerelease](https://github.com/grimange/almadial/releases/tag/alm46-internet-rc1)
-provides a verified bootstrap and Linux amd64 CLI. This is a release candidate,
-not a stable production release. On a fresh supported host:
+The standard-installer correction is prepared as **`alm34-standard-rc1`**. It is
+not published by this implementation task. The earlier `alm46-internet-rc1`
+prerelease remains unchanged and does not contain this correction. Use the version
+approved and published by the release owner; prereleases are not stable production
+releases. Developer clean-host qualification of this correction is currently
+**BLOCKED**: the configured official repositories no longer expose six accepted
+10.2 RPM pins and offer 10.3 replacements. No RPM/source-policy substitution is
+authorized by this correction; do not treat this candidate as ready for operator
+retest. On a fresh supported host, after qualification and publication:
 
 ```bash
 ssh root@YOUR_SERVER
-
-curl -fsSLO \
-  https://github.com/grimange/almadial/releases/download/alm46-internet-rc1/install.sh
-
-printf '%s  %s\n' \
-  26a99a84302a498afab5bd6a1d4dfd27c7bc10aa87b4180e99ac710bf0dabba4 \
-  install.sh | sha256sum -c -
-
+VERSION='APPROVED_VERSION'
+curl -fsSLO "https://github.com/grimange/almadial/releases/download/${VERSION}/install.sh"
+# Verify install.sh against the approved release SHA-256 and inspect it.
 bash install.sh
-
 almadial --version
 almadial install
 ```
 
-Check that script verification succeeds and inspect the script before running it.
-The CLI must report `alm46-internet-rc1`. The bootstrap downloads the pinned CLI
-over trusted HTTPS and verifies it before execution. No endpoint override, custom
-laboratory CA, Go, Git, manual archive transfer or copied plan digest is required.
-For full inputs, binary identity and recovery, see the
-[operator guide](docs/operations/almadial-installation.md).
+The bootstrap downloads the pinned CLI over trusted HTTPS and verifies its exact
+checksum before execution. No Go compilation, Git checkout, task ID, mandatory
+snapshot identity or recovery assertion is required. Maintain appropriate backups;
+the installer requires one explicit approval of the actual immutable plan.
 
-Choose **remote** and supply your server's FQDN, directly attached IPv4/interface
-and matching trusted certificate inputs. Cloud-image users normally connect with
-the configured account and enter a root shell using `sudo -i`.
+Choose **remote** and supply your FQDN, directly assigned IPv4/interface and trusted
+certificate inputs. The installer discovers and preserves the effective SSH port,
+including supported single nonstandard ports. Cloud-image users can enter a root
+shell with `sudo -i`. See the [operator guide](docs/operations/almadial-installation.md)
+for certificate preparation, exact prompts, source verification and recovery.
 
 ## Features
 
@@ -66,8 +66,9 @@ The installer provides these capabilities, subject to the deployment limitations
 | Item | Requirement or qualified baseline |
 |---|---|
 | OS and CPU | Fresh AlmaLinux **10.2**, **x86_64 / Linux amd64** |
-| Resources | **4 vCPUs, 8 GiB RAM, 80 GiB disk** used in qualification; a recommended starting point, not a tested minimum or production capacity estimate |
-| Access | Root or an authorized account with `sudo`, working SSH and a recovery snapshot |
+| Enforced resources | 4 CPUs; 7 GiB total and 4 GiB available RAM; 60 GiB free on installation filesystems; recording filesystem reserve of 1 GiB and 10,000 free inodes |
+| Qualified baseline | **4 vCPUs, 8 GiB RAM, 80 GiB disk**; recommended starting point, not production capacity sizing |
+| Access | Root or an authorized account with `sudo`, working SSH; an appropriate backup or recovery method is recommended |
 | Network | DNS, synchronized time, HTTPS access to release/upstream sources and signed package repositories; outbound TCP 3690 for pinned VICIdial SVN fallback |
 | Trust | OS trust for standard release downloads; matching trusted application TLS for the browser; private distribution CA only for optional mirrors |
 | Source availability | Pinned upstream downloads plus authoritative revision retrieval; every input is verified against the accepted manifest |

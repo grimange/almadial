@@ -401,3 +401,14 @@ func TestUnloadedNFTablesProof(t *testing.T) {
 		t.Fatal("unsafe kernel name")
 	}
 }
+
+func TestResourceGuidanceRequiredAndObserved(t *testing.T) {
+	r := Requirements{MinCPUs: 4, MinTotalMemory: 7 << 30, MinAvailableMemory: 4 << 30, MinDiskAvailable: 60 << 30}
+	s := Snapshot{CPUs: 2, TotalMemory: 6 << 30, AvailableMemory: 3 << 30, Disks: []Disk{{Path: "/var", Available: 59 << 30}}}
+	got := ResourceGuidance(s, r)
+	for _, want := range []string{"required 4", "observed 2", "7516192768", "6442450944", "4294967296", "3221225472", "64424509440", "63350767616", "/var"} {
+		if !strings.Contains(got, want) {
+			t.Fatal(want, got)
+		}
+	}
+}

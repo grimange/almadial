@@ -267,37 +267,54 @@ func TestSystemPlanAndExecution(t *testing.T) {
 	}
 }
 func TestSystemFailuresAndRecovery(t *testing.T) {
-	for _, kind := range []execution.Category{execution.Timeout, execution.Canceled, execution.Exit, execution.Start, execution.OutputLimit} {
-		t.Run(string(kind), func(t *testing.T) {
-			i, m := systemInputs(t, false)
-			s, _ := i.Prepare(m)
-			f := &systemFake{s: i.Snapshot, failure: kind, failAt: 2}
-			dir := filepath.Join(t.TempDir(), "state")
-			o, e := ExecuteSystemLab(context.Background(), s, m, systemAuth(s), dir, f, f, false, nil)
-			if !errors.Is(e, &execution.Error{Category: kind}) || len(o.Traces) != 2 {
-				t.Fatal(e)
+	for _, standard := range []bool{false, true} {
+		t.Run(map[bool]string{false: "legacy", true: "standard"}[standard], func(t *testing.T) {
+			systemAuth := systemAuth
+			if standard {
+				original := systemAuth
+				systemAuth = func(s SystemStage) SystemLabAuthorization {
+					a := original(s)
+					a.Scope = StandardAuthorization
+					a.SnapshotReference = ""
+					a.OperatorEvidenceSHA256 = ""
+					a.CandidateAcknowledged = false
+					return a
+				}
 			}
-			if f.calls != 2 {
-				t.Fatal("continued after failure")
+
+			for _, kind := range []execution.Category{execution.Timeout, execution.Canceled, execution.Exit, execution.Start, execution.OutputLimit} {
+				t.Run(string(kind), func(t *testing.T) {
+					i, m := systemInputs(t, false)
+					s, _ := i.Prepare(m)
+					f := &systemFake{s: i.Snapshot, failure: kind, failAt: 2}
+					dir := filepath.Join(t.TempDir(), "state")
+					o, e := ExecuteSystemLab(context.Background(), s, m, systemAuth(s), dir, f, f, false, nil)
+					if !errors.Is(e, &execution.Error{Category: kind}) || len(o.Traces) != 2 {
+						t.Fatal(e)
+					}
+					if f.calls != 2 {
+						t.Fatal("continued after failure")
+					}
+					f.failure = ""
+					o, e = ExecuteSystemLab(context.Background(), s, m, systemAuth(s), dir, f, f, true, nil)
+					if e != nil || len(o.Traces) != 17 || f.calls != 19 {
+						t.Fatal("safe absent action did not resume", e)
+					}
+				})
 			}
-			f.failure = ""
-			o, e = ExecuteSystemLab(context.Background(), s, m, systemAuth(s), dir, f, f, true, nil)
-			if e != nil || len(o.Traces) != 17 || f.calls != 19 {
-				t.Fatal("safe absent action did not resume", e)
-			}
-		})
-	}
-	for _, tc := range []struct {
-		name       string
-		lie, extra bool
-	}{{"zero exit missing postcondition", true, false}, {"unexpected vendor change", false, true}} {
-		t.Run(tc.name, func(t *testing.T) {
-			i, m := systemInputs(t, false)
-			s, _ := i.Prepare(m)
-			f := &systemFake{s: i.Snapshot, lie: tc.lie, extra: tc.extra}
-			o, e := ExecuteSystemLab(context.Background(), s, m, systemAuth(s), filepath.Join(t.TempDir(), "state"), f, f, false, nil)
-			if !errors.Is(e, &execution.Error{Category: execution.Postcondition}) || o.Journal.Actions[0].State != journal.Failed {
-				t.Fatal(e)
+			for _, tc := range []struct {
+				name       string
+				lie, extra bool
+			}{{"zero exit missing postcondition", true, false}, {"unexpected vendor change", false, true}} {
+				t.Run(tc.name, func(t *testing.T) {
+					i, m := systemInputs(t, false)
+					s, _ := i.Prepare(m)
+					f := &systemFake{s: i.Snapshot, lie: tc.lie, extra: tc.extra}
+					o, e := ExecuteSystemLab(context.Background(), s, m, systemAuth(s), filepath.Join(t.TempDir(), "state"), f, f, false, nil)
+					if !errors.Is(e, &execution.Error{Category: execution.Postcondition}) || o.Journal.Actions[0].State != journal.Failed {
+						t.Fatal(e)
+					}
+				})
 			}
 		})
 	}
